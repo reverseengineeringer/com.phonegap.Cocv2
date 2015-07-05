@@ -6,6 +6,7 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
+        Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$1;,
         Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$HttpUrlConnectionDelegate;
     }
 .end annotation
@@ -30,7 +31,7 @@
 
     const/4 v1, 0x0
 
-    invoke-direct {v0, p0, p1, p2, v1}, Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$HttpUrlConnectionDelegate;-><init>(Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl;Ljava/net/URL;Lcom/squareup/okhttp/OkHttpClient;Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$HttpUrlConnectionDelegate;)V
+    invoke-direct {v0, p0, p1, p2, v1}, Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$HttpUrlConnectionDelegate;-><init>(Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl;Ljava/net/URL;Lcom/squareup/okhttp/OkHttpClient;Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$1;)V
 
     iput-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl;->delegate:Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$HttpUrlConnectionDelegate;
 
@@ -77,7 +78,6 @@
 
     if-eqz v0, :cond_2
 
-    .line 120
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl;->delegate:Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$HttpUrlConnectionDelegate;
 
     iget-object v0, v0, Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$HttpUrlConnectionDelegate;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
@@ -88,11 +88,9 @@
 
     move-result-object v0
 
-    .line 119
     :goto_0
     return-object v0
 
-    .line 121
     :cond_2
     const/4 v0, 0x0
 

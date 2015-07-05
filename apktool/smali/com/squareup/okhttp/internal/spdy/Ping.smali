@@ -155,7 +155,7 @@
 .end method
 
 .method public roundTripTime(JLjava/util/concurrent/TimeUnit;)J
-    .locals 4
+    .locals 5
     .param p1, "timeout"    # J
     .param p3, "unit"    # Ljava/util/concurrent/TimeUnit;
     .annotation system Ldalvik/annotation/Throws;

@@ -19,9 +19,7 @@
 
 .field callbackContext:Lorg/apache/cordova/CallbackContext;
 
-.field currentInputStream:Ljava/io/InputStream;
-
-.field currentOutputStream:Ljava/io/OutputStream;
+.field connection:Ljava/net/HttpURLConnection;
 
 .field source:Ljava/lang/String;
 
@@ -38,19 +36,19 @@
     .param p3, "callbackContext"    # Lorg/apache/cordova/CallbackContext;
 
     .prologue
-    .line 89
+    .line 91
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 90
+    .line 92
     iput-object p1, p0, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->source:Ljava/lang/String;
 
-    .line 91
+    .line 93
     iput-object p2, p0, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->target:Ljava/lang/String;
 
-    .line 92
+    .line 94
     iput-object p3, p0, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->callbackContext:Lorg/apache/cordova/CallbackContext;
 
-    .line 93
+    .line 95
     return-void
 .end method
 
@@ -61,28 +59,28 @@
     .param p1, "pluginResult"    # Lorg/apache/cordova/PluginResult;
 
     .prologue
-    .line 95
+    .line 97
     monitor-enter p0
 
-    .line 96
+    .line 98
     :try_start_0
     iget-boolean v0, p0, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->aborted:Z
 
     if-nez v0, :cond_0
 
-    .line 97
+    .line 99
     iget-object v0, p0, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->callbackContext:Lorg/apache/cordova/CallbackContext;
 
     invoke-virtual {v0, p1}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
 
-    .line 95
+    .line 101
     :cond_0
     monitor-exit p0
 
-    .line 100
+    .line 102
     return-void
 
-    .line 95
+    .line 101
     :catchall_0
     move-exception v0
 

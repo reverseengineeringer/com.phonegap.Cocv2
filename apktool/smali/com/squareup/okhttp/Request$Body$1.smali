@@ -1,4 +1,4 @@
-.class Lcom/squareup/okhttp/Request$Body$1;
+.class final Lcom/squareup/okhttp/Request$Body$1;
 .super Lcom/squareup/okhttp/Request$Body;
 .source "Request.java"
 
@@ -9,15 +9,15 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x0
+    accessFlags = 0x8
     name = null
 .end annotation
 
 
 # instance fields
-.field private final synthetic val$content:[B
+.field final synthetic val$content:[B
 
-.field private final synthetic val$contentType:Lcom/squareup/okhttp/MediaType;
+.field final synthetic val$contentType:Lcom/squareup/okhttp/MediaType;
 
 
 # direct methods
@@ -25,12 +25,11 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 144
     iput-object p1, p0, Lcom/squareup/okhttp/Request$Body$1;->val$contentType:Lcom/squareup/okhttp/MediaType;
 
     iput-object p2, p0, Lcom/squareup/okhttp/Request$Body$1;->val$content:[B
 
-    .line 144
     invoke-direct {p0}, Lcom/squareup/okhttp/Request$Body;-><init>()V
 
     return-void

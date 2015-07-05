@@ -36,24 +36,24 @@
     .param p6, "assetFd"    # Landroid/content/res/AssetFileDescriptor;
 
     .prologue
-    .line 436
+    .line 439
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 437
+    .line 440
     iput-object p1, p0, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->uri:Landroid/net/Uri;
 
-    .line 438
+    .line 441
     iput-object p2, p0, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->inputStream:Ljava/io/InputStream;
 
-    .line 439
+    .line 442
     iput-object p3, p0, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->mimeType:Ljava/lang/String;
 
-    .line 440
+    .line 443
     iput-wide p4, p0, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->length:J
 
-    .line 441
+    .line 444
     iput-object p6, p0, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->assetFd:Landroid/content/res/AssetFileDescriptor;
 
-    .line 442
+    .line 445
     return-void
 .end method

@@ -70,7 +70,6 @@
 
     const/4 v1, 0x0
 
-    .line 43
     const-string v2, "spdy/3"
 
     aput-object v2, v0, v1
@@ -201,10 +200,8 @@
 
     if-eqz v1, :cond_3
 
-    .line 363
     iget-object v1, p0, Lcom/squareup/okhttp/OkHttpClient;->sslSocketFactory:Ljavax/net/ssl/SSLSocketFactory;
 
-    .line 362
     :goto_3
     iput-object v1, v0, Lcom/squareup/okhttp/OkHttpClient;->sslSocketFactory:Ljavax/net/ssl/SSLSocketFactory;
 
@@ -213,10 +210,8 @@
 
     if-eqz v1, :cond_4
 
-    .line 366
     iget-object v1, p0, Lcom/squareup/okhttp/OkHttpClient;->hostnameVerifier:Ljavax/net/ssl/HostnameVerifier;
 
-    .line 365
     :goto_4
     iput-object v1, v0, Lcom/squareup/okhttp/OkHttpClient;->hostnameVerifier:Ljavax/net/ssl/HostnameVerifier;
 
@@ -225,10 +220,8 @@
 
     if-eqz v1, :cond_5
 
-    .line 369
     iget-object v1, p0, Lcom/squareup/okhttp/OkHttpClient;->authenticator:Lcom/squareup/okhttp/OkAuthenticator;
 
-    .line 368
     :goto_5
     iput-object v1, v0, Lcom/squareup/okhttp/OkHttpClient;->authenticator:Lcom/squareup/okhttp/OkAuthenticator;
 
@@ -294,7 +287,7 @@
 
     goto :goto_2
 
-    .line 364
+    .line 362
     :cond_3
     invoke-static {}, Ljavax/net/ssl/HttpsURLConnection;->getDefaultSSLSocketFactory()Ljavax/net/ssl/SSLSocketFactory;
 
@@ -302,13 +295,13 @@
 
     goto :goto_3
 
-    .line 367
+    .line 365
     :cond_4
     sget-object v1, Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;->INSTANCE:Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;
 
     goto :goto_4
 
-    .line 370
+    .line 368
     :cond_5
     sget-object v1, Lcom/squareup/okhttp/internal/http/HttpAuthenticator;->SYSTEM_DEFAULT:Lcom/squareup/okhttp/OkAuthenticator;
 
@@ -657,9 +650,13 @@
 
     new-instance v3, Ljava/lang/StringBuilder;
 
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v4, "Unexpected protocol: "
 
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
 
     invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -687,7 +684,7 @@
 .end method
 
 .method public setConnectTimeout(JLjava/util/concurrent/TimeUnit;)V
-    .locals 4
+    .locals 5
     .param p1, "timeout"    # J
     .param p3, "unit"    # Ljava/util/concurrent/TimeUnit;
 
@@ -827,7 +824,7 @@
 .end method
 
 .method public setReadTimeout(JLjava/util/concurrent/TimeUnit;)V
-    .locals 4
+    .locals 5
     .param p1, "timeout"    # J
     .param p3, "unit"    # Ljava/util/concurrent/TimeUnit;
 
@@ -952,9 +949,13 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "transports doesn\'t contain http/1.1: "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 

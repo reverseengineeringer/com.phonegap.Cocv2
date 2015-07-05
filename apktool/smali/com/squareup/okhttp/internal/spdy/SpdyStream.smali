@@ -6,8 +6,9 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;,
-        Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
+        Lcom/squareup/okhttp/internal/spdy/SpdyStream$1;,
+        Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;,
+        Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
     }
 .end annotation
 
@@ -77,10 +78,8 @@
     :goto_0
     sput-boolean v0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->$assertionsDisabled:Z
 
-    .line 42
     return-void
 
-    .line 31
     :cond_0
     const/4 v0, 0x0
 
@@ -113,7 +112,7 @@
     .local p6, "requestHeaders":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     const/4 v2, 0x0
 
-    .line 66
+    .line 67
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     .line 47
@@ -124,14 +123,14 @@
     .line 56
     new-instance v0, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
 
-    invoke-direct {v0, p0, v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;-><init>(Lcom/squareup/okhttp/internal/spdy/SpdyStream;Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)V
+    invoke-direct {v0, p0, v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;-><init>(Lcom/squareup/okhttp/internal/spdy/SpdyStream;Lcom/squareup/okhttp/internal/spdy/SpdyStream$1;)V
 
     iput-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->in:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
 
     .line 57
     new-instance v0, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
 
-    invoke-direct {v0, p0, v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;-><init>(Lcom/squareup/okhttp/internal/spdy/SpdyStream;Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)V
+    invoke-direct {v0, p0, v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;-><init>(Lcom/squareup/okhttp/internal/spdy/SpdyStream;Lcom/squareup/okhttp/internal/spdy/SpdyStream$1;)V
 
     iput-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->out:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
 
@@ -171,12 +170,14 @@
     .line 72
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->in:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
 
-    invoke-static {v0, p4}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$1(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;Z)V
+    # setter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->finished:Z
+    invoke-static {v0, p4}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$202(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;Z)Z
 
     .line 73
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->out:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
 
-    invoke-static {v0, p3}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$1(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;Z)V
+    # setter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->finished:Z
+    invoke-static {v0, p3}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$302(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;Z)Z
 
     .line 74
     iput p5, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->priority:I
@@ -191,48 +192,20 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
+.method static synthetic access$1000(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)Lcom/squareup/okhttp/internal/spdy/ErrorCode;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyStream;
 
     .prologue
-    .line 45
-    iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->connection:Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
-
-    return-object v0
-.end method
-
-.method static synthetic access$1(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)I
-    .locals 1
-
-    .prologue
-    .line 44
-    iget v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->id:I
-
-    return v0
-.end method
-
-.method static synthetic access$2(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)J
-    .locals 2
-
-    .prologue
-    .line 47
-    iget-wide v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->readTimeoutMillis:J
-
-    return-wide v0
-.end method
-
-.method static synthetic access$3(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)Lcom/squareup/okhttp/internal/spdy/ErrorCode;
-    .locals 1
-
-    .prologue
-    .line 64
+    .line 31
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->errorCode:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
     return-object v0
 .end method
 
-.method static synthetic access$4(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)V
+.method static synthetic access$1100(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)V
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyStream;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/io/IOException;
@@ -240,30 +213,65 @@
     .end annotation
 
     .prologue
-    .line 547
+    .line 31
     invoke-direct {p0}, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->cancelStreamIfNecessary()V
 
     return-void
 .end method
 
-.method static synthetic access$5(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
+.method static synthetic access$1200(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyStream;
 
     .prologue
-    .line 57
+    .line 31
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->out:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
 
     return-object v0
 .end method
 
-.method static synthetic access$6(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)I
+.method static synthetic access$1300(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)I
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyStream;
 
     .prologue
-    .line 48
+    .line 31
     iget v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->writeWindowSize:I
 
     return v0
+.end method
+
+.method static synthetic access$700(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)I
+    .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyStream;
+
+    .prologue
+    .line 31
+    iget v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->id:I
+
+    return v0
+.end method
+
+.method static synthetic access$800(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
+    .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyStream;
+
+    .prologue
+    .line 31
+    iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->connection:Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
+
+    return-object v0
+.end method
+
+.method static synthetic access$900(Lcom/squareup/okhttp/internal/spdy/SpdyStream;)J
+    .locals 2
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyStream;
+
+    .prologue
+    .line 31
+    iget-wide v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->readTimeoutMillis:J
+
+    return-wide v0
 .end method
 
 .method private cancelStreamIfNecessary()V
@@ -301,7 +309,7 @@
     iget-object v2, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->in:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->finished:Z
-    invoke-static {v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$2(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
+    invoke-static {v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$200(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
 
     move-result v2
 
@@ -310,7 +318,7 @@
     iget-object v2, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->in:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->closed:Z
-    invoke-static {v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$3(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
+    invoke-static {v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$400(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
 
     move-result v2
 
@@ -319,7 +327,7 @@
     iget-object v2, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->out:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->finished:Z
-    invoke-static {v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$2(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
+    invoke-static {v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$300(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
 
     move-result v2
 
@@ -328,7 +336,7 @@
     iget-object v2, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->out:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->closed:Z
-    invoke-static {v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$3(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
+    invoke-static {v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$500(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
 
     move-result v2
 
@@ -344,7 +352,7 @@
 
     move-result v1
 
-    .line 551
+    .line 554
     .local v1, "open":Z
     monitor-exit p0
     :try_end_0
@@ -371,7 +379,7 @@
 
     goto :goto_0
 
-    .line 551
+    .line 554
     :catchall_0
     move-exception v2
 
@@ -444,7 +452,7 @@
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->in:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->finished:Z
-    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$2(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
+    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$200(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
 
     move-result v1
 
@@ -453,7 +461,7 @@
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->out:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->finished:Z
-    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$2(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
+    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$300(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
 
     move-result v1
 
@@ -464,7 +472,7 @@
 
     goto :goto_0
 
-    .line 241
+    .line 250
     :catchall_0
     move-exception v0
 
@@ -482,7 +490,7 @@
     .line 249
     invoke-virtual {p0}, Ljava/lang/Object;->notifyAll()V
 
-    .line 241
+    .line 250
     monitor-exit p0
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
@@ -530,12 +538,10 @@
     :cond_0
     if-eqz p1, :cond_1
 
-    .line 316
     invoke-virtual {p1, v0}, Lcom/squareup/okhttp/internal/spdy/Settings;->getInitialWindowSize(I)I
 
     move-result v0
 
-    .line 315
     :cond_1
     iput v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->writeWindowSize:I
 
@@ -676,7 +682,7 @@
 
     throw v0
 
-    .line 208
+    .line 212
     :catchall_0
     move-exception v0
 
@@ -761,10 +767,10 @@
     .line 119
     monitor-enter p0
 
-    const-wide/16 v1, 0x0
+    const-wide/16 v2, 0x0
 
     .line 120
-    .local v1, "remaining":J
+    .local v2, "remaining":J
     const-wide/16 v4, 0x0
 
     .line 121
@@ -786,7 +792,7 @@
     div-long v4, v6, v8
 
     .line 123
-    iget-wide v1, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->readTimeoutMillis:J
+    iget-wide v2, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->readTimeoutMillis:J
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -796,42 +802,24 @@
     :try_start_1
     iget-object v6, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->responseHeaders:Ljava/util/List;
 
-    if-nez v6, :cond_1
+    if-nez v6, :cond_3
 
     iget-object v6, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->errorCode:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    if-eqz v6, :cond_2
-
-    .line 137
-    :cond_1
-    iget-object v6, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->responseHeaders:Ljava/util/List;
-
-    if-eqz v6, :cond_5
-
-    .line 138
-    iget-object v6, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->responseHeaders:Ljava/util/List;
-    :try_end_1
-    .catch Ljava/lang/InterruptedException; {:try_start_1 .. :try_end_1} :catch_0
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
-
-    monitor-exit p0
-
-    return-object v6
+    if-nez v6, :cond_3
 
     .line 127
-    :cond_2
-    :try_start_2
     iget-wide v6, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->readTimeoutMillis:J
 
     cmp-long v6, v6, v12
 
-    if-nez v6, :cond_3
+    if-nez v6, :cond_1
 
     .line 128
     invoke-virtual {p0}, Ljava/lang/Object;->wait()V
-    :try_end_2
-    .catch Ljava/lang/InterruptedException; {:try_start_2 .. :try_end_2} :catch_0
-    .catchall {:try_start_2 .. :try_end_2} :catchall_0
+    :try_end_1
+    .catch Ljava/lang/InterruptedException; {:try_start_1 .. :try_end_1} :catch_0
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     goto :goto_0
 
@@ -841,23 +829,23 @@
 
     .line 142
     .local v0, "e":Ljava/lang/InterruptedException;
-    :try_start_3
-    new-instance v3, Ljava/io/InterruptedIOException;
+    :try_start_2
+    new-instance v1, Ljava/io/InterruptedIOException;
 
-    invoke-direct {v3}, Ljava/io/InterruptedIOException;-><init>()V
+    invoke-direct {v1}, Ljava/io/InterruptedIOException;-><init>()V
 
     .line 143
-    .local v3, "rethrow":Ljava/io/InterruptedIOException;
-    invoke-virtual {v3, v0}, Ljava/io/InterruptedIOException;->initCause(Ljava/lang/Throwable;)Ljava/lang/Throwable;
+    .local v1, "rethrow":Ljava/io/InterruptedIOException;
+    invoke-virtual {v1, v0}, Ljava/io/InterruptedIOException;->initCause(Ljava/lang/Throwable;)Ljava/lang/Throwable;
 
     .line 144
-    throw v3
-    :try_end_3
-    .catchall {:try_start_3 .. :try_end_3} :catchall_0
+    throw v1
+    :try_end_2
+    .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
     .line 119
     .end local v0    # "e":Ljava/lang/InterruptedException;
-    .end local v3    # "rethrow":Ljava/io/InterruptedIOException;
+    .end local v1    # "rethrow":Ljava/io/InterruptedIOException;
     :catchall_0
     move-exception v6
 
@@ -866,14 +854,14 @@
     throw v6
 
     .line 129
-    :cond_3
-    cmp-long v6, v1, v12
+    :cond_1
+    cmp-long v6, v2, v12
 
-    if-lez v6, :cond_4
+    if-lez v6, :cond_2
 
     .line 130
-    :try_start_4
-    invoke-virtual {p0, v1, v2}, Ljava/lang/Object;->wait(J)V
+    :try_start_3
+    invoke-virtual {p0, v2, v3}, Ljava/lang/Object;->wait(J)V
 
     .line 131
     iget-wide v6, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->readTimeoutMillis:J
@@ -888,22 +876,24 @@
 
     div-long/2addr v8, v10
 
-    sub-long v1, v6, v8
+    sub-long v2, v6, v8
 
-    .line 132
     goto :goto_0
 
     .line 133
-    :cond_4
+    :cond_2
     new-instance v6, Ljava/net/SocketTimeoutException;
 
     new-instance v7, Ljava/lang/StringBuilder;
 
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v8, "Read response header timeout. readTimeoutMillis: "
 
-    invoke-direct {v7, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 134
+    move-result-object v7
+
     iget-wide v8, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->readTimeoutMillis:J
 
     invoke-virtual {v7, v8, v9}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
@@ -914,20 +904,40 @@
 
     move-result-object v7
 
-    .line 133
     invoke-direct {v6, v7}, Ljava/net/SocketTimeoutException;-><init>(Ljava/lang/String;)V
 
     throw v6
 
+    .line 137
+    :cond_3
+    iget-object v6, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->responseHeaders:Ljava/util/List;
+
+    if-eqz v6, :cond_4
+
+    .line 138
+    iget-object v6, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->responseHeaders:Ljava/util/List;
+    :try_end_3
+    .catch Ljava/lang/InterruptedException; {:try_start_3 .. :try_end_3} :catch_0
+    .catchall {:try_start_3 .. :try_end_3} :catchall_0
+
+    monitor-exit p0
+
+    return-object v6
+
     .line 140
-    :cond_5
+    :cond_4
+    :try_start_4
     new-instance v6, Ljava/io/IOException;
 
     new-instance v7, Ljava/lang/StringBuilder;
 
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v8, "stream was reset: "
 
-    invoke-direct {v7, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
 
     iget-object v8, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->errorCode:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
@@ -1020,7 +1030,7 @@
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->in:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->finished:Z
-    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$2(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
+    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$200(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
 
     move-result v1
 
@@ -1029,7 +1039,7 @@
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->in:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->closed:Z
-    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$3(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
+    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$400(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
 
     move-result v1
 
@@ -1039,7 +1049,7 @@
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->out:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->finished:Z
-    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$2(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
+    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$300(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
 
     move-result v1
 
@@ -1048,7 +1058,7 @@
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->out:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->closed:Z
-    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$3(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
+    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$500(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
 
     move-result v1
 
@@ -1145,7 +1155,8 @@
 
     const/4 v2, 0x1
 
-    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$1(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;Z)V
+    # setter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->finished:Z
+    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;->access$202(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;Z)Z
 
     .line 296
     invoke-virtual {p0}, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->isOpen()Z
@@ -1156,7 +1167,7 @@
     .local v0, "open":Z
     invoke-virtual {p0}, Ljava/lang/Object;->notifyAll()V
 
-    .line 294
+    .line 298
     monitor-exit p0
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
@@ -1175,7 +1186,7 @@
     :cond_1
     return-void
 
-    .line 294
+    .line 298
     .end local v0    # "open":Z
     :catchall_0
     move-exception v1
@@ -1250,7 +1261,7 @@
     .line 262
     sget-object v0, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->PROTOCOL_ERROR:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    .line 259
+    .line 278
     :goto_0
     monitor-exit p0
     :try_end_0
@@ -1282,7 +1293,7 @@
 
     goto :goto_0
 
-    .line 259
+    .line 278
     :catchall_0
     move-exception v3
 
@@ -1304,7 +1315,6 @@
     .line 270
     sget-object v0, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->STREAM_IN_USE:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    .line 271
     goto :goto_0
 
     .line 272
@@ -1414,7 +1424,7 @@
 .end method
 
 .method declared-synchronized receiveWindowUpdate(I)V
-    .locals 2
+    .locals 1
     .param p1, "deltaWindowSize"    # I
 
     .prologue
@@ -1424,14 +1434,8 @@
     :try_start_0
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyStream;->out:Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
 
-    # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->unacknowledgedBytes:I
-    invoke-static {v0}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$4(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)I
-
-    move-result v1
-
-    sub-int/2addr v1, p1
-
-    invoke-static {v0, v1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$5(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;I)V
+    # -= operator for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->unacknowledgedBytes:I
+    invoke-static {v0, p1}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$620(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;I)I
 
     .line 328
     invoke-virtual {p0}, Ljava/lang/Object;->notifyAll()V
@@ -1511,7 +1515,7 @@
 
     throw v1
 
-    .line 165
+    .line 180
     :catchall_0
     move-exception v1
 
@@ -1566,12 +1570,13 @@
 
     const/4 v2, 0x1
 
-    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$1(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;Z)V
+    # setter for: Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->finished:Z
+    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;->access$302(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;Z)Z
 
     .line 178
     const/4 v0, 0x1
 
-    .line 165
+    .line 180
     :cond_4
     monitor-exit p0
     :try_end_1
@@ -1589,7 +1594,7 @@
 .end method
 
 .method public setReadTimeout(J)V
-    .locals 0
+    .locals 1
     .param p1, "readTimeoutMillis"    # J
 
     .prologue

@@ -26,10 +26,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 66
     iput-object p1, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders$1;->this$0:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
-    .line 66
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -57,7 +56,8 @@
     .line 69
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders$1;->this$0:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
-    invoke-static {v0, v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->access$0(Lcom/squareup/okhttp/internal/http/RequestHeaders;Z)V
+    # setter for: Lcom/squareup/okhttp/internal/http/RequestHeaders;->noCache:Z
+    invoke-static {v0, v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->access$002(Lcom/squareup/okhttp/internal/http/RequestHeaders;Z)Z
 
     .line 79
     :cond_0
@@ -81,7 +81,8 @@
 
     move-result v1
 
-    invoke-static {v0, v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->access$1(Lcom/squareup/okhttp/internal/http/RequestHeaders;I)V
+    # setter for: Lcom/squareup/okhttp/internal/http/RequestHeaders;->maxAgeSeconds:I
+    invoke-static {v0, v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->access$102(Lcom/squareup/okhttp/internal/http/RequestHeaders;I)I
 
     goto :goto_0
 
@@ -102,7 +103,8 @@
 
     move-result v1
 
-    invoke-static {v0, v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->access$2(Lcom/squareup/okhttp/internal/http/RequestHeaders;I)V
+    # setter for: Lcom/squareup/okhttp/internal/http/RequestHeaders;->maxStaleSeconds:I
+    invoke-static {v0, v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->access$202(Lcom/squareup/okhttp/internal/http/RequestHeaders;I)I
 
     goto :goto_0
 
@@ -123,7 +125,8 @@
 
     move-result v1
 
-    invoke-static {v0, v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->access$3(Lcom/squareup/okhttp/internal/http/RequestHeaders;I)V
+    # setter for: Lcom/squareup/okhttp/internal/http/RequestHeaders;->minFreshSeconds:I
+    invoke-static {v0, v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->access$302(Lcom/squareup/okhttp/internal/http/RequestHeaders;I)I
 
     goto :goto_0
 
@@ -140,7 +143,8 @@
     .line 77
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders$1;->this$0:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
-    invoke-static {v0, v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->access$4(Lcom/squareup/okhttp/internal/http/RequestHeaders;Z)V
+    # setter for: Lcom/squareup/okhttp/internal/http/RequestHeaders;->onlyIfCached:Z
+    invoke-static {v0, v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->access$402(Lcom/squareup/okhttp/internal/http/RequestHeaders;Z)Z
 
     goto :goto_0
 .end method

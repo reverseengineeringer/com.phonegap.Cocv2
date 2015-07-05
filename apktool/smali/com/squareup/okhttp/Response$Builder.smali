@@ -77,51 +77,56 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/Request;
+.method static synthetic access$000(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/Request;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/Response$Builder;
 
     .prologue
-    .line 238
+    .line 237
     iget-object v0, p0, Lcom/squareup/okhttp/Response$Builder;->request:Lcom/squareup/okhttp/Request;
 
     return-object v0
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/Response$Builder;)I
+.method static synthetic access$100(Lcom/squareup/okhttp/Response$Builder;)I
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/Response$Builder;
 
     .prologue
-    .line 239
+    .line 237
     iget v0, p0, Lcom/squareup/okhttp/Response$Builder;->code:I
 
     return v0
 .end method
 
-.method static synthetic access$2(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/internal/http/RawHeaders;
+.method static synthetic access$200(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/internal/http/RawHeaders;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/Response$Builder;
 
     .prologue
-    .line 240
+    .line 237
     iget-object v0, p0, Lcom/squareup/okhttp/Response$Builder;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     return-object v0
 .end method
 
-.method static synthetic access$3(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/Response$Body;
+.method static synthetic access$300(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/Response$Body;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/Response$Builder;
 
     .prologue
-    .line 241
+    .line 237
     iget-object v0, p0, Lcom/squareup/okhttp/Response$Builder;->body:Lcom/squareup/okhttp/Response$Body;
 
     return-object v0
 .end method
 
-.method static synthetic access$4(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/Response;
+.method static synthetic access$400(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/Response;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/Response$Builder;
 
     .prologue
-    .line 242
+    .line 237
     iget-object v0, p0, Lcom/squareup/okhttp/Response$Builder;->redirectedBy:Lcom/squareup/okhttp/Response;
 
     return-object v0
@@ -195,7 +200,7 @@
 
     const/4 v1, 0x0
 
-    invoke-direct {v0, p0, v1}, Lcom/squareup/okhttp/Response;-><init>(Lcom/squareup/okhttp/Response$Builder;Lcom/squareup/okhttp/Response;)V
+    invoke-direct {v0, p0, v1}, Lcom/squareup/okhttp/Response;-><init>(Lcom/squareup/okhttp/Response$Builder;Lcom/squareup/okhttp/Response$1;)V
 
     return-object v0
 .end method

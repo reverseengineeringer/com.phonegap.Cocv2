@@ -24,9 +24,9 @@
 
 
 # static fields
-.field public static final enum CLASS_NOT_FOUND_EXCEPTION:Lorg/apache/cordova/PluginResult$Status;
+.field private static final synthetic $VALUES:[Lorg/apache/cordova/PluginResult$Status;
 
-.field private static final synthetic ENUM$VALUES:[Lorg/apache/cordova/PluginResult$Status;
+.field public static final enum CLASS_NOT_FOUND_EXCEPTION:Lorg/apache/cordova/PluginResult$Status;
 
 .field public static final enum ERROR:Lorg/apache/cordova/PluginResult$Status;
 
@@ -217,13 +217,18 @@
 
     aput-object v2, v0, v1
 
-    sput-object v0, Lorg/apache/cordova/PluginResult$Status;->ENUM$VALUES:[Lorg/apache/cordova/PluginResult$Status;
+    sput-object v0, Lorg/apache/cordova/PluginResult$Status;->$VALUES:[Lorg/apache/cordova/PluginResult$Status;
 
     return-void
 .end method
 
 .method private constructor <init>(Ljava/lang/String;I)V
     .locals 0
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()V"
+        }
+    .end annotation
 
     .prologue
     .line 167
@@ -234,9 +239,10 @@
 
 .method public static valueOf(Ljava/lang/String;)Lorg/apache/cordova/PluginResult$Status;
     .locals 1
+    .param p0, "name"    # Ljava/lang/String;
 
     .prologue
-    .line 1
+    .line 167
     const-class v0, Lorg/apache/cordova/PluginResult$Status;
 
     invoke-static {v0, p0}, Ljava/lang/Enum;->valueOf(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Enum;
@@ -249,19 +255,17 @@
 .end method
 
 .method public static values()[Lorg/apache/cordova/PluginResult$Status;
-    .locals 4
+    .locals 1
 
     .prologue
-    const/4 v3, 0x0
+    .line 167
+    sget-object v0, Lorg/apache/cordova/PluginResult$Status;->$VALUES:[Lorg/apache/cordova/PluginResult$Status;
 
-    .line 1
-    sget-object v0, Lorg/apache/cordova/PluginResult$Status;->ENUM$VALUES:[Lorg/apache/cordova/PluginResult$Status;
+    invoke-virtual {v0}, [Lorg/apache/cordova/PluginResult$Status;->clone()Ljava/lang/Object;
 
-    array-length v1, v0
+    move-result-object v0
 
-    new-array v2, v1, [Lorg/apache/cordova/PluginResult$Status;
+    check-cast v0, [Lorg/apache/cordova/PluginResult$Status;
 
-    invoke-static {v0, v3, v2, v3, v1}, Ljava/lang/System;->arraycopy(Ljava/lang/Object;ILjava/lang/Object;II)V
-
-    return-object v2
+    return-object v0
 .end method

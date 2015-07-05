@@ -17,26 +17,25 @@
 # instance fields
 .field final synthetic this$0:Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
 
-.field private final synthetic val$errorCode:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+.field final synthetic val$errorCode:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-.field private final synthetic val$streamId:I
+.field final synthetic val$streamId:I
 
 
 # direct methods
 .method varargs constructor <init>(Lcom/squareup/okhttp/internal/spdy/SpdyConnection;Ljava/lang/String;[Ljava/lang/Object;ILcom/squareup/okhttp/internal/spdy/ErrorCode;)V
     .locals 0
-    .param p2, "$anonymous0"    # Ljava/lang/String;
-    .param p3, "$anonymous1"    # [Ljava/lang/Object;
+    .param p2, "x0"    # Ljava/lang/String;
+    .param p3, "x1"    # [Ljava/lang/Object;
 
     .prologue
-    .line 1
+    .line 192
     iput-object p1, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$1;->this$0:Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
 
     iput p4, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$1;->val$streamId:I
 
     iput-object p5, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$1;->val$errorCode:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    .line 192
     invoke-direct {p0, p2, p3}, Lcom/squareup/okhttp/internal/NamedRunnable;-><init>(Ljava/lang/String;[Ljava/lang/Object;)V
 
     return-void

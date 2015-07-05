@@ -6,22 +6,19 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;,
+        Lorg/apache/cordova/NativeToJsMessageQueue$1;,
         Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;,
-        Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;,
+        Lorg/apache/cordova/NativeToJsMessageQueue$PrivateApiBridgeMode;,
         Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;,
+        Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;,
         Lorg/apache/cordova/NativeToJsMessageQueue$PollingBridgeMode;,
-        Lorg/apache/cordova/NativeToJsMessageQueue$PrivateApiBridgeMode;
+        Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
     }
 .end annotation
 
 
 # static fields
-.field private static final DEFAULT_BRIDGE_MODE:I = 0x2
-
 .field static final DISABLE_EXEC_CHAINING:Z = false
-
-.field static final ENABLE_LOCATION_CHANGE_EXEC_MODE:Z = false
 
 .field private static final FORCE_ENCODE_USING_EVAL:Z = false
 
@@ -31,7 +28,7 @@
 
 
 # instance fields
-.field private activeListenerIndex:I
+.field private activeBridgeMode:Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
 .field private final cordova:Lorg/apache/cordova/CordovaInterface;
 
@@ -58,7 +55,7 @@
     .locals 1
 
     .prologue
-    .line 56
+    .line 49
     const/high16 v0, 0x1f400000
 
     sput v0, Lorg/apache/cordova/NativeToJsMessageQueue;->MAX_PAYLOAD_SIZE:I
@@ -74,85 +71,86 @@
     .prologue
     const/4 v3, 0x0
 
-    .line 82
+    .line 77
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 72
+    .line 60
     new-instance v0, Ljava/util/LinkedList;
 
     invoke-direct {v0}, Ljava/util/LinkedList;-><init>()V
 
     iput-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
 
-    .line 83
+    .line 78
     iput-object p2, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->cordova:Lorg/apache/cordova/CordovaInterface;
 
-    .line 84
+    .line 79
     iput-object p1, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->webView:Lorg/apache/cordova/CordovaWebView;
 
-    .line 85
+    .line 80
     const/4 v0, 0x4
 
     new-array v0, v0, [Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
     iput-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->registeredListeners:[Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
-    .line 86
+    .line 81
     iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->registeredListeners:[Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
     const/4 v1, 0x0
 
     new-instance v2, Lorg/apache/cordova/NativeToJsMessageQueue$PollingBridgeMode;
 
-    invoke-direct {v2, p0, v3}, Lorg/apache/cordova/NativeToJsMessageQueue$PollingBridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$PollingBridgeMode;)V
+    invoke-direct {v2, p0, v3}, Lorg/apache/cordova/NativeToJsMessageQueue$PollingBridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$1;)V
 
     aput-object v2, v0, v1
 
-    .line 87
+    .line 82
     iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->registeredListeners:[Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
     const/4 v1, 0x1
 
     new-instance v2, Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;
 
-    invoke-direct {v2, p0, v3}, Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;)V
+    invoke-direct {v2, p0, v3}, Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$1;)V
 
     aput-object v2, v0, v1
 
-    .line 88
+    .line 83
     iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->registeredListeners:[Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
     const/4 v1, 0x2
 
     new-instance v2, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;
 
-    invoke-direct {v2, p0, v3}, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;)V
+    invoke-direct {v2, p0, v3}, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$1;)V
 
     aput-object v2, v0, v1
 
-    .line 89
+    .line 84
     iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->registeredListeners:[Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
     const/4 v1, 0x3
 
     new-instance v2, Lorg/apache/cordova/NativeToJsMessageQueue$PrivateApiBridgeMode;
 
-    invoke-direct {v2, p0, v3}, Lorg/apache/cordova/NativeToJsMessageQueue$PrivateApiBridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$PrivateApiBridgeMode;)V
+    invoke-direct {v2, p0, v3}, Lorg/apache/cordova/NativeToJsMessageQueue$PrivateApiBridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$1;)V
 
     aput-object v2, v0, v1
 
-    .line 90
+    .line 85
     invoke-virtual {p0}, Lorg/apache/cordova/NativeToJsMessageQueue;->reset()V
 
-    .line 91
+    .line 86
     return-void
 .end method
 
-.method static synthetic access$0(Lorg/apache/cordova/NativeToJsMessageQueue;)Ljava/lang/String;
+.method static synthetic access$500(Lorg/apache/cordova/NativeToJsMessageQueue;)Ljava/lang/String;
     .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/NativeToJsMessageQueue;
 
     .prologue
-    .line 178
+    .line 35
     invoke-direct {p0}, Lorg/apache/cordova/NativeToJsMessageQueue;->popAndEncodeAsJs()Ljava/lang/String;
 
     move-result-object v0
@@ -160,31 +158,34 @@
     return-object v0
 .end method
 
-.method static synthetic access$1(Lorg/apache/cordova/NativeToJsMessageQueue;)Lorg/apache/cordova/CordovaWebView;
+.method static synthetic access$600(Lorg/apache/cordova/NativeToJsMessageQueue;)Lorg/apache/cordova/CordovaWebView;
     .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/NativeToJsMessageQueue;
 
     .prologue
-    .line 80
+    .line 35
     iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->webView:Lorg/apache/cordova/CordovaWebView;
 
     return-object v0
 .end method
 
-.method static synthetic access$2(Lorg/apache/cordova/NativeToJsMessageQueue;)Lorg/apache/cordova/CordovaInterface;
+.method static synthetic access$700(Lorg/apache/cordova/NativeToJsMessageQueue;)Lorg/apache/cordova/CordovaInterface;
     .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/NativeToJsMessageQueue;
 
     .prologue
-    .line 79
+    .line 35
     iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->cordova:Lorg/apache/cordova/CordovaInterface;
 
     return-object v0
 .end method
 
-.method static synthetic access$3(Lorg/apache/cordova/NativeToJsMessageQueue;)Ljava/util/LinkedList;
+.method static synthetic access$800(Lorg/apache/cordova/NativeToJsMessageQueue;)Ljava/util/LinkedList;
     .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/NativeToJsMessageQueue;
 
     .prologue
-    .line 72
+    .line 35
     iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
 
     return-object v0
@@ -224,37 +225,51 @@
     .param p1, "message"    # Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
 
     .prologue
-    .line 252
+    .line 255
     monitor-enter p0
 
-    .line 253
+    .line 256
     :try_start_0
+    iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeBridgeMode:Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
+
+    if-nez v0, :cond_0
+
+    .line 257
+    const-string v0, "JsMessageQueue"
+
+    const-string v1, "Dropping Native->JS message due to disabled bridge"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 258
+    monitor-exit p0
+
+    .line 265
+    :goto_0
+    return-void
+
+    .line 260
+    :cond_0
     iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
 
     invoke-virtual {v0, p1}, Ljava/util/LinkedList;->add(Ljava/lang/Object;)Z
 
-    .line 254
+    .line 261
     iget-boolean v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->paused:Z
 
-    if-nez v0, :cond_0
+    if-nez v0, :cond_1
 
-    .line 255
-    iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->registeredListeners:[Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
-
-    iget v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeListenerIndex:I
-
-    aget-object v0, v0, v1
+    .line 262
+    iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeBridgeMode:Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
     invoke-virtual {v0}, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;->onNativeToJsMessageAvailable()V
 
-    .line 252
-    :cond_0
+    .line 264
+    :cond_1
     monitor-exit p0
 
-    .line 258
-    return-void
+    goto :goto_0
 
-    .line 252
     :catchall_0
     move-exception v0
 
@@ -282,7 +297,6 @@
 
     move-result-object v1
 
-    .line 134
     const/16 v2, 0x20
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
@@ -298,258 +312,268 @@
     .locals 14
 
     .prologue
-    const/4 v9, 0x1
+    const/4 v10, 0x1
 
-    const/4 v10, 0x0
-
-    .line 179
-    monitor-enter p0
-
-    .line 180
-    :try_start_0
-    iget-object v11, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
-
-    invoke-virtual {v11}, Ljava/util/LinkedList;->size()I
-
-    move-result v1
-
-    .line 181
-    .local v1, "length":I
-    if-nez v1, :cond_0
+    const/4 v11, 0x0
 
     .line 182
-    monitor-exit p0
+    monitor-enter p0
 
-    const/4 v5, 0x0
+    .line 183
+    :try_start_0
+    iget-object v12, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
 
-    .line 215
-    :goto_0
-    return-object v5
+    invoke-virtual {v12}, Ljava/util/LinkedList;->size()I
+
+    move-result v2
 
     .line 184
-    :cond_0
-    const/4 v7, 0x0
+    .local v2, "length":I
+    if-nez v2, :cond_0
 
     .line 185
-    .local v7, "totalPayloadLen":I
-    const/4 v4, 0x0
+    const/4 v6, 0x0
 
-    .line 186
-    .local v4, "numMessagesToSend":I
-    iget-object v11, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
+    monitor-exit p0
 
-    invoke-virtual {v11}, Ljava/util/LinkedList;->iterator()Ljava/util/Iterator;
+    .line 218
+    :goto_0
+    return-object v6
 
-    move-result-object v11
+    .line 187
+    :cond_0
+    const/4 v8, 0x0
 
+    .line 188
+    .local v8, "totalPayloadLen":I
+    const/4 v5, 0x0
+
+    .line 189
+    .local v5, "numMessagesToSend":I
+    iget-object v12, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
+
+    invoke-virtual {v12}, Ljava/util/LinkedList;->iterator()Ljava/util/Iterator;
+
+    move-result-object v1
+
+    .local v1, "i$":Ljava/util/Iterator;
     :goto_1
-    invoke-interface {v11}, Ljava/util/Iterator;->hasNext()Z
+    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v12
 
-    if-nez v12, :cond_3
+    if-eqz v12, :cond_1
 
-    .line 194
+    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v3
+
+    check-cast v3, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+
+    .line 190
+    .local v3, "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    invoke-virtual {v3}, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->calculateEncodedLength()I
+
+    move-result v12
+
+    add-int/lit8 v4, v12, 0x32
+
+    .line 191
+    .local v4, "messageSize":I
+    if-lez v5, :cond_2
+
+    add-int v12, v8, v4
+
+    sget v13, Lorg/apache/cordova/NativeToJsMessageQueue;->MAX_PAYLOAD_SIZE:I
+
+    if-le v12, v13, :cond_2
+
+    sget v12, Lorg/apache/cordova/NativeToJsMessageQueue;->MAX_PAYLOAD_SIZE:I
+
+    if-lez v12, :cond_2
+
+    .line 197
+    .end local v3    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    .end local v4    # "messageSize":I
     :cond_1
-    iget-object v11, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
+    iget-object v12, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
 
-    invoke-virtual {v11}, Ljava/util/LinkedList;->size()I
+    invoke-virtual {v12}, Ljava/util/LinkedList;->size()I
 
-    move-result v11
+    move-result v12
 
-    if-ne v4, v11, :cond_5
+    if-ne v5, v12, :cond_3
 
-    move v8, v9
-
-    .line 195
-    .local v8, "willSendAllMessages":Z
-    :goto_2
-    new-instance v6, Ljava/lang/StringBuilder;
-
-    if-eqz v8, :cond_6
-
-    move v11, v10
-
-    :goto_3
-    add-int/2addr v11, v7
-
-    invoke-direct {v6, v11}, Ljava/lang/StringBuilder;-><init>(I)V
+    move v9, v10
 
     .line 198
-    .local v6, "sb":Ljava/lang/StringBuilder;
+    .local v9, "willSendAllMessages":Z
+    :goto_2
+    new-instance v7, Ljava/lang/StringBuilder;
+
+    if-eqz v9, :cond_4
+
+    move v12, v11
+
+    :goto_3
+    add-int/2addr v12, v8
+
+    invoke-direct {v7, v12}, Ljava/lang/StringBuilder;-><init>(I)V
+
+    .line 201
+    .local v7, "sb":Ljava/lang/StringBuilder;
     const/4 v0, 0x0
 
     .local v0, "i":I
     :goto_4
-    if-lt v0, v4, :cond_7
+    if-ge v0, v5, :cond_6
+
+    .line 202
+    iget-object v12, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
+
+    invoke-virtual {v12}, Ljava/util/LinkedList;->removeFirst()Ljava/lang/Object;
+
+    move-result-object v3
+
+    check-cast v3, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+
+    .line 203
+    .restart local v3    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    if-eqz v9, :cond_5
+
+    add-int/lit8 v12, v0, 0x1
+
+    if-ne v12, v5, :cond_5
+
+    .line 204
+    invoke-virtual {v3, v7}, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->encodeAsJsMessage(Ljava/lang/StringBuilder;)V
+
+    .line 201
+    :goto_5
+    add-int/lit8 v0, v0, 0x1
+
+    goto :goto_4
+
+    .line 194
+    .end local v0    # "i":I
+    .end local v7    # "sb":Ljava/lang/StringBuilder;
+    .end local v9    # "willSendAllMessages":Z
+    .restart local v4    # "messageSize":I
+    :cond_2
+    add-int/2addr v8, v4
+
+    .line 195
+    add-int/lit8 v5, v5, 0x1
+
+    .line 196
+    goto :goto_1
+
+    .end local v3    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    .end local v4    # "messageSize":I
+    :cond_3
+    move v9, v11
+
+    .line 197
+    goto :goto_2
+
+    .line 198
+    .restart local v9    # "willSendAllMessages":Z
+    :cond_4
+    const/16 v12, 0x64
+
+    goto :goto_3
+
+    .line 206
+    .restart local v0    # "i":I
+    .restart local v3    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    .restart local v7    # "sb":Ljava/lang/StringBuilder;
+    :cond_5
+    const-string v12, "try{"
+
+    invoke-virtual {v7, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 207
+    invoke-virtual {v3, v7}, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->encodeAsJsMessage(Ljava/lang/StringBuilder;)V
 
     .line 208
-    if-nez v8, :cond_2
+    const-string v12, "}finally{"
 
-    .line 209
-    const-string v11, "window.setTimeout(function(){cordova.require(\'cordova/plugin/android/polling\').pollOnce();},0);"
+    invoke-virtual {v7, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v6, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    goto :goto_5
 
-    .line 211
-    :cond_2
-    if-eqz v8, :cond_9
-
-    move v0, v9
-
-    :goto_5
-    if-lt v0, v4, :cond_a
-
-    .line 214
-    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v5
-
-    .line 215
-    .local v5, "ret":Ljava/lang/String;
-    monitor-exit p0
-
-    goto :goto_0
-
-    .line 179
+    .line 219
     .end local v0    # "i":I
-    .end local v1    # "length":I
-    .end local v4    # "numMessagesToSend":I
-    .end local v5    # "ret":Ljava/lang/String;
-    .end local v6    # "sb":Ljava/lang/StringBuilder;
-    .end local v7    # "totalPayloadLen":I
-    .end local v8    # "willSendAllMessages":Z
+    .end local v1    # "i$":Ljava/util/Iterator;
+    .end local v2    # "length":I
+    .end local v3    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    .end local v5    # "numMessagesToSend":I
+    .end local v7    # "sb":Ljava/lang/StringBuilder;
+    .end local v8    # "totalPayloadLen":I
+    .end local v9    # "willSendAllMessages":Z
     :catchall_0
-    move-exception v9
+    move-exception v10
 
     monitor-exit p0
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    throw v9
+    throw v10
 
-    .line 186
-    .restart local v1    # "length":I
-    .restart local v4    # "numMessagesToSend":I
-    .restart local v7    # "totalPayloadLen":I
-    :cond_3
-    :try_start_1
-    invoke-interface {v11}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v2
-
-    check-cast v2, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
-
-    .line 187
-    .local v2, "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
-    invoke-virtual {v2}, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->calculateEncodedLength()I
-
-    move-result v12
-
-    add-int/lit8 v3, v12, 0x32
-
-    .line 188
-    .local v3, "messageSize":I
-    if-lez v4, :cond_4
-
-    add-int v12, v7, v3
-
-    sget v13, Lorg/apache/cordova/NativeToJsMessageQueue;->MAX_PAYLOAD_SIZE:I
-
-    if-le v12, v13, :cond_4
-
-    sget v12, Lorg/apache/cordova/NativeToJsMessageQueue;->MAX_PAYLOAD_SIZE:I
-
-    if-gtz v12, :cond_1
-
-    .line 191
-    :cond_4
-    add-int/2addr v7, v3
-
-    .line 192
-    add-int/lit8 v4, v4, 0x1
-
-    goto :goto_1
-
-    .end local v2    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
-    .end local v3    # "messageSize":I
-    :cond_5
-    move v8, v10
-
-    .line 194
-    goto :goto_2
-
-    .line 195
-    .restart local v8    # "willSendAllMessages":Z
-    :cond_6
-    const/16 v11, 0x64
-
-    goto :goto_3
-
-    .line 199
+    .line 211
     .restart local v0    # "i":I
-    .restart local v6    # "sb":Ljava/lang/StringBuilder;
+    .restart local v1    # "i$":Ljava/util/Iterator;
+    .restart local v2    # "length":I
+    .restart local v5    # "numMessagesToSend":I
+    .restart local v7    # "sb":Ljava/lang/StringBuilder;
+    .restart local v8    # "totalPayloadLen":I
+    .restart local v9    # "willSendAllMessages":Z
+    :cond_6
+    if-nez v9, :cond_7
+
+    .line 212
+    :try_start_1
+    const-string v12, "window.setTimeout(function(){cordova.require(\'cordova/plugin/android/polling\').pollOnce();},0);"
+
+    invoke-virtual {v7, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 214
     :cond_7
-    iget-object v11, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
+    if-eqz v9, :cond_8
 
-    invoke-virtual {v11}, Ljava/util/LinkedList;->removeFirst()Ljava/lang/Object;
+    move v0, v10
 
-    move-result-object v2
-
-    check-cast v2, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
-
-    .line 200
-    .restart local v2    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
-    if-eqz v8, :cond_8
-
-    add-int/lit8 v11, v0, 0x1
-
-    if-ne v11, v4, :cond_8
-
-    .line 201
-    invoke-virtual {v2, v6}, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->encodeAsJsMessage(Ljava/lang/StringBuilder;)V
-
-    .line 198
     :goto_6
+    if-ge v0, v5, :cond_9
+
+    .line 215
+    const/16 v10, 0x7d
+
+    invoke-virtual {v7, v10}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    .line 214
     add-int/lit8 v0, v0, 0x1
-
-    goto :goto_4
-
-    .line 203
-    :cond_8
-    const-string v11, "try{"
-
-    invoke-virtual {v6, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    .line 204
-    invoke-virtual {v2, v6}, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->encodeAsJsMessage(Ljava/lang/StringBuilder;)V
-
-    .line 205
-    const-string v11, "}finally{"
-
-    invoke-virtual {v6, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     goto :goto_6
 
-    .end local v2    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    :cond_8
+    move v0, v11
+
+    goto :goto_6
+
+    .line 217
     :cond_9
-    move v0, v10
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    .line 211
-    goto :goto_5
+    move-result-object v6
 
-    .line 212
-    :cond_a
-    const/16 v9, 0x7d
-
-    invoke-virtual {v6, v9}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+    .line 218
+    .local v6, "ret":Ljava/lang/String;
+    monitor-exit p0
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 211
-    add-int/lit8 v0, v0, 0x1
-
-    goto :goto_5
+    goto/16 :goto_0
 .end method
 
 
@@ -559,14 +583,14 @@
     .param p1, "statement"    # Ljava/lang/String;
 
     .prologue
-    .line 223
+    .line 226
     new-instance v0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
 
     invoke-direct {v0, p1}, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;-><init>(Ljava/lang/String;)V
 
     invoke-direct {p0, v0}, Lorg/apache/cordova/NativeToJsMessageQueue;->enqueueMessage(Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;)V
 
-    .line 224
+    .line 227
     return-void
 .end method
 
@@ -576,10 +600,10 @@
     .param p2, "callbackId"    # Ljava/lang/String;
 
     .prologue
-    .line 230
+    .line 233
     if-nez p2, :cond_1
 
-    .line 231
+    .line 234
     const-string v3, "JsMessageQueue"
 
     const-string v4, "Got plugin result with no callbackId"
@@ -590,12 +614,12 @@
 
     invoke-static {v3, v4, v5}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 249
+    .line 252
     :cond_0
     :goto_0
     return-void
 
-    .line 236
+    .line 239
     :cond_1
     invoke-virtual {p1}, Lorg/apache/cordova/PluginResult;->getStatus()I
 
@@ -611,32 +635,32 @@
 
     const/4 v2, 0x1
 
-    .line 237
+    .line 240
     .local v2, "noResult":Z
     :goto_1
     invoke-virtual {p1}, Lorg/apache/cordova/PluginResult;->getKeepCallback()Z
 
     move-result v0
 
-    .line 238
+    .line 241
     .local v0, "keepCallback":Z
     if-eqz v2, :cond_2
 
     if-nez v0, :cond_0
 
-    .line 241
+    .line 244
     :cond_2
     new-instance v1, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
 
     invoke-direct {v1, p1, p2}, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;-><init>(Lorg/apache/cordova/PluginResult;Ljava/lang/String;)V
 
-    .line 248
+    .line 251
     .local v1, "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
     invoke-direct {p0, v1}, Lorg/apache/cordova/NativeToJsMessageQueue;->enqueueMessage(Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;)V
 
     goto :goto_0
 
-    .line 236
+    .line 239
     .end local v0    # "keepCallback":Z
     .end local v1    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
     .end local v2    # "noResult":Z
@@ -646,14 +670,24 @@
     goto :goto_1
 .end method
 
-.method public getPaused()Z
+.method public isBridgeEnabled()Z
     .locals 1
 
     .prologue
-    .line 277
-    iget-boolean v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->paused:Z
+    .line 89
+    iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeBridgeMode:Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
+    if-eqz v0, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
     return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
 .end method
 
 .method public popAndEncode(Z)Ljava/lang/String;
@@ -661,215 +695,211 @@
     .param p1, "fromOnlineEvent"    # Z
 
     .prologue
+    const/4 v5, 0x0
+
     .line 144
     monitor-enter p0
 
     .line 145
     :try_start_0
-    iget-object v7, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->registeredListeners:[Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
+    iget-object v8, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeBridgeMode:Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
-    iget v8, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeListenerIndex:I
-
-    aget-object v7, v7, v8
-
-    invoke-virtual {v7, p1}, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;->notifyOfFlush(Z)V
+    if-nez v8, :cond_0
 
     .line 146
-    iget-object v7, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
-
-    invoke-virtual {v7}, Ljava/util/LinkedList;->isEmpty()Z
-
-    move-result v7
-
-    if-eqz v7, :cond_0
-
-    .line 147
     monitor-exit p0
 
-    const/4 v4, 0x0
-
-    .line 171
+    .line 174
     :goto_0
-    return-object v4
+    return-object v5
+
+    .line 148
+    :cond_0
+    iget-object v8, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeBridgeMode:Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
+
+    invoke-virtual {v8, p1}, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;->notifyOfFlush(Z)V
 
     .line 149
-    :cond_0
-    const/4 v6, 0x0
+    iget-object v8, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
 
-    .line 150
-    .local v6, "totalPayloadLen":I
-    const/4 v3, 0x0
-
-    .line 151
-    .local v3, "numMessagesToSend":I
-    iget-object v7, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
-
-    invoke-virtual {v7}, Ljava/util/LinkedList;->iterator()Ljava/util/Iterator;
-
-    move-result-object v7
-
-    :goto_1
-    invoke-interface {v7}, Ljava/util/Iterator;->hasNext()Z
+    invoke-virtual {v8}, Ljava/util/LinkedList;->isEmpty()Z
 
     move-result v8
 
-    if-nez v8, :cond_3
+    if-eqz v8, :cond_1
 
-    .line 160
-    :cond_1
-    new-instance v5, Ljava/lang/StringBuilder;
-
-    invoke-direct {v5, v6}, Ljava/lang/StringBuilder;-><init>(I)V
-
-    .line 161
-    .local v5, "sb":Ljava/lang/StringBuilder;
-    const/4 v0, 0x0
-
-    .local v0, "i":I
-    :goto_2
-    if-lt v0, v3, :cond_5
-
-    .line 166
-    iget-object v7, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
-
-    invoke-virtual {v7}, Ljava/util/LinkedList;->isEmpty()Z
-
-    move-result v7
-
-    if-nez v7, :cond_2
-
-    .line 168
-    const/16 v7, 0x2a
-
-    invoke-virtual {v5, v7}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    .line 170
-    :cond_2
-    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 171
-    .local v4, "ret":Ljava/lang/String;
+    .line 150
     monitor-exit p0
 
     goto :goto_0
 
-    .line 144
-    .end local v0    # "i":I
-    .end local v3    # "numMessagesToSend":I
-    .end local v4    # "ret":Ljava/lang/String;
-    .end local v5    # "sb":Ljava/lang/StringBuilder;
-    .end local v6    # "totalPayloadLen":I
+    .line 175
     :catchall_0
-    move-exception v7
+    move-exception v8
 
     monitor-exit p0
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    throw v7
+    throw v8
 
-    .line 151
-    .restart local v3    # "numMessagesToSend":I
-    .restart local v6    # "totalPayloadLen":I
-    :cond_3
+    .line 152
+    :cond_1
+    const/4 v7, 0x0
+
+    .line 153
+    .local v7, "totalPayloadLen":I
+    const/4 v4, 0x0
+
+    .line 154
+    .local v4, "numMessagesToSend":I
     :try_start_1
-    invoke-interface {v7}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    iget-object v8, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
+
+    invoke-virtual {v8}, Ljava/util/LinkedList;->iterator()Ljava/util/Iterator;
 
     move-result-object v1
 
-    check-cast v1, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    .local v1, "i$":Ljava/util/Iterator;
+    :goto_1
+    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
-    .line 152
-    .local v1, "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
-    invoke-direct {p0, v1}, Lorg/apache/cordova/NativeToJsMessageQueue;->calculatePackedMessageLength(Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;)I
+    move-result v8
 
-    move-result v2
+    if-eqz v8, :cond_2
 
-    .line 153
-    .local v2, "messageSize":I
-    if-lez v3, :cond_4
+    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    add-int v8, v6, v2
+    move-result-object v2
+
+    check-cast v2, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+
+    .line 155
+    .local v2, "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    invoke-direct {p0, v2}, Lorg/apache/cordova/NativeToJsMessageQueue;->calculatePackedMessageLength(Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;)I
+
+    move-result v3
+
+    .line 156
+    .local v3, "messageSize":I
+    if-lez v4, :cond_3
+
+    add-int v8, v7, v3
 
     sget v9, Lorg/apache/cordova/NativeToJsMessageQueue;->MAX_PAYLOAD_SIZE:I
 
-    if-le v8, v9, :cond_4
+    if-le v8, v9, :cond_3
 
     sget v8, Lorg/apache/cordova/NativeToJsMessageQueue;->MAX_PAYLOAD_SIZE:I
 
-    if-gtz v8, :cond_1
-
-    .line 156
-    :cond_4
-    add-int/2addr v6, v2
-
-    .line 157
-    add-int/lit8 v3, v3, 0x1
-
-    goto :goto_1
-
-    .line 162
-    .end local v1    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
-    .end local v2    # "messageSize":I
-    .restart local v0    # "i":I
-    .restart local v5    # "sb":Ljava/lang/StringBuilder;
-    :cond_5
-    iget-object v7, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
-
-    invoke-virtual {v7}, Ljava/util/LinkedList;->removeFirst()Ljava/lang/Object;
-
-    move-result-object v1
-
-    check-cast v1, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    if-lez v8, :cond_3
 
     .line 163
-    .restart local v1    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
-    invoke-direct {p0, v1, v5}, Lorg/apache/cordova/NativeToJsMessageQueue;->packMessage(Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;Ljava/lang/StringBuilder;)V
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    .end local v2    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    .end local v3    # "messageSize":I
+    :cond_2
+    new-instance v6, Ljava/lang/StringBuilder;
 
-    .line 161
+    invoke-direct {v6, v7}, Ljava/lang/StringBuilder;-><init>(I)V
+
+    .line 164
+    .local v6, "sb":Ljava/lang/StringBuilder;
+    const/4 v0, 0x0
+
+    .local v0, "i":I
+    :goto_2
+    if-ge v0, v4, :cond_4
+
+    .line 165
+    iget-object v8, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
+
+    invoke-virtual {v8}, Ljava/util/LinkedList;->removeFirst()Ljava/lang/Object;
+
+    move-result-object v2
+
+    check-cast v2, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+
+    .line 166
+    .restart local v2    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    invoke-direct {p0, v2, v6}, Lorg/apache/cordova/NativeToJsMessageQueue;->packMessage(Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;Ljava/lang/StringBuilder;)V
+
+    .line 164
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_2
+
+    .line 159
+    .end local v0    # "i":I
+    .end local v6    # "sb":Ljava/lang/StringBuilder;
+    .restart local v3    # "messageSize":I
+    :cond_3
+    add-int/2addr v7, v3
+
+    .line 160
+    add-int/lit8 v4, v4, 0x1
+
+    .line 161
+    goto :goto_1
+
+    .line 169
+    .end local v2    # "message":Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;
+    .end local v3    # "messageSize":I
+    .restart local v0    # "i":I
+    .restart local v6    # "sb":Ljava/lang/StringBuilder;
+    :cond_4
+    iget-object v8, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
+
+    invoke-virtual {v8}, Ljava/util/LinkedList;->isEmpty()Z
+
+    move-result v8
+
+    if-nez v8, :cond_5
+
+    .line 171
+    const/16 v8, 0x2a
+
+    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    .line 173
+    :cond_5
+    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v5
+
+    .line 174
+    .local v5, "ret":Ljava/lang/String;
+    monitor-exit p0
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    goto :goto_0
 .end method
 
 .method public reset()V
-    .locals 2
+    .locals 1
 
     .prologue
-    .line 118
+    .line 119
     monitor-enter p0
 
-    .line 119
+    .line 120
     :try_start_0
     iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
 
     invoke-virtual {v0}, Ljava/util/LinkedList;->clear()V
 
-    .line 120
-    const/4 v0, 0x2
+    .line 121
+    const/4 v0, -0x1
 
     invoke-virtual {p0, v0}, Lorg/apache/cordova/NativeToJsMessageQueue;->setBridgeMode(I)V
 
-    .line 121
-    iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->registeredListeners:[Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
-
-    iget v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeListenerIndex:I
-
-    aget-object v0, v0, v1
-
-    invoke-virtual {v0}, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;->reset()V
-
-    .line 118
+    .line 122
     monitor-exit p0
 
     .line 123
     return-void
 
-    .line 118
+    .line 122
     :catchall_0
     move-exception v0
 
@@ -885,8 +915,10 @@
     .param p1, "value"    # I
 
     .prologue
-    .line 97
-    if-ltz p1, :cond_0
+    .line 96
+    const/4 v1, -0x1
+
+    if-lt p1, v1, :cond_0
 
     iget-object v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->registeredListeners:[Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
@@ -894,15 +926,19 @@
 
     if-lt p1, v1, :cond_2
 
-    .line 98
+    .line 97
     :cond_0
     const-string v1, "JsMessageQueue"
 
     new-instance v2, Ljava/lang/StringBuilder;
 
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v3, "Invalid NativeToJsBridgeMode: "
 
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
 
     invoke-virtual {v2, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
@@ -914,50 +950,63 @@
 
     invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 112
+    .line 113
     :cond_1
     :goto_0
     return-void
 
-    .line 100
+    .line 99
     :cond_2
-    iget v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeListenerIndex:I
+    if-gez p1, :cond_4
 
-    if-eq p1, v1, :cond_1
+    const/4 v0, 0x0
+
+    .line 100
+    .local v0, "newMode":Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
+    :goto_1
+    iget-object v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeBridgeMode:Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
+
+    if-eq v0, v1, :cond_1
 
     .line 101
-    const-string v1, "JsMessageQueue"
+    const-string v2, "JsMessageQueue"
 
-    new-instance v2, Ljava/lang/StringBuilder;
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
     const-string v3, "Set native->JS mode to "
 
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v2, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    move-result-object v3
 
-    move-result-object v2
+    if-nez v0, :cond_5
 
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    const-string v1, "null"
 
-    move-result-object v2
+    :goto_2
+    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-static {v2, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 102
     monitor-enter p0
 
     .line 103
     :try_start_0
-    iput p1, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeListenerIndex:I
+    iput-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeBridgeMode:Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
     .line 104
-    iget-object v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->registeredListeners:[Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
-
-    aget-object v0, v1, p1
+    if-eqz v0, :cond_3
 
     .line 105
-    .local v0, "activeListener":Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
     invoke-virtual {v0}, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;->reset()V
 
     .line 106
@@ -976,13 +1025,12 @@
     .line 107
     invoke-virtual {v0}, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;->onNativeToJsMessageAvailable()V
 
-    .line 102
+    .line 110
     :cond_3
     monitor-exit p0
 
     goto :goto_0
 
-    .end local v0    # "activeListener":Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
     :catchall_0
     move-exception v1
 
@@ -991,6 +1039,28 @@
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     throw v1
+
+    .line 99
+    .end local v0    # "newMode":Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
+    :cond_4
+    iget-object v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->registeredListeners:[Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
+
+    aget-object v0, v1, p1
+
+    goto :goto_1
+
+    .line 101
+    .restart local v0    # "newMode":Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
+    :cond_5
+    invoke-virtual {v0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/Class;->getSimpleName()Ljava/lang/String;
+
+    move-result-object v1
+
+    goto :goto_2
 .end method
 
 .method public setPaused(Z)V
@@ -998,14 +1068,14 @@
     .param p1, "value"    # Z
 
     .prologue
-    .line 261
+    .line 268
     iget-boolean v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->paused:Z
 
     if-eqz v0, :cond_0
 
     if-eqz p1, :cond_0
 
-    .line 264
+    .line 271
     const-string v0, "JsMessageQueue"
 
     const-string v1, "nested call to setPaused detected."
@@ -1016,17 +1086,17 @@
 
     invoke-static {v0, v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 266
+    .line 273
     :cond_0
     iput-boolean p1, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->paused:Z
 
-    .line 267
+    .line 274
     if-nez p1, :cond_2
 
-    .line 268
+    .line 275
     monitor-enter p0
 
-    .line 269
+    .line 276
     :try_start_0
     iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->queue:Ljava/util/LinkedList;
 
@@ -1036,24 +1106,24 @@
 
     if-nez v0, :cond_1
 
-    .line 270
-    iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->registeredListeners:[Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
+    iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeBridgeMode:Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
-    iget v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeListenerIndex:I
+    if-eqz v0, :cond_1
 
-    aget-object v0, v0, v1
+    .line 277
+    iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue;->activeBridgeMode:Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;
 
     invoke-virtual {v0}, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;->onNativeToJsMessageAvailable()V
 
-    .line 268
+    .line 279
     :cond_1
     monitor-exit p0
 
-    .line 274
+    .line 281
     :cond_2
     return-void
 
-    .line 268
+    .line 279
     :catchall_0
     move-exception v0
 

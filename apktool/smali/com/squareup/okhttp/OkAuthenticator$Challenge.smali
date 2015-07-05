@@ -54,7 +54,6 @@
 
     move-object v0, p1
 
-    .line 74
     check-cast v0, Lcom/squareup/okhttp/OkAuthenticator$Challenge;
 
     iget-object v0, v0, Lcom/squareup/okhttp/OkAuthenticator$Challenge;->scheme:Ljava/lang/String;
@@ -67,7 +66,6 @@
 
     if-eqz v0, :cond_0
 
-    .line 75
     check-cast p1, Lcom/squareup/okhttp/OkAuthenticator$Challenge;
 
     .end local p1    # "o":Ljava/lang/Object;
@@ -81,7 +79,6 @@
 
     if-eqz v0, :cond_0
 
-    .line 73
     const/4 v0, 0x1
 
     :goto_0
@@ -144,13 +141,13 @@
     .line 83
     new-instance v0, Ljava/lang/StringBuilder;
 
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
     iget-object v1, p0, Lcom/squareup/okhttp/OkAuthenticator$Challenge;->scheme:Ljava/lang/String;
 
-    invoke-static {v1}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v0
 
     const-string v1, " realm=\""
 

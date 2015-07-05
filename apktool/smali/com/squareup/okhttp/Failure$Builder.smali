@@ -31,21 +31,23 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/Failure$Builder;)Lcom/squareup/okhttp/Request;
+.method static synthetic access$000(Lcom/squareup/okhttp/Failure$Builder;)Lcom/squareup/okhttp/Request;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/Failure$Builder;
 
     .prologue
-    .line 42
+    .line 41
     iget-object v0, p0, Lcom/squareup/okhttp/Failure$Builder;->request:Lcom/squareup/okhttp/Request;
 
     return-object v0
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/Failure$Builder;)Ljava/lang/Throwable;
+.method static synthetic access$100(Lcom/squareup/okhttp/Failure$Builder;)Ljava/lang/Throwable;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/Failure$Builder;
 
     .prologue
-    .line 43
+    .line 41
     iget-object v0, p0, Lcom/squareup/okhttp/Failure$Builder;->exception:Ljava/lang/Throwable;
 
     return-object v0
@@ -62,7 +64,7 @@
 
     const/4 v1, 0x0
 
-    invoke-direct {v0, p0, v1}, Lcom/squareup/okhttp/Failure;-><init>(Lcom/squareup/okhttp/Failure$Builder;Lcom/squareup/okhttp/Failure;)V
+    invoke-direct {v0, p0, v1}, Lcom/squareup/okhttp/Failure;-><init>(Lcom/squareup/okhttp/Failure$Builder;Lcom/squareup/okhttp/Failure$1;)V
 
     return-object v0
 .end method

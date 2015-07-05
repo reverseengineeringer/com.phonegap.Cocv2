@@ -9,9 +9,10 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
+        Lcom/squareup/okhttp/internal/http/HttpTransport$1;,
         Lcom/squareup/okhttp/internal/http/HttpTransport$ChunkedInputStream;,
-        Lcom/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream;,
         Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;,
+        Lcom/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream;,
         Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthOutputStream;
     }
 .end annotation
@@ -60,11 +61,13 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/internal/http/HttpEngine;Ljava/io/InputStream;)Z
+.method static synthetic access$200(Lcom/squareup/okhttp/internal/http/HttpEngine;Ljava/io/InputStream;)Z
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/HttpEngine;
+    .param p1, "x1"    # Ljava/io/InputStream;
 
     .prologue
-    .line 185
+    .line 32
     invoke-static {p0, p1}, Lcom/squareup/okhttp/internal/http/HttpTransport;->discardStream(Lcom/squareup/okhttp/internal/http/HttpEngine;Ljava/io/InputStream;)Z
 
     move-result v0
@@ -72,21 +75,23 @@
     return v0
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/internal/http/HttpTransport;)Lcom/squareup/okhttp/internal/http/HttpEngine;
+.method static synthetic access$300(Lcom/squareup/okhttp/internal/http/HttpTransport;)Lcom/squareup/okhttp/internal/http/HttpEngine;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/HttpTransport;
 
     .prologue
-    .line 42
+    .line 32
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpTransport;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
 
     return-object v0
 .end method
 
-.method static synthetic access$2(Lcom/squareup/okhttp/internal/http/HttpTransport;)Ljava/io/InputStream;
+.method static synthetic access$400(Lcom/squareup/okhttp/internal/http/HttpTransport;)Ljava/io/InputStream;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/HttpTransport;
 
     .prologue
-    .line 43
+    .line 32
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpTransport;->socketIn:Ljava/io/InputStream;
 
     return-object v0
@@ -142,23 +147,22 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
+    .line 195
+    const/4 v5, 0x1
+
     .line 197
     :try_start_2
     invoke-virtual {v2, v3}, Ljava/net/Socket;->setSoTimeout(I)V
 
-    .line 195
-    const/4 v4, 0x1
+    move v4, v5
 
     goto :goto_0
 
-    .line 196
     :catchall_0
     move-exception v5
 
-    .line 197
     invoke-virtual {v2, v3}, Ljava/net/Socket;->setSoTimeout(I)V
 
-    .line 198
     throw v5
     :try_end_2
     .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_0
@@ -176,7 +180,7 @@
 
 # virtual methods
 .method public createRequestBody()Ljava/io/OutputStream;
-    .locals 11
+    .locals 12
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/io/IOException;
@@ -184,7 +188,7 @@
     .end annotation
 
     .prologue
-    const-wide/16 v9, -0x1
+    const-wide/16 v10, -0x1
 
     const/4 v8, 0x0
 
@@ -201,7 +205,6 @@
     .local v1, "chunked":Z
     if-nez v1, :cond_0
 
-    .line 64
     iget-object v6, p0, Lcom/squareup/okhttp/internal/http/HttpTransport;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
 
     iget-object v6, v6, Lcom/squareup/okhttp/internal/http/HttpEngine;->policy:Lcom/squareup/okhttp/internal/http/Policy;
@@ -212,7 +215,6 @@
 
     if-lez v6, :cond_0
 
-    .line 65
     iget-object v6, p0, Lcom/squareup/okhttp/internal/http/HttpTransport;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
 
     iget-object v6, v6, Lcom/squareup/okhttp/internal/http/HttpEngine;->connection:Lcom/squareup/okhttp/Connection;
@@ -264,7 +266,7 @@
 
     iget-object v7, p0, Lcom/squareup/okhttp/internal/http/HttpTransport;->requestOut:Ljava/io/OutputStream;
 
-    invoke-direct {v6, v7, v0, v8}, Lcom/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream;-><init>(Ljava/io/OutputStream;ILcom/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream;)V
+    invoke-direct {v6, v7, v0, v8}, Lcom/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream;-><init>(Ljava/io/OutputStream;ILcom/squareup/okhttp/internal/http/HttpTransport$1;)V
 
     .line 103
     .end local v0    # "chunkLength":I
@@ -283,7 +285,7 @@
 
     .line 82
     .local v4, "fixedContentLength":J
-    cmp-long v6, v4, v9
+    cmp-long v6, v4, v10
 
     if-eqz v6, :cond_3
 
@@ -302,7 +304,7 @@
 
     iget-object v7, p0, Lcom/squareup/okhttp/internal/http/HttpTransport;->requestOut:Ljava/io/OutputStream;
 
-    invoke-direct {v6, v7, v4, v5, v8}, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthOutputStream;-><init>(Ljava/io/OutputStream;JLcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthOutputStream;)V
+    invoke-direct {v6, v7, v4, v5, v8}, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthOutputStream;-><init>(Ljava/io/OutputStream;JLcom/squareup/okhttp/internal/http/HttpTransport$1;)V
 
     goto :goto_0
 
@@ -335,7 +337,7 @@
 
     .line 95
     :cond_4
-    cmp-long v6, v2, v9
+    cmp-long v6, v2, v10
 
     if-eqz v6, :cond_5
 
@@ -463,7 +465,6 @@
 
     iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpTransport;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
 
-    .line 215
     iget-object v2, p0, Lcom/squareup/okhttp/internal/http/HttpTransport;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
 
     iget-object v2, v2, Lcom/squareup/okhttp/internal/http/HttpEngine;->responseHeaders:Lcom/squareup/okhttp/internal/http/ResponseHeaders;
@@ -474,7 +475,6 @@
 
     move-object v2, p1
 
-    .line 214
     invoke-direct/range {v0 .. v5}, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;-><init>(Ljava/io/InputStream;Ljava/net/CacheRequest;Lcom/squareup/okhttp/internal/http/HttpEngine;J)V
 
     goto :goto_0

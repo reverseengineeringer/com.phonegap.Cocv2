@@ -6,10 +6,11 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Lcom/squareup/okhttp/internal/Platform$Android23;,
-        Lcom/squareup/okhttp/internal/Platform$Android41;,
+        Lcom/squareup/okhttp/internal/Platform$1;,
+        Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;,
         Lcom/squareup/okhttp/internal/Platform$JdkWithJettyNpnPlatform;,
-        Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;
+        Lcom/squareup/okhttp/internal/Platform$Android41;,
+        Lcom/squareup/okhttp/internal/Platform$Android23;
     }
 .end annotation
 
@@ -53,310 +54,292 @@
     .line 50
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
+    .line 332
     return-void
 .end method
 
 .method private static findPlatform()Lcom/squareup/okhttp/internal/Platform;
-    .locals 22
+    .locals 17
 
     .prologue
     .line 145
     :try_start_0
-    const-string v2, "com.android.org.conscrypt.OpenSSLSocketImpl"
+    const-string v0, "com.android.org.conscrypt.OpenSSLSocketImpl"
 
-    invoke-static {v2}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
+    invoke-static {v0}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
     :try_end_0
     .catch Ljava/lang/ClassNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
-    .catch Ljava/lang/NoSuchMethodException; {:try_start_0 .. :try_end_0} :catch_2
+    .catch Ljava/lang/NoSuchMethodException; {:try_start_0 .. :try_end_0} :catch_5
+
+    move-result-object v1
+
+    .line 152
+    .local v1, "openSslSocketClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    :goto_0
+    :try_start_1
+    const-string v0, "setUseSessionTickets"
+
+    const/4 v6, 0x1
+
+    new-array v6, v6, [Ljava/lang/Class;
+
+    const/4 v15, 0x0
+
+    sget-object v16, Ljava/lang/Boolean;->TYPE:Ljava/lang/Class;
+
+    aput-object v16, v6, v15
+
+    invoke-virtual {v1, v0, v6}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+
+    move-result-object v2
+
+    .line 153
+    .local v2, "setUseSessionTickets":Ljava/lang/reflect/Method;
+    const-string v0, "setHostname"
+
+    const/4 v6, 0x1
+
+    new-array v6, v6, [Ljava/lang/Class;
+
+    const/4 v15, 0x0
+
+    const-class v16, Ljava/lang/String;
+
+    aput-object v16, v6, v15
+
+    invoke-virtual {v1, v0, v6}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+    :try_end_1
+    .catch Ljava/lang/ClassNotFoundException; {:try_start_1 .. :try_end_1} :catch_2
+    .catch Ljava/lang/NoSuchMethodException; {:try_start_1 .. :try_end_1} :catch_5
 
     move-result-object v3
 
-    .line 152
-    .local v3, "openSslSocketClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
-    :goto_0
-    :try_start_1
-    const-string v2, "setUseSessionTickets"
+    .line 157
+    .local v3, "setHostname":Ljava/lang/reflect/Method;
+    :try_start_2
+    const-string v0, "setNpnProtocols"
 
-    const/4 v8, 0x1
+    const/4 v6, 0x1
 
-    new-array v8, v8, [Ljava/lang/Class;
+    new-array v6, v6, [Ljava/lang/Class;
 
-    const/4 v9, 0x0
+    const/4 v15, 0x0
 
-    sget-object v10, Ljava/lang/Boolean;->TYPE:Ljava/lang/Class;
+    const-class v16, [B
 
-    aput-object v10, v8, v9
+    aput-object v16, v6, v15
 
-    invoke-virtual {v3, v2, v8}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+    invoke-virtual {v1, v0, v6}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
 
     move-result-object v4
 
-    .line 153
-    .local v4, "setUseSessionTickets":Ljava/lang/reflect/Method;
-    const-string v2, "setHostname"
+    .line 158
+    .local v4, "setNpnProtocols":Ljava/lang/reflect/Method;
+    const-string v0, "getNpnSelectedProtocol"
 
-    const/4 v8, 0x1
+    const/4 v6, 0x0
 
-    new-array v8, v8, [Ljava/lang/Class;
+    new-array v6, v6, [Ljava/lang/Class;
 
-    const/4 v9, 0x0
-
-    const-class v10, Ljava/lang/String;
-
-    aput-object v10, v8, v9
-
-    invoke-virtual {v3, v2, v8}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
-    :try_end_1
-    .catch Ljava/lang/ClassNotFoundException; {:try_start_1 .. :try_end_1} :catch_5
-    .catch Ljava/lang/NoSuchMethodException; {:try_start_1 .. :try_end_1} :catch_2
+    invoke-virtual {v1, v0, v6}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
 
     move-result-object v5
 
-    .line 157
-    .local v5, "setHostname":Ljava/lang/reflect/Method;
-    :try_start_2
-    const-string v2, "setNpnProtocols"
-
-    const/4 v8, 0x1
-
-    new-array v8, v8, [Ljava/lang/Class;
-
-    const/4 v9, 0x0
-
-    const-class v10, [B
-
-    aput-object v10, v8, v9
-
-    invoke-virtual {v3, v2, v8}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
-
-    move-result-object v6
-
-    .line 158
-    .local v6, "setNpnProtocols":Ljava/lang/reflect/Method;
-    const-string v2, "getNpnSelectedProtocol"
-
-    const/4 v8, 0x0
-
-    new-array v8, v8, [Ljava/lang/Class;
-
-    invoke-virtual {v3, v2, v8}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
-
-    move-result-object v7
-
     .line 159
-    .local v7, "getNpnSelectedProtocol":Ljava/lang/reflect/Method;
-    new-instance v2, Lcom/squareup/okhttp/internal/Platform$Android41;
+    .local v5, "getNpnSelectedProtocol":Ljava/lang/reflect/Method;
+    new-instance v0, Lcom/squareup/okhttp/internal/Platform$Android41;
 
-    const/4 v8, 0x0
+    const/4 v6, 0x0
 
-    invoke-direct/range {v2 .. v8}, Lcom/squareup/okhttp/internal/Platform$Android41;-><init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lcom/squareup/okhttp/internal/Platform$Android41;)V
+    invoke-direct/range {v0 .. v6}, Lcom/squareup/okhttp/internal/Platform$Android41;-><init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lcom/squareup/okhttp/internal/Platform$1;)V
     :try_end_2
     .catch Ljava/lang/NoSuchMethodException; {:try_start_2 .. :try_end_2} :catch_1
-    .catch Ljava/lang/ClassNotFoundException; {:try_start_2 .. :try_end_2} :catch_5
+    .catch Ljava/lang/ClassNotFoundException; {:try_start_2 .. :try_end_2} :catch_2
 
     .line 187
-    .end local v3    # "openSslSocketClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
-    .end local v4    # "setUseSessionTickets":Ljava/lang/reflect/Method;
-    .end local v5    # "setHostname":Ljava/lang/reflect/Method;
-    .end local v6    # "setNpnProtocols":Ljava/lang/reflect/Method;
-    .end local v7    # "getNpnSelectedProtocol":Ljava/lang/reflect/Method;
-    .local v18, "npnClassName":Ljava/lang/String;
+    .end local v1    # "openSslSocketClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    .end local v2    # "setUseSessionTickets":Ljava/lang/reflect/Method;
+    .end local v3    # "setHostname":Ljava/lang/reflect/Method;
+    .end local v4    # "setNpnProtocols":Ljava/lang/reflect/Method;
+    .end local v5    # "getNpnSelectedProtocol":Ljava/lang/reflect/Method;
+    .local v11, "npnClassName":Ljava/lang/String;
     :goto_1
-    return-object v2
+    return-object v0
 
     .line 146
-    .end local v18    # "npnClassName":Ljava/lang/String;
+    .end local v11    # "npnClassName":Ljava/lang/String;
     :catch_0
-    move-exception v16
-
-    .line 149
-    .local v16, "ignored":Ljava/lang/ClassNotFoundException;
-    :try_start_3
-    const-string v2, "org.apache.harmony.xnet.provider.jsse.OpenSSLSocketImpl"
+    move-exception v9
 
     .line 148
-    invoke-static {v2}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
+    .local v9, "ignored":Ljava/lang/ClassNotFoundException;
+    :try_start_3
+    const-string v0, "org.apache.harmony.xnet.provider.jsse.OpenSSLSocketImpl"
 
-    move-result-object v3
+    invoke-static {v0}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
 
-    .restart local v3    # "openSslSocketClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    move-result-object v1
+
+    .restart local v1    # "openSslSocketClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
     goto :goto_0
 
     .line 161
-    .end local v16    # "ignored":Ljava/lang/ClassNotFoundException;
-    .restart local v4    # "setUseSessionTickets":Ljava/lang/reflect/Method;
-    .restart local v5    # "setHostname":Ljava/lang/reflect/Method;
+    .end local v9    # "ignored":Ljava/lang/ClassNotFoundException;
+    .restart local v2    # "setUseSessionTickets":Ljava/lang/reflect/Method;
+    .restart local v3    # "setHostname":Ljava/lang/reflect/Method;
     :catch_1
-    move-exception v16
+    move-exception v9
 
     .line 162
-    .local v16, "ignored":Ljava/lang/NoSuchMethodException;
-    new-instance v8, Lcom/squareup/okhttp/internal/Platform$Android23;
+    .local v9, "ignored":Ljava/lang/NoSuchMethodException;
+    new-instance v0, Lcom/squareup/okhttp/internal/Platform$Android23;
 
-    const/4 v12, 0x0
+    const/4 v6, 0x0
 
-    const/4 v13, 0x0
-
-    move-object v9, v3
-
-    move-object v10, v4
-
-    move-object v11, v5
-
-    invoke-direct/range {v8 .. v13}, Lcom/squareup/okhttp/internal/Platform$Android23;-><init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lcom/squareup/okhttp/internal/Platform$Android23;Lcom/squareup/okhttp/internal/Platform$Android23;)V
+    invoke-direct {v0, v1, v2, v3, v6}, Lcom/squareup/okhttp/internal/Platform$Android23;-><init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lcom/squareup/okhttp/internal/Platform$1;)V
     :try_end_3
-    .catch Ljava/lang/ClassNotFoundException; {:try_start_3 .. :try_end_3} :catch_5
-    .catch Ljava/lang/NoSuchMethodException; {:try_start_3 .. :try_end_3} :catch_2
-
-    move-object v2, v8
+    .catch Ljava/lang/ClassNotFoundException; {:try_start_3 .. :try_end_3} :catch_2
+    .catch Ljava/lang/NoSuchMethodException; {:try_start_3 .. :try_end_3} :catch_5
 
     goto :goto_1
 
-    .line 166
-    .end local v3    # "openSslSocketClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
-    .end local v4    # "setUseSessionTickets":Ljava/lang/reflect/Method;
-    .end local v5    # "setHostname":Ljava/lang/reflect/Method;
-    .local v16, "ignored":Ljava/lang/ClassNotFoundException;
+    .line 164
+    .end local v1    # "openSslSocketClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    .end local v2    # "setUseSessionTickets":Ljava/lang/reflect/Method;
+    .end local v3    # "setHostname":Ljava/lang/reflect/Method;
+    .local v9, "ignored":Ljava/lang/ClassNotFoundException;
     :catch_2
-    move-exception v2
+    move-exception v0
 
     .line 172
     :goto_2
     :try_start_4
-    const-string v18, "org.eclipse.jetty.npn.NextProtoNego"
+    const-string v11, "org.eclipse.jetty.npn.NextProtoNego"
 
     .line 173
-    .restart local v18    # "npnClassName":Ljava/lang/String;
-    invoke-static/range {v18 .. v18}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
+    .restart local v11    # "npnClassName":Ljava/lang/String;
+    invoke-static {v11}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
 
-    .end local v16    # "ignored":Ljava/lang/ClassNotFoundException;
-    move-result-object v17
+    .end local v9    # "ignored":Ljava/lang/ClassNotFoundException;
+    move-result-object v10
 
     .line 174
-    .local v17, "nextProtoNegoClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
-    new-instance v2, Ljava/lang/StringBuilder;
+    .local v10, "nextProtoNegoClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    new-instance v0, Ljava/lang/StringBuilder;
 
-    invoke-static/range {v18 .. v18}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
 
-    move-result-object v8
+    invoke-virtual {v0, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-direct {v2, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v0
 
-    const-string v8, "$Provider"
+    const-string v6, "$Provider"
 
-    invoke-virtual {v2, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v0, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v2
+    move-result-object v0
 
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v2
+    move-result-object v0
 
-    invoke-static {v2}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
+    invoke-static {v0}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
 
-    move-result-object v19
+    move-result-object v12
 
     .line 175
-    .local v19, "providerClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
-    new-instance v2, Ljava/lang/StringBuilder;
+    .local v12, "providerClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    new-instance v0, Ljava/lang/StringBuilder;
 
-    invoke-static/range {v18 .. v18}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
 
-    move-result-object v8
+    invoke-virtual {v0, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-direct {v2, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v0
 
-    const-string v8, "$ClientProvider"
+    const-string v6, "$ClientProvider"
 
-    invoke-virtual {v2, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v0, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v2
+    move-result-object v0
 
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v2
+    move-result-object v0
 
-    invoke-static {v2}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
+    invoke-static {v0}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
+
+    move-result-object v7
+
+    .line 176
+    .local v7, "clientProviderClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    invoke-virtual {v0, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const-string v6, "$ServerProvider"
+
+    invoke-virtual {v0, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {v0}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
 
     move-result-object v14
 
-    .line 176
-    .local v14, "clientProviderClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
-    new-instance v2, Ljava/lang/StringBuilder;
+    .line 177
+    .local v14, "serverProviderClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    const-string v0, "put"
 
-    invoke-static/range {v18 .. v18}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    const/4 v6, 0x2
+
+    new-array v6, v6, [Ljava/lang/Class;
+
+    const/4 v15, 0x0
+
+    const-class v16, Ljavax/net/ssl/SSLSocket;
+
+    aput-object v16, v6, v15
+
+    const/4 v15, 0x1
+
+    aput-object v12, v6, v15
+
+    invoke-virtual {v10, v0, v6}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+
+    move-result-object v13
+
+    .line 178
+    .local v13, "putMethod":Ljava/lang/reflect/Method;
+    const-string v0, "get"
+
+    const/4 v6, 0x1
+
+    new-array v6, v6, [Ljava/lang/Class;
+
+    const/4 v15, 0x0
+
+    const-class v16, Ljavax/net/ssl/SSLSocket;
+
+    aput-object v16, v6, v15
+
+    invoke-virtual {v10, v0, v6}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
 
     move-result-object v8
 
-    invoke-direct {v2, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    const-string v8, "$ServerProvider"
-
-    invoke-virtual {v2, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v2
-
-    invoke-static {v2}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
-
-    move-result-object v21
-
-    .line 177
-    .local v21, "serverProviderClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
-    const-string v2, "put"
-
-    const/4 v8, 0x2
-
-    new-array v8, v8, [Ljava/lang/Class;
-
-    const/4 v9, 0x0
-
-    const-class v10, Ljavax/net/ssl/SSLSocket;
-
-    aput-object v10, v8, v9
-
-    const/4 v9, 0x1
-
-    aput-object v19, v8, v9
-
-    move-object/from16 v0, v17
-
-    invoke-virtual {v0, v2, v8}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
-
-    move-result-object v20
-
-    .line 178
-    .local v20, "putMethod":Ljava/lang/reflect/Method;
-    const-string v2, "get"
-
-    const/4 v8, 0x1
-
-    new-array v8, v8, [Ljava/lang/Class;
-
-    const/4 v9, 0x0
-
-    const-class v10, Ljavax/net/ssl/SSLSocket;
-
-    aput-object v10, v8, v9
-
-    move-object/from16 v0, v17
-
-    invoke-virtual {v0, v2, v8}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
-
-    move-result-object v15
-
     .line 179
-    .local v15, "getMethod":Ljava/lang/reflect/Method;
-    new-instance v2, Lcom/squareup/okhttp/internal/Platform$JdkWithJettyNpnPlatform;
+    .local v8, "getMethod":Ljava/lang/reflect/Method;
+    new-instance v0, Lcom/squareup/okhttp/internal/Platform$JdkWithJettyNpnPlatform;
 
-    move-object/from16 v0, v20
-
-    move-object/from16 v1, v21
-
-    invoke-direct {v2, v0, v15, v14, v1}, Lcom/squareup/okhttp/internal/Platform$JdkWithJettyNpnPlatform;-><init>(Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Ljava/lang/Class;Ljava/lang/Class;)V
+    invoke-direct {v0, v13, v8, v7, v14}, Lcom/squareup/okhttp/internal/Platform$JdkWithJettyNpnPlatform;-><init>(Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Ljava/lang/Class;Ljava/lang/Class;)V
     :try_end_4
     .catch Ljava/lang/ClassNotFoundException; {:try_start_4 .. :try_end_4} :catch_3
     .catch Ljava/lang/NoSuchMethodException; {:try_start_4 .. :try_end_4} :catch_4
@@ -364,38 +347,38 @@
     goto/16 :goto_1
 
     .line 181
-    .end local v14    # "clientProviderClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
-    .end local v15    # "getMethod":Ljava/lang/reflect/Method;
-    .end local v17    # "nextProtoNegoClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
-    .end local v19    # "providerClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
-    .end local v20    # "putMethod":Ljava/lang/reflect/Method;
-    .end local v21    # "serverProviderClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
-    .restart local v16    # "ignored":Ljava/lang/ClassNotFoundException;
+    .end local v7    # "clientProviderClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    .end local v8    # "getMethod":Ljava/lang/reflect/Method;
+    .end local v10    # "nextProtoNegoClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    .end local v12    # "providerClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    .end local v13    # "putMethod":Ljava/lang/reflect/Method;
+    .end local v14    # "serverProviderClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    .restart local v9    # "ignored":Ljava/lang/ClassNotFoundException;
     :catch_3
-    move-exception v2
+    move-exception v0
 
     .line 187
-    .end local v16    # "ignored":Ljava/lang/ClassNotFoundException;
+    .end local v9    # "ignored":Ljava/lang/ClassNotFoundException;
     :goto_3
-    new-instance v2, Lcom/squareup/okhttp/internal/Platform;
+    new-instance v0, Lcom/squareup/okhttp/internal/Platform;
 
-    invoke-direct {v2}, Lcom/squareup/okhttp/internal/Platform;-><init>()V
+    invoke-direct {v0}, Lcom/squareup/okhttp/internal/Platform;-><init>()V
 
     goto/16 :goto_1
 
     .line 183
-    .restart local v16    # "ignored":Ljava/lang/ClassNotFoundException;
+    .restart local v9    # "ignored":Ljava/lang/ClassNotFoundException;
     :catch_4
-    move-exception v2
+    move-exception v0
 
     goto :goto_3
 
-    .line 164
-    .end local v18    # "npnClassName":Ljava/lang/String;
+    .line 166
+    .end local v11    # "npnClassName":Ljava/lang/String;
     :catch_5
-    move-exception v2
+    move-exception v0
 
-    goto/16 :goto_2
+    goto :goto_2
 .end method
 
 .method public static get()Lcom/squareup/okhttp/internal/Platform;
@@ -498,7 +481,6 @@
 
     const/4 v4, 0x0
 
-    .line 122
     const-class v5, Ljava/io/OutputStream;
 
     aput-object v5, v3, v4
@@ -515,7 +497,6 @@
 
     aput-object v5, v3, v4
 
-    .line 121
     invoke-virtual {v2, v3}, Ljava/lang/Class;->getConstructor([Ljava/lang/Class;)Ljava/lang/reflect/Constructor;
 
     move-result-object v0
@@ -598,7 +579,6 @@
     :goto_0
     throw v2
 
-    .line 129
     :cond_1
     new-instance v2, Ljava/lang/RuntimeException;
 

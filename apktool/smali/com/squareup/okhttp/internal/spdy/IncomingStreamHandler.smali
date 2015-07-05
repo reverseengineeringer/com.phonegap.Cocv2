@@ -19,7 +19,6 @@
 
     sput-object v0, Lcom/squareup/okhttp/internal/spdy/IncomingStreamHandler;->REFUSE_INCOMING_STREAMS:Lcom/squareup/okhttp/internal/spdy/IncomingStreamHandler;
 
-    .line 27
     return-void
 .end method
 

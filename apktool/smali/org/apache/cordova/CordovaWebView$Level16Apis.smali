@@ -23,7 +23,7 @@
     .locals 0
 
     .prologue
-    .line 905
+    .line 828
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -34,11 +34,11 @@
     .param p0, "settings"    # Landroid/webkit/WebSettings;
 
     .prologue
-    .line 907
+    .line 830
     const/4 v0, 0x1
 
     invoke-virtual {p0, v0}, Landroid/webkit/WebSettings;->setAllowUniversalAccessFromFileURLs(Z)V
 
-    .line 908
+    .line 831
     return-void
 .end method

@@ -26,10 +26,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 297
     iput-object p1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode$1;->this$1:Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;
 
-    .line 294
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -41,41 +40,39 @@
     .locals 4
 
     .prologue
-    .line 296
+    .line 299
     iget-object v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode$1;->this$1:Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;
 
-    # getter for: Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;->this$0:Lorg/apache/cordova/NativeToJsMessageQueue;
-    invoke-static {v1}, Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;->access$1(Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;)Lorg/apache/cordova/NativeToJsMessageQueue;
-
-    move-result-object v1
+    iget-object v1, v1, Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;->this$0:Lorg/apache/cordova/NativeToJsMessageQueue;
 
     # invokes: Lorg/apache/cordova/NativeToJsMessageQueue;->popAndEncodeAsJs()Ljava/lang/String;
-    invoke-static {v1}, Lorg/apache/cordova/NativeToJsMessageQueue;->access$0(Lorg/apache/cordova/NativeToJsMessageQueue;)Ljava/lang/String;
+    invoke-static {v1}, Lorg/apache/cordova/NativeToJsMessageQueue;->access$500(Lorg/apache/cordova/NativeToJsMessageQueue;)Ljava/lang/String;
 
     move-result-object v0
 
-    .line 297
+    .line 300
     .local v0, "js":Ljava/lang/String;
     if-eqz v0, :cond_0
 
-    .line 298
+    .line 301
     iget-object v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode$1;->this$1:Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;
 
-    # getter for: Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;->this$0:Lorg/apache/cordova/NativeToJsMessageQueue;
-    invoke-static {v1}, Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;->access$1(Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;)Lorg/apache/cordova/NativeToJsMessageQueue;
-
-    move-result-object v1
+    iget-object v1, v1, Lorg/apache/cordova/NativeToJsMessageQueue$LoadUrlBridgeMode;->this$0:Lorg/apache/cordova/NativeToJsMessageQueue;
 
     # getter for: Lorg/apache/cordova/NativeToJsMessageQueue;->webView:Lorg/apache/cordova/CordovaWebView;
-    invoke-static {v1}, Lorg/apache/cordova/NativeToJsMessageQueue;->access$1(Lorg/apache/cordova/NativeToJsMessageQueue;)Lorg/apache/cordova/CordovaWebView;
+    invoke-static {v1}, Lorg/apache/cordova/NativeToJsMessageQueue;->access$600(Lorg/apache/cordova/NativeToJsMessageQueue;)Lorg/apache/cordova/CordovaWebView;
 
     move-result-object v1
 
     new-instance v2, Ljava/lang/StringBuilder;
 
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v3, "javascript:"
 
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
 
     invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -87,7 +84,7 @@
 
     invoke-virtual {v1, v2}, Lorg/apache/cordova/CordovaWebView;->loadUrlNow(Ljava/lang/String;)V
 
-    .line 300
+    .line 303
     :cond_0
     return-void
 .end method

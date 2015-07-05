@@ -23,10 +23,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 63
     iput-object p1, p0, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader$2;->this$0:Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;
 
-    .line 63
     invoke-direct {p0}, Ljava/util/zip/Inflater;-><init>()V
 
     return-void

@@ -85,9 +85,24 @@
 
     .local v1, "i":I
     :goto_0
-    if-lt v1, v4, :cond_0
+    if-ge v1, v4, :cond_0
+
+    .line 494
+    iget-object v5, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->varyHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
+
+    invoke-virtual {v2}, Lcom/squareup/okhttp/internal/StrictLineReader;->readLine()Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-virtual {v5, v6}, Lcom/squareup/okhttp/internal/http/RawHeaders;->addLine(Ljava/lang/String;)V
+
+    .line 493
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_0
 
     .line 497
+    :cond_0
     new-instance v5, Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     invoke-direct {v5}, Lcom/squareup/okhttp/internal/http/RawHeaders;-><init>()V
@@ -113,9 +128,24 @@
     const/4 v1, 0x0
 
     :goto_1
-    if-lt v1, v3, :cond_1
+    if-ge v1, v3, :cond_1
+
+    .line 501
+    iget-object v5, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->responseHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
+
+    invoke-virtual {v2}, Lcom/squareup/okhttp/internal/StrictLineReader;->readLine()Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-virtual {v5, v6}, Lcom/squareup/okhttp/internal/http/RawHeaders;->addLine(Ljava/lang/String;)V
+
+    .line 500
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_1
 
     .line 504
+    :cond_1
     invoke-direct {p0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->isHttps()Z
 
     move-result v5
@@ -140,9 +170,13 @@
 
     new-instance v6, Ljava/lang/StringBuilder;
 
+    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v7, "expected \"\" but was \""
 
-    invoke-direct {v6, v7}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
 
     invoke-virtual {v6, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -164,7 +198,7 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 517
+    .line 518
     .end local v0    # "blank":Ljava/lang/String;
     .end local v1    # "i":I
     .end local v2    # "reader":Lcom/squareup/okhttp/internal/StrictLineReader;
@@ -173,50 +207,18 @@
     :catchall_0
     move-exception v5
 
-    .line 518
     invoke-virtual {p1}, Ljava/io/InputStream;->close()V
 
-    .line 519
     throw v5
-
-    .line 494
-    .restart local v1    # "i":I
-    .restart local v2    # "reader":Lcom/squareup/okhttp/internal/StrictLineReader;
-    .restart local v4    # "varyRequestHeaderLineCount":I
-    :cond_0
-    :try_start_1
-    iget-object v5, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->varyHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
-
-    invoke-virtual {v2}, Lcom/squareup/okhttp/internal/StrictLineReader;->readLine()Ljava/lang/String;
-
-    move-result-object v6
-
-    invoke-virtual {v5, v6}, Lcom/squareup/okhttp/internal/http/RawHeaders;->addLine(Ljava/lang/String;)V
-
-    .line 493
-    add-int/lit8 v1, v1, 0x1
-
-    goto :goto_0
-
-    .line 501
-    .restart local v3    # "responseHeaderLineCount":I
-    :cond_1
-    iget-object v5, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->responseHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
-
-    invoke-virtual {v2}, Lcom/squareup/okhttp/internal/StrictLineReader;->readLine()Ljava/lang/String;
-
-    move-result-object v6
-
-    invoke-virtual {v5, v6}, Lcom/squareup/okhttp/internal/http/RawHeaders;->addLine(Ljava/lang/String;)V
-
-    .line 500
-    add-int/lit8 v1, v1, 0x1
-
-    goto :goto_1
 
     .line 509
     .restart local v0    # "blank":Ljava/lang/String;
+    .restart local v1    # "i":I
+    .restart local v2    # "reader":Lcom/squareup/okhttp/internal/StrictLineReader;
+    .restart local v3    # "responseHeaderLineCount":I
+    .restart local v4    # "varyRequestHeaderLineCount":I
     :cond_2
+    :try_start_1
     invoke-virtual {v2}, Lcom/squareup/okhttp/internal/StrictLineReader;->readLine()Ljava/lang/String;
 
     move-result-object v5
@@ -283,7 +285,7 @@
     .prologue
     const/4 v4, 0x0
 
-    .line 522
+    .line 523
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     .line 524
@@ -392,51 +394,56 @@
     goto :goto_0
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/HttpResponseCache$Entry;)Lcom/squareup/okhttp/internal/http/RawHeaders;
+.method static synthetic access$1100(Lcom/squareup/okhttp/HttpResponseCache$Entry;)Lcom/squareup/okhttp/internal/http/RawHeaders;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     .prologue
-    .line 432
+    .line 428
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->responseHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     return-object v0
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/HttpResponseCache$Entry;)Ljava/lang/String;
+.method static synthetic access$1200(Lcom/squareup/okhttp/HttpResponseCache$Entry;)Ljava/lang/String;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     .prologue
-    .line 433
+    .line 428
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->cipherSuite:Ljava/lang/String;
 
     return-object v0
 .end method
 
-.method static synthetic access$2(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+.method static synthetic access$1300(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     .prologue
-    .line 434
+    .line 428
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->peerCertificates:[Ljava/security/cert/Certificate;
 
     return-object v0
 .end method
 
-.method static synthetic access$3(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+.method static synthetic access$1400(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     .prologue
-    .line 435
+    .line 428
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->localCertificates:[Ljava/security/cert/Certificate;
 
     return-object v0
 .end method
 
-.method static synthetic access$4(Lcom/squareup/okhttp/HttpResponseCache$Entry;)Z
+.method static synthetic access$400(Lcom/squareup/okhttp/HttpResponseCache$Entry;)Z
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     .prologue
-    .line 588
+    .line 428
     invoke-direct {p0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->isHttps()Z
 
     move-result v0
@@ -454,7 +461,6 @@
 
     if-eqz v1, :cond_0
 
-    .line 555
     check-cast p1, Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl;
 
     .end local p1    # "httpConnection":Ljava/net/HttpURLConnection;
@@ -469,7 +475,6 @@
 
     if-eqz v1, :cond_1
 
-    .line 558
     check-cast v0, Lcom/squareup/okhttp/internal/http/HttpsEngine;
 
     .end local v0    # "engine":Lcom/squareup/okhttp/internal/http/HttpEngine;
@@ -477,11 +482,10 @@
 
     move-result-object v1
 
-    .line 557
     :goto_1
     return-object v1
 
-    .line 556
+    .line 554
     .restart local p1    # "httpConnection":Ljava/net/HttpURLConnection;
     :cond_0
     check-cast p1, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;
@@ -493,7 +497,7 @@
 
     goto :goto_0
 
-    .line 559
+    .line 557
     .restart local v0    # "engine":Lcom/squareup/okhttp/internal/http/HttpEngine;
     :cond_1
     const/4 v1, 0x0
@@ -627,7 +631,7 @@
 .end method
 
 .method private writeCertArray(Ljava/io/Writer;[Ljava/security/cert/Certificate;)V
-    .locals 8
+    .locals 9
     .param p1, "writer"    # Ljava/io/Writer;
     .param p2, "certificates"    # [Ljava/security/cert/Certificate;
     .annotation system Ldalvik/annotation/Throws;
@@ -641,9 +645,9 @@
     if-nez p2, :cond_1
 
     .line 613
-    const-string v4, "-1\n"
+    const-string v7, "-1\n"
 
-    invoke-virtual {p1, v4}, Ljava/io/Writer;->write(Ljava/lang/String;)V
+    invoke-virtual {p1, v7}, Ljava/io/Writer;->write(Ljava/lang/String;)V
 
     .line 626
     :cond_0
@@ -652,75 +656,80 @@
     .line 617
     :cond_1
     :try_start_0
-    new-instance v4, Ljava/lang/StringBuilder;
+    new-instance v7, Ljava/lang/StringBuilder;
 
-    array-length v5, p2
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-static {v5}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
+    array-length v8, p2
 
-    move-result-object v5
+    invoke-static {v8}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
 
-    invoke-static {v5}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    move-result-object v8
 
-    move-result-object v5
-
-    invoke-direct {v4, v5}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    const/16 v5, 0xa
-
-    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    move-result-object v4
-
-    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-virtual {p1, v4}, Ljava/io/Writer;->write(Ljava/lang/String;)V
-
-    .line 618
-    array-length v5, p2
-
-    const/4 v4, 0x0
-
-    :goto_0
-    if-ge v4, v5, :cond_0
-
-    aget-object v1, p2, v4
-
-    .line 619
-    .local v1, "certificate":Ljava/security/cert/Certificate;
-    invoke-virtual {v1}, Ljava/security/cert/Certificate;->getEncoded()[B
-
-    move-result-object v0
-
-    .line 620
-    .local v0, "bytes":[B
-    invoke-static {v0}, Lcom/squareup/okhttp/internal/Base64;->encode([B)Ljava/lang/String;
-
-    move-result-object v3
-
-    .line 621
-    .local v3, "line":Ljava/lang/String;
-    new-instance v6, Ljava/lang/StringBuilder;
-
-    invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v7
 
-    invoke-direct {v6, v7}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    const/16 v8, 0xa
 
-    const/16 v7, 0xa
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-virtual {p1, v7}, Ljava/io/Writer;->write(Ljava/lang/String;)V
+
+    .line 618
+    move-object v0, p2
+
+    .local v0, "arr$":[Ljava/security/cert/Certificate;
+    array-length v5, v0
+
+    .local v5, "len$":I
+    const/4 v4, 0x0
+
+    .local v4, "i$":I
+    :goto_0
+    if-ge v4, v5, :cond_0
+
+    aget-object v2, v0, v4
+
+    .line 619
+    .local v2, "certificate":Ljava/security/cert/Certificate;
+    invoke-virtual {v2}, Ljava/security/cert/Certificate;->getEncoded()[B
+
+    move-result-object v1
+
+    .line 620
+    .local v1, "bytes":[B
+    invoke-static {v1}, Lcom/squareup/okhttp/internal/Base64;->encode([B)Ljava/lang/String;
 
     move-result-object v6
 
-    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    .line 621
+    .local v6, "line":Ljava/lang/String;
+    new-instance v7, Ljava/lang/StringBuilder;
 
-    move-result-object v6
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-virtual {p1, v6}, Ljava/io/Writer;->write(Ljava/lang/String;)V
+    invoke-virtual {v7, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    const/16 v8, 0xa
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-virtual {p1, v7}, Ljava/io/Writer;->write(Ljava/lang/String;)V
     :try_end_0
     .catch Ljava/security/cert/CertificateEncodingException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -730,23 +739,26 @@
     goto :goto_0
 
     .line 623
-    .end local v0    # "bytes":[B
-    .end local v1    # "certificate":Ljava/security/cert/Certificate;
-    .end local v3    # "line":Ljava/lang/String;
+    .end local v0    # "arr$":[Ljava/security/cert/Certificate;
+    .end local v1    # "bytes":[B
+    .end local v2    # "certificate":Ljava/security/cert/Certificate;
+    .end local v4    # "i$":I
+    .end local v5    # "len$":I
+    .end local v6    # "line":Ljava/lang/String;
     :catch_0
-    move-exception v2
+    move-exception v3
 
     .line 624
-    .local v2, "e":Ljava/security/cert/CertificateEncodingException;
-    new-instance v4, Ljava/io/IOException;
+    .local v3, "e":Ljava/security/cert/CertificateEncodingException;
+    new-instance v7, Ljava/io/IOException;
 
-    invoke-virtual {v2}, Ljava/security/cert/CertificateEncodingException;->getMessage()Ljava/lang/String;
+    invoke-virtual {v3}, Ljava/security/cert/CertificateEncodingException;->getMessage()Ljava/lang/String;
 
-    move-result-object v5
+    move-result-object v8
 
-    invoke-direct {v4, v5}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v7, v8}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
 
-    throw v4
+    throw v7
 .end method
 
 
@@ -787,7 +799,6 @@
 
     if-eqz v1, :cond_0
 
-    .line 631
     iget-object v1, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->requestMethod:Ljava/lang/String;
 
     invoke-virtual {v1, p2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -796,7 +807,6 @@
 
     if-eqz v1, :cond_0
 
-    .line 632
     new-instance v1, Lcom/squareup/okhttp/internal/http/ResponseHeaders;
 
     iget-object v2, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->responseHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
@@ -813,10 +823,8 @@
 
     move-result v1
 
-    .line 633
     if-eqz v1, :cond_0
 
-    .line 630
     const/4 v0, 0x1
 
     :cond_0
@@ -858,13 +866,13 @@
     .local v2, "writer":Ljava/io/Writer;
     new-instance v3, Ljava/lang/StringBuilder;
 
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
     iget-object v4, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->uri:Ljava/lang/String;
 
-    invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v4
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v3
 
     invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
@@ -879,13 +887,13 @@
     .line 567
     new-instance v3, Ljava/lang/StringBuilder;
 
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
     iget-object v4, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->requestMethod:Ljava/lang/String;
 
-    invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v4
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v3
 
     invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
@@ -900,6 +908,8 @@
     .line 568
     new-instance v3, Ljava/lang/StringBuilder;
 
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
     iget-object v4, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->varyHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     invoke-virtual {v4}, Lcom/squareup/okhttp/internal/http/RawHeaders;->length()I
@@ -910,11 +920,9 @@
 
     move-result-object v4
 
-    invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v4
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v3
 
     invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
@@ -937,125 +945,12 @@
 
     move-result v3
 
-    if-lt v0, v3, :cond_1
-
-    .line 573
-    new-instance v3, Ljava/lang/StringBuilder;
-
-    iget-object v4, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->responseHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
-
-    invoke-virtual {v4}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getStatusLine()Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-virtual {v2, v3}, Ljava/io/Writer;->write(Ljava/lang/String;)V
-
-    .line 574
-    new-instance v3, Ljava/lang/StringBuilder;
-
-    iget-object v4, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->responseHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
-
-    invoke-virtual {v4}, Lcom/squareup/okhttp/internal/http/RawHeaders;->length()I
-
-    move-result v4
-
-    invoke-static {v4}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-virtual {v2, v3}, Ljava/io/Writer;->write(Ljava/lang/String;)V
-
-    .line 575
-    const/4 v0, 0x0
-
-    :goto_1
-    iget-object v3, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->responseHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
-
-    invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/RawHeaders;->length()I
-
-    move-result v3
-
-    if-lt v0, v3, :cond_2
-
-    .line 579
-    invoke-direct {p0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->isHttps()Z
-
-    move-result v3
-
-    if-eqz v3, :cond_0
-
-    .line 580
-    invoke-virtual {v2, v5}, Ljava/io/Writer;->write(I)V
-
-    .line 581
-    new-instance v3, Ljava/lang/StringBuilder;
-
-    iget-object v4, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->cipherSuite:Ljava/lang/String;
-
-    invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-virtual {v2, v3}, Ljava/io/Writer;->write(Ljava/lang/String;)V
-
-    .line 582
-    iget-object v3, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->peerCertificates:[Ljava/security/cert/Certificate;
-
-    invoke-direct {p0, v2, v3}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->writeCertArray(Ljava/io/Writer;[Ljava/security/cert/Certificate;)V
-
-    .line 583
-    iget-object v3, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->localCertificates:[Ljava/security/cert/Certificate;
-
-    invoke-direct {p0, v2, v3}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->writeCertArray(Ljava/io/Writer;[Ljava/security/cert/Certificate;)V
-
-    .line 585
-    :cond_0
-    invoke-virtual {v2}, Ljava/io/Writer;->close()V
-
-    .line 586
-    return-void
+    if-ge v0, v3, :cond_0
 
     .line 570
-    :cond_1
     new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
 
     iget-object v4, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->varyHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
@@ -1063,11 +958,9 @@
 
     move-result-object v4
 
-    invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v4
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v3
 
     const-string v4, ": "
 
@@ -1098,11 +991,79 @@
     .line 569
     add-int/lit8 v0, v0, 0x1
 
-    goto/16 :goto_0
+    goto :goto_0
+
+    .line 573
+    :cond_0
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    iget-object v4, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->responseHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
+
+    invoke-virtual {v4}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getStatusLine()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/io/Writer;->write(Ljava/lang/String;)V
+
+    .line 574
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    iget-object v4, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->responseHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
+
+    invoke-virtual {v4}, Lcom/squareup/okhttp/internal/http/RawHeaders;->length()I
+
+    move-result v4
+
+    invoke-static {v4}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/io/Writer;->write(Ljava/lang/String;)V
+
+    .line 575
+    const/4 v0, 0x0
+
+    :goto_1
+    iget-object v3, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->responseHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
+
+    invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/RawHeaders;->length()I
+
+    move-result v3
+
+    if-ge v0, v3, :cond_1
 
     .line 576
-    :cond_2
     new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
 
     iget-object v4, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->responseHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
@@ -1110,11 +1071,9 @@
 
     move-result-object v4
 
-    invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v4
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v3
 
     const-string v4, ": "
 
@@ -1145,5 +1104,54 @@
     .line 575
     add-int/lit8 v0, v0, 0x1
 
-    goto/16 :goto_1
+    goto :goto_1
+
+    .line 579
+    :cond_1
+    invoke-direct {p0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->isHttps()Z
+
+    move-result v3
+
+    if-eqz v3, :cond_2
+
+    .line 580
+    invoke-virtual {v2, v5}, Ljava/io/Writer;->write(I)V
+
+    .line 581
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    iget-object v4, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->cipherSuite:Ljava/lang/String;
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/io/Writer;->write(Ljava/lang/String;)V
+
+    .line 582
+    iget-object v3, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->peerCertificates:[Ljava/security/cert/Certificate;
+
+    invoke-direct {p0, v2, v3}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->writeCertArray(Ljava/io/Writer;[Ljava/security/cert/Certificate;)V
+
+    .line 583
+    iget-object v3, p0, Lcom/squareup/okhttp/HttpResponseCache$Entry;->localCertificates:[Ljava/security/cert/Certificate;
+
+    invoke-direct {p0, v2, v3}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->writeCertArray(Ljava/io/Writer;[Ljava/security/cert/Certificate;)V
+
+    .line 585
+    :cond_2
+    invoke-virtual {v2}, Ljava/io/Writer;->close()V
+
+    .line 586
+    return-void
 .end method

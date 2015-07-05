@@ -40,11 +40,14 @@
     return-void
 .end method
 
-.method synthetic constructor <init>(Ljava/io/OutputStream;JLcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthOutputStream;)V
+.method synthetic constructor <init>(Ljava/io/OutputStream;JLcom/squareup/okhttp/internal/http/HttpTransport$1;)V
     .locals 0
+    .param p1, "x0"    # Ljava/io/OutputStream;
+    .param p2, "x1"    # J
+    .param p4, "x2"    # Lcom/squareup/okhttp/internal/http/HttpTransport$1;
 
     .prologue
-    .line 229
+    .line 225
     invoke-direct {p0, p1, p2, p3}, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthOutputStream;-><init>(Ljava/io/OutputStream;J)V
 
     return-void
@@ -156,9 +159,13 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "expected "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     iget-wide v2, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthOutputStream;->bytesRemaining:J
 

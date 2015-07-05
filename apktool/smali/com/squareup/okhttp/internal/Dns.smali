@@ -19,7 +19,6 @@
 
     sput-object v0, Lcom/squareup/okhttp/internal/Dns;->DEFAULT:Lcom/squareup/okhttp/internal/Dns;
 
-    .line 30
     return-void
 .end method
 

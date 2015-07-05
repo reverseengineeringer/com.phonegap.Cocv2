@@ -1,4 +1,4 @@
-.class Lcom/squareup/okhttp/internal/http/HttpEngine$1;
+.class final Lcom/squareup/okhttp/internal/http/HttpEngine$1;
 .super Ljava/net/CacheResponse;
 .source "HttpEngine.java"
 
@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x0
+    accessFlags = 0x8
     name = null
 .end annotation
 
@@ -22,7 +22,6 @@
     .line 79
     invoke-direct {p0}, Ljava/net/CacheResponse;-><init>()V
 
-    .line 1
     return-void
 .end method
 

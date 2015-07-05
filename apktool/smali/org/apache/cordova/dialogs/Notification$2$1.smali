@@ -20,20 +20,15 @@
 # instance fields
 .field final synthetic this$1:Lorg/apache/cordova/dialogs/Notification$2;
 
-.field private final synthetic val$callbackContext:Lorg/apache/cordova/CallbackContext;
-
 
 # direct methods
-.method constructor <init>(Lorg/apache/cordova/dialogs/Notification$2;Lorg/apache/cordova/CallbackContext;)V
+.method constructor <init>(Lorg/apache/cordova/dialogs/Notification$2;)V
     .locals 0
 
     .prologue
-    .line 1
+    .line 168
     iput-object p1, p0, Lorg/apache/cordova/dialogs/Notification$2$1;->this$1:Lorg/apache/cordova/dialogs/Notification$2;
 
-    iput-object p2, p0, Lorg/apache/cordova/dialogs/Notification$2$1;->val$callbackContext:Lorg/apache/cordova/CallbackContext;
-
-    .line 193
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -47,22 +42,24 @@
     .param p2, "which"    # I
 
     .prologue
-    .line 195
+    .line 170
     invoke-interface {p1}, Landroid/content/DialogInterface;->dismiss()V
 
-    .line 196
-    iget-object v0, p0, Lorg/apache/cordova/dialogs/Notification$2$1;->val$callbackContext:Lorg/apache/cordova/CallbackContext;
+    .line 171
+    iget-object v0, p0, Lorg/apache/cordova/dialogs/Notification$2$1;->this$1:Lorg/apache/cordova/dialogs/Notification$2;
+
+    iget-object v0, v0, Lorg/apache/cordova/dialogs/Notification$2;->val$callbackContext:Lorg/apache/cordova/CallbackContext;
 
     new-instance v1, Lorg/apache/cordova/PluginResult;
 
     sget-object v2, Lorg/apache/cordova/PluginResult$Status;->OK:Lorg/apache/cordova/PluginResult$Status;
 
-    const/4 v3, 0x1
+    const/4 v3, 0x0
 
     invoke-direct {v1, v2, v3}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;I)V
 
     invoke-virtual {v0, v1}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
 
-    .line 197
+    .line 172
     return-void
 .end method

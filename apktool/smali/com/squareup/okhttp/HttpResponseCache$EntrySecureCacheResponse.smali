@@ -40,7 +40,7 @@
 
     .line 678
     # invokes: Lcom/squareup/okhttp/HttpResponseCache;->newBodyInputStream(Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;)Ljava/io/InputStream;
-    invoke-static {p2}, Lcom/squareup/okhttp/HttpResponseCache;->access$8(Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;)Ljava/io/InputStream;
+    invoke-static {p2}, Lcom/squareup/okhttp/HttpResponseCache;->access$1000(Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;)Ljava/io/InputStream;
 
     move-result-object v0
 
@@ -50,11 +50,12 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;)Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;
+.method static synthetic access$600(Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;)Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;
 
     .prologue
-    .line 672
+    .line 670
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->snapshot:Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;
 
     return-object v0
@@ -80,7 +81,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->cipherSuite:Ljava/lang/String;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1(Lcom/squareup/okhttp/HttpResponseCache$Entry;)Ljava/lang/String;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1200(Lcom/squareup/okhttp/HttpResponseCache$Entry;)Ljava/lang/String;
 
     move-result-object v0
 
@@ -107,7 +108,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->responseHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$0(Lcom/squareup/okhttp/HttpResponseCache$Entry;)Lcom/squareup/okhttp/internal/http/RawHeaders;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1100(Lcom/squareup/okhttp/HttpResponseCache$Entry;)Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     move-result-object v0
 
@@ -137,7 +138,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->localCertificates:[Ljava/security/cert/Certificate;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$3(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1400(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
 
     move-result-object v0
 
@@ -146,7 +147,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->localCertificates:[Ljava/security/cert/Certificate;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$3(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1400(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
 
     move-result-object v0
 
@@ -166,7 +167,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->localCertificates:[Ljava/security/cert/Certificate;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$3(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1400(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
 
     move-result-object v0
 
@@ -174,7 +175,7 @@
 
     move-result-object v0
 
-    check-cast v0, [Ljava/security/cert/Certificate;
+    check-cast v0, [Ljava/lang/Object;
 
     invoke-static {v0}, Ljava/util/Arrays;->asList([Ljava/lang/Object;)Ljava/util/List;
 
@@ -191,7 +192,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->localCertificates:[Ljava/security/cert/Certificate;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$3(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1400(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
 
     move-result-object v0
 
@@ -200,7 +201,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->localCertificates:[Ljava/security/cert/Certificate;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$3(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1400(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
 
     move-result-object v0
 
@@ -220,7 +221,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->localCertificates:[Ljava/security/cert/Certificate;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$3(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1400(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
 
     move-result-object v0
 
@@ -250,7 +251,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->peerCertificates:[Ljava/security/cert/Certificate;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$2(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1300(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
 
     move-result-object v0
 
@@ -259,7 +260,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->peerCertificates:[Ljava/security/cert/Certificate;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$2(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1300(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
 
     move-result-object v0
 
@@ -282,7 +283,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->peerCertificates:[Ljava/security/cert/Certificate;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$2(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1300(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
 
     move-result-object v0
 
@@ -322,7 +323,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->peerCertificates:[Ljava/security/cert/Certificate;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$2(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1300(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
 
     move-result-object v0
 
@@ -331,7 +332,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->peerCertificates:[Ljava/security/cert/Certificate;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$2(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1300(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
 
     move-result-object v0
 
@@ -354,7 +355,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->entry:Lcom/squareup/okhttp/HttpResponseCache$Entry;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$Entry;->peerCertificates:[Ljava/security/cert/Certificate;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$2(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$1300(Lcom/squareup/okhttp/HttpResponseCache$Entry;)[Ljava/security/cert/Certificate;
 
     move-result-object v0
 
@@ -362,7 +363,7 @@
 
     move-result-object v0
 
-    check-cast v0, [Ljava/security/cert/Certificate;
+    check-cast v0, [Ljava/lang/Object;
 
     invoke-static {v0}, Ljava/util/Arrays;->asList([Ljava/lang/Object;)Ljava/util/List;
 

@@ -228,7 +228,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/Http20Draft06$Writer;->out:Ljava/io/DataOutputStream;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/Http20Draft06;->CONNECTION_HEADER:[B
-    invoke-static {}, Lcom/squareup/okhttp/internal/spdy/Http20Draft06;->access$0()[B
+    invoke-static {}, Lcom/squareup/okhttp/internal/spdy/Http20Draft06;->access$000()[B
 
     move-result-object v1
 
@@ -591,8 +591,6 @@
     const/4 v6, 0x0
 
     invoke-virtual {v5, v6}, Ljava/io/DataOutputStream;->writeInt(I)V
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     .line 355
     const/4 v1, 0x0
@@ -601,21 +599,14 @@
     :goto_0
     const/16 v5, 0xa
 
-    if-lt v1, v5, :cond_0
-
-    .line 360
-    monitor-exit p0
-
-    return-void
+    if-ge v1, v5, :cond_1
 
     .line 356
-    :cond_0
-    :try_start_1
     invoke-virtual {p1, v1}, Lcom/squareup/okhttp/internal/spdy/Settings;->isSet(I)Z
 
     move-result v5
 
-    if-nez v5, :cond_1
+    if-nez v5, :cond_0
 
     .line 355
     :goto_1
@@ -624,7 +615,7 @@
     goto :goto_0
 
     .line 357
-    :cond_1
+    :cond_0
     iget-object v5, p0, Lcom/squareup/okhttp/internal/spdy/Http20Draft06$Writer;->out:Ljava/io/DataOutputStream;
 
     const v6, 0xffffff
@@ -641,8 +632,8 @@
     move-result v6
 
     invoke-virtual {v5, v6}, Ljava/io/DataOutputStream;->writeInt(I)V
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     goto :goto_1
 
@@ -657,6 +648,16 @@
     monitor-exit p0
 
     throw v5
+
+    .line 360
+    .restart local v0    # "flags":I
+    .restart local v1    # "i":I
+    .restart local v2    # "length":I
+    .restart local v3    # "streamId":I
+    :cond_1
+    monitor-exit p0
+
+    return-void
 .end method
 
 .method public declared-synchronized synReply(ZILjava/util/List;)V

@@ -15,11 +15,11 @@
 
 
 # static fields
+.field private static final synthetic $VALUES:[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+
 .field public static final enum CANCEL:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
 .field public static final enum COMPRESSION_ERROR:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
-
-.field private static final synthetic ENUM$VALUES:[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
 .field public static final enum FLOW_CONTROL_ERROR:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
@@ -69,7 +69,7 @@
 
     const/4 v4, -0x1
 
-    .line 20
+    .line 21
     new-instance v0, Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
     const-string v1, "NO_ERROR"
@@ -78,7 +78,6 @@
 
     move v5, v2
 
-    .line 21
     invoke-direct/range {v0 .. v5}, Lcom/squareup/okhttp/internal/spdy/ErrorCode;-><init>(Ljava/lang/String;IIII)V
 
     sput-object v0, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->NO_ERROR:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
@@ -98,7 +97,7 @@
 
     sput-object v5, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->PROTOCOL_ERROR:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    .line 25
+    .line 26
     new-instance v8, Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
     const-string v9, "INVALID_STREAM"
@@ -111,17 +110,15 @@
 
     move v13, v4
 
-    .line 26
     invoke-direct/range {v8 .. v13}, Lcom/squareup/okhttp/internal/spdy/ErrorCode;-><init>(Ljava/lang/String;IIII)V
 
     sput-object v8, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->INVALID_STREAM:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    .line 28
+    .line 29
     new-instance v8, Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
     const-string v9, "UNSUPPORTED_VERSION"
 
-    .line 29
     const/4 v12, 0x4
 
     move v10, v15
@@ -134,14 +131,13 @@
 
     sput-object v8, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->UNSUPPORTED_VERSION:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    .line 31
+    .line 32
     new-instance v8, Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
     const-string v9, "STREAM_IN_USE"
 
     const/4 v10, 0x4
 
-    .line 32
     const/16 v12, 0x8
 
     move v11, v7
@@ -152,14 +148,13 @@
 
     sput-object v8, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->STREAM_IN_USE:Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    .line 34
+    .line 35
     new-instance v8, Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
     const-string v9, "STREAM_ALREADY_CLOSED"
 
     const/4 v10, 0x5
 
-    .line 35
     const/16 v12, 0x9
 
     move v11, v7
@@ -387,7 +382,7 @@
 
     aput-object v2, v0, v1
 
-    sput-object v0, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->ENUM$VALUES:[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    sput-object v0, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->$VALUES:[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
     return-void
 .end method
@@ -397,6 +392,11 @@
     .param p3, "httpCode"    # I
     .param p4, "spdyRstCode"    # I
     .param p5, "spdyGoAwayCode"    # I
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(III)V"
+        }
+    .end annotation
 
     .prologue
     .line 57
@@ -423,35 +423,44 @@
     .line 71
     invoke-static {}, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->values()[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    move-result-object v2
+    move-result-object v0
 
-    array-length v3, v2
+    .local v0, "arr$":[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    array-length v3, v0
 
-    const/4 v1, 0x0
+    .local v3, "len$":I
+    const/4 v2, 0x0
 
+    .local v2, "i$":I
     :goto_0
-    if-lt v1, v3, :cond_1
+    if-ge v2, v3, :cond_1
 
-    .line 74
-    const/4 v0, 0x0
-
-    :cond_0
-    return-object v0
-
-    .line 71
-    :cond_1
-    aget-object v0, v2, v1
+    aget-object v1, v0, v2
 
     .line 72
-    .local v0, "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
-    iget v4, v0, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->httpCode:I
+    .local v1, "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    iget v4, v1, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->httpCode:I
 
-    if-eq v4, p0, :cond_0
+    if-ne v4, p0, :cond_0
+
+    .line 74
+    .end local v1    # "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    :goto_1
+    return-object v1
 
     .line 71
-    add-int/lit8 v1, v1, 0x1
+    .restart local v1    # "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    :cond_0
+    add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
+
+    .line 74
+    .end local v1    # "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    :cond_1
+    const/4 v1, 0x0
+
+    goto :goto_1
 .end method
 
 .method public static fromSpdy3Rst(I)Lcom/squareup/okhttp/internal/spdy/ErrorCode;
@@ -462,35 +471,44 @@
     .line 64
     invoke-static {}, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->values()[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    move-result-object v2
+    move-result-object v0
 
-    array-length v3, v2
+    .local v0, "arr$":[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    array-length v3, v0
 
-    const/4 v1, 0x0
+    .local v3, "len$":I
+    const/4 v2, 0x0
 
+    .local v2, "i$":I
     :goto_0
-    if-lt v1, v3, :cond_1
+    if-ge v2, v3, :cond_1
 
-    .line 67
-    const/4 v0, 0x0
-
-    :cond_0
-    return-object v0
-
-    .line 64
-    :cond_1
-    aget-object v0, v2, v1
+    aget-object v1, v0, v2
 
     .line 65
-    .local v0, "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
-    iget v4, v0, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->spdyRstCode:I
+    .local v1, "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    iget v4, v1, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->spdyRstCode:I
 
-    if-eq v4, p0, :cond_0
+    if-ne v4, p0, :cond_0
+
+    .line 67
+    .end local v1    # "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    :goto_1
+    return-object v1
 
     .line 64
-    add-int/lit8 v1, v1, 0x1
+    .restart local v1    # "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    :cond_0
+    add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
+
+    .line 67
+    .end local v1    # "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    :cond_1
+    const/4 v1, 0x0
+
+    goto :goto_1
 .end method
 
 .method public static fromSpdyGoAway(I)Lcom/squareup/okhttp/internal/spdy/ErrorCode;
@@ -501,42 +519,52 @@
     .line 78
     invoke-static {}, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->values()[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    move-result-object v2
+    move-result-object v0
 
-    array-length v3, v2
+    .local v0, "arr$":[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    array-length v3, v0
 
-    const/4 v1, 0x0
+    .local v3, "len$":I
+    const/4 v2, 0x0
 
+    .local v2, "i$":I
     :goto_0
-    if-lt v1, v3, :cond_1
+    if-ge v2, v3, :cond_1
 
-    .line 81
-    const/4 v0, 0x0
-
-    :cond_0
-    return-object v0
-
-    .line 78
-    :cond_1
-    aget-object v0, v2, v1
+    aget-object v1, v0, v2
 
     .line 79
-    .local v0, "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
-    iget v4, v0, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->spdyGoAwayCode:I
+    .local v1, "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    iget v4, v1, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->spdyGoAwayCode:I
 
-    if-eq v4, p0, :cond_0
+    if-ne v4, p0, :cond_0
+
+    .line 81
+    .end local v1    # "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    :goto_1
+    return-object v1
 
     .line 78
-    add-int/lit8 v1, v1, 0x1
+    .restart local v1    # "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    :cond_0
+    add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
+
+    .line 81
+    .end local v1    # "errorCode":Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    :cond_1
+    const/4 v1, 0x0
+
+    goto :goto_1
 .end method
 
 .method public static valueOf(Ljava/lang/String;)Lcom/squareup/okhttp/internal/spdy/ErrorCode;
     .locals 1
+    .param p0, "name"    # Ljava/lang/String;
 
     .prologue
-    .line 1
+    .line 19
     const-class v0, Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
     invoke-static {v0, p0}, Ljava/lang/Enum;->valueOf(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Enum;
@@ -549,19 +577,17 @@
 .end method
 
 .method public static values()[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
-    .locals 4
+    .locals 1
 
     .prologue
-    const/4 v3, 0x0
+    .line 19
+    sget-object v0, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->$VALUES:[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    .line 1
-    sget-object v0, Lcom/squareup/okhttp/internal/spdy/ErrorCode;->ENUM$VALUES:[Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    invoke-virtual {v0}, [Lcom/squareup/okhttp/internal/spdy/ErrorCode;->clone()Ljava/lang/Object;
 
-    array-length v1, v0
+    move-result-object v0
 
-    new-array v2, v1, [Lcom/squareup/okhttp/internal/spdy/ErrorCode;
+    check-cast v0, [Lcom/squareup/okhttp/internal/spdy/ErrorCode;
 
-    invoke-static {v0, v3, v2, v3, v1}, Ljava/lang/System;->arraycopy(Ljava/lang/Object;ILjava/lang/Object;II)V
-
-    return-object v2
+    return-object v0
 .end method

@@ -4,8 +4,6 @@
 
 
 # static fields
-.field private static final CORDOVA_EXEC_URL_PREFIX:Ljava/lang/String; = "http://cdv_exec/"
-
 .field private static final TAG:Ljava/lang/String; = "CordovaWebViewClient"
 
 
@@ -28,6 +26,8 @@
 
 .field private doClearHistory:Z
 
+.field helper:Lorg/apache/cordova/CordovaUriHelper;
+
 .field isCurrentlyLoading:Z
 
 
@@ -35,27 +35,29 @@
 .method public constructor <init>(Lorg/apache/cordova/CordovaInterface;)V
     .locals 1
     .param p1, "cordova"    # Lorg/apache/cordova/CordovaInterface;
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
-    .line 75
+    .line 66
     invoke-direct {p0}, Landroid/webkit/WebViewClient;-><init>()V
 
-    .line 64
+    .line 59
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->doClearHistory:Z
 
-    .line 68
+    .line 63
     new-instance v0, Ljava/util/Hashtable;
 
     invoke-direct {v0}, Ljava/util/Hashtable;-><init>()V
 
     iput-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->authenticationTokens:Ljava/util/Hashtable;
 
-    .line 76
+    .line 67
     iput-object p1, p0, Lorg/apache/cordova/CordovaWebViewClient;->cordova:Lorg/apache/cordova/CordovaInterface;
 
-    .line 77
+    .line 68
     return-void
 .end method
 
@@ -65,144 +67,36 @@
     .param p2, "view"    # Lorg/apache/cordova/CordovaWebView;
 
     .prologue
-    .line 85
+    .line 76
     invoke-direct {p0}, Landroid/webkit/WebViewClient;-><init>()V
 
-    .line 64
+    .line 59
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->doClearHistory:Z
 
-    .line 68
+    .line 63
     new-instance v0, Ljava/util/Hashtable;
 
     invoke-direct {v0}, Ljava/util/Hashtable;-><init>()V
 
     iput-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->authenticationTokens:Ljava/util/Hashtable;
 
-    .line 86
+    .line 77
     iput-object p1, p0, Lorg/apache/cordova/CordovaWebViewClient;->cordova:Lorg/apache/cordova/CordovaInterface;
 
-    .line 87
+    .line 78
     iput-object p2, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
-    .line 88
+    .line 79
+    new-instance v0, Lorg/apache/cordova/CordovaUriHelper;
+
+    invoke-direct {v0, p1, p2}, Lorg/apache/cordova/CordovaUriHelper;-><init>(Lorg/apache/cordova/CordovaInterface;Lorg/apache/cordova/CordovaWebView;)V
+
+    iput-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->helper:Lorg/apache/cordova/CordovaUriHelper;
+
+    .line 80
     return-void
-.end method
-
-.method private handleExecUrl(Ljava/lang/String;)V
-    .locals 11
-    .param p1, "url"    # Ljava/lang/String;
-
-    .prologue
-    const/16 v10, 0x23
-
-    const/4 v9, -0x1
-
-    .line 103
-    const-string v8, "http://cdv_exec/"
-
-    invoke-virtual {v8}, Ljava/lang/String;->length()I
-
-    move-result v2
-
-    .line 104
-    .local v2, "idx1":I
-    add-int/lit8 v8, v2, 0x1
-
-    invoke-virtual {p1, v10, v8}, Ljava/lang/String;->indexOf(II)I
-
-    move-result v3
-
-    .line 105
-    .local v3, "idx2":I
-    add-int/lit8 v8, v3, 0x1
-
-    invoke-virtual {p1, v10, v8}, Ljava/lang/String;->indexOf(II)I
-
-    move-result v4
-
-    .line 106
-    .local v4, "idx3":I
-    add-int/lit8 v8, v4, 0x1
-
-    invoke-virtual {p1, v10, v8}, Ljava/lang/String;->indexOf(II)I
-
-    move-result v5
-
-    .line 107
-    .local v5, "idx4":I
-    if-eq v2, v9, :cond_0
-
-    if-eq v3, v9, :cond_0
-
-    if-eq v4, v9, :cond_0
-
-    if-ne v5, v9, :cond_1
-
-    .line 108
-    :cond_0
-    const-string v8, "CordovaWebViewClient"
-
-    new-instance v9, Ljava/lang/StringBuilder;
-
-    const-string v10, "Could not decode URL command: "
-
-    invoke-direct {v9, v10}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v9, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v9
-
-    invoke-virtual {v9}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v9
-
-    invoke-static {v8, v9}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 116
-    :goto_0
-    return-void
-
-    .line 111
-    :cond_1
-    invoke-virtual {p1, v2, v3}, Ljava/lang/String;->substring(II)Ljava/lang/String;
-
-    move-result-object v7
-
-    .line 112
-    .local v7, "service":Ljava/lang/String;
-    add-int/lit8 v8, v3, 0x1
-
-    invoke-virtual {p1, v8, v4}, Ljava/lang/String;->substring(II)Ljava/lang/String;
-
-    move-result-object v0
-
-    .line 113
-    .local v0, "action":Ljava/lang/String;
-    add-int/lit8 v8, v4, 0x1
-
-    invoke-virtual {p1, v8, v5}, Ljava/lang/String;->substring(II)Ljava/lang/String;
-
-    move-result-object v1
-
-    .line 114
-    .local v1, "callbackId":Ljava/lang/String;
-    add-int/lit8 v8, v5, 0x1
-
-    invoke-virtual {p1, v8}, Ljava/lang/String;->substring(I)Ljava/lang/String;
-
-    move-result-object v6
-
-    .line 115
-    .local v6, "jsonArgs":Ljava/lang/String;
-    iget-object v8, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
-
-    iget-object v8, v8, Lorg/apache/cordova/CordovaWebView;->pluginManager:Lorg/apache/cordova/PluginManager;
-
-    invoke-virtual {v8, v7, v0, v1, v6}, Lorg/apache/cordova/PluginManager;->exec(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-
-    goto :goto_0
 .end method
 
 
@@ -211,12 +105,12 @@
     .locals 1
 
     .prologue
-    .line 480
+    .line 362
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->authenticationTokens:Ljava/util/Hashtable;
 
     invoke-virtual {v0}, Ljava/util/Hashtable;->clear()V
 
-    .line 481
+    .line 363
     return-void
 .end method
 
@@ -226,10 +120,10 @@
     .param p2, "realm"    # Ljava/lang/String;
 
     .prologue
-    .line 455
+    .line 337
     const/4 v0, 0x0
 
-    .line 456
+    .line 338
     .local v0, "token":Lorg/apache/cordova/AuthenticationToken;
     iget-object v1, p0, Lorg/apache/cordova/CordovaWebViewClient;->authenticationTokens:Ljava/util/Hashtable;
 
@@ -244,11 +138,11 @@
     .end local v0    # "token":Lorg/apache/cordova/AuthenticationToken;
     check-cast v0, Lorg/apache/cordova/AuthenticationToken;
 
-    .line 458
+    .line 340
     .restart local v0    # "token":Lorg/apache/cordova/AuthenticationToken;
     if-nez v0, :cond_1
 
-    .line 460
+    .line 342
     iget-object v1, p0, Lorg/apache/cordova/CordovaWebViewClient;->authenticationTokens:Ljava/util/Hashtable;
 
     invoke-virtual {v1, p1}, Ljava/util/Hashtable;->get(Ljava/lang/Object;)Ljava/lang/Object;
@@ -258,11 +152,11 @@
     .end local v0    # "token":Lorg/apache/cordova/AuthenticationToken;
     check-cast v0, Lorg/apache/cordova/AuthenticationToken;
 
-    .line 463
+    .line 345
     .restart local v0    # "token":Lorg/apache/cordova/AuthenticationToken;
     if-nez v0, :cond_0
 
-    .line 464
+    .line 346
     iget-object v1, p0, Lorg/apache/cordova/CordovaWebViewClient;->authenticationTokens:Ljava/util/Hashtable;
 
     invoke-virtual {v1, p2}, Ljava/util/Hashtable;->get(Ljava/lang/Object;)Ljava/lang/Object;
@@ -272,12 +166,12 @@
     .end local v0    # "token":Lorg/apache/cordova/AuthenticationToken;
     check-cast v0, Lorg/apache/cordova/AuthenticationToken;
 
-    .line 468
+    .line 350
     .restart local v0    # "token":Lorg/apache/cordova/AuthenticationToken;
     :cond_0
     if-nez v0, :cond_1
 
-    .line 469
+    .line 351
     iget-object v1, p0, Lorg/apache/cordova/CordovaWebViewClient;->authenticationTokens:Ljava/util/Hashtable;
 
     const-string v2, ""
@@ -289,7 +183,7 @@
     .end local v0    # "token":Lorg/apache/cordova/AuthenticationToken;
     check-cast v0, Lorg/apache/cordova/AuthenticationToken;
 
-    .line 473
+    .line 355
     .restart local v0    # "token":Lorg/apache/cordova/AuthenticationToken;
     :cond_1
     return-object v0
@@ -303,31 +197,35 @@
     .prologue
     const/4 v4, 0x0
 
-    .line 295
+    .line 165
     invoke-super {p0, p1, p2}, Landroid/webkit/WebViewClient;->onPageFinished(Landroid/webkit/WebView;Ljava/lang/String;)V
 
-    .line 297
+    .line 167
     iget-boolean v1, p0, Lorg/apache/cordova/CordovaWebViewClient;->isCurrentlyLoading:Z
 
     if-nez v1, :cond_1
 
-    .line 342
+    .line 212
     :cond_0
     :goto_0
     return-void
 
-    .line 300
+    .line 170
     :cond_1
     iput-boolean v4, p0, Lorg/apache/cordova/CordovaWebViewClient;->isCurrentlyLoading:Z
 
-    .line 301
+    .line 171
     const-string v1, "CordovaWebViewClient"
 
     new-instance v2, Ljava/lang/StringBuilder;
 
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v3, "onPageFinished("
 
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
 
     invoke-virtual {v2, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -345,18 +243,18 @@
 
     invoke-static {v1, v2}, Lorg/apache/cordova/LOG;->d(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 309
+    .line 179
     iget-boolean v1, p0, Lorg/apache/cordova/CordovaWebViewClient;->doClearHistory:Z
 
     if-eqz v1, :cond_2
 
-    .line 310
+    .line 180
     invoke-virtual {p1}, Landroid/webkit/WebView;->clearHistory()V
 
-    .line 311
+    .line 181
     iput-boolean v4, p0, Lorg/apache/cordova/CordovaWebViewClient;->doClearHistory:Z
 
-    .line 315
+    .line 185
     :cond_2
     iget-object v1, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
@@ -366,14 +264,14 @@
 
     iput v2, v1, Lorg/apache/cordova/CordovaWebView;->loadUrlTimeout:I
 
-    .line 318
+    .line 188
     iget-object v1, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
     const-string v2, "onPageFinished"
 
     invoke-virtual {v1, v2, p2}, Lorg/apache/cordova/CordovaWebView;->postMessage(Ljava/lang/String;Ljava/lang/Object;)V
 
-    .line 321
+    .line 191
     iget-object v1, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
     invoke-virtual {v1}, Lorg/apache/cordova/CordovaWebView;->getVisibility()I
@@ -384,7 +282,7 @@
 
     if-ne v1, v2, :cond_3
 
-    .line 322
+    .line 192
     new-instance v0, Ljava/lang/Thread;
 
     new-instance v1, Lorg/apache/cordova/CordovaWebViewClient$1;
@@ -393,11 +291,11 @@
 
     invoke-direct {v0, v1}, Ljava/lang/Thread;-><init>(Ljava/lang/Runnable;)V
 
-    .line 335
+    .line 205
     .local v0, "t":Ljava/lang/Thread;
     invoke-virtual {v0}, Ljava/lang/Thread;->start()V
 
-    .line 339
+    .line 209
     .end local v0    # "t":Ljava/lang/Thread;
     :cond_3
     const-string v1, "about:blank"
@@ -408,7 +306,7 @@
 
     if-eqz v1, :cond_0
 
-    .line 340
+    .line 210
     iget-object v1, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
     const-string v2, "exit"
@@ -427,22 +325,26 @@
     .param p3, "favicon"    # Landroid/graphics/Bitmap;
 
     .prologue
-    .line 270
+    .line 140
     invoke-super {p0, p1, p2, p3}, Landroid/webkit/WebViewClient;->onPageStarted(Landroid/webkit/WebView;Ljava/lang/String;Landroid/graphics/Bitmap;)V
 
-    .line 271
+    .line 141
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->isCurrentlyLoading:Z
 
-    .line 272
+    .line 142
     const-string v0, "CordovaWebViewClient"
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "onPageStarted("
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     invoke-virtual {v1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -460,35 +362,35 @@
 
     invoke-static {v0, v1}, Lorg/apache/cordova/LOG;->d(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 274
+    .line 144
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
-    iget-object v0, v0, Lorg/apache/cordova/CordovaWebView;->jsMessageQueue:Lorg/apache/cordova/NativeToJsMessageQueue;
+    iget-object v0, v0, Lorg/apache/cordova/CordovaWebView;->bridge:Lorg/apache/cordova/CordovaBridge;
 
-    invoke-virtual {v0}, Lorg/apache/cordova/NativeToJsMessageQueue;->reset()V
+    invoke-virtual {v0, p2}, Lorg/apache/cordova/CordovaBridge;->reset(Ljava/lang/String;)V
 
-    .line 277
+    .line 147
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
     const-string v1, "onPageStarted"
 
     invoke-virtual {v0, v1, p2}, Lorg/apache/cordova/CordovaWebView;->postMessage(Ljava/lang/String;Ljava/lang/Object;)V
 
-    .line 280
+    .line 150
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
     iget-object v0, v0, Lorg/apache/cordova/CordovaWebView;->pluginManager:Lorg/apache/cordova/PluginManager;
 
     if-eqz v0, :cond_0
 
-    .line 281
+    .line 151
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
     iget-object v0, v0, Lorg/apache/cordova/CordovaWebView;->pluginManager:Lorg/apache/cordova/PluginManager;
 
     invoke-virtual {v0}, Lorg/apache/cordova/PluginManager;->onReset()V
 
-    .line 283
+    .line 153
     :cond_0
     return-void
 .end method
@@ -501,16 +403,16 @@
     .param p4, "failingUrl"    # Ljava/lang/String;
 
     .prologue
-    .line 356
+    .line 226
     iget-boolean v2, p0, Lorg/apache/cordova/CordovaWebViewClient;->isCurrentlyLoading:Z
 
     if-nez v2, :cond_0
 
-    .line 374
+    .line 256
     :goto_0
     return-void
 
-    .line 359
+    .line 229
     :cond_0
     const-string v2, "CordovaWebViewClient"
 
@@ -538,7 +440,7 @@
 
     invoke-static {v2, v3, v4}, Lorg/apache/cordova/LOG;->d(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
 
-    .line 362
+    .line 232
     iget-object v2, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
     iget v3, v2, Lorg/apache/cordova/CordovaWebView;->loadUrlTimeout:I
@@ -547,31 +449,53 @@
 
     iput v3, v2, Lorg/apache/cordova/CordovaWebView;->loadUrlTimeout:I
 
-    .line 365
+    .line 237
+    const/16 v2, -0xa
+
+    if-ne p2, v2, :cond_2
+
+    .line 238
+    invoke-virtual {p1}, Landroid/webkit/WebView;->canGoBack()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_1
+
+    .line 239
+    invoke-virtual {p1}, Landroid/webkit/WebView;->goBack()V
+
+    goto :goto_0
+
+    .line 242
+    :cond_1
+    invoke-super {p0, p1, p2, p3, p4}, Landroid/webkit/WebViewClient;->onReceivedError(Landroid/webkit/WebView;ILjava/lang/String;Ljava/lang/String;)V
+
+    .line 247
+    :cond_2
     new-instance v0, Lorg/json/JSONObject;
 
     invoke-direct {v0}, Lorg/json/JSONObject;-><init>()V
 
-    .line 367
+    .line 249
     .local v0, "data":Lorg/json/JSONObject;
     :try_start_0
     const-string v2, "errorCode"
 
     invoke-virtual {v0, v2, p2}, Lorg/json/JSONObject;->put(Ljava/lang/String;I)Lorg/json/JSONObject;
 
-    .line 368
+    .line 250
     const-string v2, "description"
 
     invoke-virtual {v0, v2, p3}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
 
-    .line 369
+    .line 251
     const-string v2, "url"
 
     invoke-virtual {v0, v2, p4}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
     :try_end_0
     .catch Lorg/json/JSONException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 373
+    .line 255
     :goto_1
     iget-object v2, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
@@ -581,11 +505,11 @@
 
     goto :goto_0
 
-    .line 370
+    .line 252
     :catch_0
     move-exception v1
 
-    .line 371
+    .line 253
     .local v1, "e":Lorg/json/JSONException;
     invoke-virtual {v1}, Lorg/json/JSONException;->printStackTrace()V
 
@@ -600,16 +524,16 @@
     .param p4, "realm"    # Ljava/lang/String;
 
     .prologue
-    .line 249
+    .line 119
     invoke-virtual {p0, p3, p4}, Lorg/apache/cordova/CordovaWebViewClient;->getAuthenticationToken(Ljava/lang/String;Ljava/lang/String;)Lorg/apache/cordova/AuthenticationToken;
 
     move-result-object v0
 
-    .line 250
+    .line 120
     .local v0, "token":Lorg/apache/cordova/AuthenticationToken;
     if-eqz v0, :cond_0
 
-    .line 251
+    .line 121
     invoke-virtual {v0}, Lorg/apache/cordova/AuthenticationToken;->getUserName()Ljava/lang/String;
 
     move-result-object v1
@@ -620,11 +544,11 @@
 
     invoke-virtual {p2, v1, v2}, Landroid/webkit/HttpAuthHandler;->proceed(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 257
+    .line 127
     :goto_0
     return-void
 
-    .line 255
+    .line 125
     :cond_0
     invoke-super {p0, p1, p2, p3, p4}, Landroid/webkit/WebViewClient;->onReceivedHttpAuthRequest(Landroid/webkit/WebView;Landroid/webkit/HttpAuthHandler;Ljava/lang/String;Ljava/lang/String;)V
 
@@ -641,7 +565,7 @@
     .end annotation
 
     .prologue
-    .line 390
+    .line 272
     iget-object v4, p0, Lorg/apache/cordova/CordovaWebViewClient;->cordova:Lorg/apache/cordova/CordovaInterface;
 
     invoke-interface {v4}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
@@ -652,7 +576,7 @@
 
     move-result-object v2
 
-    .line 391
+    .line 273
     .local v2, "packageName":Ljava/lang/String;
     iget-object v4, p0, Lorg/apache/cordova/CordovaWebViewClient;->cordova:Lorg/apache/cordova/CordovaInterface;
 
@@ -664,7 +588,7 @@
 
     move-result-object v3
 
-    .line 395
+    .line 277
     .local v3, "pm":Landroid/content/pm/PackageManager;
     const/16 v4, 0x80
 
@@ -673,7 +597,7 @@
 
     move-result-object v0
 
-    .line 396
+    .line 278
     .local v0, "appInfo":Landroid/content/pm/ApplicationInfo;
     iget v4, v0, Landroid/content/pm/ApplicationInfo;->flags:I
 
@@ -681,15 +605,15 @@
 
     if-eqz v4, :cond_0
 
-    .line 398
+    .line 280
     invoke-virtual {p2}, Landroid/webkit/SslErrorHandler;->proceed()V
 
-    .line 408
+    .line 290
     .end local v0    # "appInfo":Landroid/content/pm/ApplicationInfo;
     :goto_0
     return-void
 
-    .line 402
+    .line 284
     .restart local v0    # "appInfo":Landroid/content/pm/ApplicationInfo;
     :cond_0
     invoke-super {p0, p1, p2, p3}, Landroid/webkit/WebViewClient;->onReceivedSslError(Landroid/webkit/WebView;Landroid/webkit/SslErrorHandler;Landroid/net/http/SslError;)V
@@ -698,12 +622,12 @@
 
     goto :goto_0
 
-    .line 404
+    .line 286
     .end local v0    # "appInfo":Landroid/content/pm/ApplicationInfo;
     :catch_0
     move-exception v1
 
-    .line 406
+    .line 288
     .local v1, "e":Landroid/content/pm/PackageManager$NameNotFoundException;
     invoke-super {p0, p1, p2, p3}, Landroid/webkit/WebViewClient;->onReceivedSslError(Landroid/webkit/WebView;Landroid/webkit/SslErrorHandler;Landroid/net/http/SslError;)V
 
@@ -716,7 +640,7 @@
     .param p2, "realm"    # Ljava/lang/String;
 
     .prologue
-    .line 437
+    .line 319
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->authenticationTokens:Ljava/util/Hashtable;
 
     invoke-virtual {p1, p2}, Ljava/lang/String;->concat(Ljava/lang/String;)Ljava/lang/String;
@@ -739,20 +663,20 @@
     .param p3, "realm"    # Ljava/lang/String;
 
     .prologue
-    .line 419
+    .line 301
     if-nez p2, :cond_0
 
-    .line 420
+    .line 302
     const-string p2, ""
 
-    .line 422
+    .line 304
     :cond_0
     if-nez p3, :cond_1
 
-    .line 423
+    .line 305
     const-string p3, ""
 
-    .line 425
+    .line 307
     :cond_1
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->authenticationTokens:Ljava/util/Hashtable;
 
@@ -762,634 +686,45 @@
 
     invoke-virtual {v0, v1, p1}, Ljava/util/Hashtable;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 426
+    .line 308
     return-void
 .end method
 
 .method public setWebView(Lorg/apache/cordova/CordovaWebView;)V
-    .locals 0
+    .locals 2
     .param p1, "view"    # Lorg/apache/cordova/CordovaWebView;
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
-    .line 96
+    .line 89
     iput-object p1, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
-    .line 97
+    .line 90
+    new-instance v0, Lorg/apache/cordova/CordovaUriHelper;
+
+    iget-object v1, p0, Lorg/apache/cordova/CordovaWebViewClient;->cordova:Lorg/apache/cordova/CordovaInterface;
+
+    invoke-direct {v0, v1, p1}, Lorg/apache/cordova/CordovaUriHelper;-><init>(Lorg/apache/cordova/CordovaInterface;Lorg/apache/cordova/CordovaWebView;)V
+
+    iput-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->helper:Lorg/apache/cordova/CordovaUriHelper;
+
+    .line 91
     return-void
 .end method
 
 .method public shouldOverrideUrlLoading(Landroid/webkit/WebView;Ljava/lang/String;)Z
-    .locals 9
+    .locals 1
     .param p1, "view"    # Landroid/webkit/WebView;
     .param p2, "url"    # Ljava/lang/String;
 
     .prologue
-    .line 134
-    iget-object v6, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
+    .line 103
+    iget-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient;->helper:Lorg/apache/cordova/CordovaUriHelper;
 
-    iget-object v6, v6, Lorg/apache/cordova/CordovaWebView;->pluginManager:Lorg/apache/cordova/PluginManager;
+    invoke-virtual {v0, p1, p2}, Lorg/apache/cordova/CordovaUriHelper;->shouldOverrideUrlLoading(Landroid/webkit/WebView;Ljava/lang/String;)Z
 
-    if-eqz v6, :cond_0
+    move-result v0
 
-    iget-object v6, p0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
-
-    iget-object v6, v6, Lorg/apache/cordova/CordovaWebView;->pluginManager:Lorg/apache/cordova/PluginManager;
-
-    invoke-virtual {v6, p2}, Lorg/apache/cordova/PluginManager;->onOverrideUrlLoading(Ljava/lang/String;)Z
-
-    move-result v6
-
-    if-nez v6, :cond_1
-
-    .line 138
-    :cond_0
-    const-string v6, "tel:"
-
-    invoke-virtual {p2, v6}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v6
-
-    if-eqz v6, :cond_2
-
-    .line 140
-    :try_start_0
-    new-instance v2, Landroid/content/Intent;
-
-    const-string v6, "android.intent.action.DIAL"
-
-    invoke-direct {v2, v6}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
-
-    .line 141
-    .local v2, "intent":Landroid/content/Intent;
-    invoke-static {p2}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
-
-    move-result-object v6
-
-    invoke-virtual {v2, v6}, Landroid/content/Intent;->setData(Landroid/net/Uri;)Landroid/content/Intent;
-
-    .line 142
-    iget-object v6, p0, Lorg/apache/cordova/CordovaWebViewClient;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v6}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v6
-
-    invoke-virtual {v6, v2}, Landroid/app/Activity;->startActivity(Landroid/content/Intent;)V
-    :try_end_0
-    .catch Landroid/content/ActivityNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
-
-    .line 233
-    .end local v2    # "intent":Landroid/content/Intent;
-    :cond_1
-    :goto_0
-    const/4 v6, 0x1
-
-    :goto_1
-    return v6
-
-    .line 143
-    :catch_0
-    move-exception v1
-
-    .line 144
-    .local v1, "e":Landroid/content/ActivityNotFoundException;
-    const-string v6, "CordovaWebViewClient"
-
-    new-instance v7, Ljava/lang/StringBuilder;
-
-    const-string v8, "Error dialing "
-
-    invoke-direct {v7, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v7, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    const-string v8, ": "
-
-    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    invoke-virtual {v1}, Landroid/content/ActivityNotFoundException;->toString()Ljava/lang/String;
-
-    move-result-object v8
-
-    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v7
-
-    invoke-static {v6, v7}, Lorg/apache/cordova/LOG;->e(Ljava/lang/String;Ljava/lang/String;)V
-
-    goto :goto_0
-
-    .line 149
-    .end local v1    # "e":Landroid/content/ActivityNotFoundException;
-    :cond_2
-    const-string v6, "geo:"
-
-    invoke-virtual {p2, v6}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v6
-
-    if-eqz v6, :cond_3
-
-    .line 151
-    :try_start_1
-    new-instance v2, Landroid/content/Intent;
-
-    const-string v6, "android.intent.action.VIEW"
-
-    invoke-direct {v2, v6}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
-
-    .line 152
-    .restart local v2    # "intent":Landroid/content/Intent;
-    invoke-static {p2}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
-
-    move-result-object v6
-
-    invoke-virtual {v2, v6}, Landroid/content/Intent;->setData(Landroid/net/Uri;)Landroid/content/Intent;
-
-    .line 153
-    iget-object v6, p0, Lorg/apache/cordova/CordovaWebViewClient;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v6}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v6
-
-    invoke-virtual {v6, v2}, Landroid/app/Activity;->startActivity(Landroid/content/Intent;)V
-    :try_end_1
-    .catch Landroid/content/ActivityNotFoundException; {:try_start_1 .. :try_end_1} :catch_1
-
-    goto :goto_0
-
-    .line 154
-    .end local v2    # "intent":Landroid/content/Intent;
-    :catch_1
-    move-exception v1
-
-    .line 155
-    .restart local v1    # "e":Landroid/content/ActivityNotFoundException;
-    const-string v6, "CordovaWebViewClient"
-
-    new-instance v7, Ljava/lang/StringBuilder;
-
-    const-string v8, "Error showing map "
-
-    invoke-direct {v7, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v7, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    const-string v8, ": "
-
-    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    invoke-virtual {v1}, Landroid/content/ActivityNotFoundException;->toString()Ljava/lang/String;
-
-    move-result-object v8
-
-    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v7
-
-    invoke-static {v6, v7}, Lorg/apache/cordova/LOG;->e(Ljava/lang/String;Ljava/lang/String;)V
-
-    goto :goto_0
-
-    .line 160
-    .end local v1    # "e":Landroid/content/ActivityNotFoundException;
-    :cond_3
-    const-string v6, "mailto:"
-
-    invoke-virtual {p2, v6}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v6
-
-    if-eqz v6, :cond_4
-
-    .line 162
-    :try_start_2
-    new-instance v2, Landroid/content/Intent;
-
-    const-string v6, "android.intent.action.VIEW"
-
-    invoke-direct {v2, v6}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
-
-    .line 163
-    .restart local v2    # "intent":Landroid/content/Intent;
-    invoke-static {p2}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
-
-    move-result-object v6
-
-    invoke-virtual {v2, v6}, Landroid/content/Intent;->setData(Landroid/net/Uri;)Landroid/content/Intent;
-
-    .line 164
-    iget-object v6, p0, Lorg/apache/cordova/CordovaWebViewClient;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v6}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v6
-
-    invoke-virtual {v6, v2}, Landroid/app/Activity;->startActivity(Landroid/content/Intent;)V
-    :try_end_2
-    .catch Landroid/content/ActivityNotFoundException; {:try_start_2 .. :try_end_2} :catch_2
-
-    goto/16 :goto_0
-
-    .line 165
-    .end local v2    # "intent":Landroid/content/Intent;
-    :catch_2
-    move-exception v1
-
-    .line 166
-    .restart local v1    # "e":Landroid/content/ActivityNotFoundException;
-    const-string v6, "CordovaWebViewClient"
-
-    new-instance v7, Ljava/lang/StringBuilder;
-
-    const-string v8, "Error sending email "
-
-    invoke-direct {v7, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v7, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    const-string v8, ": "
-
-    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    invoke-virtual {v1}, Landroid/content/ActivityNotFoundException;->toString()Ljava/lang/String;
-
-    move-result-object v8
-
-    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v7
-
-    invoke-static {v6, v7}, Lorg/apache/cordova/LOG;->e(Ljava/lang/String;Ljava/lang/String;)V
-
-    goto/16 :goto_0
-
-    .line 171
-    .end local v1    # "e":Landroid/content/ActivityNotFoundException;
-    :cond_4
-    const-string v6, "sms:"
-
-    invoke-virtual {p2, v6}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v6
-
-    if-eqz v6, :cond_7
-
-    .line 173
-    :try_start_3
-    new-instance v2, Landroid/content/Intent;
-
-    const-string v6, "android.intent.action.VIEW"
-
-    invoke-direct {v2, v6}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
-
-    .line 176
-    .restart local v2    # "intent":Landroid/content/Intent;
-    const/4 v0, 0x0
-
-    .line 177
-    .local v0, "address":Ljava/lang/String;
-    const/16 v6, 0x3f
-
-    invoke-virtual {p2, v6}, Ljava/lang/String;->indexOf(I)I
-
-    move-result v3
-
-    .line 178
-    .local v3, "parmIndex":I
-    const/4 v6, -0x1
-
-    if-ne v3, v6, :cond_6
-
-    .line 179
-    const/4 v6, 0x4
-
-    invoke-virtual {p2, v6}, Ljava/lang/String;->substring(I)Ljava/lang/String;
-
-    move-result-object v0
-
-    .line 193
-    :cond_5
-    :goto_2
-    new-instance v6, Ljava/lang/StringBuilder;
-
-    const-string v7, "sms:"
-
-    invoke-direct {v6, v7}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v6, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v6
-
-    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v6
-
-    invoke-static {v6}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
-
-    move-result-object v6
-
-    invoke-virtual {v2, v6}, Landroid/content/Intent;->setData(Landroid/net/Uri;)Landroid/content/Intent;
-
-    .line 194
-    const-string v6, "address"
-
-    invoke-virtual {v2, v6, v0}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
-
-    .line 195
-    const-string v6, "vnd.android-dir/mms-sms"
-
-    invoke-virtual {v2, v6}, Landroid/content/Intent;->setType(Ljava/lang/String;)Landroid/content/Intent;
-
-    .line 196
-    iget-object v6, p0, Lorg/apache/cordova/CordovaWebViewClient;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v6}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v6
-
-    invoke-virtual {v6, v2}, Landroid/app/Activity;->startActivity(Landroid/content/Intent;)V
-    :try_end_3
-    .catch Landroid/content/ActivityNotFoundException; {:try_start_3 .. :try_end_3} :catch_3
-
-    goto/16 :goto_0
-
-    .line 197
-    .end local v0    # "address":Ljava/lang/String;
-    .end local v2    # "intent":Landroid/content/Intent;
-    .end local v3    # "parmIndex":I
-    :catch_3
-    move-exception v1
-
-    .line 198
-    .restart local v1    # "e":Landroid/content/ActivityNotFoundException;
-    const-string v6, "CordovaWebViewClient"
-
-    new-instance v7, Ljava/lang/StringBuilder;
-
-    const-string v8, "Error sending sms "
-
-    invoke-direct {v7, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v7, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    const-string v8, ":"
-
-    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    invoke-virtual {v1}, Landroid/content/ActivityNotFoundException;->toString()Ljava/lang/String;
-
-    move-result-object v8
-
-    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v7
-
-    invoke-static {v6, v7}, Lorg/apache/cordova/LOG;->e(Ljava/lang/String;Ljava/lang/String;)V
-
-    goto/16 :goto_0
-
-    .line 182
-    .end local v1    # "e":Landroid/content/ActivityNotFoundException;
-    .restart local v0    # "address":Ljava/lang/String;
-    .restart local v2    # "intent":Landroid/content/Intent;
-    .restart local v3    # "parmIndex":I
-    :cond_6
-    const/4 v6, 0x4
-
-    :try_start_4
-    invoke-virtual {p2, v6, v3}, Ljava/lang/String;->substring(II)Ljava/lang/String;
-
-    move-result-object v0
-
-    .line 185
-    invoke-static {p2}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
-
-    move-result-object v5
-
-    .line 186
-    .local v5, "uri":Landroid/net/Uri;
-    invoke-virtual {v5}, Landroid/net/Uri;->getQuery()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 187
-    .local v4, "query":Ljava/lang/String;
-    if-eqz v4, :cond_5
-
-    .line 188
-    const-string v6, "body="
-
-    invoke-virtual {v4, v6}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v6
-
-    if-eqz v6, :cond_5
-
-    .line 189
-    const-string v6, "sms_body"
-
-    const/4 v7, 0x5
-
-    invoke-virtual {v4, v7}, Ljava/lang/String;->substring(I)Ljava/lang/String;
-
-    move-result-object v7
-
-    invoke-virtual {v2, v6, v7}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
-    :try_end_4
-    .catch Landroid/content/ActivityNotFoundException; {:try_start_4 .. :try_end_4} :catch_3
-
-    goto :goto_2
-
-    .line 203
-    .end local v0    # "address":Ljava/lang/String;
-    .end local v2    # "intent":Landroid/content/Intent;
-    .end local v3    # "parmIndex":I
-    .end local v4    # "query":Ljava/lang/String;
-    .end local v5    # "uri":Landroid/net/Uri;
-    :cond_7
-    const-string v6, "market:"
-
-    invoke-virtual {p2, v6}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v6
-
-    if-eqz v6, :cond_8
-
-    .line 205
-    :try_start_5
-    new-instance v2, Landroid/content/Intent;
-
-    const-string v6, "android.intent.action.VIEW"
-
-    invoke-direct {v2, v6}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
-
-    .line 206
-    .restart local v2    # "intent":Landroid/content/Intent;
-    invoke-static {p2}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
-
-    move-result-object v6
-
-    invoke-virtual {v2, v6}, Landroid/content/Intent;->setData(Landroid/net/Uri;)Landroid/content/Intent;
-
-    .line 207
-    iget-object v6, p0, Lorg/apache/cordova/CordovaWebViewClient;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v6}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v6
-
-    invoke-virtual {v6, v2}, Landroid/app/Activity;->startActivity(Landroid/content/Intent;)V
-    :try_end_5
-    .catch Landroid/content/ActivityNotFoundException; {:try_start_5 .. :try_end_5} :catch_4
-
-    goto/16 :goto_0
-
-    .line 208
-    .end local v2    # "intent":Landroid/content/Intent;
-    :catch_4
-    move-exception v1
-
-    .line 209
-    .restart local v1    # "e":Landroid/content/ActivityNotFoundException;
-    const-string v6, "CordovaWebViewClient"
-
-    new-instance v7, Ljava/lang/StringBuilder;
-
-    const-string v8, "Error loading Google Play Store: "
-
-    invoke-direct {v7, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v7, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v7
-
-    invoke-static {v6, v7, v1}, Lorg/apache/cordova/LOG;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
-
-    goto/16 :goto_0
-
-    .line 218
-    .end local v1    # "e":Landroid/content/ActivityNotFoundException;
-    :cond_8
-    const-string v6, "file://"
-
-    invoke-virtual {p2, v6}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v6
-
-    if-nez v6, :cond_9
-
-    const-string v6, "data:"
-
-    invoke-virtual {p2, v6}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v6
-
-    if-nez v6, :cond_9
-
-    invoke-static {p2}, Lorg/apache/cordova/Config;->isUrlWhiteListed(Ljava/lang/String;)Z
-
-    move-result v6
-
-    if-eqz v6, :cond_a
-
-    .line 219
-    :cond_9
-    const/4 v6, 0x0
-
-    goto/16 :goto_1
-
-    .line 225
-    :cond_a
-    :try_start_6
-    new-instance v2, Landroid/content/Intent;
-
-    const-string v6, "android.intent.action.VIEW"
-
-    invoke-direct {v2, v6}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
-
-    .line 226
-    .restart local v2    # "intent":Landroid/content/Intent;
-    invoke-static {p2}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
-
-    move-result-object v6
-
-    invoke-virtual {v2, v6}, Landroid/content/Intent;->setData(Landroid/net/Uri;)Landroid/content/Intent;
-
-    .line 227
-    iget-object v6, p0, Lorg/apache/cordova/CordovaWebViewClient;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v6}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v6
-
-    invoke-virtual {v6, v2}, Landroid/app/Activity;->startActivity(Landroid/content/Intent;)V
-    :try_end_6
-    .catch Landroid/content/ActivityNotFoundException; {:try_start_6 .. :try_end_6} :catch_5
-
-    goto/16 :goto_0
-
-    .line 228
-    .end local v2    # "intent":Landroid/content/Intent;
-    :catch_5
-    move-exception v1
-
-    .line 229
-    .restart local v1    # "e":Landroid/content/ActivityNotFoundException;
-    const-string v6, "CordovaWebViewClient"
-
-    new-instance v7, Ljava/lang/StringBuilder;
-
-    const-string v8, "Error loading url "
-
-    invoke-direct {v7, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v7, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v7
-
-    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v7
-
-    invoke-static {v6, v7, v1}, Lorg/apache/cordova/LOG;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
-
-    goto/16 :goto_0
+    return v0
 .end method

@@ -26,10 +26,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 196
     iput-object p1, p0, Lorg/apache/cordova/CordovaWebViewClient$1$1;->this$1:Lorg/apache/cordova/CordovaWebViewClient$1;
 
-    .line 326
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -41,13 +40,10 @@
     .locals 3
 
     .prologue
-    .line 328
+    .line 198
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient$1$1;->this$1:Lorg/apache/cordova/CordovaWebViewClient$1;
 
-    # getter for: Lorg/apache/cordova/CordovaWebViewClient$1;->this$0:Lorg/apache/cordova/CordovaWebViewClient;
-    invoke-static {v0}, Lorg/apache/cordova/CordovaWebViewClient$1;->access$0(Lorg/apache/cordova/CordovaWebViewClient$1;)Lorg/apache/cordova/CordovaWebViewClient;
-
-    move-result-object v0
+    iget-object v0, v0, Lorg/apache/cordova/CordovaWebViewClient$1;->this$0:Lorg/apache/cordova/CordovaWebViewClient;
 
     iget-object v0, v0, Lorg/apache/cordova/CordovaWebViewClient;->appView:Lorg/apache/cordova/CordovaWebView;
 
@@ -57,6 +53,6 @@
 
     invoke-virtual {v0, v1, v2}, Lorg/apache/cordova/CordovaWebView;->postMessage(Ljava/lang/String;Ljava/lang/Object;)V
 
-    .line 329
+    .line 199
     return-void
 .end method

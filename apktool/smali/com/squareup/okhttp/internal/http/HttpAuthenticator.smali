@@ -19,7 +19,6 @@
 
     sput-object v0, Lcom/squareup/okhttp/internal/http/HttpAuthenticator;->SYSTEM_DEFAULT:Lcom/squareup/okhttp/OkAuthenticator;
 
-    .line 80
     return-void
 .end method
 
@@ -67,13 +66,9 @@
 
     move-result v1
 
-    if-lt v6, v1, :cond_0
-
-    .line 164
-    return-object v9
+    if-ge v6, v1, :cond_2
 
     .line 133
-    :cond_0
     invoke-virtual {p0, v6}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getFieldName(I)Ljava/lang/String;
 
     move-result-object v1
@@ -82,16 +77,16 @@
 
     move-result v1
 
-    if-nez v1, :cond_2
+    if-nez v1, :cond_1
 
     .line 132
-    :cond_1
+    :cond_0
     add-int/lit8 v6, v6, 0x1
 
     goto :goto_0
 
     .line 136
-    :cond_2
+    :cond_1
     invoke-virtual {p0, v6}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getValue(I)Ljava/lang/String;
 
     move-result-object v0
@@ -107,7 +102,7 @@
 
     move-result v1
 
-    if-ge v2, v1, :cond_1
+    if-ge v2, v1, :cond_0
 
     .line 139
     move v11, v2
@@ -152,7 +147,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_1
+    if-eqz v1, :cond_0
 
     .line 153
     const-string v1, "realm=\""
@@ -206,6 +201,16 @@
     invoke-interface {v9, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
     goto :goto_1
+
+    .line 164
+    .end local v0    # "value":Ljava/lang/String;
+    .end local v2    # "pos":I
+    .end local v7    # "realm":Ljava/lang/String;
+    .end local v8    # "realmStart":I
+    .end local v10    # "scheme":Ljava/lang/String;
+    .end local v11    # "tokenStart":I
+    :cond_2
+    return-object v9
 .end method
 
 .method public static processAuthHeader(Lcom/squareup/okhttp/OkAuthenticator;ILcom/squareup/okhttp/internal/http/RawHeaders;Lcom/squareup/okhttp/internal/http/RawHeaders;Ljava/net/Proxy;Ljava/net/URL;)Z
@@ -273,7 +278,6 @@
     .restart local v3    # "responseField":Ljava/lang/String;
     const-string v2, "Proxy-Authorization"
 
-    .line 102
     .restart local v2    # "requestField":Ljava/lang/String;
     goto :goto_0
 
@@ -298,7 +302,6 @@
 
     if-ne v5, v6, :cond_4
 
-    .line 110
     invoke-interface {p0, p4, p5, v0}, Lcom/squareup/okhttp/OkAuthenticator;->authenticateProxy(Ljava/net/Proxy;Ljava/net/URL;Ljava/util/List;)Lcom/squareup/okhttp/OkAuthenticator$Credential;
 
     move-result-object v1
@@ -320,7 +323,7 @@
 
     goto :goto_1
 
-    .line 111
+    .line 109
     .end local v1    # "credential":Lcom/squareup/okhttp/OkAuthenticator$Credential;
     :cond_4
     invoke-interface {p0, p4, p5, v0}, Lcom/squareup/okhttp/OkAuthenticator;->authenticate(Ljava/net/Proxy;Ljava/net/URL;Ljava/util/List;)Lcom/squareup/okhttp/OkAuthenticator$Credential;

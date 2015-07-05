@@ -21,13 +21,12 @@
 # direct methods
 .method constructor <init>(Lcom/squareup/okhttp/internal/StrictLineReader;I)V
     .locals 0
-    .param p2, "$anonymous0"    # I
+    .param p2, "x0"    # I
 
     .prologue
-    .line 1
+    .line 148
     iput-object p1, p0, Lcom/squareup/okhttp/internal/StrictLineReader$1;->this$0:Lcom/squareup/okhttp/internal/StrictLineReader;
 
-    .line 148
     invoke-direct {p0, p2}, Ljava/io/ByteArrayOutputStream;-><init>(I)V
 
     return-void
@@ -73,7 +72,7 @@
     iget-object v5, p0, Lcom/squareup/okhttp/internal/StrictLineReader$1;->this$0:Lcom/squareup/okhttp/internal/StrictLineReader;
 
     # getter for: Lcom/squareup/okhttp/internal/StrictLineReader;->charset:Ljava/nio/charset/Charset;
-    invoke-static {v5}, Lcom/squareup/okhttp/internal/StrictLineReader;->access$0(Lcom/squareup/okhttp/internal/StrictLineReader;)Ljava/nio/charset/Charset;
+    invoke-static {v5}, Lcom/squareup/okhttp/internal/StrictLineReader;->access$000(Lcom/squareup/okhttp/internal/StrictLineReader;)Ljava/nio/charset/Charset;
 
     move-result-object v5
 

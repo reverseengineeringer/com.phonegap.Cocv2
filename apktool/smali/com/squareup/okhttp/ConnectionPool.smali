@@ -101,7 +101,7 @@
     :goto_1
     return-void
 
-    .line 66
+    .line 65
     .end local v2    # "keepAliveDurationMs":J
     :cond_0
     const-wide/32 v2, 0x493e0
@@ -140,12 +140,12 @@
 .end method
 
 .method public constructor <init>(IJ)V
-    .locals 10
+    .locals 12
     .param p1, "maxIdleConnections"    # I
     .param p2, "keepAliveDurationMs"    # J
 
     .prologue
-    const-wide/16 v8, 0x3e8
+    const-wide/16 v10, 0x3e8
 
     .line 120
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -158,31 +158,29 @@
     iput-object v0, p0, Lcom/squareup/okhttp/ConnectionPool;->connections:Ljava/util/LinkedList;
 
     .line 83
-    new-instance v0, Ljava/util/concurrent/ThreadPoolExecutor;
+    new-instance v1, Ljava/util/concurrent/ThreadPoolExecutor;
 
-    const/4 v1, 0x0
+    const/4 v2, 0x0
 
-    const/4 v2, 0x1
+    const/4 v3, 0x1
 
-    .line 84
-    const-wide/16 v3, 0x3c
+    const-wide/16 v4, 0x3c
 
-    sget-object v5, Ljava/util/concurrent/TimeUnit;->SECONDS:Ljava/util/concurrent/TimeUnit;
+    sget-object v6, Ljava/util/concurrent/TimeUnit;->SECONDS:Ljava/util/concurrent/TimeUnit;
 
-    new-instance v6, Ljava/util/concurrent/LinkedBlockingQueue;
+    new-instance v7, Ljava/util/concurrent/LinkedBlockingQueue;
 
-    invoke-direct {v6}, Ljava/util/concurrent/LinkedBlockingQueue;-><init>()V
+    invoke-direct {v7}, Ljava/util/concurrent/LinkedBlockingQueue;-><init>()V
 
-    .line 85
-    const-string v7, "OkHttp ConnectionPool"
+    const-string v0, "OkHttp ConnectionPool"
 
-    invoke-static {v7}, Lcom/squareup/okhttp/internal/Util;->daemonThreadFactory(Ljava/lang/String;)Ljava/util/concurrent/ThreadFactory;
+    invoke-static {v0}, Lcom/squareup/okhttp/internal/Util;->daemonThreadFactory(Ljava/lang/String;)Ljava/util/concurrent/ThreadFactory;
 
-    move-result-object v7
+    move-result-object v8
 
-    invoke-direct/range {v0 .. v7}, Ljava/util/concurrent/ThreadPoolExecutor;-><init>(IIJLjava/util/concurrent/TimeUnit;Ljava/util/concurrent/BlockingQueue;Ljava/util/concurrent/ThreadFactory;)V
+    invoke-direct/range {v1 .. v8}, Ljava/util/concurrent/ThreadPoolExecutor;-><init>(IIJLjava/util/concurrent/TimeUnit;Ljava/util/concurrent/BlockingQueue;Ljava/util/concurrent/ThreadFactory;)V
 
-    iput-object v0, p0, Lcom/squareup/okhttp/ConnectionPool;->executorService:Ljava/util/concurrent/ExecutorService;
+    iput-object v1, p0, Lcom/squareup/okhttp/ConnectionPool;->executorService:Ljava/util/concurrent/ExecutorService;
 
     .line 86
     new-instance v0, Lcom/squareup/okhttp/ConnectionPool$1;
@@ -195,9 +193,9 @@
     iput p1, p0, Lcom/squareup/okhttp/ConnectionPool;->maxIdleConnections:I
 
     .line 122
-    mul-long v0, p2, v8
+    mul-long v0, p2, v10
 
-    mul-long/2addr v0, v8
+    mul-long/2addr v0, v10
 
     iput-wide v0, p0, Lcom/squareup/okhttp/ConnectionPool;->keepAliveDurationNs:J
 
@@ -205,31 +203,34 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/ConnectionPool;)Ljava/util/LinkedList;
+.method static synthetic access$000(Lcom/squareup/okhttp/ConnectionPool;)Ljava/util/LinkedList;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/ConnectionPool;
 
     .prologue
-    .line 80
+    .line 55
     iget-object v0, p0, Lcom/squareup/okhttp/ConnectionPool;->connections:Ljava/util/LinkedList;
 
     return-object v0
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/ConnectionPool;)J
+.method static synthetic access$100(Lcom/squareup/okhttp/ConnectionPool;)J
     .locals 2
+    .param p0, "x0"    # Lcom/squareup/okhttp/ConnectionPool;
 
     .prologue
-    .line 78
+    .line 55
     iget-wide v0, p0, Lcom/squareup/okhttp/ConnectionPool;->keepAliveDurationNs:J
 
     return-wide v0
 .end method
 
-.method static synthetic access$2(Lcom/squareup/okhttp/ConnectionPool;)I
+.method static synthetic access$200(Lcom/squareup/okhttp/ConnectionPool;)I
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/ConnectionPool;
 
     .prologue
-    .line 77
+    .line 55
     iget v0, p0, Lcom/squareup/okhttp/ConnectionPool;->maxIdleConnections:I
 
     return v0
@@ -261,7 +262,6 @@
 
     move-result-object v1
 
-    .line 145
     invoke-interface {v1}, Ljava/util/concurrent/Future;->get()Ljava/lang/Object;
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
@@ -295,17 +295,17 @@
     :try_start_0
     new-instance v1, Ljava/util/ArrayList;
 
-    iget-object v2, p0, Lcom/squareup/okhttp/ConnectionPool;->connections:Ljava/util/LinkedList;
+    iget-object v3, p0, Lcom/squareup/okhttp/ConnectionPool;->connections:Ljava/util/LinkedList;
 
-    invoke-direct {v1, v2}, Ljava/util/ArrayList;-><init>(Ljava/util/Collection;)V
+    invoke-direct {v1, v3}, Ljava/util/ArrayList;-><init>(Ljava/util/Collection;)V
 
     .line 267
     .local v1, "connections":Ljava/util/List;, "Ljava/util/List<Lcom/squareup/okhttp/Connection;>;"
-    iget-object v2, p0, Lcom/squareup/okhttp/ConnectionPool;->connections:Ljava/util/LinkedList;
+    iget-object v3, p0, Lcom/squareup/okhttp/ConnectionPool;->connections:Ljava/util/LinkedList;
 
-    invoke-virtual {v2}, Ljava/util/LinkedList;->clear()V
+    invoke-virtual {v3}, Ljava/util/LinkedList;->clear()V
 
-    .line 265
+    .line 268
     monitor-exit p0
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
@@ -315,31 +315,14 @@
 
     move-result-object v2
 
+    .local v2, "i$":Ljava/util/Iterator;
     :goto_0
     invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v3
 
-    if-nez v3, :cond_0
+    if-eqz v3, :cond_0
 
-    .line 273
-    return-void
-
-    .line 265
-    .end local v1    # "connections":Ljava/util/List;, "Ljava/util/List<Lcom/squareup/okhttp/Connection;>;"
-    :catchall_0
-    move-exception v2
-
-    :try_start_1
-    monitor-exit p0
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
-
-    throw v2
-
-    .line 270
-    .restart local v1    # "connections":Ljava/util/List;, "Ljava/util/List<Lcom/squareup/okhttp/Connection;>;"
-    :cond_0
     invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v0
@@ -351,6 +334,26 @@
     invoke-static {v0}, Lcom/squareup/okhttp/internal/Util;->closeQuietly(Ljava/io/Closeable;)V
 
     goto :goto_0
+
+    .line 268
+    .end local v0    # "connection":Lcom/squareup/okhttp/Connection;
+    .end local v1    # "connections":Ljava/util/List;, "Ljava/util/List<Lcom/squareup/okhttp/Connection;>;"
+    .end local v2    # "i$":Ljava/util/Iterator;
+    :catchall_0
+    move-exception v3
+
+    :try_start_1
+    monitor-exit p0
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    throw v3
+
+    .line 273
+    .restart local v1    # "connections":Ljava/util/List;, "Ljava/util/List<Lcom/squareup/okhttp/Connection;>;"
+    .restart local v2    # "i$":Ljava/util/Iterator;
+    :cond_0
+    return-void
 .end method
 
 .method public declared-synchronized get(Lcom/squareup/okhttp/Address;)Lcom/squareup/okhttp/Connection;
@@ -386,41 +389,9 @@
 
     move-result v4
 
-    if-nez v4, :cond_2
-
-    .line 204
-    :goto_1
-    if-eqz v2, :cond_1
-
-    invoke-virtual {v2}, Lcom/squareup/okhttp/Connection;->isSpdy()Z
-
-    move-result v4
-
-    if-eqz v4, :cond_1
-
-    .line 205
-    iget-object v4, p0, Lcom/squareup/okhttp/ConnectionPool;->connections:Ljava/util/LinkedList;
-
-    invoke-virtual {v4, v2}, Ljava/util/LinkedList;->addFirst(Ljava/lang/Object;)V
-
-    .line 208
-    :cond_1
-    iget-object v4, p0, Lcom/squareup/okhttp/ConnectionPool;->executorService:Ljava/util/concurrent/ExecutorService;
-
-    iget-object v5, p0, Lcom/squareup/okhttp/ConnectionPool;->connectionsCleanupCallable:Ljava/util/concurrent/Callable;
-
-    invoke-interface {v4, v5}, Ljava/util/concurrent/ExecutorService;->submit(Ljava/util/concurrent/Callable;)Ljava/util/concurrent/Future;
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    .line 209
-    monitor-exit p0
-
-    return-object v2
+    if-eqz v4, :cond_2
 
     .line 183
-    :cond_2
-    :try_start_1
     invoke-interface {v3}, Ljava/util/ListIterator;->previous()Ljava/lang/Object;
 
     move-result-object v0
@@ -443,14 +414,12 @@
 
     if-eqz v4, :cond_0
 
-    .line 185
     invoke-virtual {v0}, Lcom/squareup/okhttp/Connection;->isAlive()Z
 
     move-result v4
 
     if-eqz v4, :cond_0
 
-    .line 186
     invoke-static {}, Ljava/lang/System;->nanoTime()J
 
     move-result-wide v4
@@ -472,15 +441,15 @@
 
     .line 190
     invoke-virtual {v0}, Lcom/squareup/okhttp/Connection;->isSpdy()Z
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     move-result v4
 
-    if-nez v4, :cond_3
+    if-nez v4, :cond_1
 
     .line 192
-    :try_start_2
+    :try_start_1
     invoke-static {}, Lcom/squareup/okhttp/internal/Platform;->get()Lcom/squareup/okhttp/internal/Platform;
 
     move-result-object v4
@@ -490,18 +459,48 @@
     move-result-object v5
 
     invoke-virtual {v4, v5}, Lcom/squareup/okhttp/internal/Platform;->tagSocket(Ljava/net/Socket;)V
-    :try_end_2
-    .catch Ljava/net/SocketException; {:try_start_2 .. :try_end_2} :catch_0
-    .catchall {:try_start_2 .. :try_end_2} :catchall_0
+    :try_end_1
+    .catch Ljava/net/SocketException; {:try_start_1 .. :try_end_1} :catch_0
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     .line 200
-    :cond_3
+    :cond_1
     move-object v2, v0
 
-    .line 201
-    goto :goto_1
+    .line 204
+    .end local v0    # "connection":Lcom/squareup/okhttp/Connection;
+    :cond_2
+    if-eqz v2, :cond_3
+
+    :try_start_2
+    invoke-virtual {v2}, Lcom/squareup/okhttp/Connection;->isSpdy()Z
+
+    move-result v4
+
+    if-eqz v4, :cond_3
+
+    .line 205
+    iget-object v4, p0, Lcom/squareup/okhttp/ConnectionPool;->connections:Ljava/util/LinkedList;
+
+    invoke-virtual {v4, v2}, Ljava/util/LinkedList;->addFirst(Ljava/lang/Object;)V
+
+    .line 208
+    :cond_3
+    iget-object v4, p0, Lcom/squareup/okhttp/ConnectionPool;->executorService:Ljava/util/concurrent/ExecutorService;
+
+    iget-object v5, p0, Lcom/squareup/okhttp/ConnectionPool;->connectionsCleanupCallable:Ljava/util/concurrent/Callable;
+
+    invoke-interface {v4, v5}, Ljava/util/concurrent/ExecutorService;->submit(Ljava/util/concurrent/Callable;)Ljava/util/concurrent/Future;
+    :try_end_2
+    .catchall {:try_start_2 .. :try_end_2} :catchall_0
+
+    .line 209
+    monitor-exit p0
+
+    return-object v2
 
     .line 193
+    .restart local v0    # "connection":Lcom/squareup/okhttp/Connection;
     :catch_0
     move-exception v1
 
@@ -517,9 +516,13 @@
 
     new-instance v5, Ljava/lang/StringBuilder;
 
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v6, "Unable to tagSocket(): "
 
-    invoke-direct {v5, v6}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
 
     invoke-virtual {v5, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
@@ -606,7 +609,7 @@
 
     return-object v0
 
-    .line 131
+    .line 133
     :catchall_0
     move-exception v0
 
@@ -624,36 +627,27 @@
     .line 171
     monitor-enter p0
 
-    const/4 v1, 0x0
+    const/4 v2, 0x0
 
     .line 172
-    .local v1, "total":I
+    .local v2, "total":I
     :try_start_0
-    iget-object v2, p0, Lcom/squareup/okhttp/ConnectionPool;->connections:Ljava/util/LinkedList;
+    iget-object v3, p0, Lcom/squareup/okhttp/ConnectionPool;->connections:Ljava/util/LinkedList;
 
-    invoke-virtual {v2}, Ljava/util/LinkedList;->iterator()Ljava/util/Iterator;
+    invoke-virtual {v3}, Ljava/util/LinkedList;->iterator()Ljava/util/Iterator;
 
-    move-result-object v2
+    move-result-object v1
 
+    .local v1, "i$":Ljava/util/Iterator;
     :cond_0
     :goto_0
-    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v3
 
-    if-nez v3, :cond_1
+    if-eqz v3, :cond_1
 
-    .line 175
-    monitor-exit p0
-
-    return v1
-
-    .line 172
-    :cond_1
-    :try_start_1
-    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v0
 
@@ -662,25 +656,32 @@
     .line 173
     .local v0, "connection":Lcom/squareup/okhttp/Connection;
     invoke-virtual {v0}, Lcom/squareup/okhttp/Connection;->isSpdy()Z
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     move-result v3
 
     if-nez v3, :cond_0
 
-    add-int/lit8 v1, v1, 0x1
+    add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 171
+    .line 175
     .end local v0    # "connection":Lcom/squareup/okhttp/Connection;
+    :cond_1
+    monitor-exit p0
+
+    return v2
+
+    .line 171
+    .end local v1    # "i$":Ljava/util/Iterator;
     :catchall_0
-    move-exception v2
+    move-exception v3
 
     monitor-exit p0
 
-    throw v2
+    throw v3
 .end method
 
 .method public declared-synchronized getSpdyConnectionCount()I
@@ -690,36 +691,27 @@
     .line 162
     monitor-enter p0
 
-    const/4 v1, 0x0
+    const/4 v2, 0x0
 
     .line 163
-    .local v1, "total":I
+    .local v2, "total":I
     :try_start_0
-    iget-object v2, p0, Lcom/squareup/okhttp/ConnectionPool;->connections:Ljava/util/LinkedList;
+    iget-object v3, p0, Lcom/squareup/okhttp/ConnectionPool;->connections:Ljava/util/LinkedList;
 
-    invoke-virtual {v2}, Ljava/util/LinkedList;->iterator()Ljava/util/Iterator;
+    invoke-virtual {v3}, Ljava/util/LinkedList;->iterator()Ljava/util/Iterator;
 
-    move-result-object v2
+    move-result-object v1
 
+    .local v1, "i$":Ljava/util/Iterator;
     :cond_0
     :goto_0
-    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v3
 
-    if-nez v3, :cond_1
+    if-eqz v3, :cond_1
 
-    .line 166
-    monitor-exit p0
-
-    return v1
-
-    .line 163
-    :cond_1
-    :try_start_1
-    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v0
 
@@ -728,25 +720,32 @@
     .line 164
     .local v0, "connection":Lcom/squareup/okhttp/Connection;
     invoke-virtual {v0}, Lcom/squareup/okhttp/Connection;->isSpdy()Z
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     move-result v3
 
     if-eqz v3, :cond_0
 
-    add-int/lit8 v1, v1, 0x1
+    add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 162
+    .line 166
     .end local v0    # "connection":Lcom/squareup/okhttp/Connection;
+    :cond_1
+    monitor-exit p0
+
+    return v2
+
+    .line 162
+    .end local v1    # "i$":Ljava/util/Iterator;
     :catchall_0
-    move-exception v2
+    move-exception v3
 
     monitor-exit p0
 
-    throw v2
+    throw v3
 .end method
 
 .method public maybeShare(Lcom/squareup/okhttp/Connection;)V
@@ -790,7 +789,7 @@
 
     invoke-virtual {v0, p1}, Ljava/util/LinkedList;->addFirst(Ljava/lang/Object;)V
 
-    .line 256
+    .line 258
     monitor-exit p0
 
     goto :goto_0
@@ -861,7 +860,7 @@
     .line 239
     invoke-virtual {p1}, Lcom/squareup/okhttp/Connection;->resetIdleStartTime()V
 
-    .line 237
+    .line 240
     monitor-exit p0
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
@@ -887,9 +886,13 @@
 
     new-instance v2, Ljava/lang/StringBuilder;
 
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v3, "Unable to untagSocket(): "
 
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
 
     invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
@@ -906,7 +909,7 @@
 
     goto :goto_0
 
-    .line 237
+    .line 240
     .end local v0    # "e":Ljava/net/SocketException;
     :catchall_0
     move-exception v1

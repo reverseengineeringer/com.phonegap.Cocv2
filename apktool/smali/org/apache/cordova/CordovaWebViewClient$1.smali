@@ -26,23 +26,12 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 192
     iput-object p1, p0, Lorg/apache/cordova/CordovaWebViewClient$1;->this$0:Lorg/apache/cordova/CordovaWebViewClient;
 
-    .line 322
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
-.end method
-
-.method static synthetic access$0(Lorg/apache/cordova/CordovaWebViewClient$1;)Lorg/apache/cordova/CordovaWebViewClient;
-    .locals 1
-
-    .prologue
-    .line 322
-    iget-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient$1;->this$0:Lorg/apache/cordova/CordovaWebViewClient;
-
-    return-object v0
 .end method
 
 
@@ -51,13 +40,13 @@
     .locals 2
 
     .prologue
-    .line 325
+    .line 195
     const-wide/16 v0, 0x7d0
 
     :try_start_0
     invoke-static {v0, v1}, Ljava/lang/Thread;->sleep(J)V
 
-    .line 326
+    .line 196
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebViewClient$1;->this$0:Lorg/apache/cordova/CordovaWebViewClient;
 
     iget-object v0, v0, Lorg/apache/cordova/CordovaWebViewClient;->cordova:Lorg/apache/cordova/CordovaInterface;
@@ -74,11 +63,11 @@
     :try_end_0
     .catch Ljava/lang/InterruptedException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 333
+    .line 203
     :goto_0
     return-void
 
-    .line 331
+    .line 201
     :catch_0
     move-exception v0
 

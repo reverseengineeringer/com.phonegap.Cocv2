@@ -23,10 +23,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 100
     iput-object p1, p0, Lorg/apache/cordova/networkinformation/NetworkManager$1;->this$0:Lorg/apache/cordova/networkinformation/NetworkManager;
 
-    .line 103
     invoke-direct {p0}, Landroid/content/BroadcastReceiver;-><init>()V
 
     return-void
@@ -40,14 +39,14 @@
     .param p2, "intent"    # Landroid/content/Intent;
 
     .prologue
-    .line 107
+    .line 104
     iget-object v0, p0, Lorg/apache/cordova/networkinformation/NetworkManager$1;->this$0:Lorg/apache/cordova/networkinformation/NetworkManager;
 
     iget-object v0, v0, Lorg/apache/cordova/networkinformation/NetworkManager;->webView:Lorg/apache/cordova/CordovaWebView;
 
     if-eqz v0, :cond_0
 
-    .line 108
+    .line 105
     iget-object v0, p0, Lorg/apache/cordova/networkinformation/NetworkManager$1;->this$0:Lorg/apache/cordova/networkinformation/NetworkManager;
 
     iget-object v1, p0, Lorg/apache/cordova/networkinformation/NetworkManager$1;->this$0:Lorg/apache/cordova/networkinformation/NetworkManager;
@@ -59,9 +58,9 @@
     move-result-object v1
 
     # invokes: Lorg/apache/cordova/networkinformation/NetworkManager;->updateConnectionInfo(Landroid/net/NetworkInfo;)V
-    invoke-static {v0, v1}, Lorg/apache/cordova/networkinformation/NetworkManager;->access$0(Lorg/apache/cordova/networkinformation/NetworkManager;Landroid/net/NetworkInfo;)V
+    invoke-static {v0, v1}, Lorg/apache/cordova/networkinformation/NetworkManager;->access$000(Lorg/apache/cordova/networkinformation/NetworkManager;Landroid/net/NetworkInfo;)V
 
-    .line 109
+    .line 106
     :cond_0
     return-void
 .end method

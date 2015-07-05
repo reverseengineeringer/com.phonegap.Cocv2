@@ -26,29 +26,29 @@
     .param p1, "js"    # Ljava/lang/String;
 
     .prologue
-    .line 394
+    .line 407
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 395
+    .line 408
     if-nez p1, :cond_0
 
-    .line 396
+    .line 409
     new-instance v0, Ljava/lang/NullPointerException;
 
     invoke-direct {v0}, Ljava/lang/NullPointerException;-><init>()V
 
     throw v0
 
-    .line 398
+    .line 411
     :cond_0
     iput-object p1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->jsPayloadOrCallbackId:Ljava/lang/String;
 
-    .line 399
+    .line 412
     const/4 v0, 0x0
 
     iput-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
-    .line 400
+    .line 413
     return-void
 .end method
 
@@ -58,15 +58,15 @@
     .param p2, "callbackId"    # Ljava/lang/String;
 
     .prologue
-    .line 401
+    .line 414
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 402
+    .line 415
     if-eqz p2, :cond_0
 
     if-nez p1, :cond_1
 
-    .line 403
+    .line 416
     :cond_0
     new-instance v0, Ljava/lang/NullPointerException;
 
@@ -74,14 +74,14 @@
 
     throw v0
 
-    .line 405
+    .line 418
     :cond_1
     iput-object p2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->jsPayloadOrCallbackId:Ljava/lang/String;
 
-    .line 406
+    .line 419
     iput-object p1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
-    .line 407
+    .line 420
     return-void
 .end method
 
@@ -91,12 +91,12 @@
     .locals 4
 
     .prologue
-    .line 410
+    .line 423
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     if-nez v2, :cond_0
 
-    .line 411
+    .line 424
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->jsPayloadOrCallbackId:Ljava/lang/String;
 
     invoke-virtual {v2}, Ljava/lang/String;->length()I
@@ -105,11 +105,11 @@
 
     add-int/lit8 v0, v2, 0x1
 
-    .line 436
+    .line 449
     :goto_0
     return v0
 
-    .line 413
+    .line 426
     :cond_0
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
@@ -125,7 +125,7 @@
 
     move-result v1
 
-    .line 414
+    .line 427
     .local v1, "statusLen":I
     add-int/lit8 v2, v1, 0x2
 
@@ -141,7 +141,7 @@
 
     add-int/lit8 v0, v2, 0x1
 
-    .line 415
+    .line 428
     .local v0, "ret":I
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
@@ -151,7 +151,7 @@
 
     packed-switch v2, :pswitch_data_0
 
-    .line 434
+    .line 447
     :pswitch_0
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
@@ -167,14 +167,14 @@
 
     goto :goto_0
 
-    .line 418
+    .line 431
     :pswitch_1
     add-int/lit8 v0, v0, 0x1
 
-    .line 419
+    .line 432
     goto :goto_0
 
-    .line 421
+    .line 434
     :pswitch_2
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
@@ -190,10 +190,10 @@
 
     add-int/2addr v0, v2
 
-    .line 422
+    .line 435
     goto :goto_0
 
-    .line 424
+    .line 437
     :pswitch_3
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
@@ -209,10 +209,10 @@
 
     add-int/2addr v0, v2
 
-    .line 425
+    .line 438
     goto :goto_0
 
-    .line 427
+    .line 440
     :pswitch_4
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
@@ -228,10 +228,10 @@
 
     add-int/2addr v0, v2
 
-    .line 428
+    .line 441
     goto :goto_0
 
-    .line 430
+    .line 443
     :pswitch_5
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
@@ -247,10 +247,10 @@
 
     add-int/2addr v0, v2
 
-    .line 431
+    .line 444
     goto :goto_0
 
-    .line 415
+    .line 428
     :pswitch_data_0
     .packed-switch 0x1
         :pswitch_3
@@ -268,21 +268,21 @@
     .param p1, "sb"    # Ljava/lang/StringBuilder;
 
     .prologue
-    .line 486
+    .line 499
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     if-nez v2, :cond_0
 
-    .line 487
+    .line 500
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->jsPayloadOrCallbackId:Ljava/lang/String;
 
     invoke-virtual {p1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 516
+    .line 529
     :goto_0
     return-void
 
-    .line 489
+    .line 502
     :cond_0
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
@@ -290,7 +290,7 @@
 
     move-result v0
 
-    .line 490
+    .line 503
     .local v0, "status":I
     sget-object v2, Lorg/apache/cordova/PluginResult$Status;->OK:Lorg/apache/cordova/PluginResult$Status;
 
@@ -306,11 +306,12 @@
 
     move-result v2
 
-    if-eq v0, v2, :cond_1
+    if-ne v0, v2, :cond_2
 
-    const/4 v1, 0x0
+    :cond_1
+    const/4 v1, 0x1
 
-    .line 491
+    .line 504
     .local v1, "success":Z
     :goto_1
     const-string v2, "cordova.callbackFromNative(\'"
@@ -319,43 +320,37 @@
 
     move-result-object v2
 
-    .line 492
     iget-object v3, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->jsPayloadOrCallbackId:Ljava/lang/String;
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v2
 
-    .line 493
     const-string v3, "\',"
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v2
 
-    .line 494
     invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
 
     move-result-object v2
 
-    .line 495
     const-string v3, ","
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v2
 
-    .line 496
     invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v2
 
-    .line 497
     const-string v3, ",["
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 498
+    .line 511
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     invoke-virtual {v2}, Lorg/apache/cordova/PluginResult;->getMessageType()I
@@ -364,7 +359,7 @@
 
     packed-switch v2, :pswitch_data_0
 
-    .line 510
+    .line 523
     iget-object v2, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     invoke-virtual {v2}, Lorg/apache/cordova/PluginResult;->getMessage()Ljava/lang/String;
@@ -373,7 +368,7 @@
 
     invoke-virtual {p1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 512
+    .line 525
     :goto_2
     const-string v2, "],"
 
@@ -381,7 +376,6 @@
 
     move-result-object v2
 
-    .line 513
     iget-object v3, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     invoke-virtual {v3}, Lorg/apache/cordova/PluginResult;->getKeepCallback()Z
@@ -392,21 +386,20 @@
 
     move-result-object v2
 
-    .line 514
     const-string v3, ");"
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     goto :goto_0
 
-    .line 490
+    .line 503
     .end local v1    # "success":Z
-    :cond_1
-    const/4 v1, 0x1
+    :cond_2
+    const/4 v1, 0x0
 
     goto :goto_1
 
-    .line 500
+    .line 513
     .restart local v1    # "success":Z
     :pswitch_0
     const-string v2, "atob(\'"
@@ -415,7 +408,6 @@
 
     move-result-object v2
 
-    .line 501
     iget-object v3, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     invoke-virtual {v3}, Lorg/apache/cordova/PluginResult;->getMessage()Ljava/lang/String;
@@ -426,14 +418,13 @@
 
     move-result-object v2
 
-    .line 502
     const-string v3, "\')"
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     goto :goto_2
 
-    .line 505
+    .line 518
     :pswitch_1
     const-string v2, "cordova.require(\'cordova/base64\').toArrayBuffer(\'"
 
@@ -441,7 +432,6 @@
 
     move-result-object v2
 
-    .line 506
     iget-object v3, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     invoke-virtual {v3}, Lorg/apache/cordova/PluginResult;->getMessage()Ljava/lang/String;
@@ -452,14 +442,13 @@
 
     move-result-object v2
 
-    .line 507
     const-string v3, "\')"
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     goto :goto_2
 
-    .line 498
+    .line 511
     :pswitch_data_0
     .packed-switch 0x6
         :pswitch_1
@@ -480,28 +469,27 @@
 
     const/4 v5, 0x0
 
-    .line 440
+    .line 453
     iget-object v7, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     if-nez v7, :cond_0
 
-    .line 441
+    .line 454
     const/16 v4, 0x4a
 
     invoke-virtual {p1, v4}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 442
     iget-object v5, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->jsPayloadOrCallbackId:Ljava/lang/String;
 
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 483
+    .line 496
     :goto_0
     return-void
 
-    .line 445
+    .line 458
     :cond_0
     iget-object v7, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
@@ -509,7 +497,7 @@
 
     move-result v3
 
-    .line 446
+    .line 459
     .local v3, "status":I
     sget-object v7, Lorg/apache/cordova/PluginResult$Status;->NO_RESULT:Lorg/apache/cordova/PluginResult$Status;
 
@@ -521,7 +509,7 @@
 
     move v1, v4
 
-    .line 447
+    .line 460
     .local v1, "noResult":Z
     :goto_1
     sget-object v7, Lorg/apache/cordova/PluginResult$Status;->OK:Lorg/apache/cordova/PluginResult$Status;
@@ -534,7 +522,7 @@
 
     move v2, v4
 
-    .line 448
+    .line 461
     .local v2, "resultOk":Z
     :goto_2
     iget-object v4, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
@@ -543,7 +531,7 @@
 
     move-result v0
 
-    .line 450
+    .line 463
     .local v0, "keepCallback":Z
     if-nez v1, :cond_1
 
@@ -557,7 +545,6 @@
 
     move-result-object v7
 
-    .line 451
     if-eqz v0, :cond_5
 
     const/16 v4, 0x31
@@ -567,27 +554,23 @@
 
     move-result-object v4
 
-    .line 452
     invoke-virtual {v4, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 453
     invoke-virtual {v4, v8}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 454
     iget-object v7, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->jsPayloadOrCallbackId:Ljava/lang/String;
 
     invoke-virtual {v4, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 455
     invoke-virtual {v4, v8}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
-    .line 456
+    .line 469
     iget-object v4, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     invoke-virtual {v4}, Lorg/apache/cordova/PluginResult;->getMessageType()I
@@ -596,7 +579,7 @@
 
     packed-switch v4, :pswitch_data_0
 
-    .line 481
+    .line 494
     :pswitch_0
     iget-object v4, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
@@ -614,17 +597,17 @@
     :cond_2
     move v1, v5
 
-    .line 446
+    .line 459
     goto :goto_1
 
     .restart local v1    # "noResult":Z
     :cond_3
     move v2, v5
 
-    .line 447
+    .line 460
     goto :goto_2
 
-    .line 450
+    .line 463
     .restart local v0    # "keepCallback":Z
     .restart local v2    # "resultOk":Z
     :cond_4
@@ -632,13 +615,12 @@
 
     goto :goto_3
 
-    .line 451
     :cond_5
     const/16 v4, 0x30
 
     goto :goto_4
 
-    .line 458
+    .line 471
     :pswitch_1
     iget-object v4, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
@@ -654,7 +636,7 @@
 
     goto :goto_0
 
-    .line 461
+    .line 474
     :pswitch_2
     const/16 v4, 0x4e
 
@@ -662,7 +644,7 @@
 
     goto :goto_0
 
-    .line 464
+    .line 477
     :pswitch_3
     const/16 v4, 0x6e
 
@@ -670,7 +652,6 @@
 
     move-result-object v4
 
-    .line 465
     iget-object v5, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     invoke-virtual {v5}, Lorg/apache/cordova/PluginResult;->getMessage()Ljava/lang/String;
@@ -681,13 +662,13 @@
 
     goto/16 :goto_0
 
-    .line 468
+    .line 481
     :pswitch_4
     const/16 v4, 0x73
 
     invoke-virtual {p1, v4}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
-    .line 469
+    .line 482
     iget-object v4, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     invoke-virtual {v4}, Lorg/apache/cordova/PluginResult;->getStrMessage()Ljava/lang/String;
@@ -698,11 +679,11 @@
 
     goto/16 :goto_0
 
-    .line 472
+    .line 485
     :pswitch_5
     invoke-virtual {p1, v6}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
-    .line 473
+    .line 486
     iget-object v4, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     invoke-virtual {v4}, Lorg/apache/cordova/PluginResult;->getMessage()Ljava/lang/String;
@@ -713,13 +694,13 @@
 
     goto/16 :goto_0
 
-    .line 476
+    .line 489
     :pswitch_6
     const/16 v4, 0x41
 
     invoke-virtual {p1, v4}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
-    .line 477
+    .line 490
     iget-object v4, p0, Lorg/apache/cordova/NativeToJsMessageQueue$JsMessage;->pluginResult:Lorg/apache/cordova/PluginResult;
 
     invoke-virtual {v4}, Lorg/apache/cordova/PluginResult;->getMessage()Ljava/lang/String;
@@ -730,7 +711,7 @@
 
     goto/16 :goto_0
 
-    .line 456
+    .line 469
     :pswitch_data_0
     .packed-switch 0x1
         :pswitch_4

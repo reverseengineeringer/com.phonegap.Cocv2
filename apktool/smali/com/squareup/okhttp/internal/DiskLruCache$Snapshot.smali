@@ -31,7 +31,7 @@
 
 # direct methods
 .method private constructor <init>(Lcom/squareup/okhttp/internal/DiskLruCache;Ljava/lang/String;J[Ljava/io/InputStream;[J)V
-    .locals 0
+    .locals 1
     .param p2, "key"    # Ljava/lang/String;
     .param p3, "sequenceNumber"    # J
     .param p5, "ins"    # [Ljava/io/InputStream;
@@ -59,11 +59,17 @@
     return-void
 .end method
 
-.method synthetic constructor <init>(Lcom/squareup/okhttp/internal/DiskLruCache;Ljava/lang/String;J[Ljava/io/InputStream;[JLcom/squareup/okhttp/internal/DiskLruCache$Snapshot;)V
-    .locals 0
+.method synthetic constructor <init>(Lcom/squareup/okhttp/internal/DiskLruCache;Ljava/lang/String;J[Ljava/io/InputStream;[JLcom/squareup/okhttp/internal/DiskLruCache$1;)V
+    .locals 1
+    .param p1, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache;
+    .param p2, "x1"    # Ljava/lang/String;
+    .param p3, "x2"    # J
+    .param p5, "x3"    # [Ljava/io/InputStream;
+    .param p6, "x4"    # [J
+    .param p7, "x5"    # Lcom/squareup/okhttp/internal/DiskLruCache$1;
 
     .prologue
-    .line 671
+    .line 665
     invoke-direct/range {p0 .. p6}, Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;-><init>(Lcom/squareup/okhttp/internal/DiskLruCache;Ljava/lang/String;J[Ljava/io/InputStream;[J)V
 
     return-void
@@ -76,30 +82,33 @@
 
     .prologue
     .line 703
-    iget-object v2, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;->ins:[Ljava/io/InputStream;
+    iget-object v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;->ins:[Ljava/io/InputStream;
 
-    array-length v3, v2
+    .local v0, "arr$":[Ljava/io/InputStream;
+    array-length v3, v0
 
+    .local v3, "len$":I
     const/4 v1, 0x0
 
+    .local v1, "i$":I
     :goto_0
-    if-lt v1, v3, :cond_0
+    if-ge v1, v3, :cond_0
 
-    .line 706
-    return-void
-
-    .line 703
-    :cond_0
-    aget-object v0, v2, v1
+    aget-object v2, v0, v1
 
     .line 704
-    .local v0, "in":Ljava/io/InputStream;
-    invoke-static {v0}, Lcom/squareup/okhttp/internal/Util;->closeQuietly(Ljava/io/Closeable;)V
+    .local v2, "in":Ljava/io/InputStream;
+    invoke-static {v2}, Lcom/squareup/okhttp/internal/Util;->closeQuietly(Ljava/io/Closeable;)V
 
     .line 703
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
+
+    .line 706
+    .end local v2    # "in":Ljava/io/InputStream;
+    :cond_0
+    return-void
 .end method
 
 .method public edit()Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
@@ -119,7 +128,7 @@
     iget-wide v2, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;->sequenceNumber:J
 
     # invokes: Lcom/squareup/okhttp/internal/DiskLruCache;->edit(Ljava/lang/String;J)Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
-    invoke-static {v0, v1, v2, v3}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$5(Lcom/squareup/okhttp/internal/DiskLruCache;Ljava/lang/String;J)Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
+    invoke-static {v0, v1, v2, v3}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$1600(Lcom/squareup/okhttp/internal/DiskLruCache;Ljava/lang/String;J)Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
 
     move-result-object v0
 
@@ -168,7 +177,7 @@
     move-result-object v0
 
     # invokes: Lcom/squareup/okhttp/internal/DiskLruCache;->inputStreamToString(Ljava/io/InputStream;)Ljava/lang/String;
-    invoke-static {v0}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$6(Ljava/io/InputStream;)Ljava/lang/String;
+    invoke-static {v0}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$1700(Ljava/io/InputStream;)Ljava/lang/String;
 
     move-result-object v0
 

@@ -6,8 +6,8 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Lcom/squareup/okhttp/OkAuthenticator$Challenge;,
-        Lcom/squareup/okhttp/OkAuthenticator$Credential;
+        Lcom/squareup/okhttp/OkAuthenticator$Credential;,
+        Lcom/squareup/okhttp/OkAuthenticator$Challenge;
     }
 .end annotation
 

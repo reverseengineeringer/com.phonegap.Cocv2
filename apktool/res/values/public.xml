@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public type="drawable" name="icon" id="0x7f020000" />
-    <public type="drawable" name="splash" id="0x7f020001" />
-    <public type="xml" name="config" id="0x7f030000" />
-    <public type="string" name="app_name" id="0x7f040000" />
+    <public type="drawable" name="btn_flash_auto" id="0x7f020000" />
+    <public type="drawable" name="btn_flash_no" id="0x7f020001" />
+    <public type="drawable" name="btn_flash_on" id="0x7f020002" />
+    <public type="drawable" name="btn_flip" id="0x7f020003" />
+    <public type="drawable" name="btn_shot" id="0x7f020004" />
+    <public type="drawable" name="icon" id="0x7f020008" />
+    <public type="drawable" name="splash" id="0x7f020009" />
+    <public type="drawable" name="viewfinder" id="0x7f02000a" />
+    <public type="drawable" name="ic_action_next_item" id="0x7f020005" />
+    <public type="drawable" name="ic_action_previous_item" id="0x7f020006" />
+    <public type="drawable" name="ic_action_remove" id="0x7f020007" />
+    <public type="layout" name="nativecameraplugin" id="0x7f030000" />
+    <public type="xml" name="config" id="0x7f040000" />
+    <public type="string" name="app_name" id="0x7f050000" />
+    <public type="string" name="launcher_name" id="0x7f050001" />
+    <public type="string" name="activity_name" id="0x7f050002" />
+    <public type="id" name="preview" id="0x7f060000" />
+    <public type="id" name="linearLayout" id="0x7f060001" />
+    <public type="id" name="flipCamera" id="0x7f060002" />
+    <public type="id" name="captureButton" id="0x7f060003" />
+    <public type="id" name="flashButton" id="0x7f060004" />
+    <public type="id" name="viewfinderArea" id="0x7f060005" />
+    <public type="id" name="viewfinder" id="0x7f060006" />
 </resources>

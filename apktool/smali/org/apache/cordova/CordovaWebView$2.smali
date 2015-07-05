@@ -20,9 +20,9 @@
 # instance fields
 .field final synthetic this$0:Lorg/apache/cordova/CordovaWebView;
 
-.field private final synthetic val$me:Lorg/apache/cordova/CordovaWebView;
+.field final synthetic val$me:Lorg/apache/cordova/CordovaWebView;
 
-.field private final synthetic val$url:Ljava/lang/String;
+.field final synthetic val$url:Ljava/lang/String;
 
 
 # direct methods
@@ -30,14 +30,13 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 392
     iput-object p1, p0, Lorg/apache/cordova/CordovaWebView$2;->this$0:Lorg/apache/cordova/CordovaWebView;
 
     iput-object p2, p0, Lorg/apache/cordova/CordovaWebView$2;->val$me:Lorg/apache/cordova/CordovaWebView;
 
     iput-object p3, p0, Lorg/apache/cordova/CordovaWebView$2;->val$url:Ljava/lang/String;
 
-    .line 466
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -49,26 +48,26 @@
     .locals 5
 
     .prologue
-    .line 468
+    .line 394
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebView$2;->val$me:Lorg/apache/cordova/CordovaWebView;
 
     invoke-virtual {v0}, Lorg/apache/cordova/CordovaWebView;->stopLoading()V
 
-    .line 469
+    .line 395
     const-string v0, "CordovaWebView"
 
     const-string v1, "CordovaWebView: TIMEOUT ERROR!"
 
     invoke-static {v0, v1}, Lorg/apache/cordova/LOG;->e(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 470
+    .line 396
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebView$2;->this$0:Lorg/apache/cordova/CordovaWebView;
 
     iget-object v0, v0, Lorg/apache/cordova/CordovaWebView;->viewClient:Lorg/apache/cordova/CordovaWebViewClient;
 
     if-eqz v0, :cond_0
 
-    .line 471
+    .line 397
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebView$2;->this$0:Lorg/apache/cordova/CordovaWebView;
 
     iget-object v0, v0, Lorg/apache/cordova/CordovaWebView;->viewClient:Lorg/apache/cordova/CordovaWebViewClient;
@@ -83,7 +82,7 @@
 
     invoke-virtual {v0, v1, v2, v3, v4}, Lorg/apache/cordova/CordovaWebViewClient;->onReceivedError(Landroid/webkit/WebView;ILjava/lang/String;Ljava/lang/String;)V
 
-    .line 473
+    .line 399
     :cond_0
     return-void
 .end method

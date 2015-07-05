@@ -79,13 +79,13 @@
     .line 150
     invoke-virtual {p0}, Lcom/squareup/okhttp/Response$Body;->contentLength()J
 
-    move-result-wide v1
+    move-result-wide v2
 
     .line 151
-    .local v1, "contentLength":J
-    const-wide/32 v5, 0x7fffffff
+    .local v2, "contentLength":J
+    const-wide/32 v6, 0x7fffffff
 
-    cmp-long v5, v1, v5
+    cmp-long v5, v2, v6
 
     if-lez v5, :cond_0
 
@@ -94,11 +94,15 @@
 
     new-instance v6, Ljava/lang/StringBuilder;
 
+    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v7, "Cannot buffer entire body for content length: "
 
-    invoke-direct {v6, v7}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v6, v1, v2}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+    move-result-object v6
+
+    invoke-virtual {v6, v2, v3}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
 
     move-result-object v6
 
@@ -112,14 +116,14 @@
 
     .line 155
     :cond_0
-    const-wide/16 v5, -0x1
+    const-wide/16 v6, -0x1
 
-    cmp-long v5, v1, v5
+    cmp-long v5, v2, v6
 
     if-eqz v5, :cond_1
 
     .line 156
-    long-to-int v5, v1
+    long-to-int v5, v2
 
     new-array v0, v5, [B
 
@@ -127,14 +131,14 @@
     .local v0, "content":[B
     invoke-virtual {p0}, Lcom/squareup/okhttp/Response$Body;->byteStream()Ljava/io/InputStream;
 
-    move-result-object v3
+    move-result-object v1
 
     .line 158
-    .local v3, "in":Ljava/io/InputStream;
-    invoke-static {v3, v0}, Lcom/squareup/okhttp/internal/Util;->readFully(Ljava/io/InputStream;[B)V
+    .local v1, "in":Ljava/io/InputStream;
+    invoke-static {v1, v0}, Lcom/squareup/okhttp/internal/Util;->readFully(Ljava/io/InputStream;[B)V
 
     .line 159
-    invoke-virtual {v3}, Ljava/io/InputStream;->read()I
+    invoke-virtual {v1}, Ljava/io/InputStream;->read()I
 
     move-result v5
 
@@ -152,7 +156,7 @@
 
     .line 163
     .end local v0    # "content":[B
-    .end local v3    # "in":Ljava/io/InputStream;
+    .end local v1    # "in":Ljava/io/InputStream;
     :cond_1
     new-instance v4, Ljava/io/ByteArrayOutputStream;
 

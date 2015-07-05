@@ -59,21 +59,23 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;)Z
+.method static synthetic access$200(Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;)Z
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;
 
     .prologue
-    .line 334
+    .line 332
     iget-boolean v0, p0, Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->unsupported:Z
 
     return v0
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;)Ljava/lang/String;
+.method static synthetic access$300(Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;)Ljava/lang/String;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;
 
     .prologue
-    .line 335
+    .line 332
     iget-object v0, p0, Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->selected:Ljava/lang/String;
 
     return-object v0
@@ -191,17 +193,14 @@
 
     if-eqz v3, :cond_5
 
-    .line 355
     const-class v3, Ljava/lang/String;
 
     if-ne v3, v1, :cond_5
 
-    .line 356
     array-length v3, p3
 
     if-ne v3, v6, :cond_5
 
-    .line 357
     aget-object v3, p3, v5
 
     if-eqz v3, :cond_4

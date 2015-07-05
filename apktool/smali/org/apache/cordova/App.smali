@@ -16,7 +16,7 @@
     .locals 0
 
     .prologue
-    .line 41
+    .line 42
     invoke-direct {p0}, Lorg/apache/cordova/CordovaPlugin;-><init>()V
 
     return-void
@@ -26,25 +26,25 @@
     .locals 3
 
     .prologue
-    .line 254
+    .line 260
     new-instance v0, Landroid/content/IntentFilter;
 
     invoke-direct {v0}, Landroid/content/IntentFilter;-><init>()V
 
-    .line 255
+    .line 261
     .local v0, "intentFilter":Landroid/content/IntentFilter;
     const-string v1, "android.intent.action.PHONE_STATE"
 
     invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 
-    .line 257
-    new-instance v1, Lorg/apache/cordova/App$4;
+    .line 263
+    new-instance v1, Lorg/apache/cordova/App$5;
 
-    invoke-direct {v1, p0}, Lorg/apache/cordova/App$4;-><init>(Lorg/apache/cordova/App;)V
+    invoke-direct {v1, p0}, Lorg/apache/cordova/App$5;-><init>(Lorg/apache/cordova/App;)V
 
     iput-object v1, p0, Lorg/apache/cordova/App;->telephonyReceiver:Landroid/content/BroadcastReceiver;
 
-    .line 284
+    .line 290
     iget-object v1, p0, Lorg/apache/cordova/App;->cordova:Lorg/apache/cordova/CordovaInterface;
 
     invoke-interface {v1}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
@@ -55,7 +55,7 @@
 
     invoke-virtual {v1, v2, v0}, Landroid/app/Activity;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
 
-    .line 285
+    .line 291
     return-void
 .end method
 
@@ -65,20 +65,20 @@
     .locals 2
 
     .prologue
-    .line 201
+    .line 202
     iget-object v0, p0, Lorg/apache/cordova/App;->cordova:Lorg/apache/cordova/CordovaInterface;
 
     invoke-interface {v0}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
 
     move-result-object v0
 
-    new-instance v1, Lorg/apache/cordova/App$3;
+    new-instance v1, Lorg/apache/cordova/App$4;
 
-    invoke-direct {v1, p0}, Lorg/apache/cordova/App$3;-><init>(Lorg/apache/cordova/App;)V
+    invoke-direct {v1, p0}, Lorg/apache/cordova/App$4;-><init>(Lorg/apache/cordova/App;)V
 
     invoke-virtual {v0, v1}, Landroid/app/Activity;->runOnUiThread(Ljava/lang/Runnable;)V
 
-    .line 206
+    .line 207
     return-void
 .end method
 
@@ -86,7 +86,7 @@
     .locals 2
 
     .prologue
-    .line 122
+    .line 119
     iget-object v0, p0, Lorg/apache/cordova/App;->cordova:Lorg/apache/cordova/CordovaInterface;
 
     invoke-interface {v0}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
@@ -99,20 +99,28 @@
 
     invoke-virtual {v0, v1}, Landroid/app/Activity;->runOnUiThread(Ljava/lang/Runnable;)V
 
-    .line 127
+    .line 124
     return-void
 .end method
 
 .method public clearHistory()V
-    .locals 1
+    .locals 2
 
     .prologue
-    .line 193
-    iget-object v0, p0, Lorg/apache/cordova/App;->webView:Lorg/apache/cordova/CordovaWebView;
+    .line 190
+    iget-object v0, p0, Lorg/apache/cordova/App;->cordova:Lorg/apache/cordova/CordovaInterface;
 
-    invoke-virtual {v0}, Lorg/apache/cordova/CordovaWebView;->clearHistory()V
+    invoke-interface {v0}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
 
-    .line 194
+    move-result-object v0
+
+    new-instance v1, Lorg/apache/cordova/App$3;
+
+    invoke-direct {v1, p0}, Lorg/apache/cordova/App$3;-><init>(Lorg/apache/cordova/App;)V
+
+    invoke-virtual {v0, v1}, Landroid/app/Activity;->runOnUiThread(Ljava/lang/Runnable;)V
+
+    .line 195
     return-void
 .end method
 
@@ -132,14 +140,14 @@
 
     const/4 v4, 0x0
 
-    .line 68
+    .line 65
     sget-object v2, Lorg/apache/cordova/PluginResult$Status;->OK:Lorg/apache/cordova/PluginResult$Status;
 
-    .line 69
+    .line 66
     .local v2, "status":Lorg/apache/cordova/PluginResult$Status;
     const-string v1, ""
 
-    .line 72
+    .line 69
     .local v1, "result":Ljava/lang/String;
     :try_start_0
     const-string v5, "clearCache"
@@ -150,10 +158,10 @@
 
     if-eqz v5, :cond_1
 
-    .line 73
+    .line 70
     invoke-virtual {p0}, Lorg/apache/cordova/App;->clearCache()V
 
-    .line 106
+    .line 103
     :cond_0
     :goto_0
     new-instance v5, Lorg/apache/cordova/PluginResult;
@@ -162,11 +170,11 @@
 
     invoke-virtual {p3, v5}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
 
-    .line 110
+    .line 107
     :goto_1
     return v3
 
-    .line 75
+    .line 72
     :cond_1
     const-string v5, "show"
 
@@ -176,7 +184,7 @@
 
     if-eqz v5, :cond_2
 
-    .line 79
+    .line 76
     iget-object v5, p0, Lorg/apache/cordova/App;->cordova:Lorg/apache/cordova/CordovaInterface;
 
     invoke-interface {v5}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
@@ -193,11 +201,11 @@
 
     goto :goto_0
 
-    .line 108
+    .line 105
     :catch_0
     move-exception v0
 
-    .line 109
+    .line 106
     .local v0, "e":Lorg/json/JSONException;
     new-instance v3, Lorg/apache/cordova/PluginResult;
 
@@ -209,10 +217,10 @@
 
     move v3, v4
 
-    .line 110
+    .line 107
     goto :goto_1
 
-    .line 85
+    .line 82
     .end local v0    # "e":Lorg/json/JSONException;
     :cond_2
     :try_start_1
@@ -224,7 +232,7 @@
 
     if-eqz v5, :cond_3
 
-    .line 86
+    .line 83
     const/4 v5, 0x0
 
     invoke-virtual {p2, v5}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
@@ -241,7 +249,7 @@
 
     goto :goto_0
 
-    .line 88
+    .line 85
     :cond_3
     const-string v5, "cancelLoadUrl"
 
@@ -251,7 +259,7 @@
 
     if-nez v5, :cond_0
 
-    .line 91
+    .line 88
     const-string v5, "clearHistory"
 
     invoke-virtual {p1, v5}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -260,12 +268,12 @@
 
     if-eqz v5, :cond_4
 
-    .line 92
+    .line 89
     invoke-virtual {p0}, Lorg/apache/cordova/App;->clearHistory()V
 
     goto :goto_0
 
-    .line 94
+    .line 91
     :cond_4
     const-string v5, "backHistory"
 
@@ -275,12 +283,12 @@
 
     if-eqz v5, :cond_5
 
-    .line 95
+    .line 92
     invoke-virtual {p0}, Lorg/apache/cordova/App;->backHistory()V
 
     goto :goto_0
 
-    .line 97
+    .line 94
     :cond_5
     const-string v5, "overrideButton"
 
@@ -290,7 +298,7 @@
 
     if-eqz v5, :cond_6
 
-    .line 98
+    .line 95
     const/4 v5, 0x0
 
     invoke-virtual {p2, v5}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
@@ -307,7 +315,7 @@
 
     goto :goto_0
 
-    .line 100
+    .line 97
     :cond_6
     const-string v5, "overrideBackbutton"
 
@@ -317,7 +325,7 @@
 
     if-eqz v5, :cond_7
 
-    .line 101
+    .line 98
     const/4 v5, 0x0
 
     invoke-virtual {p2, v5}, Lorg/json/JSONArray;->getBoolean(I)Z
@@ -328,7 +336,7 @@
 
     goto/16 :goto_0
 
-    .line 103
+    .line 100
     :cond_7
     const-string v5, "exitApp"
 
@@ -338,7 +346,7 @@
 
     if-eqz v5, :cond_0
 
-    .line 104
+    .line 101
     invoke-virtual {p0}, Lorg/apache/cordova/App;->exitApp()V
     :try_end_1
     .catch Lorg/json/JSONException; {:try_start_1 .. :try_end_1} :catch_0
@@ -350,7 +358,7 @@
     .locals 3
 
     .prologue
-    .line 244
+    .line 250
     iget-object v0, p0, Lorg/apache/cordova/App;->webView:Lorg/apache/cordova/CordovaWebView;
 
     const-string v1, "exit"
@@ -359,34 +367,20 @@
 
     invoke-virtual {v0, v1, v2}, Lorg/apache/cordova/CordovaWebView;->postMessage(Ljava/lang/String;Ljava/lang/Object;)V
 
-    .line 245
-    return-void
-.end method
-
-.method public initialize(Lorg/apache/cordova/CordovaInterface;Lorg/apache/cordova/CordovaWebView;)V
-    .locals 0
-    .param p1, "cordova"    # Lorg/apache/cordova/CordovaInterface;
-    .param p2, "webView"    # Lorg/apache/cordova/CordovaWebView;
-
-    .prologue
-    .line 54
-    invoke-super {p0, p1, p2}, Lorg/apache/cordova/CordovaPlugin;->initialize(Lorg/apache/cordova/CordovaInterface;Lorg/apache/cordova/CordovaWebView;)V
-
-    .line 55
-    invoke-direct {p0}, Lorg/apache/cordova/App;->initTelephonyReceiver()V
-
-    .line 56
+    .line 251
     return-void
 .end method
 
 .method public isBackbuttonOverridden()Z
-    .locals 1
+    .locals 2
 
     .prologue
-    .line 237
+    .line 243
     iget-object v0, p0, Lorg/apache/cordova/App;->webView:Lorg/apache/cordova/CordovaWebView;
 
-    invoke-virtual {v0}, Lorg/apache/cordova/CordovaWebView;->isBackButtonBound()Z
+    const/4 v1, 0x4
+
+    invoke-virtual {v0, v1}, Lorg/apache/cordova/CordovaWebView;->isButtonPlumbedToJs(I)Z
 
     move-result v0
 
@@ -404,14 +398,18 @@
     .end annotation
 
     .prologue
-    .line 137
+    .line 134
     const-string v9, "App"
 
     new-instance v10, Ljava/lang/StringBuilder;
 
+    invoke-direct {v10}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v11, "App.loadUrl("
 
-    invoke-direct {v10, v11}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v10, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v10
 
     invoke-virtual {v10, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -439,33 +437,33 @@
 
     invoke-static {v9, v10}, Lorg/apache/cordova/LOG;->d(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 138
+    .line 135
     const/4 v8, 0x0
 
-    .line 139
+    .line 136
     .local v8, "wait":I
     const/4 v5, 0x0
 
-    .line 140
+    .line 137
     .local v5, "openExternal":Z
     const/4 v0, 0x0
 
-    .line 143
+    .line 140
     .local v0, "clearHistory":Z
     new-instance v6, Ljava/util/HashMap;
 
     invoke-direct {v6}, Ljava/util/HashMap;-><init>()V
 
-    .line 144
+    .line 141
     .local v6, "params":Ljava/util/HashMap;, "Ljava/util/HashMap<Ljava/lang/String;Ljava/lang/Object;>;"
-    if-eqz p2, :cond_0
+    if-eqz p2, :cond_6
 
-    .line 145
+    .line 142
     invoke-virtual {p2}, Lorg/json/JSONObject;->names()Lorg/json/JSONArray;
 
     move-result-object v4
 
-    .line 146
+    .line 143
     .local v4, "keys":Lorg/json/JSONArray;
     const/4 v2, 0x0
 
@@ -475,50 +473,14 @@
 
     move-result v9
 
-    if-lt v2, v9, :cond_2
+    if-ge v2, v9, :cond_6
 
-    .line 177
-    .end local v2    # "i":I
-    .end local v4    # "keys":Lorg/json/JSONArray;
-    :cond_0
-    if-lez v8, :cond_1
-
-    .line 179
-    :try_start_0
-    monitor-enter p0
-    :try_end_0
-    .catch Ljava/lang/InterruptedException; {:try_start_0 .. :try_end_0} :catch_0
-
-    .line 180
-    int-to-long v9, v8
-
-    :try_start_1
-    invoke-virtual {p0, v9, v10}, Ljava/lang/Object;->wait(J)V
-
-    .line 179
-    monitor-exit p0
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
-
-    .line 186
-    :cond_1
-    :goto_1
-    iget-object v9, p0, Lorg/apache/cordova/App;->webView:Lorg/apache/cordova/CordovaWebView;
-
-    invoke-virtual {v9, p1, v5, v0, v6}, Lorg/apache/cordova/CordovaWebView;->showWebPage(Ljava/lang/String;ZZLjava/util/HashMap;)V
-
-    .line 187
-    return-void
-
-    .line 147
-    .restart local v2    # "i":I
-    .restart local v4    # "keys":Lorg/json/JSONArray;
-    :cond_2
+    .line 144
     invoke-virtual {v4, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
 
     move-result-object v3
 
-    .line 148
+    .line 145
     .local v3, "key":Ljava/lang/String;
     const-string v9, "wait"
 
@@ -526,67 +488,65 @@
 
     move-result v9
 
-    if-eqz v9, :cond_4
+    if-eqz v9, :cond_1
 
-    .line 149
+    .line 146
     invoke-virtual {p2, v3}, Lorg/json/JSONObject;->getInt(Ljava/lang/String;)I
 
     move-result v8
 
-    .line 146
-    :cond_3
-    :goto_2
+    .line 143
+    :cond_0
+    :goto_1
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 151
-    :cond_4
+    .line 148
+    :cond_1
     const-string v9, "openexternal"
 
     invoke-virtual {v3, v9}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v9
 
-    if-eqz v9, :cond_5
+    if-eqz v9, :cond_2
 
-    .line 152
+    .line 149
     invoke-virtual {p2, v3}, Lorg/json/JSONObject;->getBoolean(Ljava/lang/String;)Z
 
     move-result v5
 
-    .line 153
-    goto :goto_2
+    goto :goto_1
 
-    .line 154
-    :cond_5
+    .line 151
+    :cond_2
     const-string v9, "clearhistory"
 
     invoke-virtual {v3, v9}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v9
 
-    if-eqz v9, :cond_6
+    if-eqz v9, :cond_3
 
-    .line 155
+    .line 152
     invoke-virtual {p2, v3}, Lorg/json/JSONObject;->getBoolean(Ljava/lang/String;)Z
 
     move-result v0
 
-    .line 156
-    goto :goto_2
+    goto :goto_1
 
-    .line 158
-    :cond_6
+    .line 155
+    :cond_3
     invoke-virtual {p2, v3}, Lorg/json/JSONObject;->get(Ljava/lang/String;)Ljava/lang/Object;
 
     move-result-object v7
 
-    .line 159
+    .line 156
     .local v7, "value":Ljava/lang/Object;
-    if-eqz v7, :cond_3
+    if-eqz v7, :cond_0
 
-    .line 162
+    .line 159
     invoke-virtual {v7}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
 
     move-result-object v9
@@ -597,19 +557,19 @@
 
     move-result v9
 
-    if-eqz v9, :cond_7
+    if-eqz v9, :cond_4
 
-    .line 163
+    .line 160
     check-cast v7, Ljava/lang/String;
 
     .end local v7    # "value":Ljava/lang/Object;
     invoke-virtual {v6, v3, v7}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    goto :goto_2
+    goto :goto_1
 
-    .line 165
+    .line 162
     .restart local v7    # "value":Ljava/lang/Object;
-    :cond_7
+    :cond_4
     invoke-virtual {v7}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
 
     move-result-object v9
@@ -620,19 +580,19 @@
 
     move-result v9
 
-    if-eqz v9, :cond_8
+    if-eqz v9, :cond_5
 
-    .line 166
+    .line 163
     check-cast v7, Ljava/lang/Boolean;
 
     .end local v7    # "value":Ljava/lang/Object;
     invoke-virtual {v6, v3, v7}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    goto :goto_2
+    goto :goto_1
 
-    .line 168
+    .line 165
     .restart local v7    # "value":Ljava/lang/Object;
-    :cond_8
+    :cond_5
     invoke-virtual {v7}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
 
     move-result-object v9
@@ -643,20 +603,51 @@
 
     move-result v9
 
-    if-eqz v9, :cond_3
+    if-eqz v9, :cond_0
 
-    .line 169
+    .line 166
     check-cast v7, Ljava/lang/Integer;
 
     .end local v7    # "value":Ljava/lang/Object;
     invoke-virtual {v6, v3, v7}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    goto :goto_2
+    goto :goto_1
 
-    .line 179
+    .line 174
     .end local v2    # "i":I
     .end local v3    # "key":Ljava/lang/String;
     .end local v4    # "keys":Lorg/json/JSONArray;
+    :cond_6
+    if-lez v8, :cond_7
+
+    .line 176
+    :try_start_0
+    monitor-enter p0
+    :try_end_0
+    .catch Ljava/lang/InterruptedException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 177
+    int-to-long v10, v8
+
+    :try_start_1
+    invoke-virtual {p0, v10, v11}, Ljava/lang/Object;->wait(J)V
+
+    .line 178
+    monitor-exit p0
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    .line 183
+    :cond_7
+    :goto_2
+    iget-object v9, p0, Lorg/apache/cordova/App;->webView:Lorg/apache/cordova/CordovaWebView;
+
+    invoke-virtual {v9, p1, v5, v0, v6}, Lorg/apache/cordova/CordovaWebView;->showWebPage(Ljava/lang/String;ZZLjava/util/HashMap;)V
+
+    .line 184
+    return-void
+
+    .line 178
     :catchall_0
     move-exception v9
 
@@ -670,22 +661,22 @@
     :try_end_3
     .catch Ljava/lang/InterruptedException; {:try_start_3 .. :try_end_3} :catch_0
 
-    .line 182
+    .line 179
     :catch_0
     move-exception v1
 
-    .line 183
+    .line 180
     .local v1, "e":Ljava/lang/InterruptedException;
     invoke-virtual {v1}, Ljava/lang/InterruptedException;->printStackTrace()V
 
-    goto :goto_1
+    goto :goto_2
 .end method
 
 .method public onDestroy()V
     .locals 2
 
     .prologue
-    .line 293
+    .line 299
     iget-object v0, p0, Lorg/apache/cordova/App;->cordova:Lorg/apache/cordova/CordovaInterface;
 
     invoke-interface {v0}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
@@ -696,7 +687,7 @@
 
     invoke-virtual {v0, v1}, Landroid/app/Activity;->unregisterReceiver(Landroid/content/BroadcastReceiver;)V
 
-    .line 294
+    .line 300
     return-void
 .end method
 
@@ -705,19 +696,21 @@
     .param p1, "override"    # Z
 
     .prologue
-    .line 215
+    .line 216
     const-string v0, "App"
 
     const-string v1, "WARNING: Back Button Default Behavior will be overridden.  The backbutton event will be fired!"
 
     invoke-static {v0, v1}, Lorg/apache/cordova/LOG;->i(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 216
+    .line 217
     iget-object v0, p0, Lorg/apache/cordova/App;->webView:Lorg/apache/cordova/CordovaWebView;
 
-    invoke-virtual {v0, p1}, Lorg/apache/cordova/CordovaWebView;->bindButton(Z)V
+    const/4 v1, 0x4
 
-    .line 217
+    invoke-virtual {v0, v1, p1}, Lorg/apache/cordova/CordovaWebView;->setButtonPlumbedToJs(IZ)V
+
+    .line 218
     return-void
 .end method
 
@@ -727,18 +720,61 @@
     .param p2, "override"    # Z
 
     .prologue
-    .line 227
+    .line 228
     const-string v0, "App"
 
     const-string v1, "WARNING: Volume Button Default Behavior will be overridden.  The volume event will be fired!"
 
     invoke-static {v0, v1}, Lorg/apache/cordova/LOG;->i(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 228
+    .line 229
+    const-string v0, "volumeup"
+
+    invoke-virtual {p1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_1
+
+    .line 230
     iget-object v0, p0, Lorg/apache/cordova/App;->webView:Lorg/apache/cordova/CordovaWebView;
 
-    invoke-virtual {v0, p1, p2}, Lorg/apache/cordova/CordovaWebView;->bindButton(Ljava/lang/String;Z)V
+    const/16 v1, 0x18
 
-    .line 229
+    invoke-virtual {v0, v1, p2}, Lorg/apache/cordova/CordovaWebView;->setButtonPlumbedToJs(IZ)V
+
+    .line 235
+    :cond_0
+    :goto_0
+    return-void
+
+    .line 232
+    :cond_1
+    const-string v0, "volumedown"
+
+    invoke-virtual {p1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    .line 233
+    iget-object v0, p0, Lorg/apache/cordova/App;->webView:Lorg/apache/cordova/CordovaWebView;
+
+    const/16 v1, 0x19
+
+    invoke-virtual {v0, v1, p2}, Lorg/apache/cordova/CordovaWebView;->setButtonPlumbedToJs(IZ)V
+
+    goto :goto_0
+.end method
+
+.method public pluginInitialize()V
+    .locals 0
+
+    .prologue
+    .line 53
+    invoke-direct {p0}, Lorg/apache/cordova/App;->initTelephonyReceiver()V
+
+    .line 54
     return-void
 .end method

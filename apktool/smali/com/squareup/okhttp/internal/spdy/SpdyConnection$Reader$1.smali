@@ -17,22 +17,21 @@
 # instance fields
 .field final synthetic this$1:Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Reader;
 
-.field private final synthetic val$newStream:Lcom/squareup/okhttp/internal/spdy/SpdyStream;
+.field final synthetic val$newStream:Lcom/squareup/okhttp/internal/spdy/SpdyStream;
 
 
 # direct methods
 .method varargs constructor <init>(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Reader;Ljava/lang/String;[Ljava/lang/Object;Lcom/squareup/okhttp/internal/spdy/SpdyStream;)V
     .locals 0
-    .param p2, "$anonymous0"    # Ljava/lang/String;
-    .param p3, "$anonymous1"    # [Ljava/lang/Object;
+    .param p2, "x0"    # Ljava/lang/String;
+    .param p3, "x1"    # [Ljava/lang/Object;
 
     .prologue
-    .line 1
+    .line 491
     iput-object p1, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Reader$1;->this$1:Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Reader;
 
     iput-object p4, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Reader$1;->val$newStream:Lcom/squareup/okhttp/internal/spdy/SpdyStream;
 
-    .line 491
     invoke-direct {p0, p2, p3}, Lcom/squareup/okhttp/internal/NamedRunnable;-><init>(Ljava/lang/String;[Ljava/lang/Object;)V
 
     return-void
@@ -48,13 +47,10 @@
     :try_start_0
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Reader$1;->this$1:Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Reader;
 
-    # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Reader;->this$0:Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
-    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Reader;->access$1(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Reader;)Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
-
-    move-result-object v1
+    iget-object v1, v1, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Reader;->this$0:Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/SpdyConnection;->handler:Lcom/squareup/okhttp/internal/spdy/IncomingStreamHandler;
-    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyConnection;->access$11(Lcom/squareup/okhttp/internal/spdy/SpdyConnection;)Lcom/squareup/okhttp/internal/spdy/IncomingStreamHandler;
+    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/SpdyConnection;->access$1700(Lcom/squareup/okhttp/internal/spdy/SpdyConnection;)Lcom/squareup/okhttp/internal/spdy/IncomingStreamHandler;
 
     move-result-object v1
 

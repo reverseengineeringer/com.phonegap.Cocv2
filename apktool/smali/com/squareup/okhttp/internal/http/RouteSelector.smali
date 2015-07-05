@@ -74,7 +74,7 @@
     .param p6, "routeDatabase"    # Lcom/squareup/okhttp/RouteDatabase;
 
     .prologue
-    .line 79
+    .line 80
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     .line 74
@@ -149,15 +149,15 @@
 
     move-result v0
 
-    if-eqz v0, :cond_0
+    if-nez v0, :cond_0
 
-    const/4 v0, 0x0
+    const/4 v0, 0x1
 
     :goto_0
     return v0
 
     :cond_0
-    const/4 v0, 0x1
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method
@@ -203,7 +203,7 @@
     .end annotation
 
     .prologue
-    .line 228
+    .line 227
     new-instance v0, Ljava/net/InetSocketAddress;
 
     iget-object v1, p0, Lcom/squareup/okhttp/internal/http/RouteSelector;->socketAddresses:[Ljava/net/InetAddress;
@@ -298,19 +298,9 @@
 
     move-result v1
 
-    if-nez v1, :cond_3
-
-    .line 192
-    :cond_2
-    iput-boolean v3, p0, Lcom/squareup/okhttp/internal/http/RouteSelector;->hasNextProxy:Z
-
-    .line 193
-    sget-object v0, Ljava/net/Proxy;->NO_PROXY:Ljava/net/Proxy;
-
-    goto :goto_0
+    if-eqz v1, :cond_2
 
     .line 184
-    :cond_3
     iget-object v1, p0, Lcom/squareup/okhttp/internal/http/RouteSelector;->proxySelectorProxies:Ljava/util/Iterator;
 
     invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
@@ -328,6 +318,16 @@
     sget-object v2, Ljava/net/Proxy$Type;->DIRECT:Ljava/net/Proxy$Type;
 
     if-eq v1, v2, :cond_1
+
+    goto :goto_0
+
+    .line 192
+    .end local v0    # "candidate":Ljava/net/Proxy;
+    :cond_2
+    iput-boolean v3, p0, Lcom/squareup/okhttp/internal/http/RouteSelector;->hasNextProxy:Z
+
+    .line 193
+    sget-object v0, Ljava/net/Proxy;->NO_PROXY:Ljava/net/Proxy;
 
     goto :goto_0
 .end method
@@ -452,12 +452,15 @@
     .line 207
     new-instance v3, Ljava/lang/IllegalArgumentException;
 
-    .line 208
     new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
     const-string v5, "Proxy.address() is not an InetSocketAddress: "
 
-    invoke-direct {v4, v5}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
 
     invoke-virtual {v0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
 
@@ -471,7 +474,6 @@
 
     move-result-object v4
 
-    .line 207
     invoke-direct {v3, v4}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
 
     throw v3
@@ -654,15 +656,16 @@
 
     move-result v0
 
-    if-nez v0, :cond_0
+    if-eqz v0, :cond_1
 
-    const/4 v0, 0x0
+    :cond_0
+    const/4 v0, 0x1
 
     :goto_0
     return v0
 
-    :cond_0
-    const/4 v0, 0x1
+    :cond_1
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method
@@ -690,9 +693,38 @@
     move-result-object v1
 
     .local v1, "pooled":Lcom/squareup/okhttp/Connection;
-    if-nez v1, :cond_0
+    if-eqz v1, :cond_2
+
+    .line 108
+    const-string v3, "GET"
+
+    invoke-virtual {p1, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_0
+
+    invoke-virtual {v1}, Lcom/squareup/okhttp/Connection;->isReadable()Z
+
+    move-result v3
+
+    if-eqz v3, :cond_1
+
+    .line 137
+    .end local v1    # "pooled":Lcom/squareup/okhttp/Connection;
+    :cond_0
+    :goto_1
+    return-object v1
+
+    .line 109
+    .restart local v1    # "pooled":Lcom/squareup/okhttp/Connection;
+    :cond_1
+    invoke-virtual {v1}, Lcom/squareup/okhttp/Connection;->close()V
+
+    goto :goto_0
 
     .line 113
+    :cond_2
     invoke-direct {p0}, Lcom/squareup/okhttp/internal/http/RouteSelector;->hasNextTlsMode()Z
 
     move-result v3
@@ -726,35 +758,6 @@
     invoke-direct {v3}, Ljava/util/NoSuchElementException;-><init>()V
 
     throw v3
-
-    .line 108
-    :cond_0
-    const-string v3, "GET"
-
-    invoke-virtual {p1, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v3
-
-    if-nez v3, :cond_1
-
-    invoke-virtual {v1}, Lcom/squareup/okhttp/Connection;->isReadable()Z
-
-    move-result v3
-
-    if-eqz v3, :cond_2
-
-    .line 137
-    .end local v1    # "pooled":Lcom/squareup/okhttp/Connection;
-    :cond_1
-    :goto_1
-    return-object v1
-
-    .line 109
-    .restart local v1    # "pooled":Lcom/squareup/okhttp/Connection;
-    :cond_2
-    invoke-virtual {v1}, Lcom/squareup/okhttp/Connection;->close()V
-
-    goto :goto_0
 
     .line 119
     :cond_3

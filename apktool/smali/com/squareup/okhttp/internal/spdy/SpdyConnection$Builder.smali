@@ -137,61 +137,67 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;)Lcom/squareup/okhttp/internal/spdy/Variant;
+.method static synthetic access$000(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;)Lcom/squareup/okhttp/internal/spdy/Variant;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;
 
     .prologue
-    .line 379
+    .line 374
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;->variant:Lcom/squareup/okhttp/internal/spdy/Variant;
 
     return-object v0
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;)Z
+.method static synthetic access$100(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;)Z
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;
 
     .prologue
-    .line 380
+    .line 374
     iget-boolean v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;->client:Z
 
     return v0
 .end method
 
-.method static synthetic access$2(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;)Lcom/squareup/okhttp/internal/spdy/IncomingStreamHandler;
+.method static synthetic access$200(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;)Lcom/squareup/okhttp/internal/spdy/IncomingStreamHandler;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;
 
     .prologue
-    .line 378
+    .line 374
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;->handler:Lcom/squareup/okhttp/internal/spdy/IncomingStreamHandler;
 
     return-object v0
 .end method
 
-.method static synthetic access$3(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;)Ljava/io/InputStream;
+.method static synthetic access$300(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;)Ljava/io/InputStream;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;
 
     .prologue
-    .line 376
+    .line 374
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;->in:Ljava/io/InputStream;
 
     return-object v0
 .end method
 
-.method static synthetic access$4(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;)Ljava/io/OutputStream;
+.method static synthetic access$400(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;)Ljava/io/OutputStream;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;
 
     .prologue
-    .line 377
+    .line 374
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;->out:Ljava/io/OutputStream;
 
     return-object v0
 .end method
 
-.method static synthetic access$5(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;)Ljava/lang/String;
+.method static synthetic access$500(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;)Ljava/lang/String;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;
 
     .prologue
-    .line 375
+    .line 374
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;->hostName:Ljava/lang/String;
 
     return-object v0
@@ -208,7 +214,7 @@
 
     const/4 v1, 0x0
 
-    invoke-direct {v0, p0, v1}, Lcom/squareup/okhttp/internal/spdy/SpdyConnection;-><init>(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;Lcom/squareup/okhttp/internal/spdy/SpdyConnection;)V
+    invoke-direct {v0, p0, v1}, Lcom/squareup/okhttp/internal/spdy/SpdyConnection;-><init>(Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;Lcom/squareup/okhttp/internal/spdy/SpdyConnection$1;)V
 
     return-object v0
 .end method

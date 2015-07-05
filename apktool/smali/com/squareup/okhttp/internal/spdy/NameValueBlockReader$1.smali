@@ -17,7 +17,7 @@
 # instance fields
 .field final synthetic this$0:Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;
 
-.field private final synthetic val$in:Ljava/io/InputStream;
+.field final synthetic val$in:Ljava/io/InputStream;
 
 
 # direct methods
@@ -25,12 +25,11 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 45
     iput-object p1, p0, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader$1;->this$0:Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;
 
     iput-object p2, p0, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader$1;->val$in:Ljava/io/InputStream;
 
-    .line 45
     invoke-direct {p0}, Ljava/io/InputStream;-><init>()V
 
     return-void
@@ -74,7 +73,7 @@
 .end method
 
 .method public read([BII)I
-    .locals 3
+    .locals 2
     .param p1, "buffer"    # [B
     .param p2, "offset"    # I
     .param p3, "byteCount"    # I
@@ -89,7 +88,7 @@
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader$1;->this$0:Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->compressedLimit:I
-    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->access$0(Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;)I
+    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->access$000(Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;)I
 
     move-result v1
 
@@ -108,14 +107,8 @@
     .local v0, "consumed":I
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader$1;->this$0:Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;
 
-    # getter for: Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->compressedLimit:I
-    invoke-static {v1}, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->access$0(Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;)I
-
-    move-result v2
-
-    sub-int/2addr v2, v0
-
-    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->access$1(Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;I)V
+    # -= operator for: Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->compressedLimit:I
+    invoke-static {v1, v0}, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->access$020(Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;I)I
 
     .line 54
     return v0

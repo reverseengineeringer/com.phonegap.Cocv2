@@ -44,7 +44,7 @@
 
     .line 888
     # getter for: Lcom/squareup/okhttp/internal/DiskLruCache;->valueCount:I
-    invoke-static {p1}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$7(Lcom/squareup/okhttp/internal/DiskLruCache;)I
+    invoke-static {p1}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$1800(Lcom/squareup/okhttp/internal/DiskLruCache;)I
 
     move-result v0
 
@@ -56,68 +56,114 @@
     return-void
 .end method
 
-.method synthetic constructor <init>(Lcom/squareup/okhttp/internal/DiskLruCache;Ljava/lang/String;Lcom/squareup/okhttp/internal/DiskLruCache$Entry;)V
+.method synthetic constructor <init>(Lcom/squareup/okhttp/internal/DiskLruCache;Ljava/lang/String;Lcom/squareup/okhttp/internal/DiskLruCache$1;)V
     .locals 0
+    .param p1, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache;
+    .param p2, "x1"    # Ljava/lang/String;
+    .param p3, "x2"    # Lcom/squareup/okhttp/internal/DiskLruCache$1;
 
     .prologue
-    .line 886
+    .line 871
     invoke-direct {p0, p1, p2}, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;-><init>(Lcom/squareup/okhttp/internal/DiskLruCache;Ljava/lang/String;)V
 
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;)Z
+.method static synthetic access$1000(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;)[J
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache$Entry;
 
     .prologue
-    .line 878
-    iget-boolean v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->readable:Z
-
-    return v0
-.end method
-
-.method static synthetic access$1(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;)Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
-    .locals 1
-
-    .prologue
-    .line 881
-    iget-object v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->currentEditor:Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
+    .line 871
+    iget-object v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->lengths:[J
 
     return-object v0
 .end method
 
-.method static synthetic access$2(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;)Ljava/lang/String;
+.method static synthetic access$1100(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;)Ljava/lang/String;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache$Entry;
 
     .prologue
-    .line 872
+    .line 871
     iget-object v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->key:Ljava/lang/String;
 
     return-object v0
 .end method
 
-.method static synthetic access$4(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;Z)V
-    .locals 0
+.method static synthetic access$1200(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;)J
+    .locals 2
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache$Entry;
 
     .prologue
-    .line 878
+    .line 871
+    iget-wide v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->sequenceNumber:J
+
+    return-wide v0
+.end method
+
+.method static synthetic access$1202(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;J)J
+    .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache$Entry;
+    .param p1, "x1"    # J
+
+    .prologue
+    .line 871
+    iput-wide p1, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->sequenceNumber:J
+
+    return-wide p1
+.end method
+
+.method static synthetic access$600(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;)Z
+    .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache$Entry;
+
+    .prologue
+    .line 871
+    iget-boolean v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->readable:Z
+
+    return v0
+.end method
+
+.method static synthetic access$602(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;Z)Z
+    .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache$Entry;
+    .param p1, "x1"    # Z
+
+    .prologue
+    .line 871
     iput-boolean p1, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->readable:Z
 
-    return-void
+    return p1
 .end method
 
-.method static synthetic access$5(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;Lcom/squareup/okhttp/internal/DiskLruCache$Editor;)V
-    .locals 0
+.method static synthetic access$700(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;)Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
+    .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache$Entry;
 
     .prologue
-    .line 881
-    iput-object p1, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->currentEditor:Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
+    .line 871
+    iget-object v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->currentEditor:Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
 
-    return-void
+    return-object v0
 .end method
 
-.method static synthetic access$6(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;[Ljava/lang/String;)V
+.method static synthetic access$702(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;Lcom/squareup/okhttp/internal/DiskLruCache$Editor;)Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache$Entry;
+    .param p1, "x1"    # Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
+
+    .prologue
+    .line 871
+    iput-object p1, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->currentEditor:Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
+
+    return-object p1
+.end method
+
+.method static synthetic access$800(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;[Ljava/lang/String;)V
+    .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache$Entry;
+    .param p1, "x1"    # [Ljava/lang/String;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/io/IOException;
@@ -125,38 +171,8 @@
     .end annotation
 
     .prologue
-    .line 900
+    .line 871
     invoke-direct {p0, p1}, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->setLengths([Ljava/lang/String;)V
-
-    return-void
-.end method
-
-.method static synthetic access$7(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;)[J
-    .locals 1
-
-    .prologue
-    .line 875
-    iget-object v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->lengths:[J
-
-    return-object v0
-.end method
-
-.method static synthetic access$8(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;)J
-    .locals 2
-
-    .prologue
-    .line 884
-    iget-wide v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->sequenceNumber:J
-
-    return-wide v0
-.end method
-
-.method static synthetic access$9(Lcom/squareup/okhttp/internal/DiskLruCache$Entry;J)V
-    .locals 0
-
-    .prologue
-    .line 884
-    iput-wide p1, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->sequenceNumber:J
 
     return-void
 .end method
@@ -176,9 +192,13 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "unexpected journal line: "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     invoke-static {p1}, Ljava/util/Arrays;->toString([Ljava/lang/Object;)Ljava/lang/String;
 
@@ -198,7 +218,7 @@
 .end method
 
 .method private setLengths([Ljava/lang/String;)V
-    .locals 5
+    .locals 6
     .param p1, "strings"    # [Ljava/lang/String;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -213,7 +233,7 @@
     iget-object v3, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->this$0:Lcom/squareup/okhttp/internal/DiskLruCache;
 
     # getter for: Lcom/squareup/okhttp/internal/DiskLruCache;->valueCount:I
-    invoke-static {v3}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$7(Lcom/squareup/okhttp/internal/DiskLruCache;)I
+    invoke-static {v3}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$1800(Lcom/squareup/okhttp/internal/DiskLruCache;)I
 
     move-result v3
 
@@ -235,22 +255,18 @@
     :try_start_0
     array-length v2, p1
 
-    if-lt v1, v2, :cond_1
-
-    .line 912
-    return-void
+    if-ge v1, v2, :cond_1
 
     .line 907
-    :cond_1
     iget-object v2, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->lengths:[J
 
     aget-object v3, p1, v1
 
     invoke-static {v3}, Ljava/lang/Long;->parseLong(Ljava/lang/String;)J
 
-    move-result-wide v3
+    move-result-wide v4
 
-    aput-wide v3, v2, v1
+    aput-wide v4, v2, v1
     :try_end_0
     .catch Ljava/lang/NumberFormatException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -270,6 +286,11 @@
     move-result-object v2
 
     throw v2
+
+    .line 912
+    .end local v0    # "e":Ljava/lang/NumberFormatException;
+    :cond_1
+    return-void
 .end method
 
 
@@ -285,19 +306,19 @@
     iget-object v1, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->this$0:Lcom/squareup/okhttp/internal/DiskLruCache;
 
     # getter for: Lcom/squareup/okhttp/internal/DiskLruCache;->directory:Ljava/io/File;
-    invoke-static {v1}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$8(Lcom/squareup/okhttp/internal/DiskLruCache;)Ljava/io/File;
+    invoke-static {v1}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$1900(Lcom/squareup/okhttp/internal/DiskLruCache;)Ljava/io/File;
 
     move-result-object v1
 
     new-instance v2, Ljava/lang/StringBuilder;
 
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
     iget-object v3, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->key:Ljava/lang/String;
 
-    invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
-
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v2
 
     const-string v3, "."
 
@@ -329,19 +350,19 @@
     iget-object v1, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->this$0:Lcom/squareup/okhttp/internal/DiskLruCache;
 
     # getter for: Lcom/squareup/okhttp/internal/DiskLruCache;->directory:Ljava/io/File;
-    invoke-static {v1}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$8(Lcom/squareup/okhttp/internal/DiskLruCache;)Ljava/io/File;
+    invoke-static {v1}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$1900(Lcom/squareup/okhttp/internal/DiskLruCache;)Ljava/io/File;
 
     move-result-object v1
 
     new-instance v2, Ljava/lang/StringBuilder;
 
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
     iget-object v3, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->key:Ljava/lang/String;
 
-    invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
-
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v2
 
     const-string v3, "."
 
@@ -378,44 +399,47 @@
 
     .prologue
     .line 892
-    new-instance v0, Ljava/lang/StringBuilder;
+    new-instance v3, Ljava/lang/StringBuilder;
 
-    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
 
     .line 893
-    .local v0, "result":Ljava/lang/StringBuilder;
-    iget-object v4, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->lengths:[J
+    .local v3, "result":Ljava/lang/StringBuilder;
+    iget-object v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$Entry;->lengths:[J
 
-    array-length v5, v4
+    .local v0, "arr$":[J
+    array-length v2, v0
 
-    const/4 v3, 0x0
+    .local v2, "len$":I
+    const/4 v1, 0x0
 
+    .local v1, "i$":I
     :goto_0
-    if-lt v3, v5, :cond_0
+    if-ge v1, v2, :cond_0
 
-    .line 896
-    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v3
-
-    return-object v3
-
-    .line 893
-    :cond_0
-    aget-wide v1, v4, v3
+    aget-wide v4, v0, v1
 
     .line 894
-    .local v1, "size":J
+    .local v4, "size":J
     const/16 v6, 0x20
 
-    invoke-virtual {v0, v6}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+    invoke-virtual {v3, v6}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
     move-result-object v6
 
-    invoke-virtual {v6, v1, v2}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+    invoke-virtual {v6, v4, v5}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
 
     .line 893
-    add-int/lit8 v3, v3, 0x1
+    add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
+
+    .line 896
+    .end local v4    # "size":J
+    :cond_0
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v6
+
+    return-object v6
 .end method

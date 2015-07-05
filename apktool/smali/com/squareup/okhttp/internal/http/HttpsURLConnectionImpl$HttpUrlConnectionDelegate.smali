@@ -35,11 +35,15 @@
     return-void
 .end method
 
-.method synthetic constructor <init>(Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl;Ljava/net/URL;Lcom/squareup/okhttp/OkHttpClient;Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$HttpUrlConnectionDelegate;)V
+.method synthetic constructor <init>(Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl;Ljava/net/URL;Lcom/squareup/okhttp/OkHttpClient;Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$1;)V
     .locals 0
+    .param p1, "x0"    # Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl;
+    .param p2, "x1"    # Ljava/net/URL;
+    .param p3, "x2"    # Lcom/squareup/okhttp/OkHttpClient;
+    .param p4, "x3"    # Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$1;
 
     .prologue
-    .line 352
+    .line 351
     invoke-direct {p0, p1, p2, p3}, Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$HttpUrlConnectionDelegate;-><init>(Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl;Ljava/net/URL;Lcom/squareup/okhttp/OkHttpClient;)V
 
     return-void
@@ -68,7 +72,6 @@
 
     if-eqz v0, :cond_0
 
-    .line 362
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpsURLConnectionImpl$HttpUrlConnectionDelegate;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
 
     invoke-virtual {v0}, Lcom/squareup/okhttp/internal/http/HttpEngine;->getCacheResponse()Ljava/net/CacheResponse;
@@ -77,11 +80,9 @@
 
     check-cast v0, Ljava/net/SecureCacheResponse;
 
-    .line 361
     :goto_0
     return-object v0
 
-    .line 363
     :cond_0
     const/4 v0, 0x0
 

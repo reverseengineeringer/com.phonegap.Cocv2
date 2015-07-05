@@ -26,10 +26,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 76
     iput-object p1, p0, Lorg/apache/cordova/App$1;->this$0:Lorg/apache/cordova/App;
 
-    .line 79
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -41,7 +40,7 @@
     .locals 3
 
     .prologue
-    .line 81
+    .line 78
     iget-object v0, p0, Lorg/apache/cordova/App$1;->this$0:Lorg/apache/cordova/App;
 
     iget-object v0, v0, Lorg/apache/cordova/App;->webView:Lorg/apache/cordova/CordovaWebView;
@@ -52,6 +51,6 @@
 
     invoke-virtual {v0, v1, v2}, Lorg/apache/cordova/CordovaWebView;->postMessage(Ljava/lang/String;Ljava/lang/Object;)V
 
-    .line 82
+    .line 79
     return-void
 .end method

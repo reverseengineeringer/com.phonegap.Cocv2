@@ -22,7 +22,7 @@
     .param p4, "modernTls"    # Z
 
     .prologue
-    .line 28
+    .line 29
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     .line 30
@@ -108,7 +108,6 @@
 
     if-eqz v2, :cond_0
 
-    .line 76
     iget-object v2, p0, Lcom/squareup/okhttp/Route;->proxy:Ljava/net/Proxy;
 
     iget-object v3, v0, Lcom/squareup/okhttp/Route;->proxy:Ljava/net/Proxy;
@@ -119,7 +118,6 @@
 
     if-eqz v2, :cond_0
 
-    .line 77
     iget-object v2, p0, Lcom/squareup/okhttp/Route;->inetSocketAddress:Ljava/net/InetSocketAddress;
 
     iget-object v3, v0, Lcom/squareup/okhttp/Route;->inetSocketAddress:Ljava/net/InetSocketAddress;
@@ -130,14 +128,12 @@
 
     if-eqz v2, :cond_0
 
-    .line 78
     iget-boolean v2, p0, Lcom/squareup/okhttp/Route;->modernTls:Z
 
     iget-boolean v3, v0, Lcom/squareup/okhttp/Route;->modernTls:Z
 
     if-ne v2, v3, :cond_0
 
-    .line 75
     const/4 v1, 0x1
 
     .line 80
@@ -161,9 +157,9 @@
 
     iget-boolean v0, p0, Lcom/squareup/okhttp/Route;->modernTls:Z
 
-    if-eqz v0, :cond_0
+    if-nez v0, :cond_0
 
-    const/4 v0, 0x0
+    const/4 v0, 0x1
 
     :goto_0
     invoke-direct {v1, v2, v3, v4, v0}, Lcom/squareup/okhttp/Route;-><init>(Lcom/squareup/okhttp/Address;Ljava/net/Proxy;Ljava/net/InetSocketAddress;Z)V
@@ -171,7 +167,7 @@
     return-object v1
 
     :cond_0
-    const/4 v0, 0x1
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method

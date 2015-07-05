@@ -60,7 +60,7 @@
     .end annotation
 
     .prologue
-    .line 46
+    .line 48
     .local p7, "transports":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -83,9 +83,13 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "uriPort <= 0: "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     invoke-virtual {v1, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
@@ -184,7 +188,6 @@
 
     if-eqz v2, :cond_0
 
-    .line 119
     iget-object v2, p0, Lcom/squareup/okhttp/Address;->uriHost:Ljava/lang/String;
 
     iget-object v3, v0, Lcom/squareup/okhttp/Address;->uriHost:Ljava/lang/String;
@@ -195,14 +198,12 @@
 
     if-eqz v2, :cond_0
 
-    .line 120
     iget v2, p0, Lcom/squareup/okhttp/Address;->uriPort:I
 
     iget v3, v0, Lcom/squareup/okhttp/Address;->uriPort:I
 
     if-ne v2, v3, :cond_0
 
-    .line 121
     iget-object v2, p0, Lcom/squareup/okhttp/Address;->sslSocketFactory:Ljavax/net/ssl/SSLSocketFactory;
 
     iget-object v3, v0, Lcom/squareup/okhttp/Address;->sslSocketFactory:Ljavax/net/ssl/SSLSocketFactory;
@@ -213,7 +214,6 @@
 
     if-eqz v2, :cond_0
 
-    .line 122
     iget-object v2, p0, Lcom/squareup/okhttp/Address;->hostnameVerifier:Ljavax/net/ssl/HostnameVerifier;
 
     iget-object v3, v0, Lcom/squareup/okhttp/Address;->hostnameVerifier:Ljavax/net/ssl/HostnameVerifier;
@@ -224,7 +224,6 @@
 
     if-eqz v2, :cond_0
 
-    .line 123
     iget-object v2, p0, Lcom/squareup/okhttp/Address;->authenticator:Lcom/squareup/okhttp/OkAuthenticator;
 
     iget-object v3, v0, Lcom/squareup/okhttp/Address;->authenticator:Lcom/squareup/okhttp/OkAuthenticator;
@@ -235,7 +234,6 @@
 
     if-eqz v2, :cond_0
 
-    .line 124
     iget-object v2, p0, Lcom/squareup/okhttp/Address;->transports:Ljava/util/List;
 
     iget-object v3, v0, Lcom/squareup/okhttp/Address;->transports:Ljava/util/List;
@@ -246,7 +244,6 @@
 
     if-eqz v2, :cond_0
 
-    .line 118
     const/4 v1, 0x1
 
     .line 126

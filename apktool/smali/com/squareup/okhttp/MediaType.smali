@@ -37,17 +37,15 @@
 
     sput-object v0, Lcom/squareup/okhttp/MediaType;->TYPE_SUBTYPE:Ljava/util/regex/Pattern;
 
-    .line 32
+    .line 31
     const-string v0, ";\\s*([a-zA-Z0-9-!#$%&\'*+.^_`{|}~]+)=(?:([a-zA-Z0-9-!#$%&\'*+.^_`{|}~]+)|\"([^\"]*)\")"
 
-    .line 31
     invoke-static {v0}, Ljava/util/regex/Pattern;->compile(Ljava/lang/String;)Ljava/util/regex/Pattern;
 
     move-result-object v0
 
     sput-object v0, Lcom/squareup/okhttp/MediaType;->PARAMETER:Ljava/util/regex/Pattern;
 
-    .line 32
     return-void
 .end method
 
@@ -157,17 +155,9 @@
 
     move-result v8
 
-    if-lt v3, v8, :cond_2
-
-    .line 70
-    new-instance v7, Lcom/squareup/okhttp/MediaType;
-
-    invoke-direct {v7, p0, v5, v4, v0}, Lcom/squareup/okhttp/MediaType;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-
-    goto :goto_0
+    if-ge v3, v8, :cond_6
 
     .line 59
-    :cond_2
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
     move-result v8
@@ -188,7 +178,7 @@
 
     .line 63
     .local v1, "name":Ljava/lang/String;
-    if-eqz v1, :cond_3
+    if-eqz v1, :cond_2
 
     const-string v8, "charset"
 
@@ -196,10 +186,10 @@
 
     move-result v8
 
-    if-nez v8, :cond_4
+    if-nez v8, :cond_3
 
     .line 58
-    :cond_3
+    :cond_2
     :goto_2
     invoke-virtual {v2}, Ljava/util/regex/Matcher;->end()I
 
@@ -208,16 +198,20 @@
     goto :goto_1
 
     .line 64
-    :cond_4
-    if-eqz v0, :cond_5
+    :cond_3
+    if-eqz v0, :cond_4
 
     new-instance v7, Ljava/lang/IllegalArgumentException;
 
     new-instance v8, Ljava/lang/StringBuilder;
 
+    invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v9, "Multiple charsets: "
 
-    invoke-direct {v8, v9}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v8
 
     invoke-virtual {v8, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -232,24 +226,21 @@
     throw v7
 
     .line 65
-    :cond_5
+    :cond_4
     invoke-virtual {v2, v10}, Ljava/util/regex/Matcher;->group(I)Ljava/lang/String;
 
     move-result-object v8
 
-    if-eqz v8, :cond_6
+    if-eqz v8, :cond_5
 
-    .line 66
     invoke-virtual {v2, v10}, Ljava/util/regex/Matcher;->group(I)Ljava/lang/String;
 
     move-result-object v0
 
-    .line 65
     :goto_3
     goto :goto_2
 
-    .line 67
-    :cond_6
+    :cond_5
     const/4 v8, 0x3
 
     invoke-virtual {v2, v8}, Ljava/util/regex/Matcher;->group(I)Ljava/lang/String;
@@ -257,6 +248,15 @@
     move-result-object v0
 
     goto :goto_3
+
+    .line 70
+    .end local v1    # "name":Ljava/lang/String;
+    :cond_6
+    new-instance v7, Lcom/squareup/okhttp/MediaType;
+
+    invoke-direct {v7, p0, v5, v4, v0}, Lcom/squareup/okhttp/MediaType;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+
+    goto :goto_0
 .end method
 
 

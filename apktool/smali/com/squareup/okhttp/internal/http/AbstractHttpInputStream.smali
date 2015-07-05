@@ -28,7 +28,7 @@
     .end annotation
 
     .prologue
-    .line 42
+    .line 43
     invoke-direct {p0}, Ljava/io/InputStream;-><init>()V
 
     .line 44

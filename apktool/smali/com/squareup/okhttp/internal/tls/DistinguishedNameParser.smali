@@ -211,7 +211,27 @@
 
     aget-char v0, v0, v1
 
-    if-eq v0, v4, :cond_4
+    if-ne v0, v4, :cond_2
+
+    .line 216
+    iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
+
+    iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->end:I
+
+    add-int/lit8 v2, v1, 0x1
+
+    iput v2, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->end:I
+
+    aput-char v4, v0, v1
+
+    .line 215
+    iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
+
+    add-int/lit8 v0, v0, 0x1
+
+    iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
+
+    goto :goto_2
 
     .line 218
     :cond_2
@@ -241,7 +261,6 @@
 
     if-eq v0, v1, :cond_3
 
-    .line 219
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
@@ -269,27 +288,6 @@
     invoke-direct {v0, v1, v2, v3}, Ljava/lang/String;-><init>([CII)V
 
     goto/16 :goto_1
-
-    .line 216
-    :cond_4
-    iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
-
-    iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->end:I
-
-    add-int/lit8 v2, v1, 0x1
-
-    iput v2, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->end:I
-
-    aput-char v4, v0, v1
-
-    .line 215
-    iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
-
-    add-int/lit8 v0, v0, 0x1
-
-    iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
-
-    goto :goto_2
 
     .line 196
     :sswitch_data_0
@@ -329,9 +327,13 @@
 
     new-instance v3, Ljava/lang/StringBuilder;
 
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v4, "Malformed DN: "
 
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
 
     iget-object v4, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->dn:Ljava/lang/String;
 
@@ -399,9 +401,9 @@
     .line 322
     add-int/lit8 v0, v0, -0x57
 
-    .line 323
     goto :goto_0
 
+    .line 323
     :cond_2
     if-lt v0, v6, :cond_3
 
@@ -410,7 +412,6 @@
     .line 324
     add-int/lit8 v0, v0, -0x37
 
-    .line 325
     goto :goto_0
 
     .line 326
@@ -419,9 +420,13 @@
 
     new-instance v3, Ljava/lang/StringBuilder;
 
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v4, "Malformed DN: "
 
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
 
     iget-object v4, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->dn:Ljava/lang/String;
 
@@ -449,9 +454,9 @@
     .line 333
     add-int/lit8 v1, v1, -0x57
 
-    .line 334
     goto :goto_1
 
+    .line 334
     :cond_5
     if-lt v1, v6, :cond_6
 
@@ -460,7 +465,6 @@
     .line 335
     add-int/lit8 v1, v1, -0x37
 
-    .line 336
     goto :goto_1
 
     .line 337
@@ -469,9 +473,13 @@
 
     new-instance v3, Ljava/lang/StringBuilder;
 
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v4, "Malformed DN: "
 
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
 
     iget-object v4, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->dn:Ljava/lang/String;
 
@@ -511,9 +519,13 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "Unexpected end of DN: "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     iget-object v2, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->dn:Ljava/lang/String;
 
@@ -638,45 +650,9 @@
 
     .local v2, "i":I
     :goto_2
-    if-lt v2, v1, :cond_4
-
-    .line 299
-    int-to-char v4, v3
-
-    goto :goto_0
-
-    .line 275
-    .end local v1    # "count":I
-    .end local v2    # "i":I
-    :cond_2
-    const/16 v5, 0xef
-
-    if-gt v3, v5, :cond_3
-
-    .line 276
-    const/4 v1, 0x2
-
-    .line 277
-    .restart local v1    # "count":I
-    and-int/lit8 v3, v3, 0xf
-
-    .line 278
-    goto :goto_1
-
-    .line 279
-    .end local v1    # "count":I
-    :cond_3
-    const/4 v1, 0x3
-
-    .line 280
-    .restart local v1    # "count":I
-    and-int/lit8 v3, v3, 0x7
-
-    goto :goto_1
+    if-ge v2, v1, :cond_4
 
     .line 285
-    .restart local v2    # "i":I
-    :cond_4
     iget v5, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
 
     add-int/lit8 v5, v5, 0x1
@@ -738,6 +714,42 @@
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_2
+
+    .line 275
+    .end local v0    # "b":I
+    .end local v1    # "count":I
+    .end local v2    # "i":I
+    :cond_2
+    const/16 v5, 0xef
+
+    if-gt v3, v5, :cond_3
+
+    .line 276
+    const/4 v1, 0x2
+
+    .line 277
+    .restart local v1    # "count":I
+    and-int/lit8 v3, v3, 0xf
+
+    goto :goto_1
+
+    .line 279
+    .end local v1    # "count":I
+    :cond_3
+    const/4 v1, 0x3
+
+    .line 280
+    .restart local v1    # "count":I
+    and-int/lit8 v3, v3, 0x7
+
+    goto :goto_1
+
+    .line 299
+    .restart local v2    # "i":I
+    :cond_4
+    int-to-char v4, v3
+
+    goto :goto_0
 .end method
 
 .method private hexAV()Ljava/lang/String;
@@ -760,9 +772,13 @@
 
     new-instance v5, Ljava/lang/StringBuilder;
 
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v6, "Unexpected end of DN: "
 
-    invoke-direct {v5, v6}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
 
     iget-object v6, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->dn:Ljava/lang/String;
 
@@ -819,7 +835,6 @@
 
     if-eq v4, v5, :cond_1
 
-    .line 150
     iget-object v4, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
     iget v5, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
@@ -860,9 +875,13 @@
 
     new-instance v5, Ljava/lang/StringBuilder;
 
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v6, "Unexpected end of DN: "
 
-    invoke-direct {v5, v6}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
 
     iget-object v6, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->dn:Ljava/lang/String;
 
@@ -990,21 +1009,9 @@
     :goto_2
     array-length v4, v0
 
-    if-lt v2, v4, :cond_8
-
-    .line 183
-    new-instance v4, Ljava/lang/String;
-
-    iget-object v5, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
-
-    iget v6, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
-
-    invoke-direct {v4, v5, v6, v1}, Ljava/lang/String;-><init>([CII)V
-
-    return-object v4
+    if-ge v2, v4, :cond_8
 
     .line 180
-    :cond_8
     invoke-direct {p0, v3}, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->getByte(I)I
 
     move-result v4
@@ -1019,6 +1026,18 @@
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_2
+
+    .line 183
+    :cond_8
+    new-instance v4, Ljava/lang/String;
+
+    iget-object v5, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
+
+    iget v6, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
+
+    invoke-direct {v4, v5, v6, v1}, Ljava/lang/String;-><init>([CII)V
+
+    return-object v4
 .end method
 
 .method private nextAT()Ljava/lang/String;
@@ -1043,25 +1062,8 @@
 
     aget-char v0, v0, v1
 
-    if-eq v0, v2, :cond_1
+    if-ne v0, v2, :cond_0
 
-    .line 53
-    :cond_0
-    iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
-
-    iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->length:I
-
-    if-ne v0, v1, :cond_2
-
-    .line 54
-    const/4 v0, 0x0
-
-    .line 100
-    :goto_1
-    return-object v0
-
-    .line 51
-    :cond_1
     iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
 
     add-int/lit8 v0, v0, 0x1
@@ -1070,8 +1072,23 @@
 
     goto :goto_0
 
+    .line 53
+    :cond_0
+    iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
+
+    iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->length:I
+
+    if-ne v0, v1, :cond_1
+
+    .line 54
+    const/4 v0, 0x0
+
+    .line 100
+    :goto_1
+    return-object v0
+
     .line 58
-    :cond_2
+    :cond_1
     iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
 
     iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
@@ -1089,7 +1106,7 @@
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->length:I
 
-    if-ge v0, v1, :cond_3
+    if-ge v0, v1, :cond_2
 
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
@@ -1097,7 +1114,7 @@
 
     aget-char v0, v0, v1
 
-    if-eq v0, v3, :cond_3
+    if-eq v0, v3, :cond_2
 
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
@@ -1105,24 +1122,36 @@
 
     aget-char v0, v0, v1
 
-    if-ne v0, v2, :cond_4
+    if-eq v0, v2, :cond_2
+
+    iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
+
+    add-int/lit8 v0, v0, 0x1
+
+    iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
+
+    goto :goto_2
 
     .line 66
-    :cond_3
+    :cond_2
     iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->length:I
 
-    if-lt v0, v1, :cond_5
+    if-lt v0, v1, :cond_3
 
     .line 67
     new-instance v0, Ljava/lang/IllegalStateException;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "Unexpected end of DN: "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     iget-object v2, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->dn:Ljava/lang/String;
 
@@ -1138,18 +1167,8 @@
 
     throw v0
 
-    .line 62
-    :cond_4
-    iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
-
-    add-int/lit8 v0, v0, 0x1
-
-    iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
-
-    goto :goto_2
-
     .line 71
-    :cond_5
+    :cond_3
     iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
 
     iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->end:I
@@ -1161,7 +1180,7 @@
 
     aget-char v0, v0, v1
 
-    if-ne v0, v2, :cond_9
+    if-ne v0, v2, :cond_6
 
     .line 76
     :goto_3
@@ -1169,7 +1188,7 @@
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->length:I
 
-    if-ge v0, v1, :cond_6
+    if-ge v0, v1, :cond_4
 
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
@@ -1177,7 +1196,7 @@
 
     aget-char v0, v0, v1
 
-    if-eq v0, v3, :cond_6
+    if-eq v0, v3, :cond_4
 
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
@@ -1185,33 +1204,45 @@
 
     aget-char v0, v0, v1
 
-    if-eq v0, v2, :cond_8
+    if-ne v0, v2, :cond_4
+
+    iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
+
+    add-int/lit8 v0, v0, 0x1
+
+    iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
+
+    goto :goto_3
 
     .line 79
-    :cond_6
+    :cond_4
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
 
     aget-char v0, v0, v1
 
-    if-ne v0, v3, :cond_7
+    if-ne v0, v3, :cond_5
 
     iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->length:I
 
-    if-ne v0, v1, :cond_9
+    if-ne v0, v1, :cond_6
 
     .line 80
-    :cond_7
+    :cond_5
     new-instance v0, Ljava/lang/IllegalStateException;
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "Unexpected end of DN: "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     iget-object v2, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->dn:Ljava/lang/String;
 
@@ -1227,18 +1258,8 @@
 
     throw v0
 
-    .line 76
-    :cond_8
-    iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
-
-    add-int/lit8 v0, v0, 0x1
-
-    iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
-
-    goto :goto_3
-
     .line 84
-    :cond_9
+    :cond_6
     iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
 
     add-int/lit8 v0, v0, 0x1
@@ -1251,7 +1272,7 @@
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->length:I
 
-    if-ge v0, v1, :cond_a
+    if-ge v0, v1, :cond_7
 
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
@@ -1259,10 +1280,18 @@
 
     aget-char v0, v0, v1
 
-    if-eq v0, v2, :cond_f
+    if-ne v0, v2, :cond_7
+
+    iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
+
+    add-int/lit8 v0, v0, 0x1
+
+    iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
+
+    goto :goto_4
 
     .line 93
-    :cond_a
+    :cond_7
     iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->end:I
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
@@ -1271,7 +1300,7 @@
 
     const/4 v1, 0x4
 
-    if-le v0, v1, :cond_e
+    if-le v0, v1, :cond_b
 
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
@@ -1283,9 +1312,8 @@
 
     const/16 v1, 0x2e
 
-    if-ne v0, v1, :cond_e
+    if-ne v0, v1, :cond_b
 
-    .line 94
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
@@ -1294,7 +1322,7 @@
 
     const/16 v1, 0x4f
 
-    if-eq v0, v1, :cond_b
+    if-eq v0, v1, :cond_8
 
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
@@ -1304,10 +1332,9 @@
 
     const/16 v1, 0x6f
 
-    if-ne v0, v1, :cond_e
+    if-ne v0, v1, :cond_b
 
-    .line 95
-    :cond_b
+    :cond_8
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
@@ -1318,7 +1345,7 @@
 
     const/16 v1, 0x49
 
-    if-eq v0, v1, :cond_c
+    if-eq v0, v1, :cond_9
 
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
@@ -1330,10 +1357,9 @@
 
     const/16 v1, 0x69
 
-    if-ne v0, v1, :cond_e
+    if-ne v0, v1, :cond_b
 
-    .line 96
-    :cond_c
+    :cond_9
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
@@ -1344,7 +1370,7 @@
 
     const/16 v1, 0x44
 
-    if-eq v0, v1, :cond_d
+    if-eq v0, v1, :cond_a
 
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
@@ -1356,10 +1382,10 @@
 
     const/16 v1, 0x64
 
-    if-ne v0, v1, :cond_e
+    if-ne v0, v1, :cond_b
 
     .line 97
-    :cond_d
+    :cond_a
     iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
 
     add-int/lit8 v0, v0, 0x4
@@ -1367,7 +1393,7 @@
     iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
 
     .line 100
-    :cond_e
+    :cond_b
     new-instance v0, Ljava/lang/String;
 
     iget-object v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
@@ -1383,16 +1409,6 @@
     invoke-direct {v0, v1, v2, v3}, Ljava/lang/String;-><init>([CII)V
 
     goto/16 :goto_1
-
-    .line 88
-    :cond_f
-    iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
-
-    add-int/lit8 v0, v0, 0x1
-
-    iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
-
-    goto/16 :goto_4
 .end method
 
 .method private quotedAV()Ljava/lang/String;
@@ -1429,9 +1445,13 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "Unexpected end of DN: "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     iget-object v2, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->dn:Ljava/lang/String;
 
@@ -1457,7 +1477,7 @@
 
     const/16 v1, 0x22
 
-    if-ne v0, v1, :cond_2
+    if-ne v0, v1, :cond_1
 
     .line 116
     iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
@@ -1472,7 +1492,7 @@
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->length:I
 
-    if-ge v0, v1, :cond_1
+    if-ge v0, v1, :cond_3
 
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
@@ -1482,28 +1502,18 @@
 
     const/16 v1, 0x20
 
-    if-eq v0, v1, :cond_4
+    if-ne v0, v1, :cond_3
 
-    .line 133
-    :cond_1
-    new-instance v0, Ljava/lang/String;
+    iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
 
-    iget-object v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
+    add-int/lit8 v0, v0, 0x1
 
-    iget v2, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
+    iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
 
-    iget v3, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->end:I
-
-    iget v4, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
-
-    sub-int/2addr v3, v4
-
-    invoke-direct {v0, v1, v2, v3}, Ljava/lang/String;-><init>([CII)V
-
-    return-object v0
+    goto :goto_1
 
     .line 118
-    :cond_2
+    :cond_1
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
@@ -1512,7 +1522,7 @@
 
     const/16 v1, 0x5c
 
-    if-ne v0, v1, :cond_3
+    if-ne v0, v1, :cond_2
 
     .line 119
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
@@ -1543,7 +1553,7 @@
     goto :goto_0
 
     .line 122
-    :cond_3
+    :cond_2
     iget-object v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
     iget v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->end:I
@@ -1558,15 +1568,23 @@
 
     goto :goto_2
 
-    .line 130
-    :cond_4
-    iget v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
+    .line 133
+    :cond_3
+    new-instance v0, Ljava/lang/String;
 
-    add-int/lit8 v0, v0, 0x1
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
 
-    iput v0, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
+    iget v2, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
 
-    goto :goto_1
+    iget v3, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->end:I
+
+    iget v4, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->beg:I
+
+    sub-int/2addr v3, v4
+
+    invoke-direct {v0, v1, v2, v3}, Ljava/lang/String;-><init>([CII)V
+
+    return-object v0
 .end method
 
 
@@ -1708,41 +1726,7 @@
 
     const/16 v4, 0x3b
 
-    if-eq v3, v4, :cond_4
-
-    .line 396
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
-
-    iget v4, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
-
-    aget-char v3, v3, v4
-
-    const/16 v4, 0x2b
-
-    if-eq v3, v4, :cond_4
-
-    .line 397
-    new-instance v2, Ljava/lang/IllegalStateException;
-
-    new-instance v3, Ljava/lang/StringBuilder;
-
-    const-string v4, "Malformed DN: "
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    iget-object v4, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->dn:Ljava/lang/String;
-
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-direct {v2, v3}, Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V
-
-    throw v2
+    if-ne v3, v4, :cond_5
 
     .line 400
     :cond_4
@@ -1765,9 +1749,52 @@
 
     new-instance v3, Ljava/lang/StringBuilder;
 
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v4, "Malformed DN: "
 
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    iget-object v4, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->dn:Ljava/lang/String;
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V
+
+    throw v2
+
+    .line 396
+    :cond_5
+    iget-object v3, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->chars:[C
+
+    iget v4, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->pos:I
+
+    aget-char v3, v3, v4
+
+    const/16 v4, 0x2b
+
+    if-eq v3, v4, :cond_4
+
+    .line 397
+    new-instance v2, Ljava/lang/IllegalStateException;
+
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "Malformed DN: "
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
 
     iget-object v4, p0, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->dn:Ljava/lang/String;
 

@@ -1,4 +1,4 @@
-.class Lcom/squareup/okhttp/Request$Body$2;
+.class final Lcom/squareup/okhttp/Request$Body$2;
 .super Lcom/squareup/okhttp/Request$Body;
 .source "Request.java"
 
@@ -9,15 +9,15 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x0
+    accessFlags = 0x8
     name = null
 .end annotation
 
 
 # instance fields
-.field private final synthetic val$contentType:Lcom/squareup/okhttp/MediaType;
+.field final synthetic val$contentType:Lcom/squareup/okhttp/MediaType;
 
-.field private final synthetic val$file:Ljava/io/File;
+.field final synthetic val$file:Ljava/io/File;
 
 
 # direct methods
@@ -25,12 +25,11 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 164
     iput-object p1, p0, Lcom/squareup/okhttp/Request$Body$2;->val$contentType:Lcom/squareup/okhttp/MediaType;
 
     iput-object p2, p0, Lcom/squareup/okhttp/Request$Body$2;->val$file:Ljava/io/File;
 
-    .line 164
     invoke-direct {p0}, Lcom/squareup/okhttp/Request$Body;-><init>()V
 
     return-void
@@ -122,33 +121,24 @@
     .local v0, "buffer":[B
     :goto_1
     invoke-virtual {v3, v0}, Ljava/io/InputStream;->read([B)I
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     move-result v1
 
     .local v1, "c":I
     const/4 v6, -0x1
 
-    if-ne v1, v6, :cond_1
-
-    .line 185
-    invoke-static {v3}, Lcom/squareup/okhttp/internal/Util;->closeQuietly(Ljava/io/Closeable;)V
-
-    goto :goto_0
+    if-eq v1, v6, :cond_1
 
     .line 182
-    :cond_1
     const/4 v6, 0x0
 
-    :try_start_2
     invoke-virtual {p1, v0, v6, v1}, Ljava/io/OutputStream;->write([BII)V
-    :try_end_2
-    .catchall {:try_start_2 .. :try_end_2} :catchall_0
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     goto :goto_1
 
-    .line 184
+    .line 185
     .end local v0    # "buffer":[B
     .end local v1    # "c":I
     :catchall_0
@@ -156,16 +146,26 @@
 
     move-object v2, v3
 
-    .line 185
     .end local v3    # "in":Ljava/io/InputStream;
     .restart local v2    # "in":Ljava/io/InputStream;
     :goto_2
     invoke-static {v2}, Lcom/squareup/okhttp/internal/Util;->closeQuietly(Ljava/io/Closeable;)V
 
-    .line 186
     throw v6
 
-    .line 184
+    .end local v2    # "in":Ljava/io/InputStream;
+    .restart local v0    # "buffer":[B
+    .restart local v1    # "c":I
+    .restart local v3    # "in":Ljava/io/InputStream;
+    :cond_1
+    invoke-static {v3}, Lcom/squareup/okhttp/internal/Util;->closeQuietly(Ljava/io/Closeable;)V
+
+    goto :goto_0
+
+    .end local v0    # "buffer":[B
+    .end local v1    # "c":I
+    .end local v3    # "in":Ljava/io/InputStream;
+    .restart local v2    # "in":Ljava/io/InputStream;
     :catchall_1
     move-exception v6
 

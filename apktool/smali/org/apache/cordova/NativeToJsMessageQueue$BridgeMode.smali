@@ -23,7 +23,7 @@
     .locals 0
 
     .prologue
-    .line 280
+    .line 283
     iput-object p1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;->this$0:Lorg/apache/cordova/NativeToJsMessageQueue;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -31,11 +31,13 @@
     return-void
 .end method
 
-.method synthetic constructor <init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;)V
+.method synthetic constructor <init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$1;)V
     .locals 0
+    .param p1, "x0"    # Lorg/apache/cordova/NativeToJsMessageQueue;
+    .param p2, "x1"    # Lorg/apache/cordova/NativeToJsMessageQueue$1;
 
     .prologue
-    .line 280
+    .line 283
     invoke-direct {p0, p1}, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;)V
 
     return-void
@@ -48,7 +50,7 @@
     .param p1, "fromOnlineEvent"    # Z
 
     .prologue
-    .line 282
+    .line 285
     return-void
 .end method
 
@@ -59,6 +61,6 @@
     .locals 0
 
     .prologue
-    .line 283
+    .line 286
     return-void
 .end method

@@ -25,10 +25,10 @@
     .end annotation
 
     .prologue
-    .line 117
+    .line 119
     invoke-direct {p0, p1}, Ljava/util/zip/GZIPInputStream;-><init>(Ljava/io/InputStream;)V
 
-    .line 118
+    .line 120
     return-void
 .end method
 
@@ -38,7 +38,7 @@
     .locals 1
 
     .prologue
-    .line 120
+    .line 122
     iget-object v0, p0, Lorg/apache/cordova/filetransfer/FileTransfer$ExposedGZIPInputStream;->inf:Ljava/util/zip/Inflater;
 
     return-object v0

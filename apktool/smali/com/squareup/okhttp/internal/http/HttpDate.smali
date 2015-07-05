@@ -25,12 +25,11 @@
     .locals 3
 
     .prologue
-    .line 36
+    .line 35
     new-instance v0, Lcom/squareup/okhttp/internal/http/HttpDate$1;
 
     invoke-direct {v0}, Lcom/squareup/okhttp/internal/http/HttpDate$1;-><init>()V
 
-    .line 35
     sput-object v0, Lcom/squareup/okhttp/internal/http/HttpDate;->STANDARD_DATE_FORMAT:Ljava/lang/ThreadLocal;
 
     .line 45
@@ -40,21 +39,18 @@
 
     const/4 v1, 0x0
 
-    .line 46
     const-string v2, "EEEE, dd-MMM-yy HH:mm:ss zzz"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x1
 
-    .line 47
     const-string v2, "EEE MMM d HH:mm:ss yyyy"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x2
 
-    .line 48
     const-string v2, "EEE, dd-MMM-yyyy HH:mm:ss z"
 
     aput-object v2, v0, v1
@@ -73,7 +69,6 @@
 
     const/4 v1, 0x5
 
-    .line 49
     const-string v2, "EEE dd-MMM-yyyy HH:mm:ss z"
 
     aput-object v2, v0, v1
@@ -92,7 +87,6 @@
 
     const/16 v1, 0x8
 
-    .line 50
     const-string v2, "EEE dd-MMM-yy HH:mm:ss z"
 
     aput-object v2, v0, v1
@@ -111,7 +105,6 @@
 
     const/16 v1, 0xb
 
-    .line 51
     const-string v2, "EEE,dd-MMM-yyyy HH:mm:ss z"
 
     aput-object v2, v0, v1
@@ -124,25 +117,21 @@
 
     const/16 v1, 0xd
 
-    .line 54
     const-string v2, "EEE MMM d yyyy HH:mm:ss z"
 
     aput-object v2, v0, v1
 
-    .line 45
     sput-object v0, Lcom/squareup/okhttp/internal/http/HttpDate;->BROWSER_COMPATIBLE_DATE_FORMAT_STRINGS:[Ljava/lang/String;
 
-    .line 57
+    .line 56
     sget-object v0, Lcom/squareup/okhttp/internal/http/HttpDate;->BROWSER_COMPATIBLE_DATE_FORMAT_STRINGS:[Ljava/lang/String;
 
     array-length v0, v0
 
     new-array v0, v0, [Ljava/text/DateFormat;
 
-    .line 56
     sput-object v0, Lcom/squareup/okhttp/internal/http/HttpDate;->BROWSER_COMPATIBLE_DATE_FORMATS:[Ljava/text/DateFormat;
 
-    .line 57
     return-void
 .end method
 
@@ -223,25 +212,16 @@
 
     .local v0, "count":I
     :goto_1
-    if-lt v2, v0, :cond_0
-
-    .line 65
-    monitor-exit v4
-
-    .line 78
-    const/4 v3, 0x0
-
-    goto :goto_0
+    if-ge v2, v0, :cond_1
 
     .line 67
-    :cond_0
     sget-object v3, Lcom/squareup/okhttp/internal/http/HttpDate;->BROWSER_COMPATIBLE_DATE_FORMATS:[Ljava/text/DateFormat;
 
     aget-object v1, v3, v2
 
     .line 68
     .local v1, "format":Ljava/text/DateFormat;
-    if-nez v1, :cond_1
+    if-nez v1, :cond_0
 
     .line 69
     new-instance v1, Ljava/text/SimpleDateFormat;
@@ -264,7 +244,7 @@
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     .line 73
-    :cond_1
+    :cond_0
     :try_start_2
     invoke-virtual {v1, p0}, Ljava/text/DateFormat;->parse(Ljava/lang/String;)Ljava/util/Date;
     :try_end_2
@@ -278,7 +258,7 @@
 
     goto :goto_0
 
-    .line 65
+    .line 77
     .end local v0    # "count":I
     .end local v1    # "format":Ljava/text/DateFormat;
     :catchall_0
@@ -300,4 +280,17 @@
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_1
+
+    .line 77
+    .end local v1    # "format":Ljava/text/DateFormat;
+    :cond_1
+    :try_start_4
+    monitor-exit v4
+    :try_end_4
+    .catchall {:try_start_4 .. :try_end_4} :catchall_0
+
+    .line 78
+    const/4 v3, 0x0
+
+    goto :goto_0
 .end method

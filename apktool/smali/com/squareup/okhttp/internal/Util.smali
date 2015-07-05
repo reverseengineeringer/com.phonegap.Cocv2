@@ -77,17 +77,15 @@
 
     sput-object v0, Lcom/squareup/okhttp/internal/Util;->skipBuffer:Ljava/util/concurrent/atomic/AtomicReference;
 
-    .line 58
+    .line 57
     const/16 v0, 0x10
 
     new-array v0, v0, [C
 
     fill-array-data v0, :array_0
 
-    .line 57
     sput-object v0, Lcom/squareup/okhttp/internal/Util;->DIGITS:[C
 
-    .line 58
     return-void
 
     :array_0
@@ -123,78 +121,83 @@
 .end method
 
 .method private static bytesToHexString([B)Ljava/lang/String;
-    .locals 8
+    .locals 9
     .param p0, "bytes"    # [B
 
     .prologue
     .line 370
-    sget-object v4, Lcom/squareup/okhttp/internal/Util;->DIGITS:[C
+    sget-object v5, Lcom/squareup/okhttp/internal/Util;->DIGITS:[C
 
     .line 371
-    .local v4, "digits":[C
-    array-length v5, p0
+    .local v5, "digits":[C
+    array-length v8, p0
 
-    mul-int/lit8 v5, v5, 0x2
+    mul-int/lit8 v8, v8, 0x2
 
-    new-array v1, v5, [C
+    new-array v2, v8, [C
 
     .line 372
-    .local v1, "buf":[C
-    const/4 v2, 0x0
+    .local v2, "buf":[C
+    const/4 v3, 0x0
 
     .line 373
-    .local v2, "c":I
-    array-length v6, p0
-
-    const/4 v5, 0x0
-
-    move v3, v2
-
-    .end local v2    # "c":I
     .local v3, "c":I
-    :goto_0
-    if-lt v5, v6, :cond_0
+    move-object v0, p0
 
-    .line 377
-    new-instance v5, Ljava/lang/String;
+    .local v0, "arr$":[B
+    array-length v7, v0
 
-    invoke-direct {v5, v1}, Ljava/lang/String;-><init>([C)V
+    .local v7, "len$":I
+    const/4 v6, 0x0
 
-    return-object v5
-
-    .line 373
-    :cond_0
-    aget-byte v0, p0, v5
-
-    .line 374
-    .local v0, "b":B
-    add-int/lit8 v2, v3, 0x1
+    .local v6, "i$":I
+    move v4, v3
 
     .end local v3    # "c":I
-    .restart local v2    # "c":I
-    shr-int/lit8 v7, v0, 0x4
+    .local v4, "c":I
+    :goto_0
+    if-ge v6, v7, :cond_0
 
-    and-int/lit8 v7, v7, 0xf
+    aget-byte v1, v0, v6
 
-    aget-char v7, v4, v7
+    .line 374
+    .local v1, "b":B
+    add-int/lit8 v3, v4, 0x1
 
-    aput-char v7, v1, v3
+    .end local v4    # "c":I
+    .restart local v3    # "c":I
+    shr-int/lit8 v8, v1, 0x4
+
+    and-int/lit8 v8, v8, 0xf
+
+    aget-char v8, v5, v8
+
+    aput-char v8, v2, v4
 
     .line 375
-    add-int/lit8 v3, v2, 0x1
+    add-int/lit8 v4, v3, 0x1
 
-    .end local v2    # "c":I
-    .restart local v3    # "c":I
-    and-int/lit8 v7, v0, 0xf
+    .end local v3    # "c":I
+    .restart local v4    # "c":I
+    and-int/lit8 v8, v1, 0xf
 
-    aget-char v7, v4, v7
+    aget-char v8, v5, v8
 
-    aput-char v7, v1, v2
+    aput-char v8, v2, v3
 
     .line 373
-    add-int/lit8 v5, v5, 0x1
+    add-int/lit8 v6, v6, 0x1
 
     goto :goto_0
+
+    .line 377
+    .end local v1    # "b":B
+    :cond_0
+    new-instance v8, Ljava/lang/String;
+
+    invoke-direct {v8, v2}, Ljava/lang/String;-><init>([C)V
+
+    return-object v8
 .end method
 
 .method public static checkOffsetAndCount(III)V
@@ -470,13 +473,9 @@
     .local v1, "c":I
     const/4 v3, -0x1
 
-    if-ne v1, v3, :cond_0
-
-    .line 326
-    return v2
+    if-eq v1, v3, :cond_0
 
     .line 323
-    :cond_0
     add-int/2addr v2, v1
 
     .line 324
@@ -485,6 +484,10 @@
     invoke-virtual {p1, v0, v3, v1}, Ljava/io/OutputStream;->write([BII)V
 
     goto :goto_0
+
+    .line 326
+    :cond_0
+    return v2
 .end method
 
 .method public static daemonThreadFactory(Ljava/lang/String;)Ljava/util/concurrent/ThreadFactory;
@@ -501,7 +504,7 @@
 .end method
 
 .method public static deleteContents(Ljava/io/File;)V
-    .locals 5
+    .locals 8
     .param p0, "dir"    # Ljava/io/File;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -513,94 +516,107 @@
     .line 183
     invoke-virtual {p0}, Ljava/io/File;->listFiles()[Ljava/io/File;
 
-    move-result-object v1
+    move-result-object v2
 
     .line 184
-    .local v1, "files":[Ljava/io/File;
-    if-nez v1, :cond_0
+    .local v2, "files":[Ljava/io/File;
+    if-nez v2, :cond_0
 
     .line 185
-    new-instance v2, Ljava/io/IOException;
+    new-instance v5, Ljava/io/IOException;
 
-    new-instance v3, Ljava/lang/StringBuilder;
+    new-instance v6, Ljava/lang/StringBuilder;
 
-    const-string v4, "not a readable directory: "
+    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    const-string v7, "not a readable directory: "
 
-    invoke-virtual {v3, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
+    move-result-object v6
 
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v6, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
+    move-result-object v6
 
-    invoke-direct {v2, v3}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    throw v2
+    move-result-object v6
+
+    invoke-direct {v5, v6}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
+
+    throw v5
 
     .line 187
     :cond_0
-    array-length v3, v1
+    move-object v0, v2
 
-    const/4 v2, 0x0
+    .local v0, "arr$":[Ljava/io/File;
+    array-length v4, v0
 
+    .local v4, "len$":I
+    const/4 v3, 0x0
+
+    .local v3, "i$":I
     :goto_0
-    if-lt v2, v3, :cond_1
+    if-ge v3, v4, :cond_3
 
-    .line 195
-    return-void
-
-    .line 187
-    :cond_1
-    aget-object v0, v1, v2
+    aget-object v1, v0, v3
 
     .line 188
-    .local v0, "file":Ljava/io/File;
-    invoke-virtual {v0}, Ljava/io/File;->isDirectory()Z
+    .local v1, "file":Ljava/io/File;
+    invoke-virtual {v1}, Ljava/io/File;->isDirectory()Z
 
-    move-result v4
+    move-result v5
 
-    if-eqz v4, :cond_2
+    if-eqz v5, :cond_1
 
     .line 189
-    invoke-static {v0}, Lcom/squareup/okhttp/internal/Util;->deleteContents(Ljava/io/File;)V
+    invoke-static {v1}, Lcom/squareup/okhttp/internal/Util;->deleteContents(Ljava/io/File;)V
 
     .line 191
-    :cond_2
-    invoke-virtual {v0}, Ljava/io/File;->delete()Z
+    :cond_1
+    invoke-virtual {v1}, Ljava/io/File;->delete()Z
 
-    move-result v4
+    move-result v5
 
-    if-nez v4, :cond_3
+    if-nez v5, :cond_2
 
     .line 192
-    new-instance v2, Ljava/io/IOException;
+    new-instance v5, Ljava/io/IOException;
 
-    new-instance v3, Ljava/lang/StringBuilder;
+    new-instance v6, Ljava/lang/StringBuilder;
 
-    const-string v4, "failed to delete file: "
+    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    const-string v7, "failed to delete file: "
 
-    invoke-virtual {v3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
+    move-result-object v6
 
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v6, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
+    move-result-object v6
 
-    invoke-direct {v2, v3}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    throw v2
+    move-result-object v6
+
+    invoke-direct {v5, v6}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
+
+    throw v5
 
     .line 187
-    :cond_3
-    add-int/lit8 v2, v2, 0x1
+    :cond_2
+    add-int/lit8 v3, v3, 0x1
 
     goto :goto_0
+
+    .line 195
+    .end local v1    # "file":Ljava/io/File;
+    :cond_3
+    return-void
 .end method
 
 .method public static equal(Ljava/lang/Object;Ljava/lang/Object;)Z
@@ -610,24 +626,24 @@
 
     .prologue
     .line 107
-    if-eq p0, p1, :cond_1
+    if-eq p0, p1, :cond_0
 
-    if-eqz p0, :cond_0
+    if-eqz p0, :cond_1
 
     invoke-virtual {p0, p1}, Ljava/lang/Object;->equals(Ljava/lang/Object;)Z
 
     move-result v0
 
-    if-nez v0, :cond_1
+    if-eqz v0, :cond_1
 
     :cond_0
-    const/4 v0, 0x0
+    const/4 v0, 0x1
 
     :goto_0
     return v0
 
     :cond_1
-    const/4 v0, 0x1
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method
@@ -1075,44 +1091,44 @@
     .local v1, "count":I
     const/4 v3, -0x1
 
-    if-ne v1, v3, :cond_0
+    if-eq v1, v3, :cond_0
 
-    .line 263
-    invoke-virtual {v2}, Ljava/io/StringWriter;->toString()Ljava/lang/String;
+    .line 261
+    const/4 v3, 0x0
+
+    invoke-virtual {v2, v0, v3, v1}, Ljava/io/StringWriter;->write([CII)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    move-result-object v3
-
-    .line 265
-    invoke-virtual {p0}, Ljava/io/Reader;->close()V
-
-    .line 263
-    return-object v3
-
-    .line 261
-    :cond_0
-    const/4 v3, 0x0
-
-    :try_start_1
-    invoke-virtual {v2, v0, v3, v1}, Ljava/io/StringWriter;->write([CII)V
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
-
     goto :goto_0
 
-    .line 264
+    .line 265
     .end local v0    # "buffer":[C
     .end local v1    # "count":I
     .end local v2    # "writer":Ljava/io/StringWriter;
     :catchall_0
     move-exception v3
 
+    invoke-virtual {p0}, Ljava/io/Reader;->close()V
+
+    throw v3
+
+    .line 263
+    .restart local v0    # "buffer":[C
+    .restart local v1    # "count":I
+    .restart local v2    # "writer":Ljava/io/StringWriter;
+    :cond_0
+    :try_start_1
+    invoke-virtual {v2}, Ljava/io/StringWriter;->toString()Ljava/lang/String;
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    move-result-object v3
+
     .line 265
     invoke-virtual {p0}, Ljava/io/Reader;->close()V
 
-    .line 266
-    throw v3
+    return-object v3
 .end method
 
 .method public static readFully(Ljava/io/InputStream;[B)V
@@ -1216,6 +1232,7 @@
     .line 250
     sub-int/2addr p3, v0
 
+    .line 251
     goto :goto_0
 .end method
 
@@ -1286,7 +1303,7 @@
 .end method
 
 .method public static skipByReading(Ljava/io/InputStream;J)J
-    .locals 9
+    .locals 11
     .param p0, "in"    # Ljava/io/InputStream;
     .param p1, "byteCount"    # J
     .annotation system Ldalvik/annotation/Throws;
@@ -1337,30 +1354,20 @@
     :cond_2
     cmp-long v5, v2, p1
 
-    if-ltz v5, :cond_4
-
-    .line 309
-    :cond_3
-    :goto_1
-    sget-object v5, Lcom/squareup/okhttp/internal/Util;->skipBuffer:Ljava/util/concurrent/atomic/AtomicReference;
-
-    invoke-virtual {v5, v0}, Ljava/util/concurrent/atomic/AtomicReference;->set(Ljava/lang/Object;)V
-
-    goto :goto_0
+    if-gez v5, :cond_3
 
     .line 297
-    :cond_4
-    sub-long v5, p1, v2
+    sub-long v6, p1, v2
 
-    array-length v7, v0
+    array-length v5, v0
 
-    int-to-long v7, v7
+    int-to-long v8, v5
 
-    invoke-static {v5, v6, v7, v8}, Ljava/lang/Math;->min(JJ)J
+    invoke-static {v6, v7, v8, v9}, Ljava/lang/Math;->min(JJ)J
 
-    move-result-wide v5
+    move-result-wide v6
 
-    long-to-int v4, v5
+    long-to-int v4, v6
 
     .line 298
     .local v4, "toRead":I
@@ -1374,12 +1381,26 @@
     .local v1, "read":I
     const/4 v5, -0x1
 
-    if-eq v1, v5, :cond_3
+    if-ne v1, v5, :cond_4
+
+    .line 309
+    .end local v1    # "read":I
+    .end local v4    # "toRead":I
+    :cond_3
+    :goto_1
+    sget-object v5, Lcom/squareup/okhttp/internal/Util;->skipBuffer:Ljava/util/concurrent/atomic/AtomicReference;
+
+    invoke-virtual {v5, v0}, Ljava/util/concurrent/atomic/AtomicReference;->set(Ljava/lang/Object;)V
+
+    goto :goto_0
 
     .line 302
-    int-to-long v5, v1
+    .restart local v1    # "read":I
+    .restart local v4    # "toRead":I
+    :cond_4
+    int-to-long v6, v1
 
-    add-long/2addr v2, v5
+    add-long/2addr v2, v6
 
     .line 303
     if-ge v1, v4, :cond_2

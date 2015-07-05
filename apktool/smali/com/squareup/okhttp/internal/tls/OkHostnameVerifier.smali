@@ -28,17 +28,15 @@
 
     sput-object v0, Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;->INSTANCE:Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;
 
-    .line 53
+    .line 52
     const-string v0, "([0-9a-fA-F]*:[0-9a-fA-F:.]*)|([\\d.]+)"
 
-    .line 52
     invoke-static {v0}, Ljava/util/regex/Pattern;->compile(Ljava/lang/String;)Ljava/util/regex/Pattern;
 
     move-result-object v0
 
     sput-object v0, Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;->VERIFY_AS_IP_ADDRESS:Ljava/util/regex/Pattern;
 
-    .line 56
     return-void
 .end method
 
@@ -71,56 +69,57 @@
 
     .prologue
     .line 118
-    new-instance v5, Ljava/util/ArrayList;
+    new-instance v6, Ljava/util/ArrayList;
 
-    invoke-direct {v5}, Ljava/util/ArrayList;-><init>()V
+    invoke-direct {v6}, Ljava/util/ArrayList;-><init>()V
 
     .line 120
-    .local v5, "result":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
+    .local v6, "result":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     :try_start_0
     invoke-virtual {p1}, Ljava/security/cert/X509Certificate;->getSubjectAlternativeNames()Ljava/util/Collection;
 
-    move-result-object v7
+    move-result-object v8
 
     .line 121
-    .local v7, "subjectAltNames":Ljava/util/Collection;, "Ljava/util/Collection<*>;"
-    if-nez v7, :cond_1
+    .local v8, "subjectAltNames":Ljava/util/Collection;, "Ljava/util/Collection<*>;"
+    if-nez v8, :cond_1
 
     .line 122
     invoke-static {}, Ljava/util/Collections;->emptyList()Ljava/util/List;
 
-    move-result-object v5
+    move-result-object v6
 
     .line 142
-    .end local v5    # "result":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
-    .end local v7    # "subjectAltNames":Ljava/util/Collection;, "Ljava/util/Collection<*>;"
+    .end local v6    # "result":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
+    .end local v8    # "subjectAltNames":Ljava/util/Collection;, "Ljava/util/Collection<*>;"
     :cond_0
     :goto_0
-    return-object v5
+    return-object v6
 
     .line 124
-    .restart local v5    # "result":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
-    .restart local v7    # "subjectAltNames":Ljava/util/Collection;, "Ljava/util/Collection<*>;"
+    .restart local v6    # "result":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
+    .restart local v8    # "subjectAltNames":Ljava/util/Collection;, "Ljava/util/Collection<*>;"
     :cond_1
-    invoke-interface {v7}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
+    invoke-interface {v8}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
 
-    move-result-object v8
+    move-result-object v5
 
+    .local v5, "i$":Ljava/util/Iterator;
     :cond_2
     :goto_1
-    invoke-interface {v8}, Ljava/util/Iterator;->hasNext()Z
+    invoke-interface {v5}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v9
 
     if-eqz v9, :cond_0
 
-    invoke-interface {v8}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v5}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    move-result-object v6
+    move-result-object v7
 
     .line 125
-    .local v6, "subjectAltName":Ljava/lang/Object;
-    move-object v0, v6
+    .local v7, "subjectAltName":Ljava/lang/Object;
+    move-object v0, v7
 
     check-cast v0, Ljava/util/List;
 
@@ -172,7 +171,7 @@
     if-eqz v1, :cond_2
 
     .line 136
-    invoke-interface {v5, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+    invoke-interface {v6, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
     :try_end_0
     .catch Ljava/security/cert/CertificateParsingException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -182,8 +181,9 @@
     .end local v1    # "altName":Ljava/lang/String;
     .end local v2    # "altNameType":Ljava/lang/Integer;
     .end local v4    # "entry":Ljava/util/List;, "Ljava/util/List<*>;"
-    .end local v6    # "subjectAltName":Ljava/lang/Object;
-    .end local v7    # "subjectAltNames":Ljava/util/Collection;, "Ljava/util/Collection<*>;"
+    .end local v5    # "i$":Ljava/util/Iterator;
+    .end local v7    # "subjectAltName":Ljava/lang/Object;
+    .end local v8    # "subjectAltNames":Ljava/util/Collection;, "Ljava/util/Collection<*>;"
     :catch_0
     move-exception v3
 
@@ -191,7 +191,7 @@
     .local v3, "e":Ljava/security/cert/CertificateParsingException;
     invoke-static {}, Ljava/util/Collections;->emptyList()Ljava/util/List;
 
-    move-result-object v5
+    move-result-object v6
 
     goto :goto_0
 .end method
@@ -216,15 +216,15 @@
 .end method
 
 .method private verifyHostName(Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
-    .locals 6
+    .locals 7
     .param p1, "hostName"    # Ljava/lang/String;
     .param p2, "certificate"    # Ljava/security/cert/X509Certificate;
 
     .prologue
     .line 96
-    sget-object v4, Ljava/util/Locale;->US:Ljava/util/Locale;
+    sget-object v5, Ljava/util/Locale;->US:Ljava/util/Locale;
 
-    invoke-virtual {p1, v4}, Ljava/lang/String;->toLowerCase(Ljava/util/Locale;)Ljava/lang/String;
+    invoke-virtual {p1, v5}, Ljava/lang/String;->toLowerCase(Ljava/util/Locale;)Ljava/lang/String;
 
     move-result-object p1
 
@@ -233,61 +233,25 @@
 
     .line 98
     .local v2, "hasDns":Z
-    const/4 v4, 0x2
+    const/4 v5, 0x2
 
-    invoke-direct {p0, p2, v4}, Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;->getSubjectAltNames(Ljava/security/cert/X509Certificate;I)Ljava/util/List;
+    invoke-direct {p0, p2, v5}, Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;->getSubjectAltNames(Ljava/security/cert/X509Certificate;I)Ljava/util/List;
 
-    move-result-object v4
+    move-result-object v5
 
-    invoke-interface {v4}, Ljava/util/List;->iterator()Ljava/util/Iterator;
-
-    move-result-object v4
-
-    :cond_0
-    invoke-interface {v4}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v5
-
-    if-nez v5, :cond_1
-
-    .line 105
-    if-nez v2, :cond_2
-
-    .line 106
-    invoke-virtual {p2}, Ljava/security/cert/X509Certificate;->getSubjectX500Principal()Ljavax/security/auth/x500/X500Principal;
+    invoke-interface {v5}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
     move-result-object v3
 
-    .line 108
-    .local v3, "principal":Ljavax/security/auth/x500/X500Principal;
-    new-instance v4, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;
+    .local v3, "i$":Ljava/util/Iterator;
+    :cond_0
+    invoke-interface {v3}, Ljava/util/Iterator;->hasNext()Z
 
-    invoke-direct {v4, v3}, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;-><init>(Ljavax/security/auth/x500/X500Principal;)V
+    move-result v5
 
-    const-string v5, "cn"
+    if-eqz v5, :cond_1
 
-    invoke-virtual {v4, v5}, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->findMostSpecific(Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v1
-
-    .line 109
-    .local v1, "cn":Ljava/lang/String;
-    if-eqz v1, :cond_2
-
-    .line 110
-    invoke-virtual {p0, p1, v1}, Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;->verifyHostName(Ljava/lang/String;Ljava/lang/String;)Z
-
-    move-result v4
-
-    .line 114
-    .end local v1    # "cn":Ljava/lang/String;
-    .end local v3    # "principal":Ljavax/security/auth/x500/X500Principal;
-    :goto_0
-    return v4
-
-    .line 98
-    :cond_1
-    invoke-interface {v4}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v3}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v0
 
@@ -305,14 +269,50 @@
     if-eqz v5, :cond_0
 
     .line 101
-    const/4 v4, 0x1
+    const/4 v5, 0x1
+
+    .line 114
+    .end local v0    # "altName":Ljava/lang/String;
+    :goto_0
+    return v5
+
+    .line 105
+    :cond_1
+    if-nez v2, :cond_2
+
+    .line 106
+    invoke-virtual {p2}, Ljava/security/cert/X509Certificate;->getSubjectX500Principal()Ljavax/security/auth/x500/X500Principal;
+
+    move-result-object v4
+
+    .line 108
+    .local v4, "principal":Ljavax/security/auth/x500/X500Principal;
+    new-instance v5, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;
+
+    invoke-direct {v5, v4}, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;-><init>(Ljavax/security/auth/x500/X500Principal;)V
+
+    const-string v6, "cn"
+
+    invoke-virtual {v5, v6}, Lcom/squareup/okhttp/internal/tls/DistinguishedNameParser;->findMostSpecific(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v1
+
+    .line 109
+    .local v1, "cn":Ljava/lang/String;
+    if-eqz v1, :cond_2
+
+    .line 110
+    invoke-virtual {p0, p1, v1}, Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;->verifyHostName(Ljava/lang/String;Ljava/lang/String;)Z
+
+    move-result v5
 
     goto :goto_0
 
     .line 114
-    .end local v0    # "altName":Ljava/lang/String;
+    .end local v1    # "cn":Ljava/lang/String;
+    .end local v4    # "principal":Ljavax/security/auth/x500/X500Principal;
     :cond_2
-    const/4 v4, 0x0
+    const/4 v5, 0x0
 
     goto :goto_0
 .end method
@@ -324,31 +324,24 @@
 
     .prologue
     .line 84
-    const/4 v1, 0x7
+    const/4 v2, 0x7
 
-    invoke-direct {p0, p2, v1}, Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;->getSubjectAltNames(Ljava/security/cert/X509Certificate;I)Ljava/util/List;
+    invoke-direct {p0, p2, v2}, Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;->getSubjectAltNames(Ljava/security/cert/X509Certificate;I)Ljava/util/List;
+
+    move-result-object v2
+
+    invoke-interface {v2}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
     move-result-object v1
 
-    invoke-interface {v1}, Ljava/util/List;->iterator()Ljava/util/Iterator;
-
-    move-result-object v1
-
+    .local v1, "i$":Ljava/util/Iterator;
     :cond_0
     invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v2
 
-    if-nez v2, :cond_1
+    if-eqz v2, :cond_1
 
-    .line 89
-    const/4 v1, 0x0
-
-    :goto_0
-    return v1
-
-    .line 84
-    :cond_1
     invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v0
@@ -364,7 +357,15 @@
     if-eqz v2, :cond_0
 
     .line 86
-    const/4 v1, 0x1
+    const/4 v2, 0x1
+
+    .line 89
+    .end local v0    # "altName":Ljava/lang/String;
+    :goto_0
+    return v2
+
+    :cond_1
+    const/4 v2, 0x0
 
     goto :goto_0
 .end method
@@ -384,16 +385,13 @@
 
     if-eqz v0, :cond_0
 
-    .line 72
     invoke-direct {p0, p1, p2}, Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;->verifyIpAddress(Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
 
     move-result v0
 
-    .line 71
     :goto_0
     return v0
 
-    .line 73
     :cond_0
     invoke-direct {p0, p1, p2}, Lcom/squareup/okhttp/internal/tls/OkHostnameVerifier;->verifyHostName(Ljava/lang/String;Ljava/security/cert/X509Certificate;)Z
 

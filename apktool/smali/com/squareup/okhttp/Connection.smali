@@ -64,7 +64,6 @@
 
     sput-object v0, Lcom/squareup/okhttp/Connection;->HTTP_11:[B
 
-    .line 78
     return-void
 
     .line 69
@@ -190,12 +189,15 @@
     .line 325
     new-instance v0, Ljava/io/IOException;
 
-    .line 326
     new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
     const-string v4, "Unexpected response code for CONNECT: "
 
-    invoke-direct {v1, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     invoke-virtual {v2}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getResponseCode()I
 
@@ -209,7 +211,6 @@
 
     move-result-object v1
 
-    .line 325
     invoke-direct {v0, v1}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
 
     throw v0
@@ -235,7 +236,7 @@
 
     invoke-direct {v5, v0, v1, v4, v8}, Ljava/net/URL;-><init>(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V
 
-    .line 317
+    .line 316
     .local v5, "url":Ljava/net/URL;
     iget-object v0, p0, Lcom/squareup/okhttp/Connection;->route:Lcom/squareup/okhttp/Route;
 
@@ -245,12 +246,10 @@
 
     const/16 v1, 0x197
 
-    .line 318
     iget-object v4, p0, Lcom/squareup/okhttp/Connection;->route:Lcom/squareup/okhttp/Route;
 
     iget-object v4, v4, Lcom/squareup/okhttp/Route;->proxy:Ljava/net/Proxy;
 
-    .line 316
     invoke-static/range {v0 .. v5}, Lcom/squareup/okhttp/internal/http/HttpAuthenticator;->processAuthHeader(Lcom/squareup/okhttp/OkAuthenticator;ILcom/squareup/okhttp/internal/http/RawHeaders;Lcom/squareup/okhttp/internal/http/RawHeaders;Ljava/net/Proxy;Ljava/net/URL;)Z
 
     move-result v6
@@ -369,7 +368,6 @@
 
     iget-object v6, v6, Lcom/squareup/okhttp/Address;->sslSocketFactory:Ljavax/net/ssl/SSLSocketFactory;
 
-    .line 126
     iget-object v7, p0, Lcom/squareup/okhttp/Connection;->socket:Ljava/net/Socket;
 
     iget-object v8, p0, Lcom/squareup/okhttp/Connection;->route:Lcom/squareup/okhttp/Route;
@@ -388,7 +386,6 @@
 
     move-result-object v6
 
-    .line 125
     iput-object v6, p0, Lcom/squareup/okhttp/Connection;->socket:Ljava/net/Socket;
 
     .line 127
@@ -479,9 +476,13 @@
 
     new-instance v5, Ljava/lang/StringBuilder;
 
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v6, "Hostname \'"
 
-    invoke-direct {v5, v6}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
 
     iget-object v6, p0, Lcom/squareup/okhttp/Connection;->route:Lcom/squareup/okhttp/Route;
 
@@ -578,12 +579,10 @@
 
     invoke-direct {v5, v6, v4, v7, v8}, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;-><init>(Ljava/lang/String;ZLjava/io/InputStream;Ljava/io/OutputStream;)V
 
-    .line 156
     invoke-virtual {v5}, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$Builder;->build()Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
 
     move-result-object v4
 
-    .line 155
     iput-object v4, p0, Lcom/squareup/okhttp/Connection;->spdyConnection:Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
 
     .line 157
@@ -610,12 +609,15 @@
     .line 159
     new-instance v4, Ljava/io/IOException;
 
-    .line 160
     new-instance v5, Ljava/lang/StringBuilder;
+
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
 
     const-string v6, "Unexpected NPN transport "
 
-    invoke-direct {v5, v6}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
 
     new-instance v6, Ljava/lang/String;
 
@@ -631,7 +633,6 @@
 
     move-result-object v5
 
-    .line 159
     invoke-direct {v4, v5}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
 
     throw v4
@@ -894,7 +895,7 @@
 .end method
 
 .method public isExpired(J)Z
-    .locals 4
+    .locals 5
     .param p1, "keepAliveDurationNs"    # J
 
     .prologue
@@ -939,15 +940,16 @@
 
     move-result v0
 
-    if-nez v0, :cond_0
+    if-eqz v0, :cond_1
 
-    const/4 v0, 0x0
+    :cond_0
+    const/4 v0, 0x1
 
     :goto_0
     return v0
 
-    :cond_0
-    const/4 v0, 0x1
+    :cond_1
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method
@@ -1033,7 +1035,6 @@
 
     move v4, v5
 
-    .line 211
     goto :goto_0
 
     .line 213
@@ -1060,18 +1061,16 @@
     .local v2, "ignored":Ljava/net/SocketTimeoutException;
     goto :goto_0
 
-    .line 215
+    .line 216
     .end local v2    # "ignored":Ljava/net/SocketTimeoutException;
     .restart local v3    # "readTimeout":I
     :catchall_0
     move-exception v6
 
-    .line 216
     iget-object v7, p0, Lcom/squareup/okhttp/Connection;->socket:Ljava/net/Socket;
 
     invoke-virtual {v7, v3}, Ljava/net/Socket;->setSoTimeout(I)V
 
-    .line 217
     throw v6
     :try_end_4
     .catch Ljava/net/SocketTimeoutException; {:try_start_4 .. :try_end_4} :catch_0
@@ -1124,18 +1123,15 @@
 
     if-eqz v0, :cond_0
 
-    .line 256
     new-instance v0, Lcom/squareup/okhttp/internal/http/SpdyTransport;
 
     iget-object v1, p0, Lcom/squareup/okhttp/Connection;->spdyConnection:Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
 
     invoke-direct {v0, p1, v1}, Lcom/squareup/okhttp/internal/http/SpdyTransport;-><init>(Lcom/squareup/okhttp/internal/http/HttpEngine;Lcom/squareup/okhttp/internal/spdy/SpdyConnection;)V
 
-    .line 255
     :goto_0
     return-object v0
 
-    .line 257
     :cond_0
     new-instance v0, Lcom/squareup/okhttp/internal/http/HttpTransport;
 

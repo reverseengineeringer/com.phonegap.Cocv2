@@ -26,10 +26,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 140
     iput-object p1, p0, Lcom/squareup/okhttp/HttpResponseCache$1;->this$0:Lcom/squareup/okhttp/HttpResponseCache;
 
-    .line 140
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -90,7 +89,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$1;->this$0:Lcom/squareup/okhttp/HttpResponseCache;
 
     # invokes: Lcom/squareup/okhttp/HttpResponseCache;->maybeRemove(Ljava/lang/String;Ljava/net/URI;)Z
-    invoke-static {v0, p1, p2}, Lcom/squareup/okhttp/HttpResponseCache;->access$0(Lcom/squareup/okhttp/HttpResponseCache;Ljava/lang/String;Ljava/net/URI;)Z
+    invoke-static {v0, p1, p2}, Lcom/squareup/okhttp/HttpResponseCache;->access$000(Lcom/squareup/okhttp/HttpResponseCache;Ljava/lang/String;Ljava/net/URI;)Z
 
     .line 152
     return-void
@@ -125,7 +124,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$1;->this$0:Lcom/squareup/okhttp/HttpResponseCache;
 
     # invokes: Lcom/squareup/okhttp/HttpResponseCache;->trackConditionalCacheHit()V
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache;->access$2(Lcom/squareup/okhttp/HttpResponseCache;)V
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache;->access$200(Lcom/squareup/okhttp/HttpResponseCache;)V
 
     .line 161
     return-void
@@ -140,7 +139,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$1;->this$0:Lcom/squareup/okhttp/HttpResponseCache;
 
     # invokes: Lcom/squareup/okhttp/HttpResponseCache;->trackResponse(Lcom/squareup/okhttp/ResponseSource;)V
-    invoke-static {v0, p1}, Lcom/squareup/okhttp/HttpResponseCache;->access$3(Lcom/squareup/okhttp/HttpResponseCache;Lcom/squareup/okhttp/ResponseSource;)V
+    invoke-static {v0, p1}, Lcom/squareup/okhttp/HttpResponseCache;->access$300(Lcom/squareup/okhttp/HttpResponseCache;Lcom/squareup/okhttp/ResponseSource;)V
 
     .line 165
     return-void
@@ -161,7 +160,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$1;->this$0:Lcom/squareup/okhttp/HttpResponseCache;
 
     # invokes: Lcom/squareup/okhttp/HttpResponseCache;->update(Ljava/net/CacheResponse;Ljava/net/HttpURLConnection;)V
-    invoke-static {v0, p1, p2}, Lcom/squareup/okhttp/HttpResponseCache;->access$1(Lcom/squareup/okhttp/HttpResponseCache;Ljava/net/CacheResponse;Ljava/net/HttpURLConnection;)V
+    invoke-static {v0, p1, p2}, Lcom/squareup/okhttp/HttpResponseCache;->access$100(Lcom/squareup/okhttp/HttpResponseCache;Ljava/net/CacheResponse;Ljava/net/HttpURLConnection;)V
 
     .line 157
     return-void

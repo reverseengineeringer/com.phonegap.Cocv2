@@ -20,7 +20,7 @@
 # instance fields
 .field final synthetic this$0:Lorg/apache/cordova/CordovaActivity;
 
-.field private final synthetic val$me:Lorg/apache/cordova/CordovaActivity;
+.field final synthetic val$me:Lorg/apache/cordova/CordovaActivity;
 
 
 # direct methods
@@ -28,12 +28,11 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 704
     iput-object p1, p0, Lorg/apache/cordova/CordovaActivity$1;->this$0:Lorg/apache/cordova/CordovaActivity;
 
     iput-object p2, p0, Lorg/apache/cordova/CordovaActivity$1;->val$me:Lorg/apache/cordova/CordovaActivity;
 
-    .line 815
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -46,13 +45,13 @@
     .param p1, "dialog"    # Landroid/content/DialogInterface;
 
     .prologue
-    .line 817
+    .line 706
     iget-object v0, p0, Lorg/apache/cordova/CordovaActivity$1;->val$me:Lorg/apache/cordova/CordovaActivity;
 
     const/4 v1, 0x0
 
     iput-object v1, v0, Lorg/apache/cordova/CordovaActivity;->spinnerDialog:Landroid/app/ProgressDialog;
 
-    .line 818
+    .line 707
     return-void
 .end method

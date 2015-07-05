@@ -26,10 +26,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 963
     iput-object p1, p0, Lorg/apache/cordova/CordovaActivity$5$1;->this$1:Lorg/apache/cordova/CordovaActivity$5;
 
-    .line 1086
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -41,16 +40,13 @@
     .locals 1
 
     .prologue
-    .line 1088
+    .line 965
     iget-object v0, p0, Lorg/apache/cordova/CordovaActivity$5$1;->this$1:Lorg/apache/cordova/CordovaActivity$5;
 
-    # getter for: Lorg/apache/cordova/CordovaActivity$5;->this$0:Lorg/apache/cordova/CordovaActivity;
-    invoke-static {v0}, Lorg/apache/cordova/CordovaActivity$5;->access$0(Lorg/apache/cordova/CordovaActivity$5;)Lorg/apache/cordova/CordovaActivity;
-
-    move-result-object v0
+    iget-object v0, v0, Lorg/apache/cordova/CordovaActivity$5;->this$0:Lorg/apache/cordova/CordovaActivity;
 
     invoke-virtual {v0}, Lorg/apache/cordova/CordovaActivity;->removeSplashScreen()V
 
-    .line 1089
+    .line 966
     return-void
 .end method

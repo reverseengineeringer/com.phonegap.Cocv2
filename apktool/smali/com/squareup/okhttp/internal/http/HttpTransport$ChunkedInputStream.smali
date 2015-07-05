@@ -41,7 +41,7 @@
     .prologue
     .line 428
     # getter for: Lcom/squareup/okhttp/internal/http/HttpTransport;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
-    invoke-static {p3}, Lcom/squareup/okhttp/internal/http/HttpTransport;->access$1(Lcom/squareup/okhttp/internal/http/HttpTransport;)Lcom/squareup/okhttp/internal/http/HttpEngine;
+    invoke-static {p3}, Lcom/squareup/okhttp/internal/http/HttpTransport;->access$300(Lcom/squareup/okhttp/internal/http/HttpTransport;)Lcom/squareup/okhttp/internal/http/HttpEngine;
 
     move-result-object v0
 
@@ -151,7 +151,7 @@
     iget-object v4, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$ChunkedInputStream;->transport:Lcom/squareup/okhttp/internal/http/HttpTransport;
 
     # getter for: Lcom/squareup/okhttp/internal/http/HttpTransport;->socketIn:Ljava/io/InputStream;
-    invoke-static {v4}, Lcom/squareup/okhttp/internal/http/HttpTransport;->access$2(Lcom/squareup/okhttp/internal/http/HttpTransport;)Ljava/io/InputStream;
+    invoke-static {v4}, Lcom/squareup/okhttp/internal/http/HttpTransport;->access$400(Lcom/squareup/okhttp/internal/http/HttpTransport;)Ljava/io/InputStream;
 
     move-result-object v4
 
@@ -180,9 +180,13 @@
 
     new-instance v5, Ljava/lang/StringBuilder;
 
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v6, "Expected a hex chunk size but was "
 
-    invoke-direct {v5, v6}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
 
     invoke-virtual {v5, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -273,7 +277,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$ChunkedInputStream;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
 
     # invokes: Lcom/squareup/okhttp/internal/http/HttpTransport;->discardStream(Lcom/squareup/okhttp/internal/http/HttpEngine;Ljava/io/InputStream;)Z
-    invoke-static {v0, p0}, Lcom/squareup/okhttp/internal/http/HttpTransport;->access$0(Lcom/squareup/okhttp/internal/http/HttpEngine;Ljava/io/InputStream;)Z
+    invoke-static {v0, p0}, Lcom/squareup/okhttp/internal/http/HttpTransport;->access$200(Lcom/squareup/okhttp/internal/http/HttpEngine;Ljava/io/InputStream;)Z
 
     move-result v0
 

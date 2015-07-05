@@ -20,7 +20,7 @@
 # instance fields
 .field final synthetic this$0:Lorg/apache/cordova/CordovaChromeClient;
 
-.field private final synthetic val$result:Landroid/webkit/JsResult;
+.field final synthetic val$result:Landroid/webkit/JsResult;
 
 
 # direct methods
@@ -28,12 +28,11 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 152
     iput-object p1, p0, Lorg/apache/cordova/CordovaChromeClient$5;->this$0:Lorg/apache/cordova/CordovaChromeClient;
 
     iput-object p2, p0, Lorg/apache/cordova/CordovaChromeClient$5;->val$result:Landroid/webkit/JsResult;
 
-    .line 167
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -47,11 +46,11 @@
     .param p2, "which"    # I
 
     .prologue
-    .line 169
+    .line 154
     iget-object v0, p0, Lorg/apache/cordova/CordovaChromeClient$5;->val$result:Landroid/webkit/JsResult;
 
     invoke-virtual {v0}, Landroid/webkit/JsResult;->cancel()V
 
-    .line 170
+    .line 155
     return-void
 .end method

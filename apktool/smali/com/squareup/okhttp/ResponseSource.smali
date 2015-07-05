@@ -15,11 +15,11 @@
 
 
 # static fields
+.field private static final synthetic $VALUES:[Lcom/squareup/okhttp/ResponseSource;
+
 .field public static final enum CACHE:Lcom/squareup/okhttp/ResponseSource;
 
 .field public static final enum CONDITIONAL_CACHE:Lcom/squareup/okhttp/ResponseSource;
-
-.field private static final synthetic ENUM$VALUES:[Lcom/squareup/okhttp/ResponseSource;
 
 .field public static final enum NETWORK:Lcom/squareup/okhttp/ResponseSource;
 
@@ -35,34 +35,31 @@
 
     const/4 v2, 0x0
 
-    .line 21
+    .line 22
     new-instance v0, Lcom/squareup/okhttp/ResponseSource;
 
     const-string v1, "CACHE"
 
     invoke-direct {v0, v1, v2}, Lcom/squareup/okhttp/ResponseSource;-><init>(Ljava/lang/String;I)V
 
-    .line 22
     sput-object v0, Lcom/squareup/okhttp/ResponseSource;->CACHE:Lcom/squareup/okhttp/ResponseSource;
 
-    .line 24
+    .line 29
     new-instance v0, Lcom/squareup/okhttp/ResponseSource;
 
     const-string v1, "CONDITIONAL_CACHE"
 
     invoke-direct {v0, v1, v3}, Lcom/squareup/okhttp/ResponseSource;-><init>(Ljava/lang/String;I)V
 
-    .line 29
     sput-object v0, Lcom/squareup/okhttp/ResponseSource;->CONDITIONAL_CACHE:Lcom/squareup/okhttp/ResponseSource;
 
-    .line 31
+    .line 32
     new-instance v0, Lcom/squareup/okhttp/ResponseSource;
 
     const-string v1, "NETWORK"
 
     invoke-direct {v0, v1, v4}, Lcom/squareup/okhttp/ResponseSource;-><init>(Ljava/lang/String;I)V
 
-    .line 32
     sput-object v0, Lcom/squareup/okhttp/ResponseSource;->NETWORK:Lcom/squareup/okhttp/ResponseSource;
 
     .line 19
@@ -82,13 +79,18 @@
 
     aput-object v1, v0, v4
 
-    sput-object v0, Lcom/squareup/okhttp/ResponseSource;->ENUM$VALUES:[Lcom/squareup/okhttp/ResponseSource;
+    sput-object v0, Lcom/squareup/okhttp/ResponseSource;->$VALUES:[Lcom/squareup/okhttp/ResponseSource;
 
     return-void
 .end method
 
 .method private constructor <init>(Ljava/lang/String;I)V
     .locals 0
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()V"
+        }
+    .end annotation
 
     .prologue
     .line 19
@@ -99,9 +101,10 @@
 
 .method public static valueOf(Ljava/lang/String;)Lcom/squareup/okhttp/ResponseSource;
     .locals 1
+    .param p0, "name"    # Ljava/lang/String;
 
     .prologue
-    .line 1
+    .line 19
     const-class v0, Lcom/squareup/okhttp/ResponseSource;
 
     invoke-static {v0, p0}, Ljava/lang/Enum;->valueOf(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Enum;
@@ -114,21 +117,19 @@
 .end method
 
 .method public static values()[Lcom/squareup/okhttp/ResponseSource;
-    .locals 4
+    .locals 1
 
     .prologue
-    const/4 v3, 0x0
+    .line 19
+    sget-object v0, Lcom/squareup/okhttp/ResponseSource;->$VALUES:[Lcom/squareup/okhttp/ResponseSource;
 
-    .line 1
-    sget-object v0, Lcom/squareup/okhttp/ResponseSource;->ENUM$VALUES:[Lcom/squareup/okhttp/ResponseSource;
+    invoke-virtual {v0}, [Lcom/squareup/okhttp/ResponseSource;->clone()Ljava/lang/Object;
 
-    array-length v1, v0
+    move-result-object v0
 
-    new-array v2, v1, [Lcom/squareup/okhttp/ResponseSource;
+    check-cast v0, [Lcom/squareup/okhttp/ResponseSource;
 
-    invoke-static {v0, v3, v2, v3, v1}, Ljava/lang/System;->arraycopy(Ljava/lang/Object;ILjava/lang/Object;II)V
-
-    return-object v2
+    return-object v0
 .end method
 
 
@@ -144,15 +145,16 @@
 
     sget-object v0, Lcom/squareup/okhttp/ResponseSource;->NETWORK:Lcom/squareup/okhttp/ResponseSource;
 
-    if-eq p0, v0, :cond_0
+    if-ne p0, v0, :cond_1
 
-    const/4 v0, 0x0
+    :cond_0
+    const/4 v0, 0x1
 
     :goto_0
     return v0
 
-    :cond_0
-    const/4 v0, 0x1
+    :cond_1
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method

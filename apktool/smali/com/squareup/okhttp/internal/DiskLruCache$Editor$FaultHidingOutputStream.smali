@@ -34,11 +34,14 @@
     return-void
 .end method
 
-.method synthetic constructor <init>(Lcom/squareup/okhttp/internal/DiskLruCache$Editor;Ljava/io/OutputStream;Lcom/squareup/okhttp/internal/DiskLruCache$Editor$FaultHidingOutputStream;)V
+.method synthetic constructor <init>(Lcom/squareup/okhttp/internal/DiskLruCache$Editor;Ljava/io/OutputStream;Lcom/squareup/okhttp/internal/DiskLruCache$1;)V
     .locals 0
+    .param p1, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
+    .param p2, "x1"    # Ljava/io/OutputStream;
+    .param p3, "x2"    # Lcom/squareup/okhttp/internal/DiskLruCache$1;
 
     .prologue
-    .line 833
+    .line 832
     invoke-direct {p0, p1, p2}, Lcom/squareup/okhttp/internal/DiskLruCache$Editor$FaultHidingOutputStream;-><init>(Lcom/squareup/okhttp/internal/DiskLruCache$Editor;Ljava/io/OutputStream;)V
 
     return-void
@@ -72,7 +75,8 @@
 
     const/4 v2, 0x1
 
-    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/DiskLruCache$Editor;->access$0(Lcom/squareup/okhttp/internal/DiskLruCache$Editor;Z)V
+    # setter for: Lcom/squareup/okhttp/internal/DiskLruCache$Editor;->hasErrors:Z
+    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/DiskLruCache$Editor;->access$2302(Lcom/squareup/okhttp/internal/DiskLruCache$Editor;Z)Z
 
     goto :goto_0
 .end method
@@ -103,7 +107,8 @@
 
     const/4 v2, 0x1
 
-    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/DiskLruCache$Editor;->access$0(Lcom/squareup/okhttp/internal/DiskLruCache$Editor;Z)V
+    # setter for: Lcom/squareup/okhttp/internal/DiskLruCache$Editor;->hasErrors:Z
+    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/DiskLruCache$Editor;->access$2302(Lcom/squareup/okhttp/internal/DiskLruCache$Editor;Z)Z
 
     goto :goto_0
 .end method
@@ -135,7 +140,8 @@
 
     const/4 v2, 0x1
 
-    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/DiskLruCache$Editor;->access$0(Lcom/squareup/okhttp/internal/DiskLruCache$Editor;Z)V
+    # setter for: Lcom/squareup/okhttp/internal/DiskLruCache$Editor;->hasErrors:Z
+    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/DiskLruCache$Editor;->access$2302(Lcom/squareup/okhttp/internal/DiskLruCache$Editor;Z)Z
 
     goto :goto_0
 .end method
@@ -169,7 +175,8 @@
 
     const/4 v2, 0x1
 
-    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/DiskLruCache$Editor;->access$0(Lcom/squareup/okhttp/internal/DiskLruCache$Editor;Z)V
+    # setter for: Lcom/squareup/okhttp/internal/DiskLruCache$Editor;->hasErrors:Z
+    invoke-static {v1, v2}, Lcom/squareup/okhttp/internal/DiskLruCache$Editor;->access$2302(Lcom/squareup/okhttp/internal/DiskLruCache$Editor;Z)Z
 
     goto :goto_0
 .end method

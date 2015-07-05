@@ -125,7 +125,6 @@
     .line 48
     iput-object v0, p0, Lorg/apache/cordova/ExifHelper;->outFile:Landroid/media/ExifInterface;
 
-    .line 26
     return-void
 .end method
 

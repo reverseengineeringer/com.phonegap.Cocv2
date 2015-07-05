@@ -45,7 +45,7 @@
     .local p1, "openSslSocketClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
     const/4 v0, 0x0
 
-    invoke-direct {p0, p1, p2, p3, v0}, Lcom/squareup/okhttp/internal/Platform$Android23;-><init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lcom/squareup/okhttp/internal/Platform$Android23;)V
+    invoke-direct {p0, p1, p2, p3, v0}, Lcom/squareup/okhttp/internal/Platform$Android23;-><init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lcom/squareup/okhttp/internal/Platform$1;)V
 
     .line 240
     iput-object p4, p0, Lcom/squareup/okhttp/internal/Platform$Android41;->setNpnProtocols:Ljava/lang/reflect/Method;
@@ -57,11 +57,17 @@
     return-void
 .end method
 
-.method synthetic constructor <init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lcom/squareup/okhttp/internal/Platform$Android41;)V
+.method synthetic constructor <init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lcom/squareup/okhttp/internal/Platform$1;)V
     .locals 0
+    .param p1, "x0"    # Ljava/lang/Class;
+    .param p2, "x1"    # Ljava/lang/reflect/Method;
+    .param p3, "x2"    # Ljava/lang/reflect/Method;
+    .param p4, "x3"    # Ljava/lang/reflect/Method;
+    .param p5, "x4"    # Ljava/lang/reflect/Method;
+    .param p6, "x5"    # Lcom/squareup/okhttp/internal/Platform$1;
 
     .prologue
-    .line 237
+    .line 233
     invoke-direct/range {p0 .. p5}, Lcom/squareup/okhttp/internal/Platform$Android41;-><init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;)V
 
     return-void
@@ -101,6 +107,8 @@
     invoke-virtual {v1, p1, v2}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
 
     move-result-object v1
+
+    check-cast v1, [B
 
     check-cast v1, [B
     :try_end_0

@@ -3,10 +3,16 @@
 .source "FileUtils.java"
 
 
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Lorg/apache/cordova/file/FileUtils$FileOp;
+    }
+.end annotation
+
+
 # static fields
 .field public static ABORT_ERR:I = 0x0
-
-.field public static APPLICATION:I = 0x0
 
 .field public static ENCODING_ERR:I = 0x0
 
@@ -24,763 +30,458 @@
 
 .field public static PATH_EXISTS_ERR:I
 
-.field public static PERSISTENT:I
-
 .field public static QUOTA_EXCEEDED_ERR:I
-
-.field public static RESOURCE:I
 
 .field public static SECURITY_ERR:I
 
 .field public static SYNTAX_ERR:I
 
-.field public static TEMPORARY:I
-
 .field public static TYPE_MISMATCH_ERR:I
+
+.field public static UNKNOWN_ERR:I
+
+.field private static filePlugin:Lorg/apache/cordova/file/FileUtils;
+
+
+# instance fields
+.field private configured:Z
+
+.field private filesystems:Ljava/util/ArrayList;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/ArrayList",
+            "<",
+            "Lorg/apache/cordova/file/Filesystem;",
+            ">;"
+        }
+    .end annotation
+.end field
 
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 4
+    .locals 1
 
     .prologue
-    const/4 v3, 0x3
+    .line 55
+    const/4 v0, 0x1
 
-    const/4 v2, 0x2
-
-    const/4 v1, 0x1
+    sput v0, Lorg/apache/cordova/file/FileUtils;->NOT_FOUND_ERR:I
 
     .line 56
-    sput v1, Lorg/apache/cordova/file/FileUtils;->NOT_FOUND_ERR:I
+    const/4 v0, 0x2
+
+    sput v0, Lorg/apache/cordova/file/FileUtils;->SECURITY_ERR:I
 
     .line 57
-    sput v2, Lorg/apache/cordova/file/FileUtils;->SECURITY_ERR:I
+    const/4 v0, 0x3
 
-    .line 58
-    sput v3, Lorg/apache/cordova/file/FileUtils;->ABORT_ERR:I
+    sput v0, Lorg/apache/cordova/file/FileUtils;->ABORT_ERR:I
 
-    .line 60
+    .line 59
     const/4 v0, 0x4
 
     sput v0, Lorg/apache/cordova/file/FileUtils;->NOT_READABLE_ERR:I
 
-    .line 61
+    .line 60
     const/4 v0, 0x5
 
     sput v0, Lorg/apache/cordova/file/FileUtils;->ENCODING_ERR:I
 
-    .line 62
+    .line 61
     const/4 v0, 0x6
 
     sput v0, Lorg/apache/cordova/file/FileUtils;->NO_MODIFICATION_ALLOWED_ERR:I
 
-    .line 63
+    .line 62
     const/4 v0, 0x7
 
     sput v0, Lorg/apache/cordova/file/FileUtils;->INVALID_STATE_ERR:I
 
-    .line 64
+    .line 63
     const/16 v0, 0x8
 
     sput v0, Lorg/apache/cordova/file/FileUtils;->SYNTAX_ERR:I
 
-    .line 65
+    .line 64
     const/16 v0, 0x9
 
     sput v0, Lorg/apache/cordova/file/FileUtils;->INVALID_MODIFICATION_ERR:I
 
-    .line 66
+    .line 65
     const/16 v0, 0xa
 
     sput v0, Lorg/apache/cordova/file/FileUtils;->QUOTA_EXCEEDED_ERR:I
 
-    .line 67
+    .line 66
     const/16 v0, 0xb
 
     sput v0, Lorg/apache/cordova/file/FileUtils;->TYPE_MISMATCH_ERR:I
 
-    .line 68
+    .line 67
     const/16 v0, 0xc
 
     sput v0, Lorg/apache/cordova/file/FileUtils;->PATH_EXISTS_ERR:I
 
-    .line 70
-    const/4 v0, 0x0
+    .line 69
+    const/16 v0, 0x3e8
 
-    sput v0, Lorg/apache/cordova/file/FileUtils;->TEMPORARY:I
-
-    .line 71
-    sput v1, Lorg/apache/cordova/file/FileUtils;->PERSISTENT:I
-
-    .line 72
-    sput v2, Lorg/apache/cordova/file/FileUtils;->RESOURCE:I
-
-    .line 73
-    sput v3, Lorg/apache/cordova/file/FileUtils;->APPLICATION:I
+    sput v0, Lorg/apache/cordova/file/FileUtils;->UNKNOWN_ERR:I
 
     return-void
 .end method
 
 .method public constructor <init>()V
-    .locals 0
+    .locals 1
 
     .prologue
-    .line 78
+    .line 52
     invoke-direct {p0}, Lorg/apache/cordova/CordovaPlugin;-><init>()V
 
-    .line 79
+    .line 71
+    const/4 v0, 0x0
+
+    iput-boolean v0, p0, Lorg/apache/cordova/file/FileUtils;->configured:Z
+
+    .line 76
     return-void
 .end method
 
-.method static synthetic access$0(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;II)[B
-    .locals 1
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Ljava/io/IOException;
-        }
-    .end annotation
-
-    .prologue
-    .line 971
-    invoke-direct {p0, p1, p2, p3}, Lorg/apache/cordova/file/FileUtils;->readAsBinaryHelper(Ljava/lang/String;II)[B
-
-    move-result-object v0
-
-    return-object v0
-.end method
-
-.method private atRootDirectory(Ljava/lang/String;)Z
+.method static synthetic access$000(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;J)J
     .locals 2
-    .param p1, "filePath"    # Ljava/lang/String;
-
-    .prologue
-    .line 776
-    iget-object v0, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-static {p1, v0}, Lorg/apache/cordova/file/FileHelper;->getRealPath(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;)Ljava/lang/String;
-
-    move-result-object p1
-
-    .line 778
-    new-instance v0, Ljava/lang/StringBuilder;
-
-    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-static {v1}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    const-string v1, "/Android/data/"
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    iget-object v1, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v1}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Landroid/app/Activity;->getPackageName()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    const-string v1, "/cache"
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-virtual {p1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v0
-
-    if-nez v0, :cond_0
-
-    .line 779
-    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-virtual {p1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v0
-
-    if-nez v0, :cond_0
-
-    .line 780
-    new-instance v0, Ljava/lang/StringBuilder;
-
-    const-string v1, "/data/data/"
-
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    iget-object v1, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v1}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Landroid/app/Activity;->getPackageName()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-virtual {p1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_1
-
-    .line 781
-    :cond_0
-    const/4 v0, 0x1
-
-    .line 783
-    :goto_0
-    return v0
-
-    :cond_1
-    const/4 v0, 0x0
-
-    goto :goto_0
-.end method
-
-.method private copyAction(Ljava/io/File;Ljava/io/File;)V
-    .locals 8
-    .param p1, "srcFile"    # Ljava/io/File;
-    .param p2, "destFile"    # Ljava/io/File;
+    .param p0, "x0"    # Lorg/apache/cordova/file/FileUtils;
+    .param p1, "x1"    # Ljava/lang/String;
+    .param p2, "x2"    # J
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/io/FileNotFoundException;,
-            Ljava/io/IOException;
+            Ljava/io/IOException;,
+            Lorg/apache/cordova/file/NoModificationAllowedException;
         }
     .end annotation
 
     .prologue
-    .line 444
-    new-instance v6, Ljava/io/FileInputStream;
+    .line 52
+    invoke-direct {p0, p1, p2, p3}, Lorg/apache/cordova/file/FileUtils;->truncateFile(Ljava/lang/String;J)J
 
-    invoke-direct {v6, p1}, Ljava/io/FileInputStream;-><init>(Ljava/io/File;)V
+    move-result-wide v0
 
-    .line 445
-    .local v6, "istream":Ljava/io/FileInputStream;
-    new-instance v7, Ljava/io/FileOutputStream;
-
-    invoke-direct {v7, p2}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;)V
-
-    .line 446
-    .local v7, "ostream":Ljava/io/FileOutputStream;
-    invoke-virtual {v6}, Ljava/io/FileInputStream;->getChannel()Ljava/nio/channels/FileChannel;
-
-    move-result-object v0
-
-    .line 447
-    .local v0, "input":Ljava/nio/channels/FileChannel;
-    invoke-virtual {v7}, Ljava/io/FileOutputStream;->getChannel()Ljava/nio/channels/FileChannel;
-
-    move-result-object v5
-
-    .line 450
-    .local v5, "output":Ljava/nio/channels/FileChannel;
-    const-wide/16 v1, 0x0
-
-    :try_start_0
-    invoke-virtual {v0}, Ljava/nio/channels/FileChannel;->size()J
-
-    move-result-wide v3
-
-    invoke-virtual/range {v0 .. v5}, Ljava/nio/channels/FileChannel;->transferTo(JJLjava/nio/channels/WritableByteChannel;)J
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    .line 452
-    invoke-virtual {v6}, Ljava/io/FileInputStream;->close()V
-
-    .line 453
-    invoke-virtual {v7}, Ljava/io/FileOutputStream;->close()V
-
-    .line 454
-    invoke-virtual {v0}, Ljava/nio/channels/FileChannel;->close()V
-
-    .line 455
-    invoke-virtual {v5}, Ljava/nio/channels/FileChannel;->close()V
-
-    .line 457
-    return-void
-
-    .line 451
-    :catchall_0
-    move-exception v1
-
-    .line 452
-    invoke-virtual {v6}, Ljava/io/FileInputStream;->close()V
-
-    .line 453
-    invoke-virtual {v7}, Ljava/io/FileOutputStream;->close()V
-
-    .line 454
-    invoke-virtual {v0}, Ljava/nio/channels/FileChannel;->close()V
-
-    .line 455
-    invoke-virtual {v5}, Ljava/nio/channels/FileChannel;->close()V
-
-    .line 456
-    throw v1
+    return-wide v0
 .end method
 
-.method private copyDirectory(Ljava/io/File;Ljava/io/File;)Lorg/json/JSONObject;
-    .locals 7
-    .param p1, "srcDir"    # Ljava/io/File;
-    .param p2, "destinationDir"    # Ljava/io/File;
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Lorg/json/JSONException;,
-            Ljava/io/IOException;,
-            Lorg/apache/cordova/file/NoModificationAllowedException;,
-            Lorg/apache/cordova/file/InvalidModificationException;
-        }
-    .end annotation
-
-    .prologue
-    .line 472
-    invoke-virtual {p2}, Ljava/io/File;->exists()Z
-
-    move-result v2
-
-    if-eqz v2, :cond_0
-
-    invoke-virtual {p2}, Ljava/io/File;->isFile()Z
-
-    move-result v2
-
-    if-eqz v2, :cond_0
-
-    .line 473
-    new-instance v2, Lorg/apache/cordova/file/InvalidModificationException;
-
-    const-string v3, "Can\'t rename a file to a directory"
-
-    invoke-direct {v2, v3}, Lorg/apache/cordova/file/InvalidModificationException;-><init>(Ljava/lang/String;)V
-
-    throw v2
-
-    .line 477
-    :cond_0
-    invoke-virtual {p1}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
-
-    move-result-object v2
-
-    invoke-virtual {p2}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-direct {p0, v2, v3}, Lorg/apache/cordova/file/FileUtils;->isCopyOnItself(Ljava/lang/String;Ljava/lang/String;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_1
-
-    .line 478
-    new-instance v2, Lorg/apache/cordova/file/InvalidModificationException;
-
-    const-string v3, "Can\'t copy itself into itself"
-
-    invoke-direct {v2, v3}, Lorg/apache/cordova/file/InvalidModificationException;-><init>(Ljava/lang/String;)V
-
-    throw v2
-
-    .line 482
-    :cond_1
-    invoke-virtual {p2}, Ljava/io/File;->exists()Z
-
-    move-result v2
-
-    if-nez v2, :cond_2
-
-    .line 483
-    invoke-virtual {p2}, Ljava/io/File;->mkdir()Z
-
-    move-result v2
-
-    if-nez v2, :cond_2
-
-    .line 485
-    new-instance v2, Lorg/apache/cordova/file/NoModificationAllowedException;
-
-    const-string v3, "Couldn\'t create the destination directory"
-
-    invoke-direct {v2, v3}, Lorg/apache/cordova/file/NoModificationAllowedException;-><init>(Ljava/lang/String;)V
-
-    throw v2
-
-    .line 490
-    :cond_2
-    invoke-virtual {p1}, Ljava/io/File;->listFiles()[Ljava/io/File;
-
-    move-result-object v3
-
-    array-length v4, v3
-
-    const/4 v2, 0x0
-
-    :goto_0
-    if-lt v2, v4, :cond_3
-
-    .line 499
-    invoke-static {p2}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/io/File;)Lorg/json/JSONObject;
-
-    move-result-object v2
-
-    return-object v2
-
-    .line 490
-    :cond_3
-    aget-object v1, v3, v2
-
-    .line 491
-    .local v1, "file":Ljava/io/File;
-    new-instance v0, Ljava/io/File;
-
-    new-instance v5, Ljava/lang/StringBuilder;
-
-    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
-
-    invoke-virtual {p2}, Ljava/io/File;->getAbsoluteFile()Ljava/io/File;
-
-    move-result-object v6
-
-    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    move-result-object v5
-
-    sget-object v6, Ljava/io/File;->separator:Ljava/lang/String;
-
-    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v5
-
-    invoke-virtual {v1}, Ljava/io/File;->getName()Ljava/lang/String;
-
-    move-result-object v6
-
-    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v5
-
-    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-direct {v0, v5}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .line 492
-    .local v0, "destination":Ljava/io/File;
-    invoke-virtual {v1}, Ljava/io/File;->isDirectory()Z
-
-    move-result v5
-
-    if-eqz v5, :cond_4
-
-    .line 493
-    invoke-direct {p0, v1, v0}, Lorg/apache/cordova/file/FileUtils;->copyDirectory(Ljava/io/File;Ljava/io/File;)Lorg/json/JSONObject;
-
-    .line 490
-    :goto_1
-    add-int/lit8 v2, v2, 0x1
-
-    goto :goto_0
-
-    .line 495
-    :cond_4
-    invoke-direct {p0, v1, v0}, Lorg/apache/cordova/file/FileUtils;->copyFile(Ljava/io/File;Ljava/io/File;)Lorg/json/JSONObject;
-
-    goto :goto_1
-.end method
-
-.method private copyFile(Ljava/io/File;Ljava/io/File;)Lorg/json/JSONObject;
-    .locals 2
-    .param p1, "srcFile"    # Ljava/io/File;
-    .param p2, "destFile"    # Ljava/io/File;
+.method static synthetic access$100(Lorg/apache/cordova/file/FileUtils;)Lorg/json/JSONArray;
+    .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/file/FileUtils;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/io/IOException;,
-            Lorg/apache/cordova/file/InvalidModificationException;,
             Lorg/json/JSONException;
         }
     .end annotation
 
     .prologue
-    .line 430
-    invoke-virtual {p2}, Ljava/io/File;->exists()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    invoke-virtual {p2}, Ljava/io/File;->isDirectory()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    .line 431
-    new-instance v0, Lorg/apache/cordova/file/InvalidModificationException;
-
-    const-string v1, "Can\'t rename a file to a directory"
-
-    invoke-direct {v0, v1}, Lorg/apache/cordova/file/InvalidModificationException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-
-    .line 434
-    :cond_0
-    invoke-direct {p0, p1, p2}, Lorg/apache/cordova/file/FileUtils;->copyAction(Ljava/io/File;Ljava/io/File;)V
-
-    .line 436
-    invoke-static {p2}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/io/File;)Lorg/json/JSONObject;
+    .line 52
+    invoke-direct {p0}, Lorg/apache/cordova/file/FileUtils;->requestAllFileSystems()Lorg/json/JSONArray;
 
     move-result-object v0
 
     return-object v0
 .end method
 
-.method private createDestination(Ljava/lang/String;Ljava/io/File;Ljava/io/File;)Ljava/io/File;
-    .locals 3
-    .param p1, "newName"    # Ljava/lang/String;
-    .param p2, "fp"    # Ljava/io/File;
-    .param p3, "destination"    # Ljava/io/File;
+.method static synthetic access$1000(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lorg/json/JSONObject;
+    .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/file/FileUtils;
+    .param p1, "x1"    # Ljava/lang/String;
+    .param p2, "x2"    # Ljava/lang/String;
+    .param p3, "x3"    # Ljava/lang/String;
+    .param p4, "x4"    # Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Lorg/json/JSONException;,
+            Lorg/apache/cordova/file/NoModificationAllowedException;,
+            Ljava/io/IOException;,
+            Lorg/apache/cordova/file/InvalidModificationException;,
+            Lorg/apache/cordova/file/EncodingException;,
+            Lorg/apache/cordova/file/FileExistsException;
+        }
+    .end annotation
 
     .prologue
-    .line 403
-    const/4 v0, 0x0
+    .line 52
+    invoke-direct {p0, p1, p2, p3, p4}, Lorg/apache/cordova/file/FileUtils;->transferTo(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lorg/json/JSONObject;
 
-    .line 406
-    .local v0, "destFile":Ljava/io/File;
-    const-string v1, "null"
+    move-result-object v0
 
-    invoke-virtual {v1, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    return-object v0
+.end method
 
-    move-result v1
+.method static synthetic access$1100(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;)Lorg/json/JSONArray;
+    .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/file/FileUtils;
+    .param p1, "x1"    # Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/FileNotFoundException;,
+            Lorg/json/JSONException;,
+            Ljava/net/MalformedURLException;
+        }
+    .end annotation
 
-    if-nez v1, :cond_0
+    .prologue
+    .line 52
+    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->readEntries(Ljava/lang/String;)Lorg/json/JSONArray;
 
-    const-string v1, ""
+    move-result-object v0
 
-    invoke-virtual {v1, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    return-object v0
+.end method
 
-    move-result v1
+.method static synthetic access$200(Lorg/apache/cordova/file/FileUtils;)Lorg/json/JSONObject;
+    .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/file/FileUtils;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Lorg/json/JSONException;
+        }
+    .end annotation
 
-    if-eqz v1, :cond_1
+    .prologue
+    .line 52
+    invoke-direct {p0}, Lorg/apache/cordova/file/FileUtils;->requestAllPaths()Lorg/json/JSONObject;
 
-    .line 407
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method static synthetic access$300(Lorg/apache/cordova/file/FileUtils;I)Lorg/json/JSONObject;
+    .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/file/FileUtils;
+    .param p1, "x1"    # I
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;,
+            Lorg/json/JSONException;
+        }
+    .end annotation
+
+    .prologue
+    .line 52
+    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->requestFileSystem(I)Lorg/json/JSONObject;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method static synthetic access$400(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;)Lorg/json/JSONObject;
+    .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/file/FileUtils;
+    .param p1, "x1"    # Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;,
+            Lorg/json/JSONException;
+        }
+    .end annotation
+
+    .prologue
+    .line 52
+    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->resolveLocalFileSystemURI(Ljava/lang/String;)Lorg/json/JSONObject;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method static synthetic access$500(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;)Lorg/json/JSONObject;
+    .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/file/FileUtils;
+    .param p1, "x1"    # Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/FileNotFoundException;,
+            Lorg/json/JSONException;,
+            Ljava/net/MalformedURLException;
+        }
+    .end annotation
+
+    .prologue
+    .line 52
+    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->getFileMetadata(Ljava/lang/String;)Lorg/json/JSONObject;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method static synthetic access$600(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;)Lorg/json/JSONObject;
+    .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/file/FileUtils;
+    .param p1, "x1"    # Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Lorg/json/JSONException;,
+            Ljava/io/IOException;
+        }
+    .end annotation
+
+    .prologue
+    .line 52
+    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->getParent(Ljava/lang/String;)Lorg/json/JSONObject;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method static synthetic access$700(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Ljava/lang/String;Lorg/json/JSONObject;Z)Lorg/json/JSONObject;
+    .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/file/FileUtils;
+    .param p1, "x1"    # Ljava/lang/String;
+    .param p2, "x2"    # Ljava/lang/String;
+    .param p3, "x3"    # Lorg/json/JSONObject;
+    .param p4, "x4"    # Z
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Lorg/apache/cordova/file/FileExistsException;,
+            Ljava/io/IOException;,
+            Lorg/apache/cordova/file/TypeMismatchException;,
+            Lorg/apache/cordova/file/EncodingException;,
+            Lorg/json/JSONException;
+        }
+    .end annotation
+
+    .prologue
+    .line 52
+    invoke-direct {p0, p1, p2, p3, p4}, Lorg/apache/cordova/file/FileUtils;->getFile(Ljava/lang/String;Ljava/lang/String;Lorg/json/JSONObject;Z)Lorg/json/JSONObject;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method static synthetic access$800(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;)Z
+    .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/file/FileUtils;
+    .param p1, "x1"    # Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Lorg/apache/cordova/file/NoModificationAllowedException;,
+            Lorg/apache/cordova/file/InvalidModificationException;,
+            Ljava/net/MalformedURLException;
+        }
+    .end annotation
+
+    .prologue
+    .line 52
+    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->remove(Ljava/lang/String;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method static synthetic access$900(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;)Z
+    .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/file/FileUtils;
+    .param p1, "x1"    # Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Lorg/apache/cordova/file/FileExistsException;,
+            Lorg/apache/cordova/file/NoModificationAllowedException;,
+            Ljava/net/MalformedURLException;
+        }
+    .end annotation
+
+    .prologue
+    .line 52
+    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->removeRecursively(Ljava/lang/String;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method private filesystemForName(Ljava/lang/String;)Lorg/apache/cordova/file/Filesystem;
+    .locals 3
+    .param p1, "name"    # Ljava/lang/String;
+
+    .prologue
+    .line 89
+    iget-object v2, p0, Lorg/apache/cordova/file/FileUtils;->filesystems:Ljava/util/ArrayList;
+
+    invoke-virtual {v2}, Ljava/util/ArrayList;->iterator()Ljava/util/Iterator;
+
+    move-result-object v1
+
+    .local v1, "i$":Ljava/util/Iterator;
     :cond_0
-    const/4 p1, 0x0
+    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
-    .line 410
-    :cond_1
-    if-eqz p1, :cond_2
+    move-result v2
 
-    .line 411
-    new-instance v0, Ljava/io/File;
+    if-eqz v2, :cond_1
 
-    .end local v0    # "destFile":Ljava/io/File;
-    new-instance v1, Ljava/lang/StringBuilder;
+    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    invoke-virtual {p3}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+    move-result-object v0
 
-    move-result-object v2
+    check-cast v0, Lorg/apache/cordova/file/Filesystem;
 
-    invoke-static {v2}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    .line 90
+    .local v0, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-eqz v0, :cond_0
 
-    move-result-object v2
+    iget-object v2, v0, Lorg/apache/cordova/file/Filesystem;->name:Ljava/lang/String;
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    if-eqz v2, :cond_0
 
-    sget-object v2, Ljava/io/File;->separator:Ljava/lang/String;
+    iget-object v2, v0, Lorg/apache/cordova/file/Filesystem;->name:Ljava/lang/String;
 
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v2, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    move-result-object v1
+    move-result v2
 
-    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    if-eqz v2, :cond_0
 
-    move-result-object v1
-
-    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .line 415
-    .restart local v0    # "destFile":Ljava/io/File;
+    .line 94
+    .end local v0    # "fs":Lorg/apache/cordova/file/Filesystem;
     :goto_0
     return-object v0
 
-    .line 413
-    :cond_2
-    new-instance v0, Ljava/io/File;
+    :cond_1
+    const/4 v0, 0x0
 
-    .end local v0    # "destFile":Ljava/io/File;
-    new-instance v1, Ljava/lang/StringBuilder;
-
-    invoke-virtual {p3}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
-
-    move-result-object v2
-
-    invoke-static {v2}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
-
-    move-result-object v2
-
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    sget-object v2, Ljava/io/File;->separator:Ljava/lang/String;
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    invoke-virtual {p2}, Ljava/io/File;->getName()Ljava/lang/String;
-
-    move-result-object v2
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .restart local v0    # "destFile":Ljava/io/File;
     goto :goto_0
 .end method
 
-.method private createFileObject(Ljava/lang/String;)Ljava/io/File;
-    .locals 2
-    .param p1, "filePath"    # Ljava/lang/String;
+.method private filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
+    .locals 1
+    .param p1, "localURL"    # Lorg/apache/cordova/file/LocalFilesystemURL;
 
     .prologue
-    .line 793
-    iget-object v1, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
+    .line 216
+    if-nez p1, :cond_0
 
-    invoke-static {p1, v1}, Lorg/apache/cordova/file/FileHelper;->getRealPath(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;)Ljava/lang/String;
-
-    move-result-object p1
-
-    .line 795
-    new-instance v0, Ljava/io/File;
-
-    invoke-direct {v0, p1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .line 796
-    .local v0, "file":Ljava/io/File;
-    return-object v0
-.end method
-
-.method private createFileObject(Ljava/lang/String;Ljava/lang/String;)Ljava/io/File;
-    .locals 3
-    .param p1, "dirPath"    # Ljava/lang/String;
-    .param p2, "fileName"    # Ljava/lang/String;
-
-    .prologue
-    .line 741
     const/4 v0, 0x0
 
-    .line 742
-    .local v0, "fp":Ljava/io/File;
-    const-string v1, "/"
-
-    invoke-virtual {p2, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v1
-
-    if-eqz v1, :cond_0
-
-    .line 743
-    new-instance v0, Ljava/io/File;
-
-    .end local v0    # "fp":Ljava/io/File;
-    invoke-direct {v0, p2}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .line 748
-    .restart local v0    # "fp":Ljava/io/File;
+    .line 217
     :goto_0
     return-object v0
 
-    .line 745
     :cond_0
-    iget-object v1, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
+    iget-object v0, p1, Lorg/apache/cordova/file/LocalFilesystemURL;->filesystemName:Ljava/lang/String;
 
-    invoke-static {p1, v1}, Lorg/apache/cordova/file/FileHelper;->getRealPath(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;)Ljava/lang/String;
+    invoke-direct {p0, v0}, Lorg/apache/cordova/file/FileUtils;->filesystemForName(Ljava/lang/String;)Lorg/apache/cordova/file/Filesystem;
 
-    move-result-object p1
+    move-result-object v0
 
-    .line 746
-    new-instance v0, Ljava/io/File;
-
-    .end local v0    # "fp":Ljava/io/File;
-    new-instance v1, Ljava/lang/StringBuilder;
-
-    invoke-static {p1}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
-
-    move-result-object v2
-
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    sget-object v2, Ljava/io/File;->separator:Ljava/lang/String;
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    invoke-virtual {v1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .restart local v0    # "fp":Ljava/io/File;
     goto :goto_0
 .end method
 
 .method public static getEntry(Ljava/io/File;)Lorg/json/JSONObject;
-    .locals 4
+    .locals 1
     .param p0, "file"    # Ljava/io/File;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -788,93 +489,40 @@
         }
     .end annotation
 
-    .prologue
-    .line 891
-    new-instance v0, Lorg/json/JSONObject;
-
-    invoke-direct {v0}, Lorg/json/JSONObject;-><init>()V
-
-    .line 893
-    .local v0, "entry":Lorg/json/JSONObject;
-    const-string v1, "isFile"
-
-    invoke-virtual {p0}, Ljava/io/File;->isFile()Z
-
-    move-result v2
-
-    invoke-virtual {v0, v1, v2}, Lorg/json/JSONObject;->put(Ljava/lang/String;Z)Lorg/json/JSONObject;
-
-    .line 894
-    const-string v1, "isDirectory"
-
-    invoke-virtual {p0}, Ljava/io/File;->isDirectory()Z
-
-    move-result v2
-
-    invoke-virtual {v0, v1, v2}, Lorg/json/JSONObject;->put(Ljava/lang/String;Z)Lorg/json/JSONObject;
-
-    .line 895
-    const-string v1, "name"
-
-    invoke-virtual {p0}, Ljava/io/File;->getName()Ljava/lang/String;
-
-    move-result-object v2
-
-    invoke-virtual {v0, v1, v2}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
-
-    .line 896
-    const-string v1, "fullPath"
-
-    new-instance v2, Ljava/lang/StringBuilder;
-
-    const-string v3, "file://"
-
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {p0}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v2
-
-    invoke-virtual {v0, v1, v2}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
-
-    .line 900
-    return-object v0
-.end method
-
-.method private getEntry(Ljava/lang/String;)Lorg/json/JSONObject;
-    .locals 1
-    .param p1, "path"    # Ljava/lang/String;
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Lorg/json/JSONException;
-        }
+    .annotation runtime Ljava/lang/Deprecated;
     .end annotation
 
     .prologue
-    .line 911
-    new-instance v0, Ljava/io/File;
-
-    invoke-direct {v0, p1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    invoke-static {v0}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/io/File;)Lorg/json/JSONObject;
+    .line 931
+    invoke-static {}, Lorg/apache/cordova/file/FileUtils;->getFilePlugin()Lorg/apache/cordova/file/FileUtils;
 
     move-result-object v0
 
+    if-eqz v0, :cond_0
+
+    .line 932
+    invoke-static {}, Lorg/apache/cordova/file/FileUtils;->getFilePlugin()Lorg/apache/cordova/file/FileUtils;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p0}, Lorg/apache/cordova/file/FileUtils;->getEntryForFile(Ljava/io/File;)Lorg/json/JSONObject;
+
+    move-result-object v0
+
+    .line 934
+    :goto_0
     return-object v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
 .end method
 
 .method private getFile(Ljava/lang/String;Ljava/lang/String;Lorg/json/JSONObject;Z)Lorg/json/JSONObject;
     .locals 5
-    .param p1, "dirPath"    # Ljava/lang/String;
-    .param p2, "fileName"    # Ljava/lang/String;
+    .param p1, "baseURLstr"    # Ljava/lang/String;
+    .param p2, "path"    # Ljava/lang/String;
     .param p3, "options"    # Lorg/json/JSONObject;
     .param p4, "directory"    # Z
     .annotation system Ldalvik/annotation/Throws;
@@ -888,168 +536,58 @@
     .end annotation
 
     .prologue
-    .line 684
-    const/4 v0, 0x0
+    .line 770
+    :try_start_0
+    new-instance v2, Lorg/apache/cordova/file/LocalFilesystemURL;
 
-    .line 685
-    .local v0, "create":Z
-    const/4 v1, 0x0
+    invoke-direct {v2, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
 
-    .line 686
-    .local v1, "exclusive":Z
-    if-eqz p3, :cond_0
+    .line 771
+    .local v2, "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    invoke-direct {p0, v2}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
 
-    .line 687
-    const-string v3, "create"
+    move-result-object v1
 
-    invoke-virtual {p3, v3}, Lorg/json/JSONObject;->optBoolean(Ljava/lang/String;)Z
+    .line 772
+    .local v1, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-nez v1, :cond_0
 
-    move-result v0
+    .line 773
+    new-instance v3, Ljava/net/MalformedURLException;
 
-    .line 688
-    if-eqz v0, :cond_0
+    const-string v4, "No installed handlers for this URL"
 
-    .line 689
-    const-string v3, "exclusive"
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
 
-    invoke-virtual {p3, v3}, Lorg/json/JSONObject;->optBoolean(Ljava/lang/String;)Z
+    throw v3
+    :try_end_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
 
-    move-result v1
+    .line 777
+    .end local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :catch_0
+    move-exception v0
 
-    .line 694
+    .line 778
+    .local v0, "e":Ljava/lang/IllegalArgumentException;
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "Unrecognized filesystem URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    .line 775
+    .end local v0    # "e":Ljava/lang/IllegalArgumentException;
+    .restart local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .restart local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
     :cond_0
-    const-string v3, ":"
-
-    invoke-virtual {p2, v3}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
-
-    move-result v3
-
-    if-eqz v3, :cond_1
-
-    .line 695
-    new-instance v3, Lorg/apache/cordova/file/EncodingException;
-
-    const-string v4, "This file has a : in it\'s name"
-
-    invoke-direct {v3, v4}, Lorg/apache/cordova/file/EncodingException;-><init>(Ljava/lang/String;)V
-
-    throw v3
-
-    .line 698
-    :cond_1
-    invoke-direct {p0, p1, p2}, Lorg/apache/cordova/file/FileUtils;->createFileObject(Ljava/lang/String;Ljava/lang/String;)Ljava/io/File;
-
-    move-result-object v2
-
-    .line 700
-    .local v2, "fp":Ljava/io/File;
-    if-eqz v0, :cond_4
-
-    .line 701
-    if-eqz v1, :cond_2
-
-    invoke-virtual {v2}, Ljava/io/File;->exists()Z
-
-    move-result v3
-
-    if-eqz v3, :cond_2
-
-    .line 702
-    new-instance v3, Lorg/apache/cordova/file/FileExistsException;
-
-    const-string v4, "create/exclusive fails"
-
-    invoke-direct {v3, v4}, Lorg/apache/cordova/file/FileExistsException;-><init>(Ljava/lang/String;)V
-
-    throw v3
-
-    .line 704
-    :cond_2
-    if-eqz p4, :cond_3
-
-    .line 705
-    invoke-virtual {v2}, Ljava/io/File;->mkdir()Z
-
-    .line 709
-    :goto_0
-    invoke-virtual {v2}, Ljava/io/File;->exists()Z
-
-    move-result v3
-
-    if-nez v3, :cond_7
-
-    .line 710
-    new-instance v3, Lorg/apache/cordova/file/FileExistsException;
-
-    const-string v4, "create fails"
-
-    invoke-direct {v3, v4}, Lorg/apache/cordova/file/FileExistsException;-><init>(Ljava/lang/String;)V
-
-    throw v3
-
-    .line 707
-    :cond_3
-    invoke-virtual {v2}, Ljava/io/File;->createNewFile()Z
-
-    goto :goto_0
-
-    .line 714
-    :cond_4
-    invoke-virtual {v2}, Ljava/io/File;->exists()Z
-
-    move-result v3
-
-    if-nez v3, :cond_5
-
-    .line 715
-    new-instance v3, Ljava/io/FileNotFoundException;
-
-    const-string v4, "path does not exist"
-
-    invoke-direct {v3, v4}, Ljava/io/FileNotFoundException;-><init>(Ljava/lang/String;)V
-
-    throw v3
-
-    .line 717
-    :cond_5
-    if-eqz p4, :cond_6
-
-    .line 718
-    invoke-virtual {v2}, Ljava/io/File;->isFile()Z
-
-    move-result v3
-
-    if-eqz v3, :cond_7
-
-    .line 719
-    new-instance v3, Lorg/apache/cordova/file/TypeMismatchException;
-
-    const-string v4, "path doesn\'t exist or is file"
-
-    invoke-direct {v3, v4}, Lorg/apache/cordova/file/TypeMismatchException;-><init>(Ljava/lang/String;)V
-
-    throw v3
-
-    .line 722
-    :cond_6
-    invoke-virtual {v2}, Ljava/io/File;->isDirectory()Z
-
-    move-result v3
-
-    if-eqz v3, :cond_7
-
-    .line 723
-    new-instance v3, Lorg/apache/cordova/file/TypeMismatchException;
-
-    const-string v4, "path doesn\'t exist or is directory"
-
-    invoke-direct {v3, v4}, Lorg/apache/cordova/file/TypeMismatchException;-><init>(Ljava/lang/String;)V
-
-    throw v3
-
-    .line 729
-    :cond_7
-    invoke-static {v2}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/io/File;)Lorg/json/JSONObject;
+    :try_start_1
+    invoke-virtual {v1, v2, p2, p3, p4}, Lorg/apache/cordova/file/Filesystem;->getFileForLocalURL(Lorg/apache/cordova/file/LocalFilesystemURL;Ljava/lang/String;Lorg/json/JSONObject;Z)Lorg/json/JSONObject;
+    :try_end_1
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_1 .. :try_end_1} :catch_0
 
     move-result-object v3
 
@@ -1058,845 +596,680 @@
 
 .method private getFileMetadata(Ljava/lang/String;)Lorg/json/JSONObject;
     .locals 5
-    .param p1, "filePath"    # Ljava/lang/String;
+    .param p1, "baseURLstr"    # Ljava/lang/String;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/io/FileNotFoundException;,
-            Lorg/json/JSONException;
+            Lorg/json/JSONException;,
+            Ljava/net/MalformedURLException;
         }
     .end annotation
 
     .prologue
-    .line 825
-    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->createFileObject(Ljava/lang/String;)Ljava/io/File;
+    .line 817
+    :try_start_0
+    new-instance v2, Lorg/apache/cordova/file/LocalFilesystemURL;
 
-    move-result-object v0
+    invoke-direct {v2, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
 
-    .line 827
-    .local v0, "file":Ljava/io/File;
-    invoke-virtual {v0}, Ljava/io/File;->exists()Z
+    .line 818
+    .local v2, "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    invoke-direct {p0, v2}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
 
-    move-result v2
+    move-result-object v1
 
-    if-nez v2, :cond_0
-
-    .line 828
-    new-instance v2, Ljava/io/FileNotFoundException;
-
-    new-instance v3, Ljava/lang/StringBuilder;
-
-    const-string v4, "File: "
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v3, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    const-string v4, " does not exist."
-
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-direct {v2, v3}, Ljava/io/FileNotFoundException;-><init>(Ljava/lang/String;)V
-
-    throw v2
-
-    .line 831
-    :cond_0
-    new-instance v1, Lorg/json/JSONObject;
-
-    invoke-direct {v1}, Lorg/json/JSONObject;-><init>()V
-
-    .line 832
-    .local v1, "metadata":Lorg/json/JSONObject;
-    const-string v2, "size"
-
-    invoke-virtual {v0}, Ljava/io/File;->length()J
-
-    move-result-wide v3
-
-    invoke-virtual {v1, v2, v3, v4}, Lorg/json/JSONObject;->put(Ljava/lang/String;J)Lorg/json/JSONObject;
-
-    .line 833
-    const-string v2, "type"
-
-    iget-object v3, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-static {p1, v3}, Lorg/apache/cordova/file/FileHelper;->getMimeType(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;)Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-virtual {v1, v2, v3}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
-
-    .line 834
-    const-string v2, "name"
-
-    invoke-virtual {v0}, Ljava/io/File;->getName()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-virtual {v1, v2, v3}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
-
-    .line 835
-    const-string v2, "fullPath"
-
-    invoke-virtual {v1, v2, p1}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
-
-    .line 836
-    const-string v2, "lastModifiedDate"
-
-    invoke-virtual {v0}, Ljava/io/File;->lastModified()J
-
-    move-result-wide v3
-
-    invoke-virtual {v1, v2, v3, v4}, Lorg/json/JSONObject;->put(Ljava/lang/String;J)Lorg/json/JSONObject;
-
-    .line 838
-    return-object v1
-.end method
-
-.method private getMetadata(Ljava/lang/String;)J
-    .locals 3
-    .param p1, "filePath"    # Ljava/lang/String;
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Ljava/io/FileNotFoundException;
-        }
-    .end annotation
-
-    .prologue
-    .line 807
-    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->createFileObject(Ljava/lang/String;)Ljava/io/File;
-
-    move-result-object v0
-
-    .line 809
-    .local v0, "file":Ljava/io/File;
-    invoke-virtual {v0}, Ljava/io/File;->exists()Z
-
-    move-result v1
-
+    .line 819
+    .local v1, "fs":Lorg/apache/cordova/file/Filesystem;
     if-nez v1, :cond_0
 
-    .line 810
-    new-instance v1, Ljava/io/FileNotFoundException;
+    .line 820
+    new-instance v3, Ljava/net/MalformedURLException;
 
-    const-string v2, "Failed to find file in getMetadata"
+    const-string v4, "No installed handlers for this URL"
 
-    invoke-direct {v1, v2}, Ljava/io/FileNotFoundException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
 
-    throw v1
+    throw v3
+    :try_end_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 813
+    .line 824
+    .end local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :catch_0
+    move-exception v0
+
+    .line 825
+    .local v0, "e":Ljava/lang/IllegalArgumentException;
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "Unrecognized filesystem URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    .line 822
+    .end local v0    # "e":Ljava/lang/IllegalArgumentException;
+    .restart local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .restart local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
     :cond_0
-    invoke-virtual {v0}, Ljava/io/File;->lastModified()J
+    :try_start_1
+    invoke-virtual {v1, v2}, Lorg/apache/cordova/file/Filesystem;->getFileMetadataForLocalURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/json/JSONObject;
+    :try_end_1
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_1 .. :try_end_1} :catch_0
 
-    move-result-wide v1
+    move-result-object v3
 
-    return-wide v1
+    return-object v3
+.end method
+
+.method public static getFilePlugin()Lorg/apache/cordova/file/FileUtils;
+    .locals 1
+
+    .prologue
+    .line 212
+    sget-object v0, Lorg/apache/cordova/file/FileUtils;->filePlugin:Lorg/apache/cordova/file/FileUtils;
+
+    return-object v0
 .end method
 
 .method private getParent(Ljava/lang/String;)Lorg/json/JSONObject;
-    .locals 1
-    .param p1, "filePath"    # Ljava/lang/String;
+    .locals 5
+    .param p1, "baseURLstr"    # Ljava/lang/String;
     .annotation system Ldalvik/annotation/Throws;
         value = {
-            Lorg/json/JSONException;
-        }
-    .end annotation
-
-    .prologue
-    .line 760
-    iget-object v0, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-static {p1, v0}, Lorg/apache/cordova/file/FileHelper;->getRealPath(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;)Ljava/lang/String;
-
-    move-result-object p1
-
-    .line 762
-    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->atRootDirectory(Ljava/lang/String;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    .line 763
-    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/lang/String;)Lorg/json/JSONObject;
-
-    move-result-object v0
-
-    .line 765
-    :goto_0
-    return-object v0
-
-    :cond_0
-    new-instance v0, Ljava/io/File;
-
-    invoke-direct {v0, p1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v0}, Ljava/io/File;->getParent()Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-direct {p0, v0}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/lang/String;)Lorg/json/JSONObject;
-
-    move-result-object v0
-
-    goto :goto_0
-.end method
-
-.method private isCopyOnItself(Ljava/lang/String;Ljava/lang/String;)Z
-    .locals 2
-    .param p1, "src"    # Ljava/lang/String;
-    .param p2, "dest"    # Ljava/lang/String;
-
-    .prologue
-    .line 515
-    invoke-virtual {p2, p1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    sget-object v0, Ljava/io/File;->separator:Ljava/lang/String;
-
-    invoke-virtual {p1}, Ljava/lang/String;->length()I
-
-    move-result v1
-
-    add-int/lit8 v1, v1, -0x1
-
-    invoke-virtual {p2, v0, v1}, Ljava/lang/String;->indexOf(Ljava/lang/String;I)I
-
-    move-result v0
-
-    const/4 v1, -0x1
-
-    if-eq v0, v1, :cond_0
-
-    .line 516
-    const/4 v0, 0x1
-
-    .line 519
-    :goto_0
-    return v0
-
-    :cond_0
-    const/4 v0, 0x0
-
-    goto :goto_0
-.end method
-
-.method private moveDirectory(Ljava/io/File;Ljava/io/File;)Lorg/json/JSONObject;
-    .locals 2
-    .param p1, "srcDir"    # Ljava/io/File;
-    .param p2, "destinationDir"    # Ljava/io/File;
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Ljava/io/IOException;,
             Lorg/json/JSONException;,
-            Lorg/apache/cordova/file/InvalidModificationException;,
-            Lorg/apache/cordova/file/NoModificationAllowedException;,
-            Lorg/apache/cordova/file/FileExistsException;
-        }
-    .end annotation
-
-    .prologue
-    .line 569
-    invoke-virtual {p2}, Ljava/io/File;->exists()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    invoke-virtual {p2}, Ljava/io/File;->isFile()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    .line 570
-    new-instance v0, Lorg/apache/cordova/file/InvalidModificationException;
-
-    const-string v1, "Can\'t rename a file to a directory"
-
-    invoke-direct {v0, v1}, Lorg/apache/cordova/file/InvalidModificationException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-
-    .line 574
-    :cond_0
-    invoke-virtual {p1}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-virtual {p2}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-direct {p0, v0, v1}, Lorg/apache/cordova/file/FileUtils;->isCopyOnItself(Ljava/lang/String;Ljava/lang/String;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_1
-
-    .line 575
-    new-instance v0, Lorg/apache/cordova/file/InvalidModificationException;
-
-    const-string v1, "Can\'t move itself into itself"
-
-    invoke-direct {v0, v1}, Lorg/apache/cordova/file/InvalidModificationException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-
-    .line 579
-    :cond_1
-    invoke-virtual {p2}, Ljava/io/File;->exists()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_2
-
-    .line 580
-    invoke-virtual {p2}, Ljava/io/File;->list()[Ljava/lang/String;
-
-    move-result-object v0
-
-    array-length v0, v0
-
-    if-lez v0, :cond_2
-
-    .line 581
-    new-instance v0, Lorg/apache/cordova/file/InvalidModificationException;
-
-    const-string v1, "directory is not empty"
-
-    invoke-direct {v0, v1}, Lorg/apache/cordova/file/InvalidModificationException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-
-    .line 586
-    :cond_2
-    invoke-virtual {p1, p2}, Ljava/io/File;->renameTo(Ljava/io/File;)Z
-
-    move-result v0
-
-    if-nez v0, :cond_3
-
-    .line 591
-    invoke-direct {p0, p1, p2}, Lorg/apache/cordova/file/FileUtils;->copyDirectory(Ljava/io/File;Ljava/io/File;)Lorg/json/JSONObject;
-
-    .line 592
-    invoke-virtual {p2}, Ljava/io/File;->exists()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_4
-
-    .line 593
-    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->removeDirRecursively(Ljava/io/File;)Z
-
-    .line 599
-    :cond_3
-    invoke-static {p2}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/io/File;)Lorg/json/JSONObject;
-
-    move-result-object v0
-
-    return-object v0
-
-    .line 595
-    :cond_4
-    new-instance v0, Ljava/io/IOException;
-
-    const-string v1, "moved failed"
-
-    invoke-direct {v0, v1}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-.end method
-
-.method private moveFile(Ljava/io/File;Ljava/io/File;)Lorg/json/JSONObject;
-    .locals 2
-    .param p1, "srcFile"    # Ljava/io/File;
-    .param p2, "destFile"    # Ljava/io/File;
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Ljava/io/IOException;,
-            Lorg/json/JSONException;,
-            Lorg/apache/cordova/file/InvalidModificationException;
-        }
-    .end annotation
-
-    .prologue
-    .line 534
-    invoke-virtual {p2}, Ljava/io/File;->exists()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    invoke-virtual {p2}, Ljava/io/File;->isDirectory()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    .line 535
-    new-instance v0, Lorg/apache/cordova/file/InvalidModificationException;
-
-    const-string v1, "Can\'t rename a file to a directory"
-
-    invoke-direct {v0, v1}, Lorg/apache/cordova/file/InvalidModificationException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-
-    .line 539
-    :cond_0
-    invoke-virtual {p1, p2}, Ljava/io/File;->renameTo(Ljava/io/File;)Z
-
-    move-result v0
-
-    if-nez v0, :cond_1
-
-    .line 544
-    invoke-direct {p0, p1, p2}, Lorg/apache/cordova/file/FileUtils;->copyAction(Ljava/io/File;Ljava/io/File;)V
-
-    .line 545
-    invoke-virtual {p2}, Ljava/io/File;->exists()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_2
-
-    .line 546
-    invoke-virtual {p1}, Ljava/io/File;->delete()Z
-
-    .line 552
-    :cond_1
-    invoke-static {p2}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/io/File;)Lorg/json/JSONObject;
-
-    move-result-object v0
-
-    return-object v0
-
-    .line 548
-    :cond_2
-    new-instance v0, Ljava/io/IOException;
-
-    const-string v1, "moved failed"
-
-    invoke-direct {v0, v1}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
-
-    throw v0
-.end method
-
-.method private notifyDelete(Ljava/lang/String;)V
-    .locals 6
-    .param p1, "filePath"    # Ljava/lang/String;
-
-    .prologue
-    .line 233
-    iget-object v1, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-static {p1, v1}, Lorg/apache/cordova/file/FileHelper;->getRealPath(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;)Ljava/lang/String;
-
-    move-result-object v0
-
-    .line 235
-    .local v0, "newFilePath":Ljava/lang/String;
-    :try_start_0
-    iget-object v1, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v1}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Landroid/app/Activity;->getContentResolver()Landroid/content/ContentResolver;
-
-    move-result-object v1
-
-    sget-object v2, Landroid/provider/MediaStore$Images$Media;->EXTERNAL_CONTENT_URI:Landroid/net/Uri;
-
-    .line 236
-    const-string v3, "_data = ?"
-
-    .line 237
-    const/4 v4, 0x1
-
-    new-array v4, v4, [Ljava/lang/String;
-
-    const/4 v5, 0x0
-
-    aput-object v0, v4, v5
-
-    .line 235
-    invoke-virtual {v1, v2, v3, v4}, Landroid/content/ContentResolver;->delete(Landroid/net/Uri;Ljava/lang/String;[Ljava/lang/String;)I
-    :try_end_0
-    .catch Ljava/lang/UnsupportedOperationException; {:try_start_0 .. :try_end_0} :catch_0
-
-    .line 243
-    :goto_0
-    return-void
-
-    .line 238
-    :catch_0
-    move-exception v1
-
-    goto :goto_0
-.end method
-
-.method private readAsBinaryHelper(Ljava/lang/String;II)[B
-    .locals 6
-    .param p1, "filename"    # Ljava/lang/String;
-    .param p2, "start"    # I
-    .param p3, "end"    # I
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
             Ljava/io/IOException;
         }
     .end annotation
 
     .prologue
-    .line 972
-    sub-int v3, p3, p2
+    .line 794
+    :try_start_0
+    new-instance v2, Lorg/apache/cordova/file/LocalFilesystemURL;
 
-    .line 973
-    .local v3, "numBytesToRead":I
-    new-array v0, v3, [B
+    invoke-direct {v2, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
 
-    .line 974
-    .local v0, "bytes":[B
-    iget-object v4, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-static {p1, v4}, Lorg/apache/cordova/file/FileHelper;->getInputStreamFromUriString(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;)Ljava/io/InputStream;
+    .line 795
+    .local v2, "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    invoke-direct {p0, v2}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
 
     move-result-object v1
 
-    .line 975
-    .local v1, "inputStream":Ljava/io/InputStream;
-    const/4 v2, 0x0
+    .line 796
+    .local v1, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-nez v1, :cond_0
 
-    .line 977
-    .local v2, "numBytesRead":I
-    if-lez p2, :cond_0
+    .line 797
+    new-instance v3, Ljava/net/MalformedURLException;
 
-    .line 978
-    int-to-long v4, p2
+    const-string v4, "No installed handlers for this URL"
 
-    invoke-virtual {v1, v4, v5}, Ljava/io/InputStream;->skip(J)J
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
 
-    .line 981
+    throw v3
+    :try_end_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 801
+    .end local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :catch_0
+    move-exception v0
+
+    .line 802
+    .local v0, "e":Ljava/lang/IllegalArgumentException;
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "Unrecognized filesystem URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    .line 799
+    .end local v0    # "e":Ljava/lang/IllegalArgumentException;
+    .restart local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .restart local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
     :cond_0
-    :goto_0
-    if-lez v3, :cond_1
+    :try_start_1
+    invoke-virtual {v1, v2}, Lorg/apache/cordova/file/Filesystem;->getParentForLocalURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/json/JSONObject;
+    :try_end_1
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_1 .. :try_end_1} :catch_0
 
-    invoke-virtual {v1, v0, v2, v3}, Ljava/io/InputStream;->read([BII)I
+    move-result-object v3
 
-    move-result v2
-
-    if-gez v2, :cond_2
-
-    .line 985
-    :cond_1
-    return-object v0
-
-    .line 982
-    :cond_2
-    sub-int/2addr v3, v2
-
-    goto :goto_0
+    return-object v3
 .end method
 
 .method private readEntries(Ljava/lang/String;)Lorg/json/JSONArray;
     .locals 5
-    .param p1, "fileName"    # Ljava/lang/String;
+    .param p1, "baseURLstr"    # Ljava/lang/String;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/io/FileNotFoundException;,
+            Lorg/json/JSONException;,
+            Ljava/net/MalformedURLException;
+        }
+    .end annotation
+
+    .prologue
+    .line 645
+    :try_start_0
+    new-instance v2, Lorg/apache/cordova/file/LocalFilesystemURL;
+
+    invoke-direct {v2, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
+
+    .line 646
+    .local v2, "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    invoke-direct {p0, v2}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
+
+    move-result-object v1
+
+    .line 647
+    .local v1, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-nez v1, :cond_0
+
+    .line 648
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "No installed handlers for this URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+    :try_end_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 652
+    .end local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :catch_0
+    move-exception v0
+
+    .line 653
+    .local v0, "e":Ljava/lang/IllegalArgumentException;
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "Unrecognized filesystem URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    .line 650
+    .end local v0    # "e":Ljava/lang/IllegalArgumentException;
+    .restart local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .restart local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :cond_0
+    :try_start_1
+    invoke-virtual {v1, v2}, Lorg/apache/cordova/file/Filesystem;->readEntriesAtLocalURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/json/JSONArray;
+    :try_end_1
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_1 .. :try_end_1} :catch_0
+
+    move-result-object v3
+
+    return-object v3
+.end method
+
+.method private remove(Ljava/lang/String;)Z
+    .locals 5
+    .param p1, "baseURLstr"    # Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Lorg/apache/cordova/file/NoModificationAllowedException;,
+            Lorg/apache/cordova/file/InvalidModificationException;,
+            Ljava/net/MalformedURLException;
+        }
+    .end annotation
+
+    .prologue
+    .line 736
+    :try_start_0
+    new-instance v2, Lorg/apache/cordova/file/LocalFilesystemURL;
+
+    invoke-direct {v2, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
+
+    .line 738
+    .local v2, "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    const-string v3, ""
+
+    iget-object v4, v2, Lorg/apache/cordova/file/LocalFilesystemURL;->fullPath:Ljava/lang/String;
+
+    invoke-virtual {v3, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_0
+
+    const-string v3, "/"
+
+    iget-object v4, v2, Lorg/apache/cordova/file/LocalFilesystemURL;->fullPath:Ljava/lang/String;
+
+    invoke-virtual {v3, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_1
+
+    .line 740
+    :cond_0
+    new-instance v3, Lorg/apache/cordova/file/NoModificationAllowedException;
+
+    const-string v4, "You can\'t delete the root directory"
+
+    invoke-direct {v3, v4}, Lorg/apache/cordova/file/NoModificationAllowedException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+    :try_end_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 749
+    .end local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :catch_0
+    move-exception v0
+
+    .line 750
+    .local v0, "e":Ljava/lang/IllegalArgumentException;
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "Unrecognized filesystem URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    .line 743
+    .end local v0    # "e":Ljava/lang/IllegalArgumentException;
+    .restart local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :cond_1
+    :try_start_1
+    invoke-direct {p0, v2}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
+
+    move-result-object v1
+
+    .line 744
+    .local v1, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-nez v1, :cond_2
+
+    .line 745
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "No installed handlers for this URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    .line 747
+    :cond_2
+    invoke-virtual {v1, v2}, Lorg/apache/cordova/file/Filesystem;->removeFileAtLocalURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Z
+    :try_end_1
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_1 .. :try_end_1} :catch_0
+
+    move-result v3
+
+    return v3
+.end method
+
+.method private removeRecursively(Ljava/lang/String;)Z
+    .locals 5
+    .param p1, "baseURLstr"    # Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Lorg/apache/cordova/file/FileExistsException;,
+            Lorg/apache/cordova/file/NoModificationAllowedException;,
+            Ljava/net/MalformedURLException;
+        }
+    .end annotation
+
+    .prologue
+    .line 706
+    :try_start_0
+    new-instance v2, Lorg/apache/cordova/file/LocalFilesystemURL;
+
+    invoke-direct {v2, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
+
+    .line 708
+    .local v2, "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    const-string v3, ""
+
+    iget-object v4, v2, Lorg/apache/cordova/file/LocalFilesystemURL;->fullPath:Ljava/lang/String;
+
+    invoke-virtual {v3, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_0
+
+    const-string v3, "/"
+
+    iget-object v4, v2, Lorg/apache/cordova/file/LocalFilesystemURL;->fullPath:Ljava/lang/String;
+
+    invoke-virtual {v3, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_1
+
+    .line 709
+    :cond_0
+    new-instance v3, Lorg/apache/cordova/file/NoModificationAllowedException;
+
+    const-string v4, "You can\'t delete the root directory"
+
+    invoke-direct {v3, v4}, Lorg/apache/cordova/file/NoModificationAllowedException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+    :try_end_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 718
+    .end local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :catch_0
+    move-exception v0
+
+    .line 719
+    .local v0, "e":Ljava/lang/IllegalArgumentException;
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "Unrecognized filesystem URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    .line 712
+    .end local v0    # "e":Ljava/lang/IllegalArgumentException;
+    .restart local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :cond_1
+    :try_start_1
+    invoke-direct {p0, v2}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
+
+    move-result-object v1
+
+    .line 713
+    .local v1, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-nez v1, :cond_2
+
+    .line 714
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "No installed handlers for this URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    .line 716
+    :cond_2
+    invoke-virtual {v1, v2}, Lorg/apache/cordova/file/Filesystem;->recursiveRemoveFileAtLocalURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Z
+    :try_end_1
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_1 .. :try_end_1} :catch_0
+
+    move-result v3
+
+    return v3
+.end method
+
+.method private requestAllFileSystems()Lorg/json/JSONArray;
+    .locals 6
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;,
             Lorg/json/JSONException;
         }
     .end annotation
 
     .prologue
-    .line 303
-    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->createFileObject(Ljava/lang/String;)Ljava/io/File;
+    .line 865
+    new-instance v2, Lorg/json/JSONArray;
 
-    move-result-object v2
+    invoke-direct {v2}, Lorg/json/JSONArray;-><init>()V
 
-    .line 305
-    .local v2, "fp":Ljava/io/File;
-    invoke-virtual {v2}, Ljava/io/File;->exists()Z
+    .line 866
+    .local v2, "ret":Lorg/json/JSONArray;
+    iget-object v4, p0, Lorg/apache/cordova/file/FileUtils;->filesystems:Ljava/util/ArrayList;
 
-    move-result v4
-
-    if-nez v4, :cond_0
-
-    .line 307
-    new-instance v4, Ljava/io/FileNotFoundException;
-
-    invoke-direct {v4}, Ljava/io/FileNotFoundException;-><init>()V
-
-    throw v4
-
-    .line 310
-    :cond_0
-    new-instance v0, Lorg/json/JSONArray;
-
-    invoke-direct {v0}, Lorg/json/JSONArray;-><init>()V
-
-    .line 312
-    .local v0, "entries":Lorg/json/JSONArray;
-    invoke-virtual {v2}, Ljava/io/File;->isDirectory()Z
-
-    move-result v4
-
-    if-eqz v4, :cond_1
-
-    .line 313
-    invoke-virtual {v2}, Ljava/io/File;->listFiles()[Ljava/io/File;
+    invoke-virtual {v4}, Ljava/util/ArrayList;->iterator()Ljava/util/Iterator;
 
     move-result-object v1
 
-    .line 314
-    .local v1, "files":[Ljava/io/File;
-    const/4 v3, 0x0
-
-    .local v3, "i":I
+    .local v1, "i$":Ljava/util/Iterator;
     :goto_0
-    array-length v4, v1
-
-    if-lt v3, v4, :cond_2
-
-    .line 321
-    .end local v1    # "files":[Ljava/io/File;
-    .end local v3    # "i":I
-    :cond_1
-    return-object v0
-
-    .line 315
-    .restart local v1    # "files":[Ljava/io/File;
-    .restart local v3    # "i":I
-    :cond_2
-    aget-object v4, v1, v3
-
-    invoke-virtual {v4}, Ljava/io/File;->canRead()Z
+    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v4
 
-    if-eqz v4, :cond_3
+    if-eqz v4, :cond_0
 
-    .line 316
-    aget-object v4, v1, v3
+    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    invoke-static {v4}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/io/File;)Lorg/json/JSONObject;
+    move-result-object v0
+
+    check-cast v0, Lorg/apache/cordova/file/Filesystem;
+
+    .line 867
+    .local v0, "fs":Lorg/apache/cordova/file/Filesystem;
+    new-instance v3, Lorg/apache/cordova/file/LocalFilesystemURL;
+
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v5, "cdvfile://localhost/"
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->put(Ljava/lang/Object;)Lorg/json/JSONArray;
+    iget-object v5, v0, Lorg/apache/cordova/file/Filesystem;->name:Ljava/lang/String;
 
-    .line 314
-    :cond_3
-    add-int/lit8 v3, v3, 0x1
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    const-string v5, "/"
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-direct {v3, v4}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
+
+    .line 868
+    .local v3, "rootURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    invoke-virtual {v0, v3}, Lorg/apache/cordova/file/Filesystem;->getEntryForLocalURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/json/JSONObject;
+
+    move-result-object v4
+
+    invoke-virtual {v2, v4}, Lorg/json/JSONArray;->put(Ljava/lang/Object;)Lorg/json/JSONArray;
 
     goto :goto_0
+
+    .line 870
+    .end local v0    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v3    # "rootURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :cond_0
+    return-object v2
 .end method
 
-.method private remove(Ljava/lang/String;)Z
-    .locals 3
-    .param p1, "filePath"    # Ljava/lang/String;
+.method private requestAllPaths()Lorg/json/JSONObject;
+    .locals 5
     .annotation system Ldalvik/annotation/Throws;
         value = {
-            Lorg/apache/cordova/file/NoModificationAllowedException;,
-            Lorg/apache/cordova/file/InvalidModificationException;
+            Lorg/json/JSONException;
         }
     .end annotation
 
     .prologue
-    .line 654
-    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->createFileObject(Ljava/lang/String;)Ljava/io/File;
+    .line 878
+    iget-object v3, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
+
+    invoke-interface {v3}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
 
     move-result-object v0
 
-    .line 657
-    .local v0, "fp":Ljava/io/File;
-    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->atRootDirectory(Ljava/lang/String;)Z
+    .line 879
+    .local v0, "context":Landroid/content/Context;
+    new-instance v2, Lorg/json/JSONObject;
 
-    move-result v1
+    invoke-direct {v2}, Lorg/json/JSONObject;-><init>()V
 
-    if-eqz v1, :cond_0
+    .line 880
+    .local v2, "ret":Lorg/json/JSONObject;
+    const-string v3, "applicationDirectory"
 
-    .line 658
-    new-instance v1, Lorg/apache/cordova/file/NoModificationAllowedException;
+    const-string v4, "file:///android_asset/"
 
-    const-string v2, "You can\'t delete the root directory"
+    invoke-virtual {v2, v3, v4}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
 
-    invoke-direct {v1, v2}, Lorg/apache/cordova/file/NoModificationAllowedException;-><init>(Ljava/lang/String;)V
+    .line 881
+    const-string v3, "applicationStorageDirectory"
 
-    throw v1
+    invoke-virtual {v0}, Landroid/content/Context;->getFilesDir()Ljava/io/File;
 
-    .line 662
-    :cond_0
-    invoke-virtual {v0}, Ljava/io/File;->isDirectory()Z
+    move-result-object v4
 
-    move-result v1
+    invoke-virtual {v4}, Ljava/io/File;->getParentFile()Ljava/io/File;
 
-    if-eqz v1, :cond_1
+    move-result-object v4
 
-    invoke-virtual {v0}, Ljava/io/File;->list()[Ljava/lang/String;
+    invoke-static {v4}, Lorg/apache/cordova/file/FileUtils;->toDirUrl(Ljava/io/File;)Ljava/lang/String;
 
-    move-result-object v1
+    move-result-object v4
 
-    array-length v1, v1
+    invoke-virtual {v2, v3, v4}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
 
-    if-lez v1, :cond_1
+    .line 882
+    const-string v3, "dataDirectory"
 
-    .line 663
-    new-instance v1, Lorg/apache/cordova/file/InvalidModificationException;
+    invoke-virtual {v0}, Landroid/content/Context;->getFilesDir()Ljava/io/File;
 
-    const-string v2, "You can\'t delete a directory that is not empty."
+    move-result-object v4
 
-    invoke-direct {v1, v2}, Lorg/apache/cordova/file/InvalidModificationException;-><init>(Ljava/lang/String;)V
+    invoke-static {v4}, Lorg/apache/cordova/file/FileUtils;->toDirUrl(Ljava/io/File;)Ljava/lang/String;
 
-    throw v1
+    move-result-object v4
 
-    .line 666
-    :cond_1
-    invoke-virtual {v0}, Ljava/io/File;->delete()Z
+    invoke-virtual {v2, v3, v4}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
 
-    move-result v1
+    .line 883
+    const-string v3, "cacheDirectory"
 
-    return v1
-.end method
+    invoke-virtual {v0}, Landroid/content/Context;->getCacheDir()Ljava/io/File;
 
-.method private removeDirRecursively(Ljava/io/File;)Z
-    .locals 4
-    .param p1, "directory"    # Ljava/io/File;
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Lorg/apache/cordova/file/FileExistsException;
-        }
-    .end annotation
+    move-result-object v4
 
-    .prologue
-    .line 631
-    invoke-virtual {p1}, Ljava/io/File;->isDirectory()Z
+    invoke-static {v4}, Lorg/apache/cordova/file/FileUtils;->toDirUrl(Ljava/io/File;)Ljava/lang/String;
 
-    move-result v1
+    move-result-object v4
 
-    if-eqz v1, :cond_0
+    invoke-virtual {v2, v3, v4}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
 
-    .line 632
-    invoke-virtual {p1}, Ljava/io/File;->listFiles()[Ljava/io/File;
-
-    move-result-object v2
-
-    array-length v3, v2
-
-    const/4 v1, 0x0
-
-    :goto_0
-    if-lt v1, v3, :cond_1
-
-    .line 637
-    :cond_0
-    invoke-virtual {p1}, Ljava/io/File;->delete()Z
-
-    move-result v1
-
-    if-nez v1, :cond_2
-
-    .line 638
-    new-instance v1, Lorg/apache/cordova/file/FileExistsException;
-
-    new-instance v2, Ljava/lang/StringBuilder;
-
-    const-string v3, "could not delete: "
-
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {p1}, Ljava/io/File;->getName()Ljava/lang/String;
+    .line 884
+    invoke-static {}, Landroid/os/Environment;->getExternalStorageState()Ljava/lang/String;
 
     move-result-object v3
 
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    const-string v4, "mounted"
 
-    move-result-object v2
+    invoke-virtual {v3, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    move-result v3
 
-    move-result-object v2
+    if-eqz v3, :cond_0
 
-    invoke-direct {v1, v2}, Lorg/apache/cordova/file/FileExistsException;-><init>(Ljava/lang/String;)V
+    .line 886
+    :try_start_0
+    const-string v3, "externalApplicationStorageDirectory"
 
-    throw v1
+    const/4 v4, 0x0
 
-    .line 632
-    :cond_1
-    aget-object v0, v2, v1
+    invoke-virtual {v0, v4}, Landroid/content/Context;->getExternalFilesDir(Ljava/lang/String;)Ljava/io/File;
 
-    .line 633
-    .local v0, "file":Ljava/io/File;
-    invoke-direct {p0, v0}, Lorg/apache/cordova/file/FileUtils;->removeDirRecursively(Ljava/io/File;)Z
+    move-result-object v4
 
-    .line 632
-    add-int/lit8 v1, v1, 0x1
+    invoke-virtual {v4}, Ljava/io/File;->getParentFile()Ljava/io/File;
 
-    goto :goto_0
+    move-result-object v4
 
-    .line 640
-    .end local v0    # "file":Ljava/io/File;
-    :cond_2
-    const/4 v1, 0x1
+    invoke-static {v4}, Lorg/apache/cordova/file/FileUtils;->toDirUrl(Ljava/io/File;)Ljava/lang/String;
 
-    return v1
-.end method
+    move-result-object v4
 
-.method private removeRecursively(Ljava/lang/String;)Z
-    .locals 2
-    .param p1, "filePath"    # Ljava/lang/String;
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Lorg/apache/cordova/file/FileExistsException;
-        }
-    .end annotation
+    invoke-virtual {v2, v3, v4}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
 
-    .prologue
-    .line 613
-    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->createFileObject(Ljava/lang/String;)Ljava/io/File;
+    .line 887
+    const-string v3, "externalDataDirectory"
 
-    move-result-object v0
+    const/4 v4, 0x0
 
-    .line 616
-    .local v0, "fp":Ljava/io/File;
-    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->atRootDirectory(Ljava/lang/String;)Z
+    invoke-virtual {v0, v4}, Landroid/content/Context;->getExternalFilesDir(Ljava/lang/String;)Ljava/io/File;
 
-    move-result v1
+    move-result-object v4
 
-    if-eqz v1, :cond_0
+    invoke-static {v4}, Lorg/apache/cordova/file/FileUtils;->toDirUrl(Ljava/io/File;)Ljava/lang/String;
 
-    .line 617
-    const/4 v1, 0x0
+    move-result-object v4
 
-    .line 620
-    :goto_0
-    return v1
+    invoke-virtual {v2, v3, v4}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
 
+    .line 888
+    const-string v3, "externalCacheDirectory"
+
+    invoke-virtual {v0}, Landroid/content/Context;->getExternalCacheDir()Ljava/io/File;
+
+    move-result-object v4
+
+    invoke-static {v4}, Lorg/apache/cordova/file/FileUtils;->toDirUrl(Ljava/io/File;)Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v2, v3, v4}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
+
+    .line 889
+    const-string v3, "externalRootDirectory"
+
+    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
+
+    move-result-object v4
+
+    invoke-static {v4}, Lorg/apache/cordova/file/FileUtils;->toDirUrl(Ljava/io/File;)Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v2, v3, v4}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
+    :try_end_0
+    .catch Ljava/lang/NullPointerException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 896
     :cond_0
-    invoke-direct {p0, v0}, Lorg/apache/cordova/file/FileUtils;->removeDirRecursively(Ljava/io/File;)Z
+    :goto_0
+    return-object v2
 
-    move-result v1
+    .line 891
+    :catch_0
+    move-exception v1
+
+    .line 893
+    .local v1, "e":Ljava/lang/NullPointerException;
+    const-string v3, "FileUtils"
+
+    const-string v4, "Unable to access these paths, most liklely due to USB storage"
+
+    invoke-static {v3, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
 .end method
 
 .method private requestFileSystem(I)Lorg/json/JSONObject;
-    .locals 5
+    .locals 6
     .param p1, "type"    # I
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -1906,328 +1279,107 @@
     .end annotation
 
     .prologue
-    .line 850
+    .line 838
     new-instance v1, Lorg/json/JSONObject;
 
     invoke-direct {v1}, Lorg/json/JSONObject;-><init>()V
 
-    .line 851
+    .line 839
     .local v1, "fs":Lorg/json/JSONObject;
-    sget v2, Lorg/apache/cordova/file/FileUtils;->TEMPORARY:I
+    const/4 v2, 0x0
 
-    if-ne p1, v2, :cond_1
+    .line 841
+    .local v2, "rootFs":Lorg/apache/cordova/file/Filesystem;
+    :try_start_0
+    iget-object v4, p0, Lorg/apache/cordova/file/FileUtils;->filesystems:Ljava/util/ArrayList;
 
-    .line 853
-    const-string v2, "name"
-
-    const-string v3, "temporary"
-
-    invoke-virtual {v1, v2, v3}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
-
-    .line 854
-    invoke-static {}, Landroid/os/Environment;->getExternalStorageState()Ljava/lang/String;
-
-    move-result-object v2
-
-    const-string v3, "mounted"
-
-    invoke-virtual {v2, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_0
-
-    .line 855
-    new-instance v0, Ljava/io/File;
-
-    new-instance v2, Ljava/lang/StringBuilder;
-
-    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    .line 856
-    const-string v3, "/Android/data/"
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    iget-object v3, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v3}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Landroid/app/Activity;->getPackageName()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    const-string v3, "/cache/"
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v2
-
-    .line 855
-    invoke-direct {v0, v2}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .line 858
-    .local v0, "fp":Ljava/io/File;
-    invoke-virtual {v0}, Ljava/io/File;->mkdirs()Z
-
-    .line 859
-    const-string v2, "root"
-
-    new-instance v3, Ljava/lang/StringBuilder;
-
-    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
+    invoke-virtual {v4, p1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
     move-result-object v4
 
-    invoke-virtual {v4}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+    move-object v0, v4
 
-    move-result-object v4
+    check-cast v0, Lorg/apache/cordova/file/Filesystem;
 
-    invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    move-object v2, v0
+    :try_end_0
+    .catch Ljava/lang/ArrayIndexOutOfBoundsException; {:try_start_0 .. :try_end_0} :catch_0
 
-    move-result-object v4
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    .line 860
-    const-string v4, "/Android/data/"
-
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    iget-object v4, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v4}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v4
-
-    invoke-virtual {v4}, Landroid/app/Activity;->getPackageName()Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    const-string v4, "/cache/"
-
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v3
-
-    .line 859
-    invoke-direct {p0, v3}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/lang/String;)Lorg/json/JSONObject;
-
-    move-result-object v3
-
-    invoke-virtual {v1, v2, v3}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
-
-    .line 880
-    .end local v0    # "fp":Ljava/io/File;
+    .line 845
     :goto_0
+    if-nez v2, :cond_0
+
+    .line 846
+    new-instance v4, Ljava/io/IOException;
+
+    const-string v5, "No filesystem of type requested"
+
+    invoke-direct {v4, v5}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
+
+    throw v4
+
+    .line 848
+    :cond_0
+    new-instance v3, Lorg/apache/cordova/file/LocalFilesystemURL;
+
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v5, "cdvfile://localhost/"
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    iget-object v5, v2, Lorg/apache/cordova/file/Filesystem;->name:Ljava/lang/String;
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    const-string v5, "/"
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-direct {v3, v4}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
+
+    .line 850
+    .local v3, "rootURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    const-string v4, "name"
+
+    iget-object v5, v2, Lorg/apache/cordova/file/Filesystem;->name:Ljava/lang/String;
+
+    invoke-virtual {v1, v4, v5}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
+
+    .line 851
+    const-string v4, "root"
+
+    invoke-virtual {v2, v3}, Lorg/apache/cordova/file/Filesystem;->getEntryForLocalURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/json/JSONObject;
+
+    move-result-object v5
+
+    invoke-virtual {v1, v4, v5}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
+
+    .line 852
     return-object v1
 
-    .line 862
-    :cond_0
-    new-instance v0, Ljava/io/File;
-
-    new-instance v2, Ljava/lang/StringBuilder;
-
-    const-string v3, "/data/data/"
-
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    iget-object v3, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v3}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Landroid/app/Activity;->getPackageName()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    const-string v3, "/cache/"
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v2
-
-    invoke-direct {v0, v2}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .line 864
-    .restart local v0    # "fp":Ljava/io/File;
-    invoke-virtual {v0}, Ljava/io/File;->mkdirs()Z
-
-    .line 865
-    const-string v2, "root"
-
-    new-instance v3, Ljava/lang/StringBuilder;
-
-    const-string v4, "/data/data/"
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    iget-object v4, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v4}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v4
-
-    invoke-virtual {v4}, Landroid/app/Activity;->getPackageName()Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    const-string v4, "/cache/"
-
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-direct {p0, v3}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/lang/String;)Lorg/json/JSONObject;
-
-    move-result-object v3
-
-    invoke-virtual {v1, v2, v3}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
+    .line 842
+    .end local v3    # "rootURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :catch_0
+    move-exception v4
 
     goto :goto_0
-
-    .line 868
-    .end local v0    # "fp":Ljava/io/File;
-    :cond_1
-    sget v2, Lorg/apache/cordova/file/FileUtils;->PERSISTENT:I
-
-    if-ne p1, v2, :cond_3
-
-    .line 869
-    const-string v2, "name"
-
-    const-string v3, "persistent"
-
-    invoke-virtual {v1, v2, v3}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
-
-    .line 870
-    invoke-static {}, Landroid/os/Environment;->getExternalStorageState()Ljava/lang/String;
-
-    move-result-object v2
-
-    const-string v3, "mounted"
-
-    invoke-virtual {v2, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_2
-
-    .line 871
-    const-string v2, "root"
-
-    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
-
-    move-result-object v3
-
-    invoke-static {v3}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/io/File;)Lorg/json/JSONObject;
-
-    move-result-object v3
-
-    invoke-virtual {v1, v2, v3}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
-
-    goto :goto_0
-
-    .line 873
-    :cond_2
-    const-string v2, "root"
-
-    new-instance v3, Ljava/lang/StringBuilder;
-
-    const-string v4, "/data/data/"
-
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    iget-object v4, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v4}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v4
-
-    invoke-virtual {v4}, Landroid/app/Activity;->getPackageName()Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-direct {p0, v3}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/lang/String;)Lorg/json/JSONObject;
-
-    move-result-object v3
-
-    invoke-virtual {v1, v2, v3}, Lorg/json/JSONObject;->put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
-
-    goto/16 :goto_0
-
-    .line 877
-    :cond_3
-    new-instance v2, Ljava/io/IOException;
-
-    const-string v3, "No filesystem of type requested"
-
-    invoke-direct {v2, v3}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
-
-    throw v2
 .end method
 
 .method private resolveLocalFileSystemURI(Ljava/lang/String;)Lorg/json/JSONObject;
-    .locals 12
+    .locals 10
     .param p1, "url"    # Ljava/lang/String;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -2237,190 +1389,258 @@
     .end annotation
 
     .prologue
-    const/4 v1, 0x7
+    .line 592
+    if-nez p1, :cond_0
 
-    const/4 v3, 0x0
+    .line 593
+    new-instance v8, Ljava/net/MalformedURLException;
 
-    .line 257
-    const-string v0, "UTF-8"
+    const-string v9, "Unrecognized filesystem URL"
 
-    invoke-static {p1, v0}, Ljava/net/URLDecoder;->decode(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    invoke-direct {v8, v9}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v8
+
+    .line 597
+    :cond_0
+    const-string v8, "file:/"
+
+    invoke-virtual {p1, v8}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v8
+
+    if-eqz v8, :cond_5
+
+    .line 598
+    const-string v8, "file://"
+
+    invoke-virtual {p1, v8}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v8
+
+    if-nez v8, :cond_1
+
+    .line 599
+    new-instance v8, Ljava/lang/StringBuilder;
+
+    invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v9, "file:///"
+
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v8
 
-    .line 259
-    .local v8, "decoded":Ljava/lang/String;
-    const/4 v9, 0x0
+    const/4 v9, 0x6
 
-    .line 262
-    .local v9, "fp":Ljava/io/File;
-    const-string v0, "content:"
+    invoke-virtual {p1, v9}, Ljava/lang/String;->substring(I)Ljava/lang/String;
 
-    invoke-virtual {v8, v0}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+    move-result-object v9
 
-    move-result v0
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    if-eqz v0, :cond_0
+    move-result-object v8
 
-    .line 263
-    iget-object v0, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
+    invoke-virtual {v8}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    invoke-interface {v0}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
+    move-result-object p1
+
+    .line 601
+    :cond_1
+    const-string v8, "UTF-8"
+
+    invoke-static {p1, v8}, Ljava/net/URLDecoder;->decode(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
-    invoke-static {v8}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
+    .line 604
+    .local v0, "decoded":Ljava/lang/String;
+    const-string v8, "?"
 
-    move-result-object v1
-
-    const/4 v2, 0x1
-
-    new-array v2, v2, [Ljava/lang/String;
-
-    const/4 v4, 0x0
-
-    const-string v5, "_data"
-
-    aput-object v5, v2, v4
-
-    move-object v4, v3
-
-    move-object v5, v3
-
-    invoke-virtual/range {v0 .. v5}, Landroid/app/Activity;->managedQuery(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;
-
-    move-result-object v7
-
-    .line 265
-    .local v7, "cursor":Landroid/database/Cursor;
-    const-string v0, "_data"
-
-    invoke-interface {v7, v0}, Landroid/database/Cursor;->getColumnIndexOrThrow(Ljava/lang/String;)I
+    invoke-virtual {v0, v8}, Ljava/lang/String;->indexOf(Ljava/lang/String;)I
 
     move-result v6
 
-    .line 266
-    .local v6, "column_index":I
-    invoke-interface {v7}, Landroid/database/Cursor;->moveToFirst()Z
+    .line 606
+    .local v6, "questionMark":I
+    if-gez v6, :cond_3
 
-    .line 267
-    new-instance v9, Ljava/io/File;
+    .line 607
+    invoke-virtual {v0}, Ljava/lang/String;->length()I
 
-    .end local v9    # "fp":Ljava/io/File;
-    invoke-interface {v7, v6}, Landroid/database/Cursor;->getString(I)Ljava/lang/String;
+    move-result v5
 
-    move-result-object v0
-
-    invoke-direct {v9, v0}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .line 285
-    .end local v6    # "column_index":I
-    .end local v7    # "cursor":Landroid/database/Cursor;
-    .restart local v9    # "fp":Ljava/io/File;
+    .line 612
+    .local v5, "pathEnd":I
     :goto_0
-    invoke-virtual {v9}, Ljava/io/File;->exists()Z
+    const-string v8, "/"
 
-    move-result v0
+    const/4 v9, 0x7
 
-    if-nez v0, :cond_3
+    invoke-virtual {v0, v8, v9}, Ljava/lang/String;->indexOf(Ljava/lang/String;I)I
 
-    .line 286
-    new-instance v0, Ljava/io/FileNotFoundException;
+    move-result v7
 
-    invoke-direct {v0}, Ljava/io/FileNotFoundException;-><init>()V
+    .line 613
+    .local v7, "thirdSlash":I
+    if-ltz v7, :cond_2
 
-    throw v0
+    if-le v7, v5, :cond_4
 
-    .line 271
-    :cond_0
-    new-instance v11, Ljava/net/URL;
-
-    invoke-direct {v11, v8}, Ljava/net/URL;-><init>(Ljava/lang/String;)V
-
-    .line 273
-    .local v11, "testUrl":Ljava/net/URL;
-    const-string v0, "file://"
-
-    invoke-virtual {v8, v0}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_2
-
-    .line 274
-    const-string v0, "?"
-
-    invoke-virtual {v8, v0}, Ljava/lang/String;->indexOf(Ljava/lang/String;)I
-
-    move-result v10
-
-    .line 275
-    .local v10, "questionMark":I
-    if-gez v10, :cond_1
-
-    .line 276
-    new-instance v9, Ljava/io/File;
-
-    .end local v9    # "fp":Ljava/io/File;
-    invoke-virtual {v8}, Ljava/lang/String;->length()I
-
-    move-result v0
-
-    invoke-virtual {v8, v1, v0}, Ljava/lang/String;->substring(II)Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-direct {v9, v0}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .line 277
-    .restart local v9    # "fp":Ljava/io/File;
-    goto :goto_0
-
-    .line 278
-    :cond_1
-    new-instance v9, Ljava/io/File;
-
-    .end local v9    # "fp":Ljava/io/File;
-    invoke-virtual {v8, v1, v10}, Ljava/lang/String;->substring(II)Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-direct {v9, v0}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .line 280
-    .restart local v9    # "fp":Ljava/io/File;
-    goto :goto_0
-
-    .line 281
-    .end local v10    # "questionMark":I
+    .line 614
     :cond_2
-    new-instance v9, Ljava/io/File;
+    const-string v4, ""
 
-    .end local v9    # "fp":Ljava/io/File;
-    invoke-direct {v9, v8}, Ljava/io/File;-><init>(Ljava/lang/String;)V
+    .line 618
+    .local v4, "path":Ljava/lang/String;
+    :goto_1
+    invoke-virtual {p0, v4}, Lorg/apache/cordova/file/FileUtils;->filesystemURLforLocalPath(Ljava/lang/String;)Lorg/apache/cordova/file/LocalFilesystemURL;
 
-    .restart local v9    # "fp":Ljava/io/File;
+    move-result-object v3
+
+    .line 624
+    .end local v0    # "decoded":Ljava/lang/String;
+    .end local v4    # "path":Ljava/lang/String;
+    .end local v5    # "pathEnd":I
+    .end local v6    # "questionMark":I
+    .end local v7    # "thirdSlash":I
+    .local v3, "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :goto_2
+    :try_start_0
+    invoke-direct {p0, v3}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
+
+    move-result-object v2
+
+    .line 625
+    .local v2, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-nez v2, :cond_6
+
+    .line 626
+    new-instance v8, Ljava/net/MalformedURLException;
+
+    const-string v9, "No installed handlers for this URL"
+
+    invoke-direct {v8, v9}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v8
+    :try_end_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 629
+    .end local v2    # "fs":Lorg/apache/cordova/file/Filesystem;
+    :catch_0
+    move-exception v1
+
+    .line 630
+    .local v1, "e":Ljava/lang/IllegalArgumentException;
+    new-instance v8, Ljava/net/MalformedURLException;
+
+    const-string v9, "Unrecognized filesystem URL"
+
+    invoke-direct {v8, v9}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v8
+
+    .line 609
+    .end local v1    # "e":Ljava/lang/IllegalArgumentException;
+    .end local v3    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    .restart local v0    # "decoded":Ljava/lang/String;
+    .restart local v6    # "questionMark":I
+    :cond_3
+    move v5, v6
+
+    .restart local v5    # "pathEnd":I
     goto :goto_0
 
-    .line 288
-    .end local v11    # "testUrl":Ljava/net/URL;
-    :cond_3
-    invoke-virtual {v9}, Ljava/io/File;->canRead()Z
-
-    move-result v0
-
-    if-nez v0, :cond_4
-
-    .line 289
-    new-instance v0, Ljava/io/IOException;
-
-    invoke-direct {v0}, Ljava/io/IOException;-><init>()V
-
-    throw v0
-
-    .line 291
+    .line 616
+    .restart local v7    # "thirdSlash":I
     :cond_4
-    invoke-static {v9}, Lorg/apache/cordova/file/FileUtils;->getEntry(Ljava/io/File;)Lorg/json/JSONObject;
+    invoke-virtual {v0, v7, v5}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+
+    move-result-object v4
+
+    .restart local v4    # "path":Ljava/lang/String;
+    goto :goto_1
+
+    .line 620
+    .end local v0    # "decoded":Ljava/lang/String;
+    .end local v4    # "path":Ljava/lang/String;
+    .end local v5    # "pathEnd":I
+    .end local v6    # "questionMark":I
+    .end local v7    # "thirdSlash":I
+    :cond_5
+    new-instance v3, Lorg/apache/cordova/file/LocalFilesystemURL;
+
+    invoke-direct {v3, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
+
+    .restart local v3    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    goto :goto_2
+
+    .line 628
+    .restart local v2    # "fs":Lorg/apache/cordova/file/Filesystem;
+    :cond_6
+    :try_start_1
+    invoke-virtual {v2, v3}, Lorg/apache/cordova/file/Filesystem;->getEntryForLocalURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/json/JSONObject;
+    :try_end_1
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_1 .. :try_end_1} :catch_0
+
+    move-result-object v8
+
+    return-object v8
+.end method
+
+.method private threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+    .locals 2
+    .param p1, "f"    # Lorg/apache/cordova/file/FileUtils$FileOp;
+    .param p2, "callbackContext"    # Lorg/apache/cordova/CallbackContext;
+
+    .prologue
+    .line 548
+    iget-object v0, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
+
+    invoke-interface {v0}, Lorg/apache/cordova/CordovaInterface;->getThreadPool()Ljava/util/concurrent/ExecutorService;
+
+    move-result-object v0
+
+    new-instance v1, Lorg/apache/cordova/file/FileUtils$25;
+
+    invoke-direct {v1, p0, p1, p2}, Lorg/apache/cordova/file/FileUtils$25;-><init>(Lorg/apache/cordova/file/FileUtils;Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    invoke-interface {v0, v1}, Ljava/util/concurrent/ExecutorService;->execute(Ljava/lang/Runnable;)V
+
+    .line 578
+    return-void
+.end method
+
+.method private static toDirUrl(Ljava/io/File;)Ljava/lang/String;
+    .locals 2
+    .param p0, "f"    # Ljava/io/File;
+
+    .prologue
+    .line 874
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    invoke-static {p0}, Landroid/net/Uri;->fromFile(Ljava/io/File;)Landroid/net/Uri;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Landroid/net/Uri;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const/16 v1, 0x2f
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v0
 
@@ -2428,9 +1648,9 @@
 .end method
 
 .method private transferTo(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lorg/json/JSONObject;
-    .locals 7
-    .param p1, "fileName"    # Ljava/lang/String;
-    .param p2, "newParent"    # Ljava/lang/String;
+    .locals 6
+    .param p1, "srcURLstr"    # Ljava/lang/String;
+    .param p2, "destURLstr"    # Ljava/lang/String;
     .param p3, "newName"    # Ljava/lang/String;
     .param p4, "move"    # Z
     .annotation system Ldalvik/annotation/Throws;
@@ -2445,184 +1665,80 @@
     .end annotation
 
     .prologue
-    .line 340
-    iget-object v5, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
+    .line 673
+    if-eqz p1, :cond_0
 
-    invoke-static {p1, v5}, Lorg/apache/cordova/file/FileHelper;->getRealPath(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;)Ljava/lang/String;
+    if-nez p2, :cond_1
+
+    .line 675
+    :cond_0
+    new-instance v2, Ljava/io/FileNotFoundException;
+
+    invoke-direct {v2}, Ljava/io/FileNotFoundException;-><init>()V
+
+    throw v2
+
+    .line 678
+    :cond_1
+    new-instance v4, Lorg/apache/cordova/file/LocalFilesystemURL;
+
+    invoke-direct {v4, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
+
+    .line 679
+    .local v4, "srcURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    new-instance v1, Lorg/apache/cordova/file/LocalFilesystemURL;
+
+    invoke-direct {v1, p2}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
+
+    .line 681
+    .local v1, "destURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    invoke-direct {p0, v4}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
 
     move-result-object v3
 
-    .line 341
-    .local v3, "newFileName":Ljava/lang/String;
-    iget-object v5, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-static {p2, v5}, Lorg/apache/cordova/file/FileHelper;->getRealPath(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;)Ljava/lang/String;
-
-    move-result-object p2
-
-    .line 344
-    if-eqz p3, :cond_0
-
-    const-string v5, ":"
-
-    invoke-virtual {p3, v5}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_0
-
-    .line 345
-    new-instance v5, Lorg/apache/cordova/file/EncodingException;
-
-    const-string v6, "Bad file name"
-
-    invoke-direct {v5, v6}, Lorg/apache/cordova/file/EncodingException;-><init>(Ljava/lang/String;)V
-
-    throw v5
-
-    .line 348
-    :cond_0
-    new-instance v4, Ljava/io/File;
-
-    invoke-direct {v4, v3}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .line 350
-    .local v4, "source":Ljava/io/File;
-    invoke-virtual {v4}, Ljava/io/File;->exists()Z
-
-    move-result v5
-
-    if-nez v5, :cond_1
-
-    .line 352
-    new-instance v5, Ljava/io/FileNotFoundException;
-
-    const-string v6, "The source does not exist"
-
-    invoke-direct {v5, v6}, Ljava/io/FileNotFoundException;-><init>(Ljava/lang/String;)V
-
-    throw v5
-
-    .line 355
-    :cond_1
-    new-instance v1, Ljava/io/File;
-
-    invoke-direct {v1, p2}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    .line 356
-    .local v1, "destinationDir":Ljava/io/File;
-    invoke-virtual {v1}, Ljava/io/File;->exists()Z
-
-    move-result v5
-
-    if-nez v5, :cond_2
-
-    .line 358
-    new-instance v5, Ljava/io/FileNotFoundException;
-
-    const-string v6, "The source does not exist"
-
-    invoke-direct {v5, v6}, Ljava/io/FileNotFoundException;-><init>(Ljava/lang/String;)V
-
-    throw v5
-
-    .line 362
-    :cond_2
-    invoke-direct {p0, p3, v4, v1}, Lorg/apache/cordova/file/FileUtils;->createDestination(Ljava/lang/String;Ljava/io/File;Ljava/io/File;)Ljava/io/File;
+    .line 682
+    .local v3, "srcFs":Lorg/apache/cordova/file/Filesystem;
+    invoke-direct {p0, v1}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
 
     move-result-object v0
 
-    .line 368
-    .local v0, "destination":Ljava/io/File;
-    invoke-virtual {v4}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+    .line 685
+    .local v0, "destFs":Lorg/apache/cordova/file/Filesystem;
+    if-eqz p3, :cond_2
 
-    move-result-object v5
+    const-string v2, ":"
 
-    invoke-virtual {v0}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+    invoke-virtual {p3, v2}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
 
-    move-result-object v6
+    move-result v2
 
-    invoke-virtual {v5, v6}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    if-eqz v2, :cond_2
 
-    move-result v5
+    .line 686
+    new-instance v2, Lorg/apache/cordova/file/EncodingException;
 
-    if-eqz v5, :cond_3
+    const-string v5, "Bad file name"
 
-    .line 369
-    new-instance v5, Lorg/apache/cordova/file/InvalidModificationException;
+    invoke-direct {v2, v5}, Lorg/apache/cordova/file/EncodingException;-><init>(Ljava/lang/String;)V
 
-    const-string v6, "Can\'t copy a file onto itself"
+    throw v2
 
-    invoke-direct {v5, v6}, Lorg/apache/cordova/file/InvalidModificationException;-><init>(Ljava/lang/String;)V
+    :cond_2
+    move-object v2, p3
 
-    throw v5
+    move v5, p4
 
-    .line 372
-    :cond_3
-    invoke-virtual {v4}, Ljava/io/File;->isDirectory()Z
-
-    move-result v5
-
-    if-eqz v5, :cond_6
-
-    .line 373
-    if-eqz p4, :cond_5
-
-    .line 374
-    invoke-direct {p0, v4, v0}, Lorg/apache/cordova/file/FileUtils;->moveDirectory(Ljava/io/File;Ljava/io/File;)Lorg/json/JSONObject;
+    .line 689
+    invoke-virtual/range {v0 .. v5}, Lorg/apache/cordova/file/Filesystem;->copyFileToURL(Lorg/apache/cordova/file/LocalFilesystemURL;Ljava/lang/String;Lorg/apache/cordova/file/Filesystem;Lorg/apache/cordova/file/LocalFilesystemURL;Z)Lorg/json/JSONObject;
 
     move-result-object v2
 
-    .line 389
-    :cond_4
-    :goto_0
     return-object v2
-
-    .line 376
-    :cond_5
-    invoke-direct {p0, v4, v0}, Lorg/apache/cordova/file/FileUtils;->copyDirectory(Ljava/io/File;Ljava/io/File;)Lorg/json/JSONObject;
-
-    move-result-object v2
-
-    goto :goto_0
-
-    .line 379
-    :cond_6
-    if-eqz p4, :cond_7
-
-    .line 380
-    invoke-direct {p0, v4, v0}, Lorg/apache/cordova/file/FileUtils;->moveFile(Ljava/io/File;Ljava/io/File;)Lorg/json/JSONObject;
-
-    move-result-object v2
-
-    .line 383
-    .local v2, "newFileEntry":Lorg/json/JSONObject;
-    const-string v5, "content://"
-
-    invoke-virtual {p1, v5}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_4
-
-    .line 384
-    invoke-direct {p0, p1}, Lorg/apache/cordova/file/FileUtils;->notifyDelete(Ljava/lang/String;)V
-
-    goto :goto_0
-
-    .line 389
-    .end local v2    # "newFileEntry":Lorg/json/JSONObject;
-    :cond_7
-    invoke-direct {p0, v4, v0}, Lorg/apache/cordova/file/FileUtils;->copyFile(Ljava/io/File;Ljava/io/File;)Lorg/json/JSONObject;
-
-    move-result-object v2
-
-    goto :goto_0
 .end method
 
 .method private truncateFile(Ljava/lang/String;J)J
-    .locals 4
-    .param p1, "filename"    # Ljava/lang/String;
+    .locals 6
+    .param p1, "srcURLstr"    # Ljava/lang/String;
     .param p2, "size"    # J
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -2633,101 +1749,68 @@
     .end annotation
 
     .prologue
-    .line 1038
-    const-string v2, "content://"
-
-    invoke-virtual {p1, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_0
-
-    .line 1039
-    new-instance v2, Lorg/apache/cordova/file/NoModificationAllowedException;
-
-    const-string v3, "Couldn\'t truncate file given its content URI"
-
-    invoke-direct {v2, v3}, Lorg/apache/cordova/file/NoModificationAllowedException;-><init>(Ljava/lang/String;)V
-
-    throw v2
-
-    .line 1042
-    :cond_0
-    iget-object v2, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-static {p1, v2}, Lorg/apache/cordova/file/FileHelper;->getRealPath(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;)Ljava/lang/String;
-
-    move-result-object p1
-
-    .line 1044
-    new-instance v1, Ljava/io/RandomAccessFile;
-
-    const-string v2, "rw"
-
-    invoke-direct {v1, p1, v2}, Ljava/io/RandomAccessFile;-><init>(Ljava/lang/String;Ljava/lang/String;)V
-
-    .line 1046
-    .local v1, "raf":Ljava/io/RandomAccessFile;
-    :try_start_0
-    invoke-virtual {v1}, Ljava/io/RandomAccessFile;->length()J
-
-    move-result-wide v2
-
-    cmp-long v2, v2, p2
-
-    if-ltz v2, :cond_1
-
     .line 1047
-    invoke-virtual {v1}, Ljava/io/RandomAccessFile;->getChannel()Ljava/nio/channels/FileChannel;
+    :try_start_0
+    new-instance v2, Lorg/apache/cordova/file/LocalFilesystemURL;
 
-    move-result-object v0
+    invoke-direct {v2, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
 
     .line 1048
-    .local v0, "channel":Ljava/nio/channels/FileChannel;
-    invoke-virtual {v0, p2, p3}, Ljava/nio/channels/FileChannel;->truncate(J)Ljava/nio/channels/FileChannel;
+    .local v2, "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    invoke-direct {p0, v2}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
+
+    move-result-object v1
+
+    .line 1049
+    .local v1, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-nez v1, :cond_0
+
+    .line 1050
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "No installed handlers for this URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
     :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
 
     .line 1054
-    invoke-virtual {v1}, Ljava/io/RandomAccessFile;->close()V
-
-    .line 1052
-    .end local v0    # "channel":Ljava/nio/channels/FileChannel;
-    .end local p2    # "size":J
-    :goto_0
-    return-wide p2
-
-    .restart local p2    # "size":J
-    :cond_1
-    :try_start_1
-    invoke-virtual {v1}, Ljava/io/RandomAccessFile;->length()J
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
-
-    move-result-wide p2
-
-    .line 1054
-    .end local p2    # "size":J
-    invoke-virtual {v1}, Ljava/io/RandomAccessFile;->close()V
-
-    goto :goto_0
-
-    .line 1053
-    .restart local p2    # "size":J
-    :catchall_0
-    move-exception v2
-
-    .line 1054
-    invoke-virtual {v1}, Ljava/io/RandomAccessFile;->close()V
+    .end local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :catch_0
+    move-exception v0
 
     .line 1055
-    throw v2
+    .local v0, "e":Ljava/lang/IllegalArgumentException;
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "Unrecognized filesystem URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    .line 1053
+    .end local v0    # "e":Ljava/lang/IllegalArgumentException;
+    .restart local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .restart local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :cond_0
+    :try_start_1
+    invoke-virtual {v1, v2, p2, p3}, Lorg/apache/cordova/file/Filesystem;->truncateFileAtURL(Lorg/apache/cordova/file/LocalFilesystemURL;J)J
+    :try_end_1
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_1 .. :try_end_1} :catch_0
+
+    move-result-wide v4
+
+    return-wide v4
 .end method
 
 
 # virtual methods
 .method public execute(Ljava/lang/String;Lorg/json/JSONArray;Lorg/apache/cordova/CallbackContext;)Z
-    .locals 27
+    .locals 35
     .param p1, "action"    # Ljava/lang/String;
     .param p2, "args"    # Lorg/json/JSONArray;
     .param p3, "callbackContext"    # Lorg/apache/cordova/CallbackContext;
@@ -2738,1396 +1821,2303 @@
     .end annotation
 
     .prologue
-    .line 91
-    :try_start_0
-    const-string v2, "testSaveLocationExists"
+    .line 247
+    move-object/from16 v0, p0
 
-    move-object/from16 v0, p1
+    iget-boolean v4, v0, Lorg/apache/cordova/file/FileUtils;->configured:Z
 
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    if-nez v4, :cond_0
 
-    move-result v2
+    .line 248
+    new-instance v4, Lorg/apache/cordova/PluginResult;
 
-    if-eqz v2, :cond_0
+    sget-object v5, Lorg/apache/cordova/PluginResult$Status;->ERROR:Lorg/apache/cordova/PluginResult$Status;
 
-    .line 92
-    invoke-static {}, Lorg/apache/cordova/file/DirectoryManager;->testSaveLocationExists()Z
+    const-string v9, "File plugin is not configured. Please see the README.md file for details on how to update config.xml"
 
-    move-result v15
-
-    .line 93
-    .local v15, "b":Z
-    new-instance v2, Lorg/apache/cordova/PluginResult;
-
-    sget-object v3, Lorg/apache/cordova/PluginResult$Status;->OK:Lorg/apache/cordova/PluginResult$Status;
-
-    invoke-direct {v2, v3, v15}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;Z)V
+    invoke-direct {v4, v5, v9}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;Ljava/lang/String;)V
 
     move-object/from16 v0, p3
 
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
+    invoke-virtual {v0, v4}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
 
-    .line 224
-    .end local v15    # "b":Z
+    .line 249
+    const/4 v4, 0x1
+
+    .line 499
     :goto_0
-    const/4 v2, 0x1
+    return v4
 
-    :goto_1
-    return v2
-
-    .line 95
+    .line 251
     :cond_0
-    const-string v2, "getFreeDiskSpace"
+    const-string v4, "testSaveLocationExists"
 
     move-object/from16 v0, p1
 
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    move-result v2
+    move-result v4
 
-    if-eqz v2, :cond_1
+    if-eqz v4, :cond_1
 
-    .line 96
-    const/4 v2, 0x0
+    .line 252
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$1;
 
-    invoke-static {v2}, Lorg/apache/cordova/file/DirectoryManager;->getFreeDiskSpace(Z)J
+    move-object/from16 v0, p0
 
-    move-result-wide v21
+    move-object/from16 v1, p3
 
-    .line 97
-    .local v21, "l":J
-    new-instance v2, Lorg/apache/cordova/PluginResult;
+    invoke-direct {v4, v0, v1}, Lorg/apache/cordova/file/FileUtils$1;-><init>(Lorg/apache/cordova/file/FileUtils;Lorg/apache/cordova/CallbackContext;)V
 
-    sget-object v3, Lorg/apache/cordova/PluginResult$Status;->OK:Lorg/apache/cordova/PluginResult$Status;
+    move-object/from16 v0, p0
 
-    move-wide/from16 v0, v21
+    move-object/from16 v1, p3
 
-    long-to-float v6, v0
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
 
-    invoke-direct {v2, v3, v6}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;F)V
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
-    :try_end_0
-    .catch Ljava/io/FileNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
-    .catch Lorg/apache/cordova/file/FileExistsException; {:try_start_0 .. :try_end_0} :catch_1
-    .catch Lorg/apache/cordova/file/NoModificationAllowedException; {:try_start_0 .. :try_end_0} :catch_2
-    .catch Lorg/apache/cordova/file/InvalidModificationException; {:try_start_0 .. :try_end_0} :catch_3
-    .catch Ljava/net/MalformedURLException; {:try_start_0 .. :try_end_0} :catch_4
-    .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_5
-    .catch Lorg/apache/cordova/file/EncodingException; {:try_start_0 .. :try_end_0} :catch_6
-    .catch Lorg/apache/cordova/file/TypeMismatchException; {:try_start_0 .. :try_end_0} :catch_7
+    .line 499
+    :goto_1
+    const/4 v4, 0x1
 
     goto :goto_0
 
-    .line 207
-    .end local v21    # "l":J
-    :catch_0
-    move-exception v16
-
-    .line 208
-    .local v16, "e":Ljava/io/FileNotFoundException;
-    sget v2, Lorg/apache/cordova/file/FileUtils;->NOT_FOUND_ERR:I
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->error(I)V
-
-    goto :goto_0
-
-    .line 99
-    .end local v16    # "e":Ljava/io/FileNotFoundException;
+    .line 259
     :cond_1
-    :try_start_1
-    const-string v2, "testFileExists"
+    const-string v4, "getFreeDiskSpace"
 
     move-object/from16 v0, p1
 
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    move-result v2
+    move-result v4
 
-    if-eqz v2, :cond_2
+    if-eqz v4, :cond_2
 
-    .line 100
-    const/4 v2, 0x0
+    .line 260
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$2;
 
-    move-object/from16 v0, p2
+    move-object/from16 v0, p0
 
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+    move-object/from16 v1, p3
 
-    move-result-object v2
+    invoke-direct {v4, v0, v1}, Lorg/apache/cordova/file/FileUtils$2;-><init>(Lorg/apache/cordova/file/FileUtils;Lorg/apache/cordova/CallbackContext;)V
 
-    invoke-static {v2}, Lorg/apache/cordova/file/DirectoryManager;->testFileExists(Ljava/lang/String;)Z
+    move-object/from16 v0, p0
 
-    move-result v15
+    move-object/from16 v1, p3
 
-    .line 101
-    .restart local v15    # "b":Z
-    new-instance v2, Lorg/apache/cordova/PluginResult;
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
 
-    sget-object v3, Lorg/apache/cordova/PluginResult$Status;->OK:Lorg/apache/cordova/PluginResult$Status;
+    goto :goto_1
 
-    invoke-direct {v2, v3, v15}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;Z)V
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
-    :try_end_1
-    .catch Ljava/io/FileNotFoundException; {:try_start_1 .. :try_end_1} :catch_0
-    .catch Lorg/apache/cordova/file/FileExistsException; {:try_start_1 .. :try_end_1} :catch_1
-    .catch Lorg/apache/cordova/file/NoModificationAllowedException; {:try_start_1 .. :try_end_1} :catch_2
-    .catch Lorg/apache/cordova/file/InvalidModificationException; {:try_start_1 .. :try_end_1} :catch_3
-    .catch Ljava/net/MalformedURLException; {:try_start_1 .. :try_end_1} :catch_4
-    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_5
-    .catch Lorg/apache/cordova/file/EncodingException; {:try_start_1 .. :try_end_1} :catch_6
-    .catch Lorg/apache/cordova/file/TypeMismatchException; {:try_start_1 .. :try_end_1} :catch_7
-
-    goto :goto_0
-
-    .line 209
-    .end local v15    # "b":Z
-    :catch_1
-    move-exception v16
-
-    .line 210
-    .local v16, "e":Lorg/apache/cordova/file/FileExistsException;
-    sget v2, Lorg/apache/cordova/file/FileUtils;->PATH_EXISTS_ERR:I
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->error(I)V
-
-    goto :goto_0
-
-    .line 103
-    .end local v16    # "e":Lorg/apache/cordova/file/FileExistsException;
+    .line 267
     :cond_2
-    :try_start_2
-    const-string v2, "testDirectoryExists"
+    const-string v4, "testFileExists"
 
     move-object/from16 v0, p1
 
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    move-result v2
+    move-result v4
 
-    if-eqz v2, :cond_3
+    if-eqz v4, :cond_3
 
-    .line 104
-    const/4 v2, 0x0
+    .line 268
+    const/4 v4, 0x0
 
     move-object/from16 v0, p2
 
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
 
-    move-result-object v2
+    move-result-object v6
 
-    invoke-static {v2}, Lorg/apache/cordova/file/DirectoryManager;->testFileExists(Ljava/lang/String;)Z
+    .line 269
+    .local v6, "fname":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$3;
 
-    move-result v15
+    move-object/from16 v0, p0
 
-    .line 105
-    .restart local v15    # "b":Z
-    new-instance v2, Lorg/apache/cordova/PluginResult;
+    move-object/from16 v1, p3
 
-    sget-object v3, Lorg/apache/cordova/PluginResult$Status;->OK:Lorg/apache/cordova/PluginResult$Status;
+    invoke-direct {v4, v0, v6, v1}, Lorg/apache/cordova/file/FileUtils$3;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)V
 
-    invoke-direct {v2, v3, v15}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;Z)V
+    move-object/from16 v0, p0
 
-    move-object/from16 v0, p3
+    move-object/from16 v1, p3
 
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
-    :try_end_2
-    .catch Ljava/io/FileNotFoundException; {:try_start_2 .. :try_end_2} :catch_0
-    .catch Lorg/apache/cordova/file/FileExistsException; {:try_start_2 .. :try_end_2} :catch_1
-    .catch Lorg/apache/cordova/file/NoModificationAllowedException; {:try_start_2 .. :try_end_2} :catch_2
-    .catch Lorg/apache/cordova/file/InvalidModificationException; {:try_start_2 .. :try_end_2} :catch_3
-    .catch Ljava/net/MalformedURLException; {:try_start_2 .. :try_end_2} :catch_4
-    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_5
-    .catch Lorg/apache/cordova/file/EncodingException; {:try_start_2 .. :try_end_2} :catch_6
-    .catch Lorg/apache/cordova/file/TypeMismatchException; {:try_start_2 .. :try_end_2} :catch_7
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
 
-    goto :goto_0
+    goto :goto_1
 
-    .line 211
-    .end local v15    # "b":Z
-    :catch_2
-    move-exception v16
-
-    .line 212
-    .local v16, "e":Lorg/apache/cordova/file/NoModificationAllowedException;
-    sget v2, Lorg/apache/cordova/file/FileUtils;->NO_MODIFICATION_ALLOWED_ERR:I
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->error(I)V
-
-    goto :goto_0
-
-    .line 107
-    .end local v16    # "e":Lorg/apache/cordova/file/NoModificationAllowedException;
+    .line 276
+    .end local v6    # "fname":Ljava/lang/String;
     :cond_3
-    :try_start_3
-    const-string v2, "readAsText"
+    const-string v4, "testDirectoryExists"
 
     move-object/from16 v0, p1
 
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_4
-
-    .line 108
-    const/4 v2, 0x1
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v7
-
-    .line 109
-    .local v7, "encoding":Ljava/lang/String;
-    const/4 v2, 0x2
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getInt(I)I
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v4
 
-    .line 110
-    .local v4, "start":I
-    const/4 v2, 0x3
+    if-eqz v4, :cond_4
+
+    .line 277
+    const/4 v4, 0x0
 
     move-object/from16 v0, p2
 
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getInt(I)I
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
 
-    move-result v5
+    move-result-object v6
 
-    .line 112
-    .local v5, "end":I
-    const/4 v2, 0x0
+    .line 278
+    .restart local v6    # "fname":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$4;
 
-    move-object/from16 v0, p2
+    move-object/from16 v0, p0
 
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+    move-object/from16 v1, p3
 
-    move-result-object v3
+    invoke-direct {v4, v0, v6, v1}, Lorg/apache/cordova/file/FileUtils$4;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)V
 
-    const/4 v8, 0x1
+    move-object/from16 v0, p0
 
-    move-object/from16 v2, p0
+    move-object/from16 v1, p3
 
-    move-object/from16 v6, p3
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
 
-    invoke-virtual/range {v2 .. v8}, Lorg/apache/cordova/file/FileUtils;->readFileAs(Ljava/lang/String;IILorg/apache/cordova/CallbackContext;Ljava/lang/String;I)V
-    :try_end_3
-    .catch Ljava/io/FileNotFoundException; {:try_start_3 .. :try_end_3} :catch_0
-    .catch Lorg/apache/cordova/file/FileExistsException; {:try_start_3 .. :try_end_3} :catch_1
-    .catch Lorg/apache/cordova/file/NoModificationAllowedException; {:try_start_3 .. :try_end_3} :catch_2
-    .catch Lorg/apache/cordova/file/InvalidModificationException; {:try_start_3 .. :try_end_3} :catch_3
-    .catch Ljava/net/MalformedURLException; {:try_start_3 .. :try_end_3} :catch_4
-    .catch Ljava/io/IOException; {:try_start_3 .. :try_end_3} :catch_5
-    .catch Lorg/apache/cordova/file/EncodingException; {:try_start_3 .. :try_end_3} :catch_6
-    .catch Lorg/apache/cordova/file/TypeMismatchException; {:try_start_3 .. :try_end_3} :catch_7
+    goto :goto_1
 
-    goto/16 :goto_0
-
-    .line 213
-    .end local v4    # "start":I
-    .end local v5    # "end":I
-    .end local v7    # "encoding":Ljava/lang/String;
-    :catch_3
-    move-exception v16
-
-    .line 214
-    .local v16, "e":Lorg/apache/cordova/file/InvalidModificationException;
-    sget v2, Lorg/apache/cordova/file/FileUtils;->INVALID_MODIFICATION_ERR:I
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->error(I)V
-
-    goto/16 :goto_0
-
-    .line 114
-    .end local v16    # "e":Lorg/apache/cordova/file/InvalidModificationException;
+    .line 285
+    .end local v6    # "fname":Ljava/lang/String;
     :cond_4
-    :try_start_4
-    const-string v2, "readAsDataURL"
+    const-string v4, "readAsText"
 
     move-object/from16 v0, p1
 
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_5
-
-    .line 115
-    const/4 v2, 0x1
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getInt(I)I
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v4
 
-    .line 116
-    .restart local v4    # "start":I
-    const/4 v2, 0x2
+    if-eqz v4, :cond_5
+
+    .line 286
+    const/4 v4, 0x1
 
     move-object/from16 v0, p2
 
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getInt(I)I
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
 
-    move-result v5
+    move-result-object v10
 
-    .line 118
-    .restart local v5    # "end":I
-    const/4 v2, 0x0
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v9
-
-    const/4 v13, 0x0
-
-    const/4 v14, -0x1
-
-    move-object/from16 v8, p0
-
-    move v10, v4
-
-    move v11, v5
-
-    move-object/from16 v12, p3
-
-    invoke-virtual/range {v8 .. v14}, Lorg/apache/cordova/file/FileUtils;->readFileAs(Ljava/lang/String;IILorg/apache/cordova/CallbackContext;Ljava/lang/String;I)V
-    :try_end_4
-    .catch Ljava/io/FileNotFoundException; {:try_start_4 .. :try_end_4} :catch_0
-    .catch Lorg/apache/cordova/file/FileExistsException; {:try_start_4 .. :try_end_4} :catch_1
-    .catch Lorg/apache/cordova/file/NoModificationAllowedException; {:try_start_4 .. :try_end_4} :catch_2
-    .catch Lorg/apache/cordova/file/InvalidModificationException; {:try_start_4 .. :try_end_4} :catch_3
-    .catch Ljava/net/MalformedURLException; {:try_start_4 .. :try_end_4} :catch_4
-    .catch Ljava/io/IOException; {:try_start_4 .. :try_end_4} :catch_5
-    .catch Lorg/apache/cordova/file/EncodingException; {:try_start_4 .. :try_end_4} :catch_6
-    .catch Lorg/apache/cordova/file/TypeMismatchException; {:try_start_4 .. :try_end_4} :catch_7
-
-    goto/16 :goto_0
-
-    .line 215
-    .end local v4    # "start":I
-    .end local v5    # "end":I
-    :catch_4
-    move-exception v16
-
-    .line 216
-    .local v16, "e":Ljava/net/MalformedURLException;
-    sget v2, Lorg/apache/cordova/file/FileUtils;->ENCODING_ERR:I
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->error(I)V
-
-    goto/16 :goto_0
-
-    .line 120
-    .end local v16    # "e":Ljava/net/MalformedURLException;
-    :cond_5
-    :try_start_5
-    const-string v2, "readAsArrayBuffer"
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_6
-
-    .line 121
-    const/4 v2, 0x1
+    .line 287
+    .local v10, "encoding":Ljava/lang/String;
+    const/4 v4, 0x2
 
     move-object/from16 v0, p2
 
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getInt(I)I
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getInt(I)I
 
-    move-result v4
+    move-result v7
 
-    .line 122
-    .restart local v4    # "start":I
-    const/4 v2, 0x2
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getInt(I)I
-
-    move-result v5
-
-    .line 124
-    .restart local v5    # "end":I
-    const/4 v2, 0x0
+    .line 288
+    .local v7, "start":I
+    const/4 v4, 0x3
 
     move-object/from16 v0, p2
 
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v9
-
-    const/4 v13, 0x0
-
-    const/4 v14, 0x6
-
-    move-object/from16 v8, p0
-
-    move v10, v4
-
-    move v11, v5
-
-    move-object/from16 v12, p3
-
-    invoke-virtual/range {v8 .. v14}, Lorg/apache/cordova/file/FileUtils;->readFileAs(Ljava/lang/String;IILorg/apache/cordova/CallbackContext;Ljava/lang/String;I)V
-    :try_end_5
-    .catch Ljava/io/FileNotFoundException; {:try_start_5 .. :try_end_5} :catch_0
-    .catch Lorg/apache/cordova/file/FileExistsException; {:try_start_5 .. :try_end_5} :catch_1
-    .catch Lorg/apache/cordova/file/NoModificationAllowedException; {:try_start_5 .. :try_end_5} :catch_2
-    .catch Lorg/apache/cordova/file/InvalidModificationException; {:try_start_5 .. :try_end_5} :catch_3
-    .catch Ljava/net/MalformedURLException; {:try_start_5 .. :try_end_5} :catch_4
-    .catch Ljava/io/IOException; {:try_start_5 .. :try_end_5} :catch_5
-    .catch Lorg/apache/cordova/file/EncodingException; {:try_start_5 .. :try_end_5} :catch_6
-    .catch Lorg/apache/cordova/file/TypeMismatchException; {:try_start_5 .. :try_end_5} :catch_7
-
-    goto/16 :goto_0
-
-    .line 217
-    .end local v4    # "start":I
-    .end local v5    # "end":I
-    :catch_5
-    move-exception v16
-
-    .line 218
-    .local v16, "e":Ljava/io/IOException;
-    sget v2, Lorg/apache/cordova/file/FileUtils;->INVALID_MODIFICATION_ERR:I
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->error(I)V
-
-    goto/16 :goto_0
-
-    .line 126
-    .end local v16    # "e":Ljava/io/IOException;
-    :cond_6
-    :try_start_6
-    const-string v2, "readAsBinaryString"
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_7
-
-    .line 127
-    const/4 v2, 0x1
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getInt(I)I
-
-    move-result v4
-
-    .line 128
-    .restart local v4    # "start":I
-    const/4 v2, 0x2
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getInt(I)I
-
-    move-result v5
-
-    .line 130
-    .restart local v5    # "end":I
-    const/4 v2, 0x0
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v9
-
-    const/4 v13, 0x0
-
-    const/4 v14, 0x7
-
-    move-object/from16 v8, p0
-
-    move v10, v4
-
-    move v11, v5
-
-    move-object/from16 v12, p3
-
-    invoke-virtual/range {v8 .. v14}, Lorg/apache/cordova/file/FileUtils;->readFileAs(Ljava/lang/String;IILorg/apache/cordova/CallbackContext;Ljava/lang/String;I)V
-    :try_end_6
-    .catch Ljava/io/FileNotFoundException; {:try_start_6 .. :try_end_6} :catch_0
-    .catch Lorg/apache/cordova/file/FileExistsException; {:try_start_6 .. :try_end_6} :catch_1
-    .catch Lorg/apache/cordova/file/NoModificationAllowedException; {:try_start_6 .. :try_end_6} :catch_2
-    .catch Lorg/apache/cordova/file/InvalidModificationException; {:try_start_6 .. :try_end_6} :catch_3
-    .catch Ljava/net/MalformedURLException; {:try_start_6 .. :try_end_6} :catch_4
-    .catch Ljava/io/IOException; {:try_start_6 .. :try_end_6} :catch_5
-    .catch Lorg/apache/cordova/file/EncodingException; {:try_start_6 .. :try_end_6} :catch_6
-    .catch Lorg/apache/cordova/file/TypeMismatchException; {:try_start_6 .. :try_end_6} :catch_7
-
-    goto/16 :goto_0
-
-    .line 219
-    .end local v4    # "start":I
-    .end local v5    # "end":I
-    :catch_6
-    move-exception v16
-
-    .line 220
-    .local v16, "e":Lorg/apache/cordova/file/EncodingException;
-    sget v2, Lorg/apache/cordova/file/FileUtils;->ENCODING_ERR:I
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->error(I)V
-
-    goto/16 :goto_0
-
-    .line 132
-    .end local v16    # "e":Lorg/apache/cordova/file/EncodingException;
-    :cond_7
-    :try_start_7
-    const-string v2, "write"
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_8
-
-    .line 133
-    const/4 v2, 0x0
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v2
-
-    const/4 v3, 0x1
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v3
-
-    const/4 v6, 0x2
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v6}, Lorg/json/JSONArray;->getInt(I)I
-
-    move-result v6
-
-    const/4 v8, 0x3
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v8}, Lorg/json/JSONArray;->getBoolean(I)Z
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getInt(I)I
 
     move-result v8
 
+    .line 289
+    .local v8, "end":I
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 290
+    .restart local v6    # "fname":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$5;
+
+    move-object/from16 v5, p0
+
+    move-object/from16 v9, p3
+
+    invoke-direct/range {v4 .. v10}, Lorg/apache/cordova/file/FileUtils$5;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;IILorg/apache/cordova/CallbackContext;Ljava/lang/String;)V
+
     move-object/from16 v0, p0
 
-    invoke-virtual {v0, v2, v3, v6, v8}, Lorg/apache/cordova/file/FileUtils;->write(Ljava/lang/String;Ljava/lang/String;IZ)J
+    move-object/from16 v1, p3
 
-    move-result-wide v19
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 296
+    .end local v6    # "fname":Ljava/lang/String;
+    .end local v7    # "start":I
+    .end local v8    # "end":I
+    .end local v10    # "encoding":Ljava/lang/String;
+    :cond_5
+    const-string v4, "readAsDataURL"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_6
+
+    .line 297
+    const/4 v4, 0x1
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getInt(I)I
+
+    move-result v7
+
+    .line 298
+    .restart local v7    # "start":I
+    const/4 v4, 0x2
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getInt(I)I
+
+    move-result v8
+
+    .line 299
+    .restart local v8    # "end":I
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 300
+    .restart local v6    # "fname":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$6;
+
+    move-object/from16 v5, p0
+
+    move-object/from16 v9, p3
+
+    invoke-direct/range {v4 .. v9}, Lorg/apache/cordova/file/FileUtils$6;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;IILorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 306
+    .end local v6    # "fname":Ljava/lang/String;
+    .end local v7    # "start":I
+    .end local v8    # "end":I
+    :cond_6
+    const-string v4, "readAsArrayBuffer"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_7
+
+    .line 307
+    const/4 v4, 0x1
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getInt(I)I
+
+    move-result v7
+
+    .line 308
+    .restart local v7    # "start":I
+    const/4 v4, 0x2
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getInt(I)I
+
+    move-result v8
+
+    .line 309
+    .restart local v8    # "end":I
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 310
+    .restart local v6    # "fname":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$7;
+
+    move-object/from16 v5, p0
+
+    move-object/from16 v9, p3
+
+    invoke-direct/range {v4 .. v9}, Lorg/apache/cordova/file/FileUtils$7;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;IILorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 316
+    .end local v6    # "fname":Ljava/lang/String;
+    .end local v7    # "start":I
+    .end local v8    # "end":I
+    :cond_7
+    const-string v4, "readAsBinaryString"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_8
+
+    .line 317
+    const/4 v4, 0x1
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getInt(I)I
+
+    move-result v7
+
+    .line 318
+    .restart local v7    # "start":I
+    const/4 v4, 0x2
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getInt(I)I
+
+    move-result v8
+
+    .line 319
+    .restart local v8    # "end":I
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 320
+    .restart local v6    # "fname":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$8;
+
+    move-object/from16 v5, p0
+
+    move-object/from16 v9, p3
+
+    invoke-direct/range {v4 .. v9}, Lorg/apache/cordova/file/FileUtils$8;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;IILorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 326
+    .end local v6    # "fname":Ljava/lang/String;
+    .end local v7    # "start":I
+    .end local v8    # "end":I
+    :cond_8
+    const-string v4, "write"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_9
+
+    .line 327
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 328
+    .restart local v6    # "fname":Ljava/lang/String;
+    const/4 v4, 0x1
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v14
+
+    .line 329
+    .local v14, "data":Ljava/lang/String;
+    const/4 v4, 0x2
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getInt(I)I
+
+    move-result v15
+
+    .line 330
+    .local v15, "offset":I
+    const/4 v4, 0x3
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getBoolean(I)Z
+
+    move-result v4
+
+    invoke-static {v4}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    move-result-object v16
+
+    .line 331
+    .local v16, "isBinary":Ljava/lang/Boolean;
+    new-instance v11, Lorg/apache/cordova/file/FileUtils$9;
+
+    move-object/from16 v12, p0
+
+    move-object v13, v6
+
+    move-object/from16 v17, p3
+
+    invoke-direct/range {v11 .. v17}, Lorg/apache/cordova/file/FileUtils$9;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v11, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 338
+    .end local v6    # "fname":Ljava/lang/String;
+    .end local v14    # "data":Ljava/lang/String;
+    .end local v15    # "offset":I
+    .end local v16    # "isBinary":Ljava/lang/Boolean;
+    :cond_9
+    const-string v4, "truncate"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_a
+
+    .line 339
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 340
+    .restart local v6    # "fname":Ljava/lang/String;
+    const/4 v4, 0x1
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getInt(I)I
+
+    move-result v15
+
+    .line 341
+    .restart local v15    # "offset":I
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$10;
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v4, v0, v6, v15, v1}, Lorg/apache/cordova/file/FileUtils$10;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;ILorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 348
+    .end local v6    # "fname":Ljava/lang/String;
+    .end local v15    # "offset":I
+    :cond_a
+    const-string v4, "requestAllFileSystems"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_b
+
+    .line 349
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$11;
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v4, v0, v1}, Lorg/apache/cordova/file/FileUtils$11;-><init>(Lorg/apache/cordova/file/FileUtils;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 354
+    :cond_b
+    const-string v4, "requestAllPaths"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_c
+
+    .line 355
+    move-object/from16 v0, p0
+
+    iget-object v4, v0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
+
+    invoke-interface {v4}, Lorg/apache/cordova/CordovaInterface;->getThreadPool()Ljava/util/concurrent/ExecutorService;
+
+    move-result-object v4
+
+    new-instance v5, Lorg/apache/cordova/file/FileUtils$12;
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v5, v0, v1}, Lorg/apache/cordova/file/FileUtils$12;-><init>(Lorg/apache/cordova/file/FileUtils;Lorg/apache/cordova/CallbackContext;)V
+
+    invoke-interface {v4, v5}, Ljava/util/concurrent/ExecutorService;->execute(Ljava/lang/Runnable;)V
+
+    goto/16 :goto_1
+
+    .line 367
+    :cond_c
+    const-string v4, "requestFileSystem"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_d
+
+    .line 368
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getInt(I)I
+
+    move-result v23
+
+    .line 369
+    .local v23, "fstype":I
+    const/4 v4, 0x1
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->optLong(I)J
+
+    move-result-wide v20
+
+    .line 370
+    .local v20, "size":J
+    new-instance v18, Lorg/apache/cordova/file/FileUtils$13;
+
+    move-object/from16 v19, p0
+
+    move-object/from16 v22, p3
+
+    invoke-direct/range {v18 .. v23}, Lorg/apache/cordova/file/FileUtils$13;-><init>(Lorg/apache/cordova/file/FileUtils;JLorg/apache/cordova/CallbackContext;I)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v18
+
+    move-object/from16 v2, p3
+
+    invoke-direct {v0, v1, v2}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 381
+    .end local v20    # "size":J
+    .end local v23    # "fstype":I
+    :cond_d
+    const-string v4, "resolveLocalFileSystemURI"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_e
+
+    .line 382
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 383
+    .restart local v6    # "fname":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$14;
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v4, v0, v6, v1}, Lorg/apache/cordova/file/FileUtils$14;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 390
+    .end local v6    # "fname":Ljava/lang/String;
+    :cond_e
+    const-string v4, "getFileMetadata"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_f
+
+    .line 391
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 392
+    .restart local v6    # "fname":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$15;
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v4, v0, v6, v1}, Lorg/apache/cordova/file/FileUtils$15;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 399
+    .end local v6    # "fname":Ljava/lang/String;
+    :cond_f
+    const-string v4, "getParent"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_10
+
+    .line 400
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 401
+    .restart local v6    # "fname":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$16;
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v4, v0, v6, v1}, Lorg/apache/cordova/file/FileUtils$16;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 408
+    .end local v6    # "fname":Ljava/lang/String;
+    :cond_10
+    const-string v4, "getDirectory"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_11
+
+    .line 409
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v26
+
+    .line 410
+    .local v26, "dirname":Ljava/lang/String;
+    const/4 v4, 0x1
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v27
+
+    .line 411
+    .local v27, "path":Ljava/lang/String;
+    new-instance v24, Lorg/apache/cordova/file/FileUtils$17;
+
+    move-object/from16 v25, p0
+
+    move-object/from16 v28, p2
+
+    move-object/from16 v29, p3
+
+    invoke-direct/range {v24 .. v29}, Lorg/apache/cordova/file/FileUtils$17;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Ljava/lang/String;Lorg/json/JSONArray;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v24
+
+    move-object/from16 v2, p3
+
+    invoke-direct {v0, v1, v2}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 418
+    .end local v26    # "dirname":Ljava/lang/String;
+    .end local v27    # "path":Ljava/lang/String;
+    :cond_11
+    const-string v4, "getFile"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_12
+
+    .line 419
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v26
+
+    .line 420
+    .restart local v26    # "dirname":Ljava/lang/String;
+    const/4 v4, 0x1
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v27
+
+    .line 421
+    .restart local v27    # "path":Ljava/lang/String;
+    new-instance v24, Lorg/apache/cordova/file/FileUtils$18;
+
+    move-object/from16 v25, p0
+
+    move-object/from16 v28, p2
+
+    move-object/from16 v29, p3
+
+    invoke-direct/range {v24 .. v29}, Lorg/apache/cordova/file/FileUtils$18;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Ljava/lang/String;Lorg/json/JSONArray;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v24
+
+    move-object/from16 v2, p3
+
+    invoke-direct {v0, v1, v2}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 428
+    .end local v26    # "dirname":Ljava/lang/String;
+    .end local v27    # "path":Ljava/lang/String;
+    :cond_12
+    const-string v4, "remove"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_13
+
+    .line 429
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 430
+    .restart local v6    # "fname":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$19;
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v4, v0, v6, v1}, Lorg/apache/cordova/file/FileUtils$19;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 441
+    .end local v6    # "fname":Ljava/lang/String;
+    :cond_13
+    const-string v4, "removeRecursively"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_14
+
+    .line 442
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 443
+    .restart local v6    # "fname":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$20;
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v4, v0, v6, v1}, Lorg/apache/cordova/file/FileUtils$20;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 454
+    .end local v6    # "fname":Ljava/lang/String;
+    :cond_14
+    const-string v4, "moveTo"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_15
+
+    .line 455
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 456
+    .restart local v6    # "fname":Ljava/lang/String;
+    const/4 v4, 0x1
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v31
+
+    .line 457
+    .local v31, "newParent":Ljava/lang/String;
+    const/4 v4, 0x2
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v32
+
+    .line 458
+    .local v32, "newName":Ljava/lang/String;
+    new-instance v28, Lorg/apache/cordova/file/FileUtils$21;
+
+    move-object/from16 v29, p0
+
+    move-object/from16 v30, v6
+
+    move-object/from16 v33, p3
+
+    invoke-direct/range {v28 .. v33}, Lorg/apache/cordova/file/FileUtils$21;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v28
+
+    move-object/from16 v2, p3
+
+    invoke-direct {v0, v1, v2}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 465
+    .end local v6    # "fname":Ljava/lang/String;
+    .end local v31    # "newParent":Ljava/lang/String;
+    .end local v32    # "newName":Ljava/lang/String;
+    :cond_15
+    const-string v4, "copyTo"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_16
+
+    .line 466
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 467
+    .restart local v6    # "fname":Ljava/lang/String;
+    const/4 v4, 0x1
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v31
+
+    .line 468
+    .restart local v31    # "newParent":Ljava/lang/String;
+    const/4 v4, 0x2
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v32
+
+    .line 469
+    .restart local v32    # "newName":Ljava/lang/String;
+    new-instance v28, Lorg/apache/cordova/file/FileUtils$22;
+
+    move-object/from16 v29, p0
+
+    move-object/from16 v30, v6
+
+    move-object/from16 v33, p3
+
+    invoke-direct/range {v28 .. v33}, Lorg/apache/cordova/file/FileUtils$22;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v28
+
+    move-object/from16 v2, p3
+
+    invoke-direct {v0, v1, v2}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 476
+    .end local v6    # "fname":Ljava/lang/String;
+    .end local v31    # "newParent":Ljava/lang/String;
+    .end local v32    # "newName":Ljava/lang/String;
+    :cond_16
+    const-string v4, "readEntries"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_17
+
+    .line 477
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 478
+    .restart local v6    # "fname":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$23;
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v4, v0, v6, v1}, Lorg/apache/cordova/file/FileUtils$23;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 485
+    .end local v6    # "fname":Ljava/lang/String;
+    :cond_17
+    const-string v4, "_getLocalFilesystemPath"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_18
+
+    .line 488
+    const/4 v4, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+
+    move-result-object v34
+
+    .line 489
+    .local v34, "localURLstr":Ljava/lang/String;
+    new-instance v4, Lorg/apache/cordova/file/FileUtils$24;
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v34
+
+    move-object/from16 v2, p3
+
+    invoke-direct {v4, v0, v1, v2}, Lorg/apache/cordova/file/FileUtils$24;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)V
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p3
+
+    invoke-direct {v0, v4, v1}, Lorg/apache/cordova/file/FileUtils;->threadhelper(Lorg/apache/cordova/file/FileUtils$FileOp;Lorg/apache/cordova/CallbackContext;)V
+
+    goto/16 :goto_1
+
+    .line 497
+    .end local v34    # "localURLstr":Ljava/lang/String;
+    :cond_18
+    const/4 v4, 0x0
+
+    goto/16 :goto_0
+.end method
+
+.method public filesystemPathForURL(Ljava/lang/String;)Ljava/lang/String;
+    .locals 5
+    .param p1, "localURLstr"    # Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/net/MalformedURLException;
+        }
+    .end annotation
+
+    .prologue
+    .line 510
+    :try_start_0
+    new-instance v2, Lorg/apache/cordova/file/LocalFilesystemURL;
+
+    invoke-direct {v2, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
+
+    .line 511
+    .local v2, "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    invoke-direct {p0, v2}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
+
+    move-result-object v1
+
+    .line 512
+    .local v1, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-nez v1, :cond_0
+
+    .line 513
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "No installed handlers for this URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+    :try_end_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 516
+    .end local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :catch_0
+    move-exception v0
+
+    .line 517
+    .local v0, "e":Ljava/lang/IllegalArgumentException;
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v4, "Unrecognized filesystem URL"
+
+    invoke-direct {v3, v4}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    .line 515
+    .end local v0    # "e":Ljava/lang/IllegalArgumentException;
+    .restart local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .restart local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :cond_0
+    :try_start_1
+    invoke-virtual {v1, v2}, Lorg/apache/cordova/file/Filesystem;->filesystemPathForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Ljava/lang/String;
+    :try_end_1
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_1 .. :try_end_1} :catch_0
+
+    move-result-object v3
+
+    return-object v3
+.end method
+
+.method public filesystemURLforLocalPath(Ljava/lang/String;)Lorg/apache/cordova/file/LocalFilesystemURL;
+    .locals 6
+    .param p1, "localPath"    # Ljava/lang/String;
+
+    .prologue
+    .line 522
+    const/4 v2, 0x0
+
+    .line 523
+    .local v2, "localURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    const/4 v3, 0x0
+
+    .line 527
+    .local v3, "shortestFullPath":I
+    iget-object v5, p0, Lorg/apache/cordova/file/FileUtils;->filesystems:Ljava/util/ArrayList;
+
+    invoke-virtual {v5}, Ljava/util/ArrayList;->iterator()Ljava/util/Iterator;
+
+    move-result-object v1
+
+    .local v1, "i$":Ljava/util/Iterator;
+    :cond_0
+    :goto_0
+    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v5
+
+    if-eqz v5, :cond_2
+
+    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Lorg/apache/cordova/file/Filesystem;
+
+    .line 528
+    .local v0, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-eqz v0, :cond_0
+
+    .line 529
+    invoke-virtual {v0, p1}, Lorg/apache/cordova/file/Filesystem;->URLforFilesystemPath(Ljava/lang/String;)Lorg/apache/cordova/file/LocalFilesystemURL;
+
+    move-result-object v4
+
+    .line 530
+    .local v4, "url":Lorg/apache/cordova/file/LocalFilesystemURL;
+    if-eqz v4, :cond_0
+
+    .line 533
+    if-eqz v2, :cond_1
+
+    iget-object v5, v4, Lorg/apache/cordova/file/LocalFilesystemURL;->fullPath:Ljava/lang/String;
+
+    invoke-virtual {v5}, Ljava/lang/String;->length()I
+
+    move-result v5
+
+    if-ge v5, v3, :cond_0
+
+    .line 534
+    :cond_1
+    move-object v2, v4
+
+    .line 535
+    iget-object v5, v4, Lorg/apache/cordova/file/LocalFilesystemURL;->fullPath:Ljava/lang/String;
+
+    invoke-virtual {v5}, Ljava/lang/String;->length()I
+
+    move-result v3
+
+    goto :goto_0
+
+    .line 540
+    .end local v0    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v4    # "url":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :cond_2
+    return-object v2
+.end method
+
+.method protected getAvailableFileSystems(Landroid/app/Activity;)Ljava/util/HashMap;
+    .locals 7
+    .param p1, "activity"    # Landroid/app/Activity;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Landroid/app/Activity;",
+            ")",
+            "Ljava/util/HashMap",
+            "<",
+            "Ljava/lang/String;",
+            "Ljava/lang/String;",
+            ">;"
+        }
+    .end annotation
+
+    .prologue
+    .line 128
+    invoke-virtual {p1}, Landroid/app/Activity;->getApplicationContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    .line 129
+    .local v1, "context":Landroid/content/Context;
+    new-instance v0, Ljava/util/HashMap;
+
+    invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
+
+    .line 131
+    .local v0, "availableFileSystems":Ljava/util/HashMap;, "Ljava/util/HashMap<Ljava/lang/String;Ljava/lang/String;>;"
+    const-string v3, "files"
+
+    invoke-virtual {v1}, Landroid/content/Context;->getFilesDir()Ljava/io/File;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v0, v3, v4}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 132
+    const-string v3, "documents"
+
+    new-instance v4, Ljava/io/File;
+
+    invoke-virtual {v1}, Landroid/content/Context;->getFilesDir()Ljava/io/File;
+
+    move-result-object v5
+
+    const-string v6, "Documents"
+
+    invoke-direct {v4, v5, v6}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+
+    invoke-virtual {v4}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v0, v3, v4}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 133
+    const-string v3, "cache"
+
+    invoke-virtual {v1}, Landroid/content/Context;->getCacheDir()Ljava/io/File;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v0, v3, v4}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
     .line 134
-    .local v19, "fileSize":J
-    new-instance v2, Lorg/apache/cordova/PluginResult;
+    const-string v3, "root"
 
-    sget-object v3, Lorg/apache/cordova/PluginResult$Status;->OK:Lorg/apache/cordova/PluginResult$Status;
+    const-string v4, "/"
 
-    move-wide/from16 v0, v19
+    invoke-virtual {v0, v3, v4}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    long-to-float v6, v0
+    .line 135
+    invoke-static {}, Landroid/os/Environment;->getExternalStorageState()Ljava/lang/String;
 
-    invoke-direct {v2, v3, v6}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;F)V
+    move-result-object v3
 
-    move-object/from16 v0, p3
+    const-string v4, "mounted"
 
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
-    :try_end_7
-    .catch Ljava/io/FileNotFoundException; {:try_start_7 .. :try_end_7} :catch_0
-    .catch Lorg/apache/cordova/file/FileExistsException; {:try_start_7 .. :try_end_7} :catch_1
-    .catch Lorg/apache/cordova/file/NoModificationAllowedException; {:try_start_7 .. :try_end_7} :catch_2
-    .catch Lorg/apache/cordova/file/InvalidModificationException; {:try_start_7 .. :try_end_7} :catch_3
-    .catch Ljava/net/MalformedURLException; {:try_start_7 .. :try_end_7} :catch_4
-    .catch Ljava/io/IOException; {:try_start_7 .. :try_end_7} :catch_5
-    .catch Lorg/apache/cordova/file/EncodingException; {:try_start_7 .. :try_end_7} :catch_6
-    .catch Lorg/apache/cordova/file/TypeMismatchException; {:try_start_7 .. :try_end_7} :catch_7
+    invoke-virtual {v3, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    goto/16 :goto_0
+    move-result v3
 
-    .line 221
-    .end local v19    # "fileSize":J
-    :catch_7
-    move-exception v16
-
-    .line 222
-    .local v16, "e":Lorg/apache/cordova/file/TypeMismatchException;
-    sget v2, Lorg/apache/cordova/file/FileUtils;->TYPE_MISMATCH_ERR:I
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->error(I)V
-
-    goto/16 :goto_0
-
-    .line 136
-    .end local v16    # "e":Lorg/apache/cordova/file/TypeMismatchException;
-    :cond_8
-    :try_start_8
-    const-string v2, "truncate"
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_9
+    if-eqz v3, :cond_0
 
     .line 137
-    const/4 v2, 0x0
+    :try_start_0
+    const-string v3, "files-external"
 
-    move-object/from16 v0, p2
+    const/4 v4, 0x0
 
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+    invoke-virtual {v1, v4}, Landroid/content/Context;->getExternalFilesDir(Ljava/lang/String;)Ljava/io/File;
 
-    move-result-object v2
+    move-result-object v4
 
-    const/4 v3, 0x1
+    invoke-virtual {v4}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
 
-    move-object/from16 v0, p2
+    move-result-object v4
 
-    invoke-virtual {v0, v3}, Lorg/json/JSONArray;->getLong(I)J
-
-    move-result-wide v8
-
-    move-object/from16 v0, p0
-
-    invoke-direct {v0, v2, v8, v9}, Lorg/apache/cordova/file/FileUtils;->truncateFile(Ljava/lang/String;J)J
-
-    move-result-wide v19
+    invoke-virtual {v0, v3, v4}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
     .line 138
-    .restart local v19    # "fileSize":J
-    new-instance v2, Lorg/apache/cordova/PluginResult;
+    const-string v3, "sdcard"
 
-    sget-object v3, Lorg/apache/cordova/PluginResult$Status;->OK:Lorg/apache/cordova/PluginResult$Status;
+    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
 
-    move-wide/from16 v0, v19
+    move-result-object v4
 
-    long-to-float v6, v0
+    invoke-virtual {v4}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
 
-    invoke-direct {v2, v3, v6}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;F)V
+    move-result-object v4
 
-    move-object/from16 v0, p3
+    invoke-virtual {v0, v3, v4}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
+    .line 139
+    const-string v3, "cache-external"
 
-    goto/16 :goto_0
+    invoke-virtual {v1}, Landroid/content/Context;->getExternalCacheDir()Ljava/io/File;
 
-    .line 140
-    .end local v19    # "fileSize":J
-    :cond_9
-    const-string v2, "requestFileSystem"
+    move-result-object v4
 
-    move-object/from16 v0, p1
+    invoke-virtual {v4}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
 
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    move-result-object v4
 
-    move-result v2
-
-    if-eqz v2, :cond_b
-
-    .line 141
-    const/4 v2, 0x1
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->optLong(I)J
-
-    move-result-wide v24
-
-    .line 142
-    .local v24, "size":J
-    const-wide/16 v2, 0x0
-
-    cmp-long v2, v24, v2
-
-    if-eqz v2, :cond_a
-
-    const/4 v2, 0x1
-
-    invoke-static {v2}, Lorg/apache/cordova/file/DirectoryManager;->getFreeDiskSpace(Z)J
-
-    move-result-wide v2
-
-    const-wide/16 v8, 0x400
-
-    mul-long/2addr v2, v8
-
-    cmp-long v2, v24, v2
-
-    if-lez v2, :cond_a
-
-    .line 143
-    new-instance v2, Lorg/apache/cordova/PluginResult;
-
-    sget-object v3, Lorg/apache/cordova/PluginResult$Status;->ERROR:Lorg/apache/cordova/PluginResult$Status;
-
-    sget v6, Lorg/apache/cordova/file/FileUtils;->QUOTA_EXCEEDED_ERR:I
-
-    invoke-direct {v2, v3, v6}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;I)V
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
-
-    goto/16 :goto_0
-
-    .line 145
-    :cond_a
-    const/4 v2, 0x0
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getInt(I)I
-
-    move-result v2
-
-    move-object/from16 v0, p0
-
-    invoke-direct {v0, v2}, Lorg/apache/cordova/file/FileUtils;->requestFileSystem(I)Lorg/json/JSONObject;
-
-    move-result-object v23
+    invoke-virtual {v0, v3, v4}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+    :try_end_0
+    .catch Ljava/lang/NullPointerException; {:try_start_0 .. :try_end_0} :catch_0
 
     .line 146
-    .local v23, "obj":Lorg/json/JSONObject;
-    move-object/from16 v0, p3
+    :cond_0
+    :goto_0
+    return-object v0
 
-    move-object/from16 v1, v23
+    .line 141
+    :catch_0
+    move-exception v2
 
-    invoke-virtual {v0, v1}, Lorg/apache/cordova/CallbackContext;->success(Lorg/json/JSONObject;)V
+    .line 142
+    .local v2, "e":Ljava/lang/NullPointerException;
+    const-string v3, "FileUtils"
 
-    goto/16 :goto_0
+    const-string v4, "External storage unavailable, check to see if USB Mass Storage Mode is on"
 
-    .line 149
-    .end local v23    # "obj":Lorg/json/JSONObject;
-    .end local v24    # "size":J
-    :cond_b
-    const-string v2, "resolveLocalFileSystemURI"
+    invoke-static {v3, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    move-object/from16 v0, p1
+    goto :goto_0
+.end method
 
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+.method public getEntryForFile(Ljava/io/File;)Lorg/json/JSONObject;
+    .locals 4
+    .param p1, "file"    # Ljava/io/File;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Lorg/json/JSONException;
+        }
+    .end annotation
 
-    move-result v2
+    .prologue
+    .line 910
+    iget-object v3, p0, Lorg/apache/cordova/file/FileUtils;->filesystems:Ljava/util/ArrayList;
 
-    if-eqz v2, :cond_c
-
-    .line 150
-    const/4 v2, 0x0
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+    invoke-virtual {v3}, Ljava/util/ArrayList;->iterator()Ljava/util/Iterator;
 
     move-result-object v2
 
-    move-object/from16 v0, p0
+    .local v2, "i$":Ljava/util/Iterator;
+    :cond_0
+    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
 
-    invoke-direct {v0, v2}, Lorg/apache/cordova/file/FileUtils;->resolveLocalFileSystemURI(Ljava/lang/String;)Lorg/json/JSONObject;
+    move-result v3
 
-    move-result-object v23
+    if-eqz v3, :cond_1
+
+    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Lorg/apache/cordova/file/Filesystem;
+
+    .line 911
+    .local v1, "fs":Lorg/apache/cordova/file/Filesystem;
+    invoke-virtual {v1, p1}, Lorg/apache/cordova/file/Filesystem;->makeEntryForFile(Ljava/io/File;)Lorg/json/JSONObject;
+
+    move-result-object v0
+
+    .line 912
+    .local v0, "entry":Lorg/json/JSONObject;
+    if-eqz v0, :cond_0
+
+    .line 916
+    .end local v0    # "entry":Lorg/json/JSONObject;
+    .end local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    :goto_0
+    return-object v0
+
+    :cond_1
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
+.method protected getExtraFileSystemsPreference(Landroid/app/Activity;)[Ljava/lang/String;
+    .locals 3
+    .param p1, "activity"    # Landroid/app/Activity;
+
+    .prologue
+    .line 98
+    invoke-virtual {p1}, Landroid/app/Activity;->getIntent()Landroid/content/Intent;
+
+    move-result-object v1
+
+    const-string v2, "androidextrafilesystems"
+
+    invoke-virtual {v1, v2}, Landroid/content/Intent;->getStringExtra(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 99
+    .local v0, "fileSystemsStr":Ljava/lang/String;
+    if-nez v0, :cond_0
+
+    .line 100
+    const-string v0, "files,files-external,documents,sdcard,cache,cache-external,root"
+
+    .line 102
+    :cond_0
+    const-string v1, ","
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
+
+    move-result-object v1
+
+    return-object v1
+.end method
+
+.method public initialize(Lorg/apache/cordova/CordovaInterface;Lorg/apache/cordova/CordovaWebView;)V
+    .locals 8
+    .param p1, "cordova"    # Lorg/apache/cordova/CordovaInterface;
+    .param p2, "webView"    # Lorg/apache/cordova/CordovaWebView;
+
+    .prologue
+    const/4 v7, 0x1
 
     .line 151
-    .restart local v23    # "obj":Lorg/json/JSONObject;
-    move-object/from16 v0, p3
+    invoke-super {p0, p1, p2}, Lorg/apache/cordova/CordovaPlugin;->initialize(Lorg/apache/cordova/CordovaInterface;Lorg/apache/cordova/CordovaWebView;)V
 
-    move-object/from16 v1, v23
+    .line 152
+    new-instance v5, Ljava/util/ArrayList;
 
-    invoke-virtual {v0, v1}, Lorg/apache/cordova/CallbackContext;->success(Lorg/json/JSONObject;)V
+    invoke-direct {v5}, Ljava/util/ArrayList;-><init>()V
 
-    goto/16 :goto_0
-
-    .line 153
-    .end local v23    # "obj":Lorg/json/JSONObject;
-    :cond_c
-    const-string v2, "getMetadata"
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_d
+    iput-object v5, p0, Lorg/apache/cordova/file/FileUtils;->filesystems:Ljava/util/ArrayList;
 
     .line 154
-    new-instance v2, Lorg/apache/cordova/PluginResult;
+    const/4 v4, 0x0
 
-    sget-object v3, Lorg/apache/cordova/PluginResult$Status;->OK:Lorg/apache/cordova/PluginResult$Status;
-
-    const/4 v6, 0x0
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v6}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v6
-
-    move-object/from16 v0, p0
-
-    invoke-direct {v0, v6}, Lorg/apache/cordova/file/FileUtils;->getMetadata(Ljava/lang/String;)J
-
-    move-result-wide v8
-
-    long-to-float v6, v8
-
-    invoke-direct {v2, v3, v6}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;F)V
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
-
-    goto/16 :goto_0
-
-    .line 156
-    :cond_d
-    const-string v2, "getFileMetadata"
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_e
+    .line 155
+    .local v4, "tempRoot":Ljava/lang/String;
+    const/4 v3, 0x0
 
     .line 157
-    const/4 v2, 0x0
+    .local v3, "persistentRoot":Ljava/lang/String;
+    invoke-interface {p1}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
 
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v2
-
-    move-object/from16 v0, p0
-
-    invoke-direct {v0, v2}, Lorg/apache/cordova/file/FileUtils;->getFileMetadata(Ljava/lang/String;)Lorg/json/JSONObject;
-
-    move-result-object v23
+    move-result-object v0
 
     .line 158
-    .restart local v23    # "obj":Lorg/json/JSONObject;
-    move-object/from16 v0, p3
+    .local v0, "activity":Landroid/app/Activity;
+    invoke-virtual {v0}, Landroid/app/Activity;->getPackageName()Ljava/lang/String;
 
-    move-object/from16 v1, v23
-
-    invoke-virtual {v0, v1}, Lorg/apache/cordova/CallbackContext;->success(Lorg/json/JSONObject;)V
-
-    goto/16 :goto_0
+    move-result-object v2
 
     .line 160
-    .end local v23    # "obj":Lorg/json/JSONObject;
-    :cond_e
-    const-string v2, "getParent"
+    .local v2, "packageName":Ljava/lang/String;
+    invoke-virtual {v0}, Landroid/app/Activity;->getIntent()Landroid/content/Intent;
 
-    move-object/from16 v0, p1
+    move-result-object v5
 
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    const-string v6, "androidpersistentfilelocation"
 
-    move-result v2
+    invoke-virtual {v5, v6}, Landroid/content/Intent;->getStringExtra(Ljava/lang/String;)Ljava/lang/String;
 
-    if-eqz v2, :cond_f
+    move-result-object v1
 
     .line 161
-    const/4 v2, 0x0
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v2
-
-    move-object/from16 v0, p0
-
-    invoke-direct {v0, v2}, Lorg/apache/cordova/file/FileUtils;->getParent(Ljava/lang/String;)Lorg/json/JSONObject;
-
-    move-result-object v23
+    .local v1, "location":Ljava/lang/String;
+    if-nez v1, :cond_0
 
     .line 162
-    .restart local v23    # "obj":Lorg/json/JSONObject;
-    move-object/from16 v0, p3
-
-    move-object/from16 v1, v23
-
-    invoke-virtual {v0, v1}, Lorg/apache/cordova/CallbackContext;->success(Lorg/json/JSONObject;)V
-
-    goto/16 :goto_0
+    const-string v1, "compatibility"
 
     .line 164
-    .end local v23    # "obj":Lorg/json/JSONObject;
-    :cond_f
-    const-string v2, "getDirectory"
+    :cond_0
+    invoke-virtual {v0}, Landroid/app/Activity;->getCacheDir()Ljava/io/File;
 
-    move-object/from16 v0, p1
+    move-result-object v5
 
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    invoke-virtual {v5}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
 
-    move-result v2
-
-    if-eqz v2, :cond_10
+    move-result-object v4
 
     .line 165
-    const/4 v2, 0x0
+    const-string v5, "internal"
 
-    move-object/from16 v0, p2
+    invoke-virtual {v5, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+    move-result v5
 
-    move-result-object v2
-
-    const/4 v3, 0x1
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v3
-
-    const/4 v6, 0x2
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v6}, Lorg/json/JSONArray;->optJSONObject(I)Lorg/json/JSONObject;
-
-    move-result-object v6
-
-    const/4 v8, 0x1
-
-    move-object/from16 v0, p0
-
-    invoke-direct {v0, v2, v3, v6, v8}, Lorg/apache/cordova/file/FileUtils;->getFile(Ljava/lang/String;Ljava/lang/String;Lorg/json/JSONObject;Z)Lorg/json/JSONObject;
-
-    move-result-object v23
+    if-eqz v5, :cond_3
 
     .line 166
-    .restart local v23    # "obj":Lorg/json/JSONObject;
-    move-object/from16 v0, p3
+    new-instance v5, Ljava/lang/StringBuilder;
 
-    move-object/from16 v1, v23
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-virtual {v0, v1}, Lorg/apache/cordova/CallbackContext;->success(Lorg/json/JSONObject;)V
-
-    goto/16 :goto_0
-
-    .line 168
-    .end local v23    # "obj":Lorg/json/JSONObject;
-    :cond_10
-    const-string v2, "getFile"
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_11
-
-    .line 169
-    const/4 v2, 0x0
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v2
-
-    const/4 v3, 0x1
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v3
-
-    const/4 v6, 0x2
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v6}, Lorg/json/JSONArray;->optJSONObject(I)Lorg/json/JSONObject;
+    invoke-virtual {v0}, Landroid/app/Activity;->getFilesDir()Ljava/io/File;
 
     move-result-object v6
 
-    const/4 v8, 0x0
+    invoke-virtual {v6}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
 
-    move-object/from16 v0, p0
+    move-result-object v6
 
-    invoke-direct {v0, v2, v3, v6, v8}, Lorg/apache/cordova/file/FileUtils;->getFile(Ljava/lang/String;Ljava/lang/String;Lorg/json/JSONObject;Z)Lorg/json/JSONObject;
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v23
+    move-result-object v5
 
-    .line 170
-    .restart local v23    # "obj":Lorg/json/JSONObject;
-    move-object/from16 v0, p3
+    const-string v6, "/files/"
 
-    move-object/from16 v1, v23
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v0, v1}, Lorg/apache/cordova/CallbackContext;->success(Lorg/json/JSONObject;)V
+    move-result-object v5
 
-    goto/16 :goto_0
+    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    .line 172
-    .end local v23    # "obj":Lorg/json/JSONObject;
-    :cond_11
-    const-string v2, "remove"
+    move-result-object v3
 
-    move-object/from16 v0, p1
+    .line 167
+    iput-boolean v7, p0, Lorg/apache/cordova/file/FileUtils;->configured:Z
 
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    .line 186
+    :cond_1
+    :goto_0
+    iget-boolean v5, p0, Lorg/apache/cordova/file/FileUtils;->configured:Z
 
-    move-result v2
+    if-eqz v5, :cond_5
 
-    if-eqz v2, :cond_13
+    .line 188
+    new-instance v5, Ljava/io/File;
 
-    .line 175
-    const/4 v2, 0x0
+    invoke-direct {v5, v4}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    move-object/from16 v0, p2
+    invoke-virtual {v5}, Ljava/io/File;->mkdirs()Z
 
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+    .line 189
+    new-instance v5, Ljava/io/File;
 
-    move-result-object v2
+    invoke-direct {v5, v3}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    move-object/from16 v0, p0
+    invoke-virtual {v5}, Ljava/io/File;->mkdirs()Z
 
-    invoke-direct {v0, v2}, Lorg/apache/cordova/file/FileUtils;->remove(Ljava/lang/String;)Z
+    .line 195
+    new-instance v5, Lorg/apache/cordova/file/LocalFilesystem;
 
-    move-result v26
+    const-string v6, "temporary"
+
+    invoke-direct {v5, v6, p1, v4}, Lorg/apache/cordova/file/LocalFilesystem;-><init>(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;Ljava/lang/String;)V
+
+    invoke-virtual {p0, v5}, Lorg/apache/cordova/file/FileUtils;->registerFilesystem(Lorg/apache/cordova/file/Filesystem;)V
+
+    .line 196
+    new-instance v5, Lorg/apache/cordova/file/LocalFilesystem;
+
+    const-string v6, "persistent"
+
+    invoke-direct {v5, v6, p1, v3}, Lorg/apache/cordova/file/LocalFilesystem;-><init>(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;Ljava/lang/String;)V
+
+    invoke-virtual {p0, v5}, Lorg/apache/cordova/file/FileUtils;->registerFilesystem(Lorg/apache/cordova/file/Filesystem;)V
+
+    .line 197
+    new-instance v5, Lorg/apache/cordova/file/ContentFilesystem;
+
+    const-string v6, "content"
+
+    invoke-direct {v5, v6, p1, p2}, Lorg/apache/cordova/file/ContentFilesystem;-><init>(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;Lorg/apache/cordova/CordovaWebView;)V
+
+    invoke-virtual {p0, v5}, Lorg/apache/cordova/file/FileUtils;->registerFilesystem(Lorg/apache/cordova/file/Filesystem;)V
+
+    .line 199
+    invoke-virtual {p0, v0}, Lorg/apache/cordova/file/FileUtils;->getExtraFileSystemsPreference(Landroid/app/Activity;)[Ljava/lang/String;
+
+    move-result-object v5
+
+    invoke-virtual {p0, v0}, Lorg/apache/cordova/file/FileUtils;->getAvailableFileSystems(Landroid/app/Activity;)Ljava/util/HashMap;
+
+    move-result-object v6
+
+    invoke-virtual {p0, v5, v6}, Lorg/apache/cordova/file/FileUtils;->registerExtraFileSystems([Ljava/lang/String;Ljava/util/HashMap;)V
+
+    .line 202
+    sget-object v5, Lorg/apache/cordova/file/FileUtils;->filePlugin:Lorg/apache/cordova/file/FileUtils;
+
+    if-nez v5, :cond_2
+
+    .line 203
+    sput-object p0, Lorg/apache/cordova/file/FileUtils;->filePlugin:Lorg/apache/cordova/file/FileUtils;
+
+    .line 209
+    :cond_2
+    :goto_1
+    return-void
+
+    .line 168
+    :cond_3
+    const-string v5, "compatibility"
+
+    invoke-virtual {v5, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+
+    move-result v5
+
+    if-eqz v5, :cond_1
+
+    .line 176
+    invoke-static {}, Landroid/os/Environment;->getExternalStorageState()Ljava/lang/String;
+
+    move-result-object v5
+
+    const-string v6, "mounted"
+
+    invoke-virtual {v5, v6}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v5
+
+    if-eqz v5, :cond_4
 
     .line 177
-    .local v26, "success":Z
-    if-eqz v26, :cond_12
+    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
+
+    move-result-object v5
+
+    invoke-virtual {v5}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
+
+    move-result-object v3
 
     .line 178
-    const/4 v2, 0x0
+    new-instance v5, Ljava/lang/StringBuilder;
 
-    move-object/from16 v0, p2
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+    invoke-static {}, Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
 
-    move-result-object v2
+    move-result-object v6
 
-    move-object/from16 v0, p0
+    invoke-virtual {v6}, Ljava/io/File;->getAbsolutePath()Ljava/lang/String;
 
-    invoke-direct {v0, v2}, Lorg/apache/cordova/file/FileUtils;->notifyDelete(Ljava/lang/String;)V
+    move-result-object v6
 
-    .line 179
-    invoke-virtual/range {p3 .. p3}, Lorg/apache/cordova/CallbackContext;->success()V
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    const-string v6, "/Android/data/"
+
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    const-string v6, "/cache/"
+
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    .line 183
+    :goto_2
+    iput-boolean v7, p0, Lorg/apache/cordova/file/FileUtils;->configured:Z
 
     goto/16 :goto_0
 
     .line 181
-    :cond_12
-    sget v2, Lorg/apache/cordova/file/FileUtils;->NO_MODIFICATION_ALLOWED_ERR:I
+    :cond_4
+    new-instance v5, Ljava/lang/StringBuilder;
 
-    move-object/from16 v0, p3
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->error(I)V
+    const-string v6, "/data/data/"
 
-    goto/16 :goto_0
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 184
-    .end local v26    # "success":Z
-    :cond_13
-    const-string v2, "removeRecursively"
+    move-result-object v5
 
-    move-object/from16 v0, p1
+    invoke-virtual {v5, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    move-result-object v5
 
-    move-result v2
-
-    if-eqz v2, :cond_15
-
-    .line 185
-    const/4 v2, 0x0
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v2
-
-    move-object/from16 v0, p0
-
-    invoke-direct {v0, v2}, Lorg/apache/cordova/file/FileUtils;->removeRecursively(Ljava/lang/String;)Z
-
-    move-result v26
-
-    .line 186
-    .restart local v26    # "success":Z
-    if-eqz v26, :cond_14
-
-    .line 187
-    invoke-virtual/range {p3 .. p3}, Lorg/apache/cordova/CallbackContext;->success()V
-
-    goto/16 :goto_0
-
-    .line 189
-    :cond_14
-    sget v2, Lorg/apache/cordova/file/FileUtils;->NO_MODIFICATION_ALLOWED_ERR:I
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/CallbackContext;->error(I)V
-
-    goto/16 :goto_0
-
-    .line 192
-    .end local v26    # "success":Z
-    :cond_15
-    const-string v2, "moveTo"
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_16
-
-    .line 193
-    const/4 v2, 0x0
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v2
-
-    const/4 v3, 0x1
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v3
 
-    const/4 v6, 0x2
+    goto :goto_2
 
-    move-object/from16 v0, p2
+    .line 206
+    :cond_5
+    const-string v5, "FileUtils"
 
-    invoke-virtual {v0, v6}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
+    const-string v6, "File plugin configuration error: Please set AndroidPersistentFileLocation in config.xml to one of \"internal\" (for new applications) or \"compatibility\" (for compatibility with previous versions)"
 
-    move-result-object v6
+    invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    const/4 v8, 0x1
+    .line 207
+    invoke-virtual {v0}, Landroid/app/Activity;->finish()V
 
-    move-object/from16 v0, p0
-
-    invoke-direct {v0, v2, v3, v6, v8}, Lorg/apache/cordova/file/FileUtils;->transferTo(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lorg/json/JSONObject;
-
-    move-result-object v18
-
-    .line 194
-    .local v18, "entry":Lorg/json/JSONObject;
-    move-object/from16 v0, p3
-
-    move-object/from16 v1, v18
-
-    invoke-virtual {v0, v1}, Lorg/apache/cordova/CallbackContext;->success(Lorg/json/JSONObject;)V
-
-    goto/16 :goto_0
-
-    .line 196
-    .end local v18    # "entry":Lorg/json/JSONObject;
-    :cond_16
-    const-string v2, "copyTo"
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_17
-
-    .line 197
-    const/4 v2, 0x0
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v2
-
-    const/4 v3, 0x1
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v3
-
-    const/4 v6, 0x2
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v6}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v6
-
-    const/4 v8, 0x0
-
-    move-object/from16 v0, p0
-
-    invoke-direct {v0, v2, v3, v6, v8}, Lorg/apache/cordova/file/FileUtils;->transferTo(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lorg/json/JSONObject;
-
-    move-result-object v18
-
-    .line 198
-    .restart local v18    # "entry":Lorg/json/JSONObject;
-    move-object/from16 v0, p3
-
-    move-object/from16 v1, v18
-
-    invoke-virtual {v0, v1}, Lorg/apache/cordova/CallbackContext;->success(Lorg/json/JSONObject;)V
-
-    goto/16 :goto_0
-
-    .line 200
-    .end local v18    # "entry":Lorg/json/JSONObject;
-    :cond_17
-    const-string v2, "readEntries"
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_18
-
-    .line 201
-    const/4 v2, 0x0
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v2}, Lorg/json/JSONArray;->getString(I)Ljava/lang/String;
-
-    move-result-object v2
-
-    move-object/from16 v0, p0
-
-    invoke-direct {v0, v2}, Lorg/apache/cordova/file/FileUtils;->readEntries(Ljava/lang/String;)Lorg/json/JSONArray;
-
-    move-result-object v17
-
-    .line 202
-    .local v17, "entries":Lorg/json/JSONArray;
-    move-object/from16 v0, p3
-
-    move-object/from16 v1, v17
-
-    invoke-virtual {v0, v1}, Lorg/apache/cordova/CallbackContext;->success(Lorg/json/JSONArray;)V
-    :try_end_8
-    .catch Ljava/io/FileNotFoundException; {:try_start_8 .. :try_end_8} :catch_0
-    .catch Lorg/apache/cordova/file/FileExistsException; {:try_start_8 .. :try_end_8} :catch_1
-    .catch Lorg/apache/cordova/file/NoModificationAllowedException; {:try_start_8 .. :try_end_8} :catch_2
-    .catch Lorg/apache/cordova/file/InvalidModificationException; {:try_start_8 .. :try_end_8} :catch_3
-    .catch Ljava/net/MalformedURLException; {:try_start_8 .. :try_end_8} :catch_4
-    .catch Ljava/io/IOException; {:try_start_8 .. :try_end_8} :catch_5
-    .catch Lorg/apache/cordova/file/EncodingException; {:try_start_8 .. :try_end_8} :catch_6
-    .catch Lorg/apache/cordova/file/TypeMismatchException; {:try_start_8 .. :try_end_8} :catch_7
-
-    goto/16 :goto_0
-
-    .line 205
-    .end local v17    # "entries":Lorg/json/JSONArray;
-    :cond_18
-    const/4 v2, 0x0
-
-    goto/16 :goto_1
+    goto :goto_1
 .end method
 
 .method public readFileAs(Ljava/lang/String;IILorg/apache/cordova/CallbackContext;Ljava/lang/String;I)V
-    .locals 9
-    .param p1, "filename"    # Ljava/lang/String;
+    .locals 8
+    .param p1, "srcURLstr"    # Ljava/lang/String;
     .param p2, "start"    # I
     .param p3, "end"    # I
     .param p4, "callbackContext"    # Lorg/apache/cordova/CallbackContext;
     .param p5, "encoding"    # Ljava/lang/String;
     .param p6, "resultType"    # I
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/net/MalformedURLException;
+        }
+    .end annotation
 
     .prologue
-    .line 927
-    iget-object v0, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
+    .line 952
+    :try_start_0
+    new-instance v1, Lorg/apache/cordova/file/LocalFilesystemURL;
 
-    invoke-interface {v0}, Lorg/apache/cordova/CordovaInterface;->getThreadPool()Ljava/util/concurrent/ExecutorService;
+    invoke-direct {v1, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
+
+    .line 953
+    .local v1, "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    invoke-direct {p0, v1}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
+
+    move-result-object v0
+
+    .line 954
+    .local v0, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-nez v0, :cond_0
+
+    .line 955
+    new-instance v2, Ljava/net/MalformedURLException;
+
+    const-string v3, "No installed handlers for this URL"
+
+    invoke-direct {v2, v3}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v2
+    :try_end_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
+    .catch Ljava/io/FileNotFoundException; {:try_start_0 .. :try_end_0} :catch_1
+    .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_2
+
+    .line 1000
+    .end local v0    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v1    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :catch_0
+    move-exception v7
+
+    .line 1001
+    .local v7, "e":Ljava/lang/IllegalArgumentException;
+    new-instance v2, Ljava/net/MalformedURLException;
+
+    const-string v3, "Unrecognized filesystem URL"
+
+    invoke-direct {v2, v3}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v2
+
+    .line 958
+    .end local v7    # "e":Ljava/lang/IllegalArgumentException;
+    .restart local v0    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .restart local v1    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :cond_0
+    int-to-long v2, p2
+
+    int-to-long v4, p3
+
+    :try_start_1
+    new-instance v6, Lorg/apache/cordova/file/FileUtils$26;
+
+    invoke-direct {v6, p0, p6, p5, p4}, Lorg/apache/cordova/file/FileUtils$26;-><init>(Lorg/apache/cordova/file/FileUtils;ILjava/lang/String;Lorg/apache/cordova/CallbackContext;)V
+
+    invoke-virtual/range {v0 .. v6}, Lorg/apache/cordova/file/Filesystem;->readFileAtURL(Lorg/apache/cordova/file/LocalFilesystemURL;JJLorg/apache/cordova/file/Filesystem$ReadFileCallback;)V
+    :try_end_1
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_1 .. :try_end_1} :catch_0
+    .catch Ljava/io/FileNotFoundException; {:try_start_1 .. :try_end_1} :catch_1
+    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_2
+
+    .line 1008
+    .end local v0    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v1    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :goto_0
+    return-void
+
+    .line 1002
+    :catch_1
+    move-exception v7
+
+    .line 1003
+    .local v7, "e":Ljava/io/FileNotFoundException;
+    new-instance v2, Lorg/apache/cordova/PluginResult;
+
+    sget-object v3, Lorg/apache/cordova/PluginResult$Status;->IO_EXCEPTION:Lorg/apache/cordova/PluginResult$Status;
+
+    sget v4, Lorg/apache/cordova/file/FileUtils;->NOT_FOUND_ERR:I
+
+    invoke-direct {v2, v3, v4}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;I)V
+
+    invoke-virtual {p4, v2}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
+
+    goto :goto_0
+
+    .line 1004
+    .end local v7    # "e":Ljava/io/FileNotFoundException;
+    :catch_2
+    move-exception v7
+
+    .line 1005
+    .local v7, "e":Ljava/io/IOException;
+    const-string v2, "FileUtils"
+
+    invoke-virtual {v7}, Ljava/io/IOException;->getLocalizedMessage()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-static {v2, v3}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 1006
+    new-instance v2, Lorg/apache/cordova/PluginResult;
+
+    sget-object v3, Lorg/apache/cordova/PluginResult$Status;->IO_EXCEPTION:Lorg/apache/cordova/PluginResult$Status;
+
+    sget v4, Lorg/apache/cordova/file/FileUtils;->NOT_READABLE_ERR:I
+
+    invoke-direct {v2, v3, v4}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;I)V
+
+    invoke-virtual {p4, v2}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
+
+    goto :goto_0
+.end method
+
+.method protected registerExtraFileSystems([Ljava/lang/String;Ljava/util/HashMap;)V
+    .locals 10
+    .param p1, "filesystems"    # [Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "([",
+            "Ljava/lang/String;",
+            "Ljava/util/HashMap",
+            "<",
+            "Ljava/lang/String;",
+            "Ljava/lang/String;",
+            ">;)V"
+        }
+    .end annotation
+
+    .prologue
+    .line 106
+    .local p2, "availableFileSystems":Ljava/util/HashMap;, "Ljava/util/HashMap<Ljava/lang/String;Ljava/lang/String;>;"
+    new-instance v4, Ljava/util/HashSet;
+
+    invoke-direct {v4}, Ljava/util/HashSet;-><init>()V
+
+    .line 109
+    .local v4, "installedFileSystems":Ljava/util/HashSet;, "Ljava/util/HashSet<Ljava/lang/String;>;"
+    move-object v0, p1
+
+    .local v0, "arr$":[Ljava/lang/String;
+    array-length v5, v0
+
+    .local v5, "len$":I
+    const/4 v3, 0x0
+
+    .local v3, "i$":I
+    :goto_0
+    if-ge v3, v5, :cond_4
+
+    aget-object v1, v0, v3
+
+    .line 110
+    .local v1, "fsName":Ljava/lang/String;
+    invoke-virtual {v4, v1}, Ljava/util/HashSet;->contains(Ljava/lang/Object;)Z
+
+    move-result v7
+
+    if-nez v7, :cond_1
+
+    .line 111
+    invoke-virtual {p2, v1}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v2
+
+    check-cast v2, Ljava/lang/String;
+
+    .line 112
+    .local v2, "fsRoot":Ljava/lang/String;
+    if-eqz v2, :cond_3
+
+    .line 113
+    new-instance v6, Ljava/io/File;
+
+    invoke-direct {v6, v2}, Ljava/io/File;-><init>(Ljava/lang/String;)V
+
+    .line 114
+    .local v6, "newRoot":Ljava/io/File;
+    invoke-virtual {v6}, Ljava/io/File;->mkdirs()Z
+
+    move-result v7
+
+    if-nez v7, :cond_0
+
+    invoke-virtual {v6}, Ljava/io/File;->isDirectory()Z
+
+    move-result v7
+
+    if-eqz v7, :cond_2
+
+    .line 115
+    :cond_0
+    new-instance v7, Lorg/apache/cordova/file/LocalFilesystem;
+
+    iget-object v8, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
+
+    invoke-direct {v7, v1, v8, v2}, Lorg/apache/cordova/file/LocalFilesystem;-><init>(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;Ljava/lang/String;)V
+
+    invoke-virtual {p0, v7}, Lorg/apache/cordova/file/FileUtils;->registerFilesystem(Lorg/apache/cordova/file/Filesystem;)V
+
+    .line 116
+    invoke-virtual {v4, v1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
+
+    .line 109
+    .end local v2    # "fsRoot":Ljava/lang/String;
+    .end local v6    # "newRoot":Ljava/io/File;
+    :cond_1
+    :goto_1
+    add-int/lit8 v3, v3, 0x1
+
+    goto :goto_0
+
+    .line 118
+    .restart local v2    # "fsRoot":Ljava/lang/String;
+    .restart local v6    # "newRoot":Ljava/io/File;
+    :cond_2
+    const-string v7, "FileUtils"
+
+    new-instance v8, Ljava/lang/StringBuilder;
+
+    invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v9, "Unable to create root dir for fileystem \""
+
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v8
 
-    new-instance v0, Lorg/apache/cordova/file/FileUtils$1;
+    invoke-virtual {v8, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-object v1, p0
+    move-result-object v8
 
-    move-object v2, p1
+    const-string v9, "\", skipping"
 
-    move v3, p2
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move v4, p3
+    move-result-object v8
 
-    move v5, p6
+    invoke-virtual {v8}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-object v6, p5
+    move-result-object v8
 
-    move-object v7, p4
+    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    invoke-direct/range {v0 .. v7}, Lorg/apache/cordova/file/FileUtils$1;-><init>(Lorg/apache/cordova/file/FileUtils;Ljava/lang/String;IIILjava/lang/String;Lorg/apache/cordova/CallbackContext;)V
+    goto :goto_1
 
-    invoke-interface {v8, v0}, Ljava/util/concurrent/ExecutorService;->execute(Ljava/lang/Runnable;)V
+    .line 121
+    .end local v6    # "newRoot":Ljava/io/File;
+    :cond_3
+    const-string v7, "FileUtils"
 
-    .line 959
+    new-instance v8, Ljava/lang/StringBuilder;
+
+    invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v9, "Unrecognized extra filesystem identifier: "
+
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v8
+
+    invoke-virtual {v8, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v8
+
+    invoke-virtual {v8}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_1
+
+    .line 125
+    .end local v1    # "fsName":Ljava/lang/String;
+    .end local v2    # "fsRoot":Ljava/lang/String;
+    :cond_4
     return-void
+.end method
+
+.method public registerFilesystem(Lorg/apache/cordova/file/Filesystem;)V
+    .locals 1
+    .param p1, "fs"    # Lorg/apache/cordova/file/Filesystem;
+
+    .prologue
+    .line 83
+    if-eqz p1, :cond_0
+
+    iget-object v0, p1, Lorg/apache/cordova/file/Filesystem;->name:Ljava/lang/String;
+
+    invoke-direct {p0, v0}, Lorg/apache/cordova/file/FileUtils;->filesystemForName(Ljava/lang/String;)Lorg/apache/cordova/file/Filesystem;
+
+    move-result-object v0
+
+    if-nez v0, :cond_0
+
+    .line 84
+    iget-object v0, p0, Lorg/apache/cordova/file/FileUtils;->filesystems:Ljava/util/ArrayList;
+
+    invoke-virtual {v0, p1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    .line 86
+    :cond_0
+    return-void
+.end method
+
+.method public remapUri(Landroid/net/Uri;)Landroid/net/Uri;
+    .locals 7
+    .param p1, "uri"    # Landroid/net/Uri;
+
+    .prologue
+    const/4 v4, 0x0
+
+    .line 223
+    :try_start_0
+    new-instance v2, Lorg/apache/cordova/file/LocalFilesystemURL;
+
+    invoke-direct {v2, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Landroid/net/Uri;)V
+
+    .line 224
+    .local v2, "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    invoke-direct {p0, v2}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
+
+    move-result-object v1
+
+    .line 225
+    .local v1, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-nez v1, :cond_1
+
+    .line 234
+    .end local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :cond_0
+    :goto_0
+    return-object v4
+
+    .line 228
+    .restart local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .restart local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :cond_1
+    invoke-virtual {v1, v2}, Lorg/apache/cordova/file/Filesystem;->filesystemPathForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Ljava/lang/String;
+
+    move-result-object v3
+
+    .line 229
+    .local v3, "path":Ljava/lang/String;
+    if-eqz v3, :cond_0
+
+    .line 230
+    new-instance v5, Ljava/lang/StringBuilder;
+
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v6, "file:///"
+
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v1, v2}, Lorg/apache/cordova/file/Filesystem;->filesystemPathForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v5
+
+    invoke-static {v5}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
+    :try_end_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result-object v4
+
+    goto :goto_0
+
+    .line 233
+    .end local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    .end local v3    # "path":Ljava/lang/String;
+    :catch_0
+    move-exception v0
+
+    .line 234
+    .local v0, "e":Ljava/lang/IllegalArgumentException;
+    goto :goto_0
 .end method
 
 .method public write(Ljava/lang/String;Ljava/lang/String;IZ)J
     .locals 8
-    .param p1, "filename"    # Ljava/lang/String;
+    .param p1, "srcURLstr"    # Ljava/lang/String;
     .param p2, "data"    # Ljava/lang/String;
     .param p3, "offset"    # I
     .param p4, "isBinary"    # Z
@@ -4140,111 +4130,87 @@
     .end annotation
 
     .prologue
-    const/4 v7, 0x0
-
-    .line 1000
-    const-string v5, "content://"
-
-    invoke-virtual {p1, v5}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_0
-
-    .line 1001
-    new-instance v5, Lorg/apache/cordova/file/NoModificationAllowedException;
-
-    const-string v6, "Couldn\'t write to file given its content URI"
-
-    invoke-direct {v5, v6}, Lorg/apache/cordova/file/NoModificationAllowedException;-><init>(Ljava/lang/String;)V
-
-    throw v5
-
-    .line 1004
-    :cond_0
-    iget-object v5, p0, Lorg/apache/cordova/file/FileUtils;->cordova:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-static {p1, v5}, Lorg/apache/cordova/file/FileHelper;->getRealPath(Ljava/lang/String;Lorg/apache/cordova/CordovaInterface;)Ljava/lang/String;
-
-    move-result-object p1
-
-    .line 1006
-    const/4 v0, 0x0
-
-    .line 1007
-    .local v0, "append":Z
-    if-lez p3, :cond_1
-
-    .line 1008
-    int-to-long v5, p3
-
-    invoke-direct {p0, p1, v5, v6}, Lorg/apache/cordova/file/FileUtils;->truncateFile(Ljava/lang/String;J)J
-
-    .line 1009
-    const/4 v0, 0x1
-
-    .line 1013
-    :cond_1
-    if-eqz p4, :cond_2
-
-    .line 1014
-    invoke-static {p2, v7}, Landroid/util/Base64;->decode(Ljava/lang/String;I)[B
-
-    move-result-object v4
-
-    .line 1018
-    .local v4, "rawData":[B
-    :goto_0
-    new-instance v2, Ljava/io/ByteArrayInputStream;
-
-    invoke-direct {v2, v4}, Ljava/io/ByteArrayInputStream;-><init>([B)V
-
-    .line 1019
-    .local v2, "in":Ljava/io/ByteArrayInputStream;
-    new-instance v3, Ljava/io/FileOutputStream;
-
-    invoke-direct {v3, p1, v0}, Ljava/io/FileOutputStream;-><init>(Ljava/lang/String;Z)V
-
-    .line 1020
-    .local v3, "out":Ljava/io/FileOutputStream;
-    array-length v5, v4
-
-    new-array v1, v5, [B
-
-    .line 1021
-    .local v1, "buff":[B
-    array-length v5, v1
-
-    invoke-virtual {v2, v1, v7, v5}, Ljava/io/ByteArrayInputStream;->read([BII)I
-
-    .line 1022
-    array-length v5, v4
-
-    invoke-virtual {v3, v1, v7, v5}, Ljava/io/FileOutputStream;->write([BII)V
-
-    .line 1023
-    invoke-virtual {v3}, Ljava/io/FileOutputStream;->flush()V
-
     .line 1024
-    invoke-virtual {v3}, Ljava/io/FileOutputStream;->close()V
+    :try_start_0
+    new-instance v2, Lorg/apache/cordova/file/LocalFilesystemURL;
+
+    invoke-direct {v2, p1}, Lorg/apache/cordova/file/LocalFilesystemURL;-><init>(Ljava/lang/String;)V
+
+    .line 1025
+    .local v2, "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    invoke-direct {p0, v2}, Lorg/apache/cordova/file/FileUtils;->filesystemForURL(Lorg/apache/cordova/file/LocalFilesystemURL;)Lorg/apache/cordova/file/Filesystem;
+
+    move-result-object v1
 
     .line 1026
-    array-length v5, v4
+    .local v1, "fs":Lorg/apache/cordova/file/Filesystem;
+    if-nez v1, :cond_0
 
-    int-to-long v5, v5
+    .line 1027
+    new-instance v3, Ljava/net/MalformedURLException;
 
-    return-wide v5
+    const-string v6, "No installed handlers for this URL"
 
-    .line 1016
-    .end local v1    # "buff":[B
-    .end local v2    # "in":Ljava/io/ByteArrayInputStream;
-    .end local v3    # "out":Ljava/io/FileOutputStream;
-    .end local v4    # "rawData":[B
-    :cond_2
-    invoke-virtual {p2}, Ljava/lang/String;->getBytes()[B
+    invoke-direct {v3, v6}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
 
-    move-result-object v4
+    throw v3
+    :try_end_0
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .restart local v4    # "rawData":[B
-    goto :goto_0
+    .line 1031
+    .end local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .end local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :catch_0
+    move-exception v0
+
+    .line 1032
+    .local v0, "e":Ljava/lang/IllegalArgumentException;
+    new-instance v3, Ljava/net/MalformedURLException;
+
+    const-string v6, "Unrecognized filesystem URL"
+
+    invoke-direct {v3, v6}, Ljava/net/MalformedURLException;-><init>(Ljava/lang/String;)V
+
+    throw v3
+
+    .line 1030
+    .end local v0    # "e":Ljava/lang/IllegalArgumentException;
+    .restart local v1    # "fs":Lorg/apache/cordova/file/Filesystem;
+    .restart local v2    # "inputURL":Lorg/apache/cordova/file/LocalFilesystemURL;
+    :cond_0
+    :try_start_1
+    invoke-virtual {v1, v2, p2, p3, p4}, Lorg/apache/cordova/file/Filesystem;->writeToFileAtURL(Lorg/apache/cordova/file/LocalFilesystemURL;Ljava/lang/String;IZ)J
+
+    move-result-wide v4
+
+    .local v4, "x":J
+    const-string v3, "TEST"
+
+    new-instance v6, Ljava/lang/StringBuilder;
+
+    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
+
+    invoke-virtual {v6, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    const-string v7, ": "
+
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v6, v4, v5}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-static {v3, v6}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_1
+    .catch Ljava/lang/IllegalArgumentException; {:try_start_1 .. :try_end_1} :catch_0
+
+    return-wide v4
 .end method

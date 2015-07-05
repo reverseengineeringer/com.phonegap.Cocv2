@@ -132,14 +132,12 @@
 
     move-result v4
 
-    .line 70
     iget-object v5, p0, Lcom/squareup/okhttp/internal/http/HttpsEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
     invoke-virtual {v5}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getProxyAuthorization()Ljava/lang/String;
 
     move-result-object v5
 
-    .line 69
     invoke-direct {v2, v3, v4, v1, v5}, Lcom/squareup/okhttp/TunnelRequest;-><init>(Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;)V
 
     return-object v2

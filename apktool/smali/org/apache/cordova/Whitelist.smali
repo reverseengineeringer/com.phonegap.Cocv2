@@ -89,7 +89,7 @@
 
     .line 123
     :cond_1
-    const-string v7, "^((\\*|[A-Za-z-]+)://)?(\\*|((\\*\\.)?[^*/:]+))?(:(\\d+))?(/.*)?"
+    const-string v7, "^((\\*|[A-Za-z-]+):(//)?)?(\\*|((\\*\\.)?[^*/:]+))?(:(\\d+))?(/.*)?"
 
     invoke-static {v7}, Ljava/util/regex/Pattern;->compile(Ljava/lang/String;)Ljava/util/regex/Pattern;
 
@@ -118,7 +118,7 @@
 
     .line 127
     .local v6, "scheme":Ljava/lang/String;
-    const/4 v7, 0x3
+    const/4 v7, 0x4
 
     invoke-virtual {v2, v7}, Ljava/util/regex/Matcher;->group(I)Ljava/lang/String;
 
@@ -149,7 +149,7 @@
 
     .line 130
     :cond_3
-    const/4 v7, 0x7
+    const/16 v7, 0x8
 
     invoke-virtual {v2, v7}, Ljava/util/regex/Matcher;->group(I)Ljava/lang/String;
 
@@ -157,7 +157,7 @@
 
     .line 131
     .local v5, "port":Ljava/lang/String;
-    const/16 v7, 0x8
+    const/16 v7, 0x9
 
     invoke-virtual {v2, v7}, Ljava/util/regex/Matcher;->group(I)Ljava/lang/String;
 
@@ -281,15 +281,9 @@
 
     move-result v4
 
-    if-nez v4, :cond_2
-
-    .line 167
-    const/4 v3, 0x0
-
-    goto :goto_0
+    if-eqz v4, :cond_2
 
     .line 162
-    :cond_2
     invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v0
@@ -303,6 +297,13 @@
     move-result v4
 
     if-eqz v4, :cond_1
+
+    goto :goto_0
+
+    .line 167
+    .end local v0    # "p":Lorg/apache/cordova/Whitelist$URLPattern;
+    :cond_2
+    const/4 v3, 0x0
 
     goto :goto_0
 .end method

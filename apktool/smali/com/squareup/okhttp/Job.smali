@@ -26,7 +26,7 @@
     .param p4, "responseReceiver"    # Lcom/squareup/okhttp/Response$Receiver;
 
     .prologue
-    .line 47
+    .line 48
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     .line 49
@@ -148,7 +148,6 @@
     .local v8, "responseCode":I
     new-instance v7, Lcom/squareup/okhttp/Dispatcher$RealResponseBody;
 
-    .line 133
     invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/HttpEngine;->getResponseHeaders()Lcom/squareup/okhttp/internal/http/ResponseHeaders;
 
     move-result-object v9
@@ -157,7 +156,6 @@
 
     move-result-object v10
 
-    .line 132
     invoke-direct {v7, v9, v10}, Lcom/squareup/okhttp/Dispatcher$RealResponseBody;-><init>(Lcom/squareup/okhttp/internal/http/ResponseHeaders;Ljava/io/InputStream;)V
 
     .line 135
@@ -168,7 +166,6 @@
 
     invoke-direct {v9, v10, v8}, Lcom/squareup/okhttp/Response$Builder;-><init>(Lcom/squareup/okhttp/Request;I)V
 
-    .line 136
     invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/HttpEngine;->getResponseHeaders()Lcom/squareup/okhttp/internal/http/ResponseHeaders;
 
     move-result-object v10
@@ -181,17 +178,14 @@
 
     move-result-object v9
 
-    .line 137
     invoke-virtual {v9, v7}, Lcom/squareup/okhttp/Response$Builder;->body(Lcom/squareup/okhttp/Response$Body;)Lcom/squareup/okhttp/Response$Builder;
 
     move-result-object v9
 
-    .line 138
     invoke-virtual {v9, v5}, Lcom/squareup/okhttp/Response$Builder;->redirectedBy(Lcom/squareup/okhttp/Response;)Lcom/squareup/okhttp/Response$Builder;
 
     move-result-object v9
 
-    .line 139
     invoke-virtual {v9}, Lcom/squareup/okhttp/Response$Builder;->build()Lcom/squareup/okhttp/Response;
 
     move-result-object v6
@@ -268,7 +262,6 @@
 
     if-eqz v0, :cond_1
 
-    .line 179
     invoke-virtual {p1}, Lcom/squareup/okhttp/internal/http/HttpEngine;->getConnection()Lcom/squareup/okhttp/Connection;
 
     move-result-object v0
@@ -297,7 +290,7 @@
     :goto_1
     return-object v12
 
-    .line 180
+    .line 178
     .end local v4    # "selectedProxy":Ljava/net/Proxy;
     .end local v10    # "responseCode":I
     :cond_1
@@ -345,7 +338,6 @@
 
     move-result-object v0
 
-    .line 192
     invoke-virtual {p2}, Lcom/squareup/okhttp/Response;->code()I
 
     move-result v1
@@ -354,14 +346,12 @@
 
     move-result-object v2
 
-    .line 193
     iget-object v5, p0, Lcom/squareup/okhttp/Job;->request:Lcom/squareup/okhttp/Request;
 
     invoke-virtual {v5}, Lcom/squareup/okhttp/Request;->url()Ljava/net/URL;
 
     move-result-object v5
 
-    .line 191
     invoke-static/range {v0 .. v5}, Lcom/squareup/okhttp/internal/http/HttpAuthenticator;->processAuthHeader(Lcom/squareup/okhttp/OkAuthenticator;ILcom/squareup/okhttp/internal/http/RawHeaders;Lcom/squareup/okhttp/internal/http/RawHeaders;Ljava/net/Proxy;Ljava/net/URL;)Z
 
     move-result v6
@@ -370,7 +360,6 @@
     .local v6, "credentialsFound":Z
     if-eqz v6, :cond_3
 
-    .line 195
     invoke-virtual {v9}, Lcom/squareup/okhttp/Request;->newBuilder()Lcom/squareup/okhttp/Request$Builder;
 
     move-result-object v0
@@ -386,13 +375,11 @@
     :goto_2
     move-object v12, v0
 
-    .line 194
     goto :goto_1
 
     :cond_3
     move-object v0, v12
 
-    .line 196
     goto :goto_2
 
     .line 203
@@ -534,7 +521,6 @@
 
     if-eqz v0, :cond_0
 
-    .line 229
     invoke-virtual {p1}, Lcom/squareup/okhttp/Request;->url()Ljava/net/URL;
 
     move-result-object v0
@@ -553,7 +539,6 @@
 
     if-ne v0, v1, :cond_0
 
-    .line 230
     invoke-virtual {p1}, Lcom/squareup/okhttp/Request;->url()Ljava/net/URL;
 
     move-result-object v0
@@ -576,7 +561,6 @@
 
     if-eqz v0, :cond_0
 
-    .line 228
     const/4 v0, 0x1
 
     :goto_0
@@ -826,24 +810,20 @@
 
     invoke-direct {v3}, Lcom/squareup/okhttp/Failure$Builder;-><init>()V
 
-    .line 97
     iget-object v4, p0, Lcom/squareup/okhttp/Job;->request:Lcom/squareup/okhttp/Request;
 
     invoke-virtual {v3, v4}, Lcom/squareup/okhttp/Failure$Builder;->request(Lcom/squareup/okhttp/Request;)Lcom/squareup/okhttp/Failure$Builder;
 
     move-result-object v3
 
-    .line 98
     invoke-virtual {v3, v0}, Lcom/squareup/okhttp/Failure$Builder;->exception(Ljava/lang/Throwable;)Lcom/squareup/okhttp/Failure$Builder;
 
     move-result-object v3
 
-    .line 99
     invoke-virtual {v3}, Lcom/squareup/okhttp/Failure$Builder;->build()Lcom/squareup/okhttp/Failure;
 
     move-result-object v3
 
-    .line 96
     invoke-interface {v2, v3}, Lcom/squareup/okhttp/Response$Receiver;->onFailure(Lcom/squareup/okhttp/Failure;)V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
@@ -855,17 +835,14 @@
 
     goto :goto_0
 
-    .line 100
     .end local v0    # "e":Ljava/io/IOException;
     :catchall_0
     move-exception v2
 
-    .line 103
     iget-object v3, p0, Lcom/squareup/okhttp/Job;->dispatcher:Lcom/squareup/okhttp/Dispatcher;
 
     invoke-virtual {v3, p0}, Lcom/squareup/okhttp/Dispatcher;->finished(Lcom/squareup/okhttp/Job;)V
 
-    .line 104
     throw v2
 .end method
 

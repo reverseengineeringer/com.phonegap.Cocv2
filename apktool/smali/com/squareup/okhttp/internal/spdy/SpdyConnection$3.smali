@@ -17,23 +17,23 @@
 # instance fields
 .field final synthetic this$0:Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
 
-.field private final synthetic val$payload1:I
+.field final synthetic val$payload1:I
 
-.field private final synthetic val$payload2:I
+.field final synthetic val$payload2:I
 
-.field private final synthetic val$ping:Lcom/squareup/okhttp/internal/spdy/Ping;
+.field final synthetic val$ping:Lcom/squareup/okhttp/internal/spdy/Ping;
 
-.field private final synthetic val$reply:Z
+.field final synthetic val$reply:Z
 
 
 # direct methods
 .method varargs constructor <init>(Lcom/squareup/okhttp/internal/spdy/SpdyConnection;Ljava/lang/String;[Ljava/lang/Object;ZIILcom/squareup/okhttp/internal/spdy/Ping;)V
     .locals 0
-    .param p2, "$anonymous0"    # Ljava/lang/String;
-    .param p3, "$anonymous1"    # [Ljava/lang/Object;
+    .param p2, "x0"    # Ljava/lang/String;
+    .param p3, "x1"    # [Ljava/lang/Object;
 
     .prologue
-    .line 1
+    .line 244
     iput-object p1, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$3;->this$0:Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
 
     iput-boolean p4, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$3;->val$reply:Z
@@ -44,7 +44,6 @@
 
     iput-object p7, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$3;->val$ping:Lcom/squareup/okhttp/internal/spdy/Ping;
 
-    .line 243
     invoke-direct {p0, p2, p3}, Lcom/squareup/okhttp/internal/NamedRunnable;-><init>(Ljava/lang/String;[Ljava/lang/Object;)V
 
     return-void
@@ -69,7 +68,7 @@
     iget-object v4, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$3;->val$ping:Lcom/squareup/okhttp/internal/spdy/Ping;
 
     # invokes: Lcom/squareup/okhttp/internal/spdy/SpdyConnection;->writePing(ZIILcom/squareup/okhttp/internal/spdy/Ping;)V
-    invoke-static {v0, v1, v2, v3, v4}, Lcom/squareup/okhttp/internal/spdy/SpdyConnection;->access$15(Lcom/squareup/okhttp/internal/spdy/SpdyConnection;ZIILcom/squareup/okhttp/internal/spdy/Ping;)V
+    invoke-static {v0, v1, v2, v3, v4}, Lcom/squareup/okhttp/internal/spdy/SpdyConnection;->access$700(Lcom/squareup/okhttp/internal/spdy/SpdyConnection;ZIILcom/squareup/okhttp/internal/spdy/Ping;)V
     :try_end_0
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
 

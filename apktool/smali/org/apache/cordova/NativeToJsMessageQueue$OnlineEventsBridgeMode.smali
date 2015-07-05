@@ -15,11 +15,15 @@
 
 
 # instance fields
+.field private ignoreNextFlush:Z
+
 .field private online:Z
 
-.field final runnable:Ljava/lang/Runnable;
+.field final resetNetworkRunnable:Ljava/lang/Runnable;
 
 .field final synthetic this$0:Lorg/apache/cordova/NativeToJsMessageQueue;
+
+.field final toggleNetworkRunnable:Ljava/lang/Runnable;
 
 
 # direct methods
@@ -27,51 +31,75 @@
     .locals 1
 
     .prologue
-    .line 309
+    .line 312
     iput-object p1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->this$0:Lorg/apache/cordova/NativeToJsMessageQueue;
 
     const/4 v0, 0x0
 
-    invoke-direct {p0, p1, v0}, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;)V
+    invoke-direct {p0, p1, v0}, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$1;)V
 
-    .line 311
+    .line 316
     new-instance v0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode$1;
 
     invoke-direct {v0, p0}, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode$1;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;)V
 
-    iput-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->runnable:Ljava/lang/Runnable;
+    iput-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->toggleNetworkRunnable:Ljava/lang/Runnable;
+
+    .line 324
+    new-instance v0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode$2;
+
+    invoke-direct {v0, p0}, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode$2;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;)V
+
+    iput-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->resetNetworkRunnable:Ljava/lang/Runnable;
 
     return-void
 .end method
 
-.method synthetic constructor <init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;)V
+.method synthetic constructor <init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$1;)V
     .locals 0
+    .param p1, "x0"    # Lorg/apache/cordova/NativeToJsMessageQueue;
+    .param p2, "x1"    # Lorg/apache/cordova/NativeToJsMessageQueue$1;
 
     .prologue
-    .line 309
+    .line 312
     invoke-direct {p0, p1}, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;)V
 
     return-void
 .end method
 
-.method static synthetic access$0(Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;)Z
+.method static synthetic access$1000(Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;)Z
     .locals 1
+    .param p0, "x0"    # Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;
 
     .prologue
-    .line 310
+    .line 312
     iget-boolean v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->online:Z
 
     return v0
 .end method
 
-.method static synthetic access$2(Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;)Lorg/apache/cordova/NativeToJsMessageQueue;
-    .locals 1
+.method static synthetic access$1002(Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;Z)Z
+    .locals 0
+    .param p0, "x0"    # Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;
+    .param p1, "x1"    # Z
 
     .prologue
-    .line 309
-    iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->this$0:Lorg/apache/cordova/NativeToJsMessageQueue;
+    .line 312
+    iput-boolean p1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->online:Z
 
-    return-object v0
+    return p1
+.end method
+
+.method static synthetic access$902(Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;Z)Z
+    .locals 0
+    .param p0, "x0"    # Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;
+    .param p1, "x1"    # Z
+
+    .prologue
+    .line 312
+    iput-boolean p1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->ignoreNextFlush:Z
+
+    return p1
 .end method
 
 
@@ -81,26 +109,30 @@
     .param p1, "fromOnlineEvent"    # Z
 
     .prologue
-    .line 327
+    .line 340
     if-eqz p1, :cond_0
 
-    .line 328
+    iget-boolean v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->ignoreNextFlush:Z
+
+    if-nez v0, :cond_0
+
+    .line 341
     iget-boolean v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->online:Z
 
-    if-eqz v0, :cond_1
+    if-nez v0, :cond_1
 
-    const/4 v0, 0x0
+    const/4 v0, 0x1
 
     :goto_0
     iput-boolean v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->online:Z
 
-    .line 330
+    .line 343
     :cond_0
     return-void
 
-    .line 328
+    .line 341
     :cond_1
-    const/4 v0, 0x1
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method
@@ -109,11 +141,11 @@
     .locals 2
 
     .prologue
-    .line 323
+    .line 336
     iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->this$0:Lorg/apache/cordova/NativeToJsMessageQueue;
 
     # getter for: Lorg/apache/cordova/NativeToJsMessageQueue;->cordova:Lorg/apache/cordova/CordovaInterface;
-    invoke-static {v0}, Lorg/apache/cordova/NativeToJsMessageQueue;->access$2(Lorg/apache/cordova/NativeToJsMessageQueue;)Lorg/apache/cordova/CordovaInterface;
+    invoke-static {v0}, Lorg/apache/cordova/NativeToJsMessageQueue;->access$700(Lorg/apache/cordova/NativeToJsMessageQueue;)Lorg/apache/cordova/CordovaInterface;
 
     move-result-object v0
 
@@ -121,11 +153,11 @@
 
     move-result-object v0
 
-    iget-object v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->runnable:Ljava/lang/Runnable;
+    iget-object v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->toggleNetworkRunnable:Ljava/lang/Runnable;
 
     invoke-virtual {v0, v1}, Landroid/app/Activity;->runOnUiThread(Ljava/lang/Runnable;)V
 
-    .line 324
+    .line 337
     return-void
 .end method
 
@@ -133,23 +165,22 @@
     .locals 2
 
     .prologue
-    .line 319
-    const/4 v0, 0x0
-
-    iput-boolean v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->online:Z
-
-    .line 320
+    .line 333
     iget-object v0, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->this$0:Lorg/apache/cordova/NativeToJsMessageQueue;
 
-    # getter for: Lorg/apache/cordova/NativeToJsMessageQueue;->webView:Lorg/apache/cordova/CordovaWebView;
-    invoke-static {v0}, Lorg/apache/cordova/NativeToJsMessageQueue;->access$1(Lorg/apache/cordova/NativeToJsMessageQueue;)Lorg/apache/cordova/CordovaWebView;
+    # getter for: Lorg/apache/cordova/NativeToJsMessageQueue;->cordova:Lorg/apache/cordova/CordovaInterface;
+    invoke-static {v0}, Lorg/apache/cordova/NativeToJsMessageQueue;->access$700(Lorg/apache/cordova/NativeToJsMessageQueue;)Lorg/apache/cordova/CordovaInterface;
 
     move-result-object v0
 
-    const/4 v1, 0x1
+    invoke-interface {v0}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
 
-    invoke-virtual {v0, v1}, Lorg/apache/cordova/CordovaWebView;->setNetworkAvailable(Z)V
+    move-result-object v0
 
-    .line 321
+    iget-object v1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$OnlineEventsBridgeMode;->resetNetworkRunnable:Ljava/lang/Runnable;
+
+    invoke-virtual {v0, v1}, Landroid/app/Activity;->runOnUiThread(Ljava/lang/Runnable;)V
+
+    .line 334
     return-void
 .end method

@@ -81,51 +81,56 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/Request$Builder;)Ljava/net/URL;
+.method static synthetic access$000(Lcom/squareup/okhttp/Request$Builder;)Ljava/net/URL;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/Request$Builder;
 
     .prologue
-    .line 193
+    .line 192
     iget-object v0, p0, Lcom/squareup/okhttp/Request$Builder;->url:Ljava/net/URL;
 
     return-object v0
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/Request$Builder;)Ljava/lang/String;
+.method static synthetic access$100(Lcom/squareup/okhttp/Request$Builder;)Ljava/lang/String;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/Request$Builder;
 
     .prologue
-    .line 194
+    .line 192
     iget-object v0, p0, Lcom/squareup/okhttp/Request$Builder;->method:Ljava/lang/String;
 
     return-object v0
 .end method
 
-.method static synthetic access$2(Lcom/squareup/okhttp/Request$Builder;)Lcom/squareup/okhttp/internal/http/RawHeaders;
+.method static synthetic access$200(Lcom/squareup/okhttp/Request$Builder;)Lcom/squareup/okhttp/internal/http/RawHeaders;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/Request$Builder;
 
     .prologue
-    .line 195
+    .line 192
     iget-object v0, p0, Lcom/squareup/okhttp/Request$Builder;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     return-object v0
 .end method
 
-.method static synthetic access$3(Lcom/squareup/okhttp/Request$Builder;)Lcom/squareup/okhttp/Request$Body;
+.method static synthetic access$300(Lcom/squareup/okhttp/Request$Builder;)Lcom/squareup/okhttp/Request$Body;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/Request$Builder;
 
     .prologue
-    .line 196
+    .line 192
     iget-object v0, p0, Lcom/squareup/okhttp/Request$Builder;->body:Lcom/squareup/okhttp/Request$Body;
 
     return-object v0
 .end method
 
-.method static synthetic access$4(Lcom/squareup/okhttp/Request$Builder;)Ljava/lang/Object;
+.method static synthetic access$400(Lcom/squareup/okhttp/Request$Builder;)Ljava/lang/Object;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/Request$Builder;
 
     .prologue
-    .line 197
+    .line 192
     iget-object v0, p0, Lcom/squareup/okhttp/Request$Builder;->tag:Ljava/lang/Object;
 
     return-object v0
@@ -157,7 +162,7 @@
 
     const/4 v1, 0x0
 
-    invoke-direct {v0, p0, v1}, Lcom/squareup/okhttp/Request;-><init>(Lcom/squareup/okhttp/Request$Builder;Lcom/squareup/okhttp/Request;)V
+    invoke-direct {v0, p0, v1}, Lcom/squareup/okhttp/Request;-><init>(Lcom/squareup/okhttp/Request$Builder;Lcom/squareup/okhttp/Request$1;)V
 
     return-object v0
 .end method
@@ -331,9 +336,13 @@
 
     new-instance v2, Ljava/lang/StringBuilder;
 
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v3, "Malformed URL: "
 
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
 
     invoke-virtual {v2, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 

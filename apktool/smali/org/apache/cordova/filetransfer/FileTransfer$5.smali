@@ -20,7 +20,7 @@
 # instance fields
 .field final synthetic this$0:Lorg/apache/cordova/filetransfer/FileTransfer;
 
-.field private final synthetic val$context:Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;
+.field final synthetic val$context:Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;
 
 
 # direct methods
@@ -28,12 +28,11 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 907
     iput-object p1, p0, Lorg/apache/cordova/filetransfer/FileTransfer$5;->this$0:Lorg/apache/cordova/filetransfer/FileTransfer;
 
     iput-object p2, p0, Lorg/apache/cordova/filetransfer/FileTransfer$5;->val$context:Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;
 
-    .line 863
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -42,42 +41,101 @@
 
 # virtual methods
 .method public run()V
-    .locals 2
+    .locals 9
 
     .prologue
-    .line 865
-    iget-object v1, p0, Lorg/apache/cordova/filetransfer/FileTransfer$5;->val$context:Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;
+    .line 909
+    iget-object v8, p0, Lorg/apache/cordova/filetransfer/FileTransfer$5;->val$context:Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;
 
-    monitor-enter v1
+    monitor-enter v8
 
-    .line 866
+    .line 910
     :try_start_0
     iget-object v0, p0, Lorg/apache/cordova/filetransfer/FileTransfer$5;->val$context:Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;
 
-    iget-object v0, v0, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->currentInputStream:Ljava/io/InputStream;
+    iget-object v7, v0, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->targetFile:Ljava/io/File;
 
-    # invokes: Lorg/apache/cordova/filetransfer/FileTransfer;->safeClose(Ljava/io/Closeable;)V
-    invoke-static {v0}, Lorg/apache/cordova/filetransfer/FileTransfer;->access$4(Ljava/io/Closeable;)V
+    .line 911
+    .local v7, "file":Ljava/io/File;
+    if-eqz v7, :cond_0
 
-    .line 867
+    .line 912
+    invoke-virtual {v7}, Ljava/io/File;->delete()Z
+
+    .line 915
+    :cond_0
+    sget v0, Lorg/apache/cordova/filetransfer/FileTransfer;->ABORTED_ERR:I
+
+    iget-object v1, p0, Lorg/apache/cordova/filetransfer/FileTransfer$5;->val$context:Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;
+
+    iget-object v1, v1, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->source:Ljava/lang/String;
+
+    iget-object v2, p0, Lorg/apache/cordova/filetransfer/FileTransfer$5;->val$context:Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;
+
+    iget-object v2, v2, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->target:Ljava/lang/String;
+
+    const/4 v3, 0x0
+
+    const/4 v4, -0x1
+
+    invoke-static {v4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v4
+
+    const/4 v5, 0x0
+
+    # invokes: Lorg/apache/cordova/filetransfer/FileTransfer;->createFileTransferError(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Throwable;)Lorg/json/JSONObject;
+    invoke-static/range {v0 .. v5}, Lorg/apache/cordova/filetransfer/FileTransfer;->access$700(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Throwable;)Lorg/json/JSONObject;
+
+    move-result-object v6
+
+    .line 916
+    .local v6, "error":Lorg/json/JSONObject;
     iget-object v0, p0, Lorg/apache/cordova/filetransfer/FileTransfer$5;->val$context:Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;
 
-    iget-object v0, v0, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->currentOutputStream:Ljava/io/OutputStream;
+    new-instance v1, Lorg/apache/cordova/PluginResult;
 
-    # invokes: Lorg/apache/cordova/filetransfer/FileTransfer;->safeClose(Ljava/io/Closeable;)V
-    invoke-static {v0}, Lorg/apache/cordova/filetransfer/FileTransfer;->access$4(Ljava/io/Closeable;)V
+    sget-object v2, Lorg/apache/cordova/PluginResult$Status;->ERROR:Lorg/apache/cordova/PluginResult$Status;
 
-    .line 865
-    monitor-exit v1
+    invoke-direct {v1, v2, v6}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;Lorg/json/JSONObject;)V
 
-    .line 869
+    invoke-virtual {v0, v1}, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
+
+    .line 917
+    iget-object v0, p0, Lorg/apache/cordova/filetransfer/FileTransfer$5;->val$context:Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;
+
+    const/4 v1, 0x1
+
+    iput-boolean v1, v0, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->aborted:Z
+
+    .line 918
+    iget-object v0, p0, Lorg/apache/cordova/filetransfer/FileTransfer$5;->val$context:Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;
+
+    iget-object v0, v0, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->connection:Ljava/net/HttpURLConnection;
+
+    if-eqz v0, :cond_1
+
+    .line 919
+    iget-object v0, p0, Lorg/apache/cordova/filetransfer/FileTransfer$5;->val$context:Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;
+
+    iget-object v0, v0, Lorg/apache/cordova/filetransfer/FileTransfer$RequestContext;->connection:Ljava/net/HttpURLConnection;
+
+    invoke-virtual {v0}, Ljava/net/HttpURLConnection;->disconnect()V
+
+    .line 921
+    :cond_1
+    monitor-exit v8
+
+    .line 922
     return-void
 
-    .line 865
+    .line 921
+    .end local v6    # "error":Lorg/json/JSONObject;
+    .end local v7    # "file":Ljava/io/File;
     :catchall_0
     move-exception v0
 
-    monitor-exit v1
+    monitor-exit v8
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 

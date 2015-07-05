@@ -48,11 +48,11 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
-    invoke-static {p0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    move-result-object v2
+    invoke-virtual {v1, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v1
 
     const-string v2, "/"
 
@@ -75,7 +75,7 @@
 .end method
 
 .method private static freeSpaceCalculation(Ljava/lang/String;)J
-    .locals 9
+    .locals 10
     .param p0, "path"    # Ljava/lang/String;
 
     .prologue
@@ -102,17 +102,17 @@
 
     .line 92
     .local v0, "availableBlocks":J
-    mul-long v5, v0, v2
+    mul-long v6, v0, v2
 
-    const-wide/16 v7, 0x400
+    const-wide/16 v8, 0x400
 
-    div-long/2addr v5, v7
+    div-long/2addr v6, v8
 
-    return-wide v5
+    return-wide v6
 .end method
 
 .method public static getFreeDiskSpace(Z)J
-    .locals 5
+    .locals 6
     .param p0, "checkInternal"    # Z
 
     .prologue
@@ -149,11 +149,11 @@
     move-result-wide v0
 
     :goto_0
-    move-wide v3, v0
+    move-wide v4, v0
 
     .line 79
     :goto_1
-    return-wide v3
+    return-wide v4
 
     .line 71
     :cond_0
@@ -166,12 +166,11 @@
 
     move-result-wide v0
 
-    .line 73
     goto :goto_0
 
     .line 76
     :cond_1
-    const-wide/16 v3, -0x1
+    const-wide/16 v4, -0x1
 
     goto :goto_1
 .end method

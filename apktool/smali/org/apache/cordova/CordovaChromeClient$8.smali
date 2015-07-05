@@ -20,9 +20,9 @@
 # instance fields
 .field final synthetic this$0:Lorg/apache/cordova/CordovaChromeClient;
 
-.field private final synthetic val$input:Landroid/widget/EditText;
+.field final synthetic val$input:Landroid/widget/EditText;
 
-.field private final synthetic val$res:Landroid/webkit/JsPromptResult;
+.field final synthetic val$res:Landroid/webkit/JsPromptResult;
 
 
 # direct methods
@@ -30,14 +30,13 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 207
     iput-object p1, p0, Lorg/apache/cordova/CordovaChromeClient$8;->this$0:Lorg/apache/cordova/CordovaChromeClient;
 
     iput-object p2, p0, Lorg/apache/cordova/CordovaChromeClient$8;->val$input:Landroid/widget/EditText;
 
     iput-object p3, p0, Lorg/apache/cordova/CordovaChromeClient$8;->val$res:Landroid/webkit/JsPromptResult;
 
-    .line 269
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -51,23 +50,23 @@
     .param p2, "which"    # I
 
     .prologue
-    .line 271
+    .line 209
     iget-object v1, p0, Lorg/apache/cordova/CordovaChromeClient$8;->val$input:Landroid/widget/EditText;
 
     invoke-virtual {v1}, Landroid/widget/EditText;->getText()Landroid/text/Editable;
 
     move-result-object v1
 
-    invoke-interface {v1}, Landroid/text/Editable;->toString()Ljava/lang/String;
+    invoke-virtual {v1}, Ljava/lang/Object;->toString()Ljava/lang/String;
 
     move-result-object v0
 
-    .line 272
+    .line 210
     .local v0, "usertext":Ljava/lang/String;
     iget-object v1, p0, Lorg/apache/cordova/CordovaChromeClient$8;->val$res:Landroid/webkit/JsPromptResult;
 
     invoke-virtual {v1, v0}, Landroid/webkit/JsPromptResult;->confirm(Ljava/lang/String;)V
 
-    .line 273
+    .line 211
     return-void
 .end method

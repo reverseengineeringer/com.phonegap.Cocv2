@@ -6,8 +6,9 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Lcom/squareup/okhttp/Request$Body;,
-        Lcom/squareup/okhttp/Request$Builder;
+        Lcom/squareup/okhttp/Request$1;,
+        Lcom/squareup/okhttp/Request$Builder;,
+        Lcom/squareup/okhttp/Request$Body;
     }
 .end annotation
 
@@ -35,7 +36,7 @@
 
     .line 46
     # getter for: Lcom/squareup/okhttp/Request$Builder;->url:Ljava/net/URL;
-    invoke-static {p1}, Lcom/squareup/okhttp/Request$Builder;->access$0(Lcom/squareup/okhttp/Request$Builder;)Ljava/net/URL;
+    invoke-static {p1}, Lcom/squareup/okhttp/Request$Builder;->access$000(Lcom/squareup/okhttp/Request$Builder;)Ljava/net/URL;
 
     move-result-object v0
 
@@ -43,7 +44,7 @@
 
     .line 47
     # getter for: Lcom/squareup/okhttp/Request$Builder;->method:Ljava/lang/String;
-    invoke-static {p1}, Lcom/squareup/okhttp/Request$Builder;->access$1(Lcom/squareup/okhttp/Request$Builder;)Ljava/lang/String;
+    invoke-static {p1}, Lcom/squareup/okhttp/Request$Builder;->access$100(Lcom/squareup/okhttp/Request$Builder;)Ljava/lang/String;
 
     move-result-object v0
 
@@ -53,7 +54,7 @@
     new-instance v0, Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     # getter for: Lcom/squareup/okhttp/Request$Builder;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
-    invoke-static {p1}, Lcom/squareup/okhttp/Request$Builder;->access$2(Lcom/squareup/okhttp/Request$Builder;)Lcom/squareup/okhttp/internal/http/RawHeaders;
+    invoke-static {p1}, Lcom/squareup/okhttp/Request$Builder;->access$200(Lcom/squareup/okhttp/Request$Builder;)Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     move-result-object v1
 
@@ -63,7 +64,7 @@
 
     .line 49
     # getter for: Lcom/squareup/okhttp/Request$Builder;->body:Lcom/squareup/okhttp/Request$Body;
-    invoke-static {p1}, Lcom/squareup/okhttp/Request$Builder;->access$3(Lcom/squareup/okhttp/Request$Builder;)Lcom/squareup/okhttp/Request$Body;
+    invoke-static {p1}, Lcom/squareup/okhttp/Request$Builder;->access$300(Lcom/squareup/okhttp/Request$Builder;)Lcom/squareup/okhttp/Request$Body;
 
     move-result-object v0
 
@@ -71,14 +72,14 @@
 
     .line 50
     # getter for: Lcom/squareup/okhttp/Request$Builder;->tag:Ljava/lang/Object;
-    invoke-static {p1}, Lcom/squareup/okhttp/Request$Builder;->access$4(Lcom/squareup/okhttp/Request$Builder;)Ljava/lang/Object;
+    invoke-static {p1}, Lcom/squareup/okhttp/Request$Builder;->access$400(Lcom/squareup/okhttp/Request$Builder;)Ljava/lang/Object;
 
     move-result-object v0
 
     if-eqz v0, :cond_0
 
     # getter for: Lcom/squareup/okhttp/Request$Builder;->tag:Ljava/lang/Object;
-    invoke-static {p1}, Lcom/squareup/okhttp/Request$Builder;->access$4(Lcom/squareup/okhttp/Request$Builder;)Ljava/lang/Object;
+    invoke-static {p1}, Lcom/squareup/okhttp/Request$Builder;->access$400(Lcom/squareup/okhttp/Request$Builder;)Ljava/lang/Object;
 
     move-result-object v0
 
@@ -95,11 +96,13 @@
     goto :goto_0
 .end method
 
-.method synthetic constructor <init>(Lcom/squareup/okhttp/Request$Builder;Lcom/squareup/okhttp/Request;)V
+.method synthetic constructor <init>(Lcom/squareup/okhttp/Request$Builder;Lcom/squareup/okhttp/Request$1;)V
     .locals 0
+    .param p1, "x0"    # Lcom/squareup/okhttp/Request$Builder;
+    .param p2, "x1"    # Lcom/squareup/okhttp/Request$1;
 
     .prologue
-    .line 45
+    .line 38
     invoke-direct {p0, p1}, Lcom/squareup/okhttp/Request;-><init>(Lcom/squareup/okhttp/Request$Builder;)V
 
     return-void
@@ -246,7 +249,6 @@
 
     invoke-direct {v0, v1}, Lcom/squareup/okhttp/Request$Builder;-><init>(Ljava/net/URL;)V
 
-    .line 103
     iget-object v1, p0, Lcom/squareup/okhttp/Request;->method:Ljava/lang/String;
 
     iget-object v2, p0, Lcom/squareup/okhttp/Request;->body:Lcom/squareup/okhttp/Request$Body;
@@ -255,21 +257,18 @@
 
     move-result-object v0
 
-    .line 104
     iget-object v1, p0, Lcom/squareup/okhttp/Request;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     invoke-virtual {v0, v1}, Lcom/squareup/okhttp/Request$Builder;->rawHeaders(Lcom/squareup/okhttp/internal/http/RawHeaders;)Lcom/squareup/okhttp/Request$Builder;
 
     move-result-object v0
 
-    .line 105
     iget-object v1, p0, Lcom/squareup/okhttp/Request;->tag:Ljava/lang/Object;
 
     invoke-virtual {v0, v1}, Lcom/squareup/okhttp/Request$Builder;->tag(Ljava/lang/Object;)Lcom/squareup/okhttp/Request$Builder;
 
     move-result-object v0
 
-    .line 102
     return-object v0
 .end method
 

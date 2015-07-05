@@ -1,4 +1,4 @@
-.class Lcom/squareup/okhttp/internal/http/HttpDate$1;
+.class final Lcom/squareup/okhttp/internal/http/HttpDate$1;
 .super Ljava/lang/ThreadLocal;
 .source "HttpDate.java"
 
@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x0
+    accessFlags = 0x8
     name = null
 .end annotation
 
@@ -31,7 +31,6 @@
     .line 36
     invoke-direct {p0}, Ljava/lang/ThreadLocal;-><init>()V
 
-    .line 1
     return-void
 .end method
 
@@ -41,7 +40,7 @@
     .locals 1
 
     .prologue
-    .line 1
+    .line 36
     invoke-virtual {p0}, Lcom/squareup/okhttp/internal/http/HttpDate$1;->initialValue()Ljava/text/DateFormat;
 
     move-result-object v0

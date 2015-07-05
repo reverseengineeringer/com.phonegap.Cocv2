@@ -90,13 +90,9 @@
 
     move-result v4
 
-    if-lt v2, v4, :cond_0
-
-    .line 118
-    return-void
+    if-ge v2, v4, :cond_d
 
     .line 83
-    :cond_0
     invoke-virtual {p2, v2}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getFieldName(I)Ljava/lang/String;
 
     move-result-object v0
@@ -115,27 +111,27 @@
 
     move-result v4
 
-    if-eqz v4, :cond_2
+    if-eqz v4, :cond_1
 
     .line 86
     invoke-static {v3, v1}, Lcom/squareup/okhttp/internal/http/HeaderParser;->parseCacheControl(Ljava/lang/String;Lcom/squareup/okhttp/internal/http/HeaderParser$CacheControlHandler;)V
 
     .line 82
-    :cond_1
+    :cond_0
     :goto_1
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
     .line 87
-    :cond_2
+    :cond_1
     const-string v4, "Pragma"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_3
+    if-eqz v4, :cond_2
 
     .line 88
     const-string v4, "no-cache"
@@ -144,7 +140,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_1
+    if-eqz v4, :cond_0
 
     .line 89
     iput-boolean v6, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->noCache:Z
@@ -152,14 +148,14 @@
     goto :goto_1
 
     .line 91
-    :cond_3
+    :cond_2
     const-string v4, "If-None-Match"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_4
+    if-eqz v4, :cond_3
 
     .line 92
     iput-object v3, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->ifNoneMatch:Ljava/lang/String;
@@ -167,14 +163,14 @@
     goto :goto_1
 
     .line 93
-    :cond_4
+    :cond_3
     const-string v4, "If-Modified-Since"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_5
+    if-eqz v4, :cond_4
 
     .line 94
     iput-object v3, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->ifModifiedSince:Ljava/lang/String;
@@ -182,14 +178,14 @@
     goto :goto_1
 
     .line 95
-    :cond_5
+    :cond_4
     const-string v4, "Authorization"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_6
+    if-eqz v4, :cond_5
 
     .line 96
     iput-boolean v6, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->hasAuthorization:Z
@@ -197,14 +193,14 @@
     goto :goto_1
 
     .line 97
-    :cond_6
+    :cond_5
     const-string v4, "Content-Length"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_7
+    if-eqz v4, :cond_6
 
     .line 99
     :try_start_0
@@ -227,14 +223,14 @@
     goto :goto_1
 
     .line 102
-    :cond_7
+    :cond_6
     const-string v4, "Transfer-Encoding"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_8
+    if-eqz v4, :cond_7
 
     .line 103
     iput-object v3, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->transferEncoding:Ljava/lang/String;
@@ -242,14 +238,14 @@
     goto :goto_1
 
     .line 104
-    :cond_8
+    :cond_7
     const-string v4, "User-Agent"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_9
+    if-eqz v4, :cond_8
 
     .line 105
     iput-object v3, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->userAgent:Ljava/lang/String;
@@ -257,14 +253,14 @@
     goto :goto_1
 
     .line 106
-    :cond_9
+    :cond_8
     const-string v4, "Host"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_a
+    if-eqz v4, :cond_9
 
     .line 107
     iput-object v3, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->host:Ljava/lang/String;
@@ -272,14 +268,14 @@
     goto :goto_1
 
     .line 108
-    :cond_a
+    :cond_9
     const-string v4, "Connection"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_b
+    if-eqz v4, :cond_a
 
     .line 109
     iput-object v3, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->connection:Ljava/lang/String;
@@ -287,14 +283,14 @@
     goto :goto_1
 
     .line 110
-    :cond_b
+    :cond_a
     const-string v4, "Accept-Encoding"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_c
+    if-eqz v4, :cond_b
 
     .line 111
     iput-object v3, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->acceptEncoding:Ljava/lang/String;
@@ -302,14 +298,14 @@
     goto :goto_1
 
     .line 112
-    :cond_c
+    :cond_b
     const-string v4, "Content-Type"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_d
+    if-eqz v4, :cond_c
 
     .line 113
     iput-object v3, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->contentType:Ljava/lang/String;
@@ -317,69 +313,85 @@
     goto/16 :goto_1
 
     .line 114
-    :cond_d
+    :cond_c
     const-string v4, "Proxy-Authorization"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_1
+    if-eqz v4, :cond_0
 
     .line 115
     iput-object v3, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->proxyAuthorization:Ljava/lang/String;
 
     goto/16 :goto_1
+
+    .line 118
+    .end local v0    # "fieldName":Ljava/lang/String;
+    .end local v3    # "value":Ljava/lang/String;
+    :cond_d
+    return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/internal/http/RequestHeaders;Z)V
+.method static synthetic access$002(Lcom/squareup/okhttp/internal/http/RequestHeaders;Z)Z
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    .param p1, "x1"    # Z
 
     .prologue
-    .line 30
+    .line 25
     iput-boolean p1, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->noCache:Z
 
-    return-void
+    return p1
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/internal/http/RequestHeaders;I)V
+.method static synthetic access$102(Lcom/squareup/okhttp/internal/http/RequestHeaders;I)I
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    .param p1, "x1"    # I
 
     .prologue
-    .line 31
+    .line 25
     iput p1, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->maxAgeSeconds:I
 
-    return-void
+    return p1
 .end method
 
-.method static synthetic access$2(Lcom/squareup/okhttp/internal/http/RequestHeaders;I)V
+.method static synthetic access$202(Lcom/squareup/okhttp/internal/http/RequestHeaders;I)I
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    .param p1, "x1"    # I
 
     .prologue
-    .line 32
+    .line 25
     iput p1, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->maxStaleSeconds:I
 
-    return-void
+    return p1
 .end method
 
-.method static synthetic access$3(Lcom/squareup/okhttp/internal/http/RequestHeaders;I)V
+.method static synthetic access$302(Lcom/squareup/okhttp/internal/http/RequestHeaders;I)I
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    .param p1, "x1"    # I
 
     .prologue
-    .line 33
+    .line 25
     iput p1, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->minFreshSeconds:I
 
-    return-void
+    return p1
 .end method
 
-.method static synthetic access$4(Lcom/squareup/okhttp/internal/http/RequestHeaders;Z)V
+.method static synthetic access$402(Lcom/squareup/okhttp/internal/http/RequestHeaders;Z)Z
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    .param p1, "x1"    # Z
 
     .prologue
-    .line 42
+    .line 25
     iput-boolean p1, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->onlyIfCached:Z
 
-    return-void
+    return p1
 .end method
 
 .method private buildCookieHeader(Ljava/util/List;)Ljava/lang/String;
@@ -434,25 +446,17 @@
 
     move-result v2
 
-    if-lt v0, v2, :cond_1
-
-    .line 315
-    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v2
-
-    goto :goto_0
+    if-ge v0, v2, :cond_2
 
     .line 312
-    :cond_1
-    if-lez v0, :cond_2
+    if-lez v0, :cond_1
 
     const-string v2, "; "
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     .line 313
-    :cond_2
+    :cond_1
     invoke-interface {p1, v0}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
     move-result-object v2
@@ -465,6 +469,14 @@
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_1
+
+    .line 315
+    :cond_2
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    goto :goto_0
 .end method
 
 
@@ -489,26 +501,22 @@
     .local p1, "allCookieHeaders":Ljava/util/Map;, "Ljava/util/Map<Ljava/lang/String;Ljava/util/List<Ljava/lang/String;>;>;"
     invoke-interface {p1}, Ljava/util/Map;->entrySet()Ljava/util/Set;
 
-    move-result-object v2
-
-    invoke-interface {v2}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
-
     move-result-object v3
 
+    invoke-interface {v3}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
+
+    move-result-object v1
+
+    .local v1, "i$":Ljava/util/Iterator;
     :cond_0
     :goto_0
-    invoke-interface {v3}, Ljava/util/Iterator;->hasNext()Z
+    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
-    move-result v2
+    move-result v3
 
-    if-nez v2, :cond_1
+    if-eqz v3, :cond_2
 
-    .line 302
-    return-void
-
-    .line 295
-    :cond_1
-    invoke-interface {v3}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v0
 
@@ -518,58 +526,63 @@
     .local v0, "entry":Ljava/util/Map$Entry;, "Ljava/util/Map$Entry<Ljava/lang/String;Ljava/util/List<Ljava/lang/String;>;>;"
     invoke-interface {v0}, Ljava/util/Map$Entry;->getKey()Ljava/lang/Object;
 
-    move-result-object v1
-
-    check-cast v1, Ljava/lang/String;
-
-    .line 297
-    .local v1, "key":Ljava/lang/String;
-    const-string v2, "Cookie"
-
-    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v2
-
-    if-nez v2, :cond_2
-
-    const-string v2, "Cookie2"
-
-    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_0
-
-    .line 298
-    :cond_2
-    invoke-interface {v0}, Ljava/util/Map$Entry;->getValue()Ljava/lang/Object;
-
     move-result-object v2
 
-    check-cast v2, Ljava/util/List;
+    check-cast v2, Ljava/lang/String;
 
-    invoke-interface {v2}, Ljava/util/List;->isEmpty()Z
+    .line 297
+    .local v2, "key":Ljava/lang/String;
+    const-string v3, "Cookie"
 
-    move-result v2
+    invoke-virtual {v3, v2}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    if-nez v2, :cond_0
+    move-result v3
+
+    if-nez v3, :cond_1
+
+    const-string v3, "Cookie2"
+
+    invoke-virtual {v3, v2}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_0
+
+    :cond_1
+    invoke-interface {v0}, Ljava/util/Map$Entry;->getValue()Ljava/lang/Object;
+
+    move-result-object v3
+
+    check-cast v3, Ljava/util/List;
+
+    invoke-interface {v3}, Ljava/util/List;->isEmpty()Z
+
+    move-result v3
+
+    if-nez v3, :cond_0
 
     .line 299
     iget-object v4, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     invoke-interface {v0}, Ljava/util/Map$Entry;->getValue()Ljava/lang/Object;
 
-    move-result-object v2
+    move-result-object v3
 
-    check-cast v2, Ljava/util/List;
+    check-cast v3, Ljava/util/List;
 
-    invoke-direct {p0, v2}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->buildCookieHeader(Ljava/util/List;)Ljava/lang/String;
+    invoke-direct {p0, v3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->buildCookieHeader(Ljava/util/List;)Ljava/lang/String;
 
-    move-result-object v2
+    move-result-object v3
 
-    invoke-virtual {v4, v1, v2}, Lcom/squareup/okhttp/internal/http/RawHeaders;->add(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v4, v2, v3}, Lcom/squareup/okhttp/internal/http/RawHeaders;->add(Ljava/lang/String;Ljava/lang/String;)V
 
     goto :goto_0
+
+    .line 302
+    .end local v0    # "entry":Ljava/util/Map$Entry;, "Ljava/util/Map$Entry<Ljava/lang/String;Ljava/util/List<Ljava/lang/String;>;>;"
+    .end local v2    # "key":Ljava/lang/String;
+    :cond_2
+    return-void
 .end method
 
 .method public getAcceptEncoding()Ljava/lang/String;
@@ -743,15 +756,16 @@
 
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/RequestHeaders;->ifNoneMatch:Ljava/lang/String;
 
-    if-nez v0, :cond_0
+    if-eqz v0, :cond_1
 
-    const/4 v0, 0x0
+    :cond_0
+    const/4 v0, 0x1
 
     :goto_0
     return v0
 
-    :cond_0
-    const/4 v0, 0x1
+    :cond_1
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method
@@ -936,7 +950,7 @@
 .end method
 
 .method public setContentLength(J)V
-    .locals 4
+    .locals 5
     .param p1, "contentLength"    # J
 
     .prologue

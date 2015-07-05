@@ -152,9 +152,13 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "Attempted to send a second callback for ID: "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     iget-object v2, p0, Lorg/apache/cordova/CallbackContext;->callbackId:Ljava/lang/String;
 
@@ -195,14 +199,14 @@
 
     move-result v0
 
-    if-eqz v0, :cond_1
+    if-nez v0, :cond_1
 
-    const/4 v0, 0x0
+    const/4 v0, 0x1
 
     :goto_1
     iput-boolean v0, p0, Lorg/apache/cordova/CallbackContext;->finished:Z
 
-    .line 55
+    .line 62
     monitor-exit p0
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
@@ -218,11 +222,11 @@
 
     .line 60
     :cond_1
-    const/4 v0, 0x1
+    const/4 v0, 0x0
 
     goto :goto_1
 
-    .line 55
+    .line 62
     :catchall_0
     move-exception v0
 

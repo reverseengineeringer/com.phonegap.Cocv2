@@ -775,3 +775,7 @@ display:block;
 background-color:#ad2a1a;
 z-index:9999;
 }
+.fullwidthfix {
+    font-size: 1.25em;
+    width: 175px;
+}

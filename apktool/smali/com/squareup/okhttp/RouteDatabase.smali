@@ -31,7 +31,6 @@
 
     iput-object v0, p0, Lcom/squareup/okhttp/RouteDatabase;->failedRoutes:Ljava/util/Set;
 
-    .line 30
     return-void
 .end method
 

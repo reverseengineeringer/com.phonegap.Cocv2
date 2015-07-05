@@ -75,17 +75,15 @@
     .line 37
     return-void
 
-    .line 34
+    .line 35
     :catchall_0
     move-exception v1
 
-    .line 35
     invoke-static {}, Ljava/lang/Thread;->currentThread()Ljava/lang/Thread;
 
     move-result-object v2
 
     invoke-virtual {v2, v0}, Ljava/lang/Thread;->setName(Ljava/lang/String;)V
 
-    .line 36
     throw v1
 .end method

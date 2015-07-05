@@ -6,6 +6,7 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
+        Lcom/squareup/okhttp/Failure$1;,
         Lcom/squareup/okhttp/Failure$Builder;
     }
 .end annotation
@@ -28,7 +29,7 @@
 
     .line 29
     # getter for: Lcom/squareup/okhttp/Failure$Builder;->request:Lcom/squareup/okhttp/Request;
-    invoke-static {p1}, Lcom/squareup/okhttp/Failure$Builder;->access$0(Lcom/squareup/okhttp/Failure$Builder;)Lcom/squareup/okhttp/Request;
+    invoke-static {p1}, Lcom/squareup/okhttp/Failure$Builder;->access$000(Lcom/squareup/okhttp/Failure$Builder;)Lcom/squareup/okhttp/Request;
 
     move-result-object v0
 
@@ -36,7 +37,7 @@
 
     .line 30
     # getter for: Lcom/squareup/okhttp/Failure$Builder;->exception:Ljava/lang/Throwable;
-    invoke-static {p1}, Lcom/squareup/okhttp/Failure$Builder;->access$1(Lcom/squareup/okhttp/Failure$Builder;)Ljava/lang/Throwable;
+    invoke-static {p1}, Lcom/squareup/okhttp/Failure$Builder;->access$100(Lcom/squareup/okhttp/Failure$Builder;)Ljava/lang/Throwable;
 
     move-result-object v0
 
@@ -46,11 +47,13 @@
     return-void
 .end method
 
-.method synthetic constructor <init>(Lcom/squareup/okhttp/Failure$Builder;Lcom/squareup/okhttp/Failure;)V
+.method synthetic constructor <init>(Lcom/squareup/okhttp/Failure$Builder;Lcom/squareup/okhttp/Failure$1;)V
     .locals 0
+    .param p1, "x0"    # Lcom/squareup/okhttp/Failure$Builder;
+    .param p2, "x1"    # Lcom/squareup/okhttp/Failure$1;
 
     .prologue
-    .line 28
+    .line 24
     invoke-direct {p0, p1}, Lcom/squareup/okhttp/Failure;-><init>(Lcom/squareup/okhttp/Failure$Builder;)V
 
     return-void

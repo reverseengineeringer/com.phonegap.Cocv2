@@ -3,14 +3,6 @@
 .source "PluginManager.java"
 
 
-# annotations
-.annotation system Ldalvik/annotation/MemberClasses;
-    value = {
-        Lorg/apache/cordova/PluginManager$PluginManagerService;
-    }
-.end annotation
-
-
 # static fields
 .field private static final SLOW_EXEC_WARNING_THRESHOLD:I
 
@@ -22,7 +14,7 @@
 
 .field private final ctx:Lorg/apache/cordova/CordovaInterface;
 
-.field private final entries:Ljava/util/HashMap;
+.field private final entryMap:Ljava/util/HashMap;
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "Ljava/util/HashMap",
@@ -34,9 +26,17 @@
     .end annotation
 .end field
 
-.field private firstRun:Z
-
-.field private numPendingUiExecs:Ljava/util/concurrent/atomic/AtomicInteger;
+.field private final pluginMap:Ljava/util/HashMap;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/HashMap",
+            "<",
+            "Ljava/lang/String;",
+            "Lorg/apache/cordova/CordovaPlugin;",
+            ">;"
+        }
+    .end annotation
+.end field
 
 .field protected urlMap:Ljava/util/HashMap;
     .annotation system Ldalvik/annotation/Signature;
@@ -58,12 +58,12 @@
     .locals 1
 
     .prologue
-    .line 52
+    .line 44
     const-string v0, "PluginManager"
 
     sput-object v0, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
 
-    .line 53
+    .line 45
     invoke-static {}, Landroid/os/Debug;->isDebuggerConnected()Z
 
     move-result v0
@@ -83,328 +83,212 @@
     goto :goto_0
 .end method
 
-.method public constructor <init>(Lorg/apache/cordova/CordovaWebView;Lorg/apache/cordova/CordovaInterface;)V
-    .locals 2
-    .param p1, "app"    # Lorg/apache/cordova/CordovaWebView;
-    .param p2, "ctx"    # Lorg/apache/cordova/CordovaInterface;
+.method constructor <init>(Lorg/apache/cordova/CordovaWebView;Lorg/apache/cordova/CordovaInterface;)V
+    .locals 1
+    .param p1, "cordovaWebView"    # Lorg/apache/cordova/CordovaWebView;
+    .param p2, "cordova"    # Lorg/apache/cordova/CordovaInterface;
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
-    .line 76
+    .line 60
+    const/4 v0, 0x0
+
+    invoke-direct {p0, p1, p2, v0}, Lorg/apache/cordova/PluginManager;-><init>(Lorg/apache/cordova/CordovaWebView;Lorg/apache/cordova/CordovaInterface;Ljava/util/List;)V
+
+    .line 61
+    return-void
+.end method
+
+.method constructor <init>(Lorg/apache/cordova/CordovaWebView;Lorg/apache/cordova/CordovaInterface;Ljava/util/List;)V
+    .locals 2
+    .param p1, "cordovaWebView"    # Lorg/apache/cordova/CordovaWebView;
+    .param p2, "cordova"    # Lorg/apache/cordova/CordovaInterface;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Lorg/apache/cordova/CordovaWebView;",
+            "Lorg/apache/cordova/CordovaInterface;",
+            "Ljava/util/List",
+            "<",
+            "Lorg/apache/cordova/PluginEntry;",
+            ">;)V"
+        }
+    .end annotation
+
+    .prologue
+    .line 63
+    .local p3, "pluginEntries":Ljava/util/List;, "Ljava/util/List<Lorg/apache/cordova/PluginEntry;>;"
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
+    .line 48
+    new-instance v1, Ljava/util/HashMap;
+
+    invoke-direct {v1}, Ljava/util/HashMap;-><init>()V
+
+    iput-object v1, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
+
+    .line 49
+    new-instance v1, Ljava/util/HashMap;
+
+    invoke-direct {v1}, Ljava/util/HashMap;-><init>()V
+
+    iput-object v1, p0, Lorg/apache/cordova/PluginManager;->entryMap:Ljava/util/HashMap;
+
     .line 56
-    new-instance v0, Ljava/util/HashMap;
+    new-instance v1, Ljava/util/HashMap;
 
-    invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
+    invoke-direct {v1}, Ljava/util/HashMap;-><init>()V
 
-    iput-object v0, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
+    iput-object v1, p0, Lorg/apache/cordova/PluginManager;->urlMap:Ljava/util/HashMap;
 
-    .line 66
-    new-instance v0, Ljava/util/HashMap;
-
-    invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
-
-    iput-object v0, p0, Lorg/apache/cordova/PluginManager;->urlMap:Ljava/util/HashMap;
-
-    .line 77
+    .line 64
     iput-object p2, p0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
 
-    .line 78
+    .line 65
     iput-object p1, p0, Lorg/apache/cordova/PluginManager;->app:Lorg/apache/cordova/CordovaWebView;
 
-    .line 79
-    const/4 v0, 0x1
+    .line 66
+    if-nez p3, :cond_0
 
-    iput-boolean v0, p0, Lorg/apache/cordova/PluginManager;->firstRun:Z
+    .line 67
+    new-instance v0, Lorg/apache/cordova/ConfigXmlParser;
 
-    .line 80
-    new-instance v0, Ljava/util/concurrent/atomic/AtomicInteger;
+    invoke-direct {v0}, Lorg/apache/cordova/ConfigXmlParser;-><init>()V
 
+    .line 68
+    .local v0, "parser":Lorg/apache/cordova/ConfigXmlParser;
+    iget-object v1, p0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
+
+    invoke-interface {v1}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Lorg/apache/cordova/ConfigXmlParser;->parse(Landroid/app/Activity;)V
+
+    .line 69
+    invoke-virtual {v0}, Lorg/apache/cordova/ConfigXmlParser;->getPluginEntries()Ljava/util/ArrayList;
+
+    move-result-object p3
+
+    .line 71
+    .end local v0    # "parser":Lorg/apache/cordova/ConfigXmlParser;
+    :cond_0
+    invoke-virtual {p0, p3}, Lorg/apache/cordova/PluginManager;->setPluginEntries(Ljava/util/List;)V
+
+    .line 72
+    return-void
+.end method
+
+.method private instantiatePlugin(Ljava/lang/String;)Lorg/apache/cordova/CordovaPlugin;
+    .locals 7
+    .param p1, "className"    # Ljava/lang/String;
+
+    .prologue
+    .line 341
+    const/4 v3, 0x0
+
+    .line 343
+    .local v3, "ret":Lorg/apache/cordova/CordovaPlugin;
     const/4 v1, 0x0
 
-    invoke-direct {v0, v1}, Ljava/util/concurrent/atomic/AtomicInteger;-><init>(I)V
+    .line 344
+    .local v1, "c":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
+    if-eqz p1, :cond_0
 
-    iput-object v0, p0, Lorg/apache/cordova/PluginManager;->numPendingUiExecs:Ljava/util/concurrent/atomic/AtomicInteger;
-
-    .line 81
-    return-void
-.end method
-
-.method static synthetic access$0(Lorg/apache/cordova/PluginManager;)Ljava/util/concurrent/atomic/AtomicInteger;
-    .locals 1
-
-    .prologue
-    .line 68
-    iget-object v0, p0, Lorg/apache/cordova/PluginManager;->numPendingUiExecs:Ljava/util/concurrent/atomic/AtomicInteger;
-
-    return-object v0
-.end method
-
-.method static synthetic access$1(Lorg/apache/cordova/PluginManager;)Lorg/apache/cordova/CordovaInterface;
-    .locals 1
-
-    .prologue
-    .line 58
-    iget-object v0, p0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
-
-    return-object v0
-.end method
-
-.method static synthetic access$2(Lorg/apache/cordova/PluginManager;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    .locals 0
-
-    .prologue
-    .line 231
-    invoke-direct {p0, p1, p2, p3, p4}, Lorg/apache/cordova/PluginManager;->execHelper(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-
-    return-void
-.end method
-
-.method private execHelper(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    .locals 13
-    .param p1, "service"    # Ljava/lang/String;
-    .param p2, "action"    # Ljava/lang/String;
-    .param p3, "callbackId"    # Ljava/lang/String;
-    .param p4, "rawArgs"    # Ljava/lang/String;
-
-    .prologue
-    .line 232
-    invoke-virtual {p0, p1}, Lorg/apache/cordova/PluginManager;->getPlugin(Ljava/lang/String;)Lorg/apache/cordova/CordovaPlugin;
-
-    move-result-object v6
-
-    .line 233
-    .local v6, "plugin":Lorg/apache/cordova/CordovaPlugin;
-    if-nez v6, :cond_1
-
-    .line 234
-    sget-object v10, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
-
-    new-instance v11, Ljava/lang/StringBuilder;
-
-    const-string v12, "exec() call to unknown plugin: "
-
-    invoke-direct {v11, v12}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v11, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v11
-
-    invoke-virtual {v11}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v11
-
-    invoke-static {v10, v11}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 235
-    new-instance v2, Lorg/apache/cordova/PluginResult;
-
-    sget-object v10, Lorg/apache/cordova/PluginResult$Status;->CLASS_NOT_FOUND_EXCEPTION:Lorg/apache/cordova/PluginResult$Status;
-
-    invoke-direct {v2, v10}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;)V
-
-    .line 236
-    .local v2, "cr":Lorg/apache/cordova/PluginResult;
-    iget-object v10, p0, Lorg/apache/cordova/PluginManager;->app:Lorg/apache/cordova/CordovaWebView;
-
-    move-object/from16 v0, p3
-
-    invoke-virtual {v10, v2, v0}, Lorg/apache/cordova/CordovaWebView;->sendPluginResult(Lorg/apache/cordova/PluginResult;Ljava/lang/String;)V
-
-    .line 259
-    .end local v2    # "cr":Lorg/apache/cordova/PluginResult;
-    :cond_0
-    :goto_0
-    return-void
-
-    .line 239
-    :cond_1
-    new-instance v1, Lorg/apache/cordova/CallbackContext;
-
-    iget-object v10, p0, Lorg/apache/cordova/PluginManager;->app:Lorg/apache/cordova/CordovaWebView;
-
-    move-object/from16 v0, p3
-
-    invoke-direct {v1, v0, v10}, Lorg/apache/cordova/CallbackContext;-><init>(Ljava/lang/String;Lorg/apache/cordova/CordovaWebView;)V
-
-    .line 241
-    .local v1, "callbackContext":Lorg/apache/cordova/CallbackContext;
     :try_start_0
-    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
+    const-string v4, ""
 
-    move-result-wide v7
+    invoke-virtual {v4, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    .line 242
-    .local v7, "pluginStartTime":J
-    move-object/from16 v0, p4
+    move-result v4
 
-    invoke-virtual {v6, p2, v0, v1}, Lorg/apache/cordova/CordovaPlugin;->execute(Ljava/lang/String;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)Z
+    if-nez v4, :cond_0
 
-    move-result v9
+    .line 345
+    invoke-static {p1}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
 
-    .line 243
-    .local v9, "wasValidAction":Z
-    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
+    move-result-object v1
 
-    move-result-wide v10
+    .line 347
+    :cond_0
+    if-eqz v1, :cond_2
 
-    sub-long v3, v10, v7
+    const/4 v4, 0x1
 
-    .line 245
-    .local v3, "duration":J
-    sget v10, Lorg/apache/cordova/PluginManager;->SLOW_EXEC_WARNING_THRESHOLD:I
+    :goto_0
+    const-class v5, Lorg/apache/cordova/CordovaPlugin;
 
-    int-to-long v10, v10
+    invoke-virtual {v5, v1}, Ljava/lang/Class;->isAssignableFrom(Ljava/lang/Class;)Z
 
-    cmp-long v10, v3, v10
+    move-result v5
 
-    if-lez v10, :cond_2
+    and-int/2addr v4, v5
 
-    .line 246
-    sget-object v10, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
+    if-eqz v4, :cond_1
 
-    new-instance v11, Ljava/lang/StringBuilder;
+    .line 348
+    invoke-virtual {v1}, Ljava/lang/Class;->newInstance()Ljava/lang/Object;
 
-    const-string v12, "THREAD WARNING: exec() call to "
+    move-result-object v4
 
-    invoke-direct {v11, v12}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-object v0, v4
 
-    invoke-virtual {v11, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    check-cast v0, Lorg/apache/cordova/CordovaPlugin;
 
-    move-result-object v11
-
-    const-string v12, "."
-
-    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v11
-
-    invoke-virtual {v11, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v11
-
-    const-string v12, " blocked the main thread for "
-
-    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v11
-
-    invoke-virtual {v11, v3, v4}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
-
-    move-result-object v11
-
-    const-string v12, "ms. Plugin should use CordovaInterface.getThreadPool()."
-
-    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v11
-
-    invoke-virtual {v11}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v11
-
-    invoke-static {v10, v11}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 248
-    :cond_2
-    if-nez v9, :cond_0
-
-    .line 249
-    new-instance v2, Lorg/apache/cordova/PluginResult;
-
-    sget-object v10, Lorg/apache/cordova/PluginResult$Status;->INVALID_ACTION:Lorg/apache/cordova/PluginResult$Status;
-
-    invoke-direct {v2, v10}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;)V
-
-    .line 250
-    .restart local v2    # "cr":Lorg/apache/cordova/PluginResult;
-    invoke-virtual {v1, v2}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
+    move-object v3, v0
     :try_end_0
-    .catch Lorg/json/JSONException; {:try_start_0 .. :try_end_0} :catch_0
-    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_1
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 354
+    :cond_1
+    :goto_1
+    return-object v3
+
+    .line 347
+    :cond_2
+    const/4 v4, 0x0
 
     goto :goto_0
 
-    .line 252
-    .end local v2    # "cr":Lorg/apache/cordova/PluginResult;
-    .end local v3    # "duration":J
-    .end local v7    # "pluginStartTime":J
-    .end local v9    # "wasValidAction":Z
+    .line 350
     :catch_0
-    move-exception v5
+    move-exception v2
 
-    .line 253
-    .local v5, "e":Lorg/json/JSONException;
-    new-instance v2, Lorg/apache/cordova/PluginResult;
+    .line 351
+    .local v2, "e":Ljava/lang/Exception;
+    invoke-virtual {v2}, Ljava/lang/Exception;->printStackTrace()V
 
-    sget-object v10, Lorg/apache/cordova/PluginResult$Status;->JSON_EXCEPTION:Lorg/apache/cordova/PluginResult$Status;
+    .line 352
+    sget-object v4, Ljava/lang/System;->out:Ljava/io/PrintStream;
 
-    invoke-direct {v2, v10}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;)V
+    new-instance v5, Ljava/lang/StringBuilder;
 
-    .line 254
-    .restart local v2    # "cr":Lorg/apache/cordova/PluginResult;
-    invoke-virtual {v1, v2}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
 
-    goto :goto_0
+    const-string v6, "Error adding plugin "
 
-    .line 255
-    .end local v2    # "cr":Lorg/apache/cordova/PluginResult;
-    .end local v5    # "e":Lorg/json/JSONException;
-    :catch_1
-    move-exception v5
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 256
-    .local v5, "e":Ljava/lang/Exception;
-    sget-object v10, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
+    move-result-object v5
 
-    const-string v11, "Uncaught exception from plugin"
+    invoke-virtual {v5, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-static {v10, v11, v5}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    move-result-object v5
 
-    .line 257
-    invoke-virtual {v5}, Ljava/lang/Exception;->getMessage()Ljava/lang/String;
+    const-string v6, "."
 
-    move-result-object v10
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v1, v10}, Lorg/apache/cordova/CallbackContext;->error(Ljava/lang/String;)V
+    move-result-object v5
 
-    goto :goto_0
-.end method
+    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-.method private pluginConfigurationMissing()V
-    .locals 2
+    move-result-object v5
 
-    .prologue
-    .line 422
-    sget-object v0, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
+    invoke-virtual {v4, v5}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
 
-    const-string v1, "====================================================================================="
-
-    invoke-static {v0, v1}, Lorg/apache/cordova/LOG;->e(Ljava/lang/String;Ljava/lang/String;)V
-
-    .line 423
-    sget-object v0, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
-
-    const-string v1, "ERROR: config.xml is missing.  Add res/xml/config.xml to your project."
-
-    invoke-static {v0, v1}, Lorg/apache/cordova/LOG;->e(Ljava/lang/String;Ljava/lang/String;)V
-
-    .line 424
-    sget-object v0, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
-
-    const-string v1, "https://git-wip-us.apache.org/repos/asf?p=cordova-android.git;a=blob;f=framework/res/xml/config.xml"
-
-    invoke-static {v0, v1}, Lorg/apache/cordova/LOG;->e(Ljava/lang/String;Ljava/lang/String;)V
-
-    .line 425
-    sget-object v0, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
-
-    const-string v1, "====================================================================================="
-
-    invoke-static {v0, v1}, Lorg/apache/cordova/LOG;->e(Ljava/lang/String;Ljava/lang/String;)V
-
-    .line 426
-    return-void
+    goto :goto_1
 .end method
 
 
@@ -415,131 +299,318 @@
     .param p2, "className"    # Ljava/lang/String;
 
     .prologue
-    .line 294
+    .line 205
     new-instance v0, Lorg/apache/cordova/PluginEntry;
 
     const/4 v1, 0x0
 
     invoke-direct {v0, p1, p2, v1}, Lorg/apache/cordova/PluginEntry;-><init>(Ljava/lang/String;Ljava/lang/String;Z)V
 
-    .line 295
+    .line 206
     .local v0, "entry":Lorg/apache/cordova/PluginEntry;
     invoke-virtual {p0, v0}, Lorg/apache/cordova/PluginManager;->addService(Lorg/apache/cordova/PluginEntry;)V
 
-    .line 296
+    .line 207
     return-void
 .end method
 
 .method public addService(Lorg/apache/cordova/PluginEntry;)V
-    .locals 2
+    .locals 5
     .param p1, "entry"    # Lorg/apache/cordova/PluginEntry;
 
     .prologue
-    .line 305
-    iget-object v0, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
+    .line 216
+    iget-object v1, p0, Lorg/apache/cordova/PluginManager;->entryMap:Ljava/util/HashMap;
 
-    iget-object v1, p1, Lorg/apache/cordova/PluginEntry;->service:Ljava/lang/String;
+    iget-object v2, p1, Lorg/apache/cordova/PluginEntry;->service:Ljava/lang/String;
 
-    invoke-virtual {v0, v1, p1}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+    invoke-virtual {v1, v2, p1}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 306
+    .line 217
+    invoke-virtual {p1}, Lorg/apache/cordova/PluginEntry;->getUrlFilters()Ljava/util/List;
+
+    move-result-object v0
+
+    .line 218
+    .local v0, "urlFilters":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
+    if-eqz v0, :cond_0
+
+    .line 219
+    iget-object v1, p0, Lorg/apache/cordova/PluginManager;->urlMap:Ljava/util/HashMap;
+
+    iget-object v2, p1, Lorg/apache/cordova/PluginEntry;->service:Ljava/lang/String;
+
+    invoke-virtual {v1, v2, v0}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 221
+    :cond_0
+    iget-object v1, p1, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+
+    if-eqz v1, :cond_1
+
+    .line 222
+    iget-object v1, p1, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
+
+    iget-object v3, p0, Lorg/apache/cordova/PluginManager;->app:Lorg/apache/cordova/CordovaWebView;
+
+    iget-object v4, p0, Lorg/apache/cordova/PluginManager;->app:Lorg/apache/cordova/CordovaWebView;
+
+    invoke-virtual {v4}, Lorg/apache/cordova/CordovaWebView;->getPreferences()Lorg/apache/cordova/CordovaPreferences;
+
+    move-result-object v4
+
+    invoke-virtual {v1, v2, v3, v4}, Lorg/apache/cordova/CordovaPlugin;->privateInitialize(Lorg/apache/cordova/CordovaInterface;Lorg/apache/cordova/CordovaWebView;Lorg/apache/cordova/CordovaPreferences;)V
+
+    .line 223
+    iget-object v1, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
+
+    iget-object v2, p1, Lorg/apache/cordova/PluginEntry;->service:Ljava/lang/String;
+
+    iget-object v3, p1, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+
+    invoke-virtual {v1, v2, v3}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 226
+    :cond_1
     return-void
 .end method
 
 .method public clearPluginObjects()V
-    .locals 3
+    .locals 1
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
-    .line 184
-    iget-object v1, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
+    .line 104
+    iget-object v0, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
 
-    invoke-virtual {v1}, Ljava/util/HashMap;->values()Ljava/util/Collection;
+    invoke-virtual {v0}, Ljava/util/HashMap;->clear()V
 
-    move-result-object v1
-
-    invoke-interface {v1}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
-
-    move-result-object v1
-
-    :goto_0
-    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v2
-
-    if-nez v2, :cond_0
-
-    .line 187
+    .line 105
     return-void
-
-    .line 184
-    :cond_0
-    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Lorg/apache/cordova/PluginEntry;
-
-    .line 185
-    .local v0, "entry":Lorg/apache/cordova/PluginEntry;
-    const/4 v2, 0x0
-
-    iput-object v2, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
-
-    goto :goto_0
 .end method
 
 .method public exec(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-    .locals 7
+    .locals 14
     .param p1, "service"    # Ljava/lang/String;
     .param p2, "action"    # Ljava/lang/String;
     .param p3, "callbackId"    # Ljava/lang/String;
     .param p4, "rawArgs"    # Ljava/lang/String;
 
     .prologue
-    .line 218
-    iget-object v0, p0, Lorg/apache/cordova/PluginManager;->numPendingUiExecs:Ljava/util/concurrent/atomic/AtomicInteger;
+    .line 137
+    invoke-virtual {p0, p1}, Lorg/apache/cordova/PluginManager;->getPlugin(Ljava/lang/String;)Lorg/apache/cordova/CordovaPlugin;
 
-    invoke-virtual {v0}, Ljava/util/concurrent/atomic/AtomicInteger;->get()I
+    move-result-object v7
 
-    move-result v0
+    .line 138
+    .local v7, "plugin":Lorg/apache/cordova/CordovaPlugin;
+    if-nez v7, :cond_1
 
-    if-lez v0, :cond_0
+    .line 139
+    sget-object v11, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
 
-    .line 219
-    iget-object v0, p0, Lorg/apache/cordova/PluginManager;->numPendingUiExecs:Ljava/util/concurrent/atomic/AtomicInteger;
+    new-instance v12, Ljava/lang/StringBuilder;
 
-    invoke-virtual {v0}, Ljava/util/concurrent/atomic/AtomicInteger;->getAndIncrement()I
+    invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
 
-    .line 220
-    iget-object v0, p0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
+    const-string v13, "exec() call to unknown plugin: "
 
-    invoke-interface {v0}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
+    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v6
+    move-result-object v12
 
-    new-instance v0, Lorg/apache/cordova/PluginManager$1;
+    invoke-virtual {v12, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-object v1, p0
+    move-result-object v12
 
-    move-object v2, p1
+    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-object v3, p2
+    move-result-object v12
 
-    move-object v4, p3
+    invoke-static {v11, v12}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    move-object v5, p4
+    .line 140
+    new-instance v3, Lorg/apache/cordova/PluginResult;
 
-    invoke-direct/range {v0 .. v5}, Lorg/apache/cordova/PluginManager$1;-><init>(Lorg/apache/cordova/PluginManager;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+    sget-object v11, Lorg/apache/cordova/PluginResult$Status;->CLASS_NOT_FOUND_EXCEPTION:Lorg/apache/cordova/PluginResult$Status;
 
-    invoke-virtual {v6, v0}, Landroid/app/Activity;->runOnUiThread(Ljava/lang/Runnable;)V
+    invoke-direct {v3, v11}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;)V
 
-    .line 229
+    .line 141
+    .local v3, "cr":Lorg/apache/cordova/PluginResult;
+    iget-object v11, p0, Lorg/apache/cordova/PluginManager;->app:Lorg/apache/cordova/CordovaWebView;
+
+    move-object/from16 v0, p3
+
+    invoke-virtual {v11, v3, v0}, Lorg/apache/cordova/CordovaWebView;->sendPluginResult(Lorg/apache/cordova/PluginResult;Ljava/lang/String;)V
+
+    .line 164
+    .end local v3    # "cr":Lorg/apache/cordova/PluginResult;
+    :cond_0
     :goto_0
     return-void
 
-    .line 227
-    :cond_0
-    invoke-direct {p0, p1, p2, p3, p4}, Lorg/apache/cordova/PluginManager;->execHelper(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+    .line 144
+    :cond_1
+    new-instance v2, Lorg/apache/cordova/CallbackContext;
+
+    iget-object v11, p0, Lorg/apache/cordova/PluginManager;->app:Lorg/apache/cordova/CordovaWebView;
+
+    move-object/from16 v0, p3
+
+    invoke-direct {v2, v0, v11}, Lorg/apache/cordova/CallbackContext;-><init>(Ljava/lang/String;Lorg/apache/cordova/CordovaWebView;)V
+
+    .line 146
+    .local v2, "callbackContext":Lorg/apache/cordova/CallbackContext;
+    :try_start_0
+    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
+
+    move-result-wide v8
+
+    .line 147
+    .local v8, "pluginStartTime":J
+    move-object/from16 v0, p2
+
+    move-object/from16 v1, p4
+
+    invoke-virtual {v7, v0, v1, v2}, Lorg/apache/cordova/CordovaPlugin;->execute(Ljava/lang/String;Ljava/lang/String;Lorg/apache/cordova/CallbackContext;)Z
+
+    move-result v10
+
+    .line 148
+    .local v10, "wasValidAction":Z
+    invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
+
+    move-result-wide v12
+
+    sub-long v4, v12, v8
+
+    .line 150
+    .local v4, "duration":J
+    sget v11, Lorg/apache/cordova/PluginManager;->SLOW_EXEC_WARNING_THRESHOLD:I
+
+    int-to-long v12, v11
+
+    cmp-long v11, v4, v12
+
+    if-lez v11, :cond_2
+
+    .line 151
+    sget-object v11, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
+
+    new-instance v12, Ljava/lang/StringBuilder;
+
+    invoke-direct {v12}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v13, "THREAD WARNING: exec() call to "
+
+    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v12
+
+    invoke-virtual {v12, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v12
+
+    const-string v13, "."
+
+    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v12
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v12, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v12
+
+    const-string v13, " blocked the main thread for "
+
+    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v12
+
+    invoke-virtual {v12, v4, v5}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    move-result-object v12
+
+    const-string v13, "ms. Plugin should use CordovaInterface.getThreadPool()."
+
+    invoke-virtual {v12, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v12
+
+    invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v12
+
+    invoke-static {v11, v12}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 153
+    :cond_2
+    if-nez v10, :cond_0
+
+    .line 154
+    new-instance v3, Lorg/apache/cordova/PluginResult;
+
+    sget-object v11, Lorg/apache/cordova/PluginResult$Status;->INVALID_ACTION:Lorg/apache/cordova/PluginResult$Status;
+
+    invoke-direct {v3, v11}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;)V
+
+    .line 155
+    .restart local v3    # "cr":Lorg/apache/cordova/PluginResult;
+    invoke-virtual {v2, v3}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
+    :try_end_0
+    .catch Lorg/json/JSONException; {:try_start_0 .. :try_end_0} :catch_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_1
+
+    goto :goto_0
+
+    .line 157
+    .end local v3    # "cr":Lorg/apache/cordova/PluginResult;
+    .end local v4    # "duration":J
+    .end local v8    # "pluginStartTime":J
+    .end local v10    # "wasValidAction":Z
+    :catch_0
+    move-exception v6
+
+    .line 158
+    .local v6, "e":Lorg/json/JSONException;
+    new-instance v3, Lorg/apache/cordova/PluginResult;
+
+    sget-object v11, Lorg/apache/cordova/PluginResult$Status;->JSON_EXCEPTION:Lorg/apache/cordova/PluginResult$Status;
+
+    invoke-direct {v3, v11}, Lorg/apache/cordova/PluginResult;-><init>(Lorg/apache/cordova/PluginResult$Status;)V
+
+    .line 159
+    .restart local v3    # "cr":Lorg/apache/cordova/PluginResult;
+    invoke-virtual {v2, v3}, Lorg/apache/cordova/CallbackContext;->sendPluginResult(Lorg/apache/cordova/PluginResult;)V
+
+    goto :goto_0
+
+    .line 160
+    .end local v3    # "cr":Lorg/apache/cordova/PluginResult;
+    .end local v6    # "e":Lorg/json/JSONException;
+    :catch_1
+    move-exception v6
+
+    .line 161
+    .local v6, "e":Ljava/lang/Exception;
+    sget-object v11, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
+
+    const-string v12, "Uncaught exception from plugin"
+
+    invoke-static {v11, v12, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    .line 162
+    invoke-virtual {v6}, Ljava/lang/Exception;->getMessage()Ljava/lang/String;
+
+    move-result-object v11
+
+    invoke-virtual {v2, v11}, Lorg/apache/cordova/CallbackContext;->error(Ljava/lang/String;)V
 
     goto :goto_0
 .end method
@@ -555,20 +626,33 @@
     .end annotation
 
     .prologue
-    .line 263
+    .line 168
     invoke-virtual {p0, p1, p2, p3, p4}, Lorg/apache/cordova/PluginManager;->exec(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 264
+    .line 169
     return-void
 .end method
 
 .method public getPlugin(Ljava/lang/String;)Lorg/apache/cordova/CordovaPlugin;
-    .locals 4
+    .locals 5
     .param p1, "service"    # Ljava/lang/String;
 
     .prologue
-    .line 275
-    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
+    .line 180
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
+
+    invoke-virtual {v2, p1}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Lorg/apache/cordova/CordovaPlugin;
+
+    .line 181
+    .local v1, "ret":Lorg/apache/cordova/CordovaPlugin;
+    if-nez v1, :cond_1
+
+    .line 182
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->entryMap:Ljava/util/HashMap;
 
     invoke-virtual {v2, p1}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
 
@@ -576,596 +660,146 @@
 
     check-cast v0, Lorg/apache/cordova/PluginEntry;
 
-    .line 276
-    .local v0, "entry":Lorg/apache/cordova/PluginEntry;
-    if-nez v0, :cond_1
+    .line 183
+    .local v0, "pe":Lorg/apache/cordova/PluginEntry;
+    if-nez v0, :cond_0
 
-    .line 277
-    const/4 v1, 0x0
+    .line 184
+    const/4 v2, 0x0
 
-    .line 283
-    :cond_0
+    .line 194
+    .end local v0    # "pe":Lorg/apache/cordova/PluginEntry;
     :goto_0
-    return-object v1
+    return-object v2
 
-    .line 279
-    :cond_1
+    .line 186
+    .restart local v0    # "pe":Lorg/apache/cordova/PluginEntry;
+    :cond_0
+    iget-object v2, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+
+    if-eqz v2, :cond_2
+
+    .line 187
     iget-object v1, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
 
-    .line 280
-    .local v1, "plugin":Lorg/apache/cordova/CordovaPlugin;
-    if-nez v1, :cond_0
+    .line 191
+    :goto_1
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
 
-    .line 281
-    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->app:Lorg/apache/cordova/CordovaWebView;
+    iget-object v3, p0, Lorg/apache/cordova/PluginManager;->app:Lorg/apache/cordova/CordovaWebView;
 
-    iget-object v3, p0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
+    iget-object v4, p0, Lorg/apache/cordova/PluginManager;->app:Lorg/apache/cordova/CordovaWebView;
 
-    invoke-virtual {v0, v2, v3}, Lorg/apache/cordova/PluginEntry;->createPlugin(Lorg/apache/cordova/CordovaWebView;Lorg/apache/cordova/CordovaInterface;)Lorg/apache/cordova/CordovaPlugin;
+    invoke-virtual {v4}, Lorg/apache/cordova/CordovaWebView;->getPreferences()Lorg/apache/cordova/CordovaPreferences;
+
+    move-result-object v4
+
+    invoke-virtual {v1, v2, v3, v4}, Lorg/apache/cordova/CordovaPlugin;->privateInitialize(Lorg/apache/cordova/CordovaInterface;Lorg/apache/cordova/CordovaWebView;Lorg/apache/cordova/CordovaPreferences;)V
+
+    .line 192
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
+
+    invoke-virtual {v2, p1, v1}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    .end local v0    # "pe":Lorg/apache/cordova/PluginEntry;
+    :cond_1
+    move-object v2, v1
+
+    .line 194
+    goto :goto_0
+
+    .line 189
+    .restart local v0    # "pe":Lorg/apache/cordova/PluginEntry;
+    :cond_2
+    iget-object v2, v0, Lorg/apache/cordova/PluginEntry;->pluginClass:Ljava/lang/String;
+
+    invoke-direct {p0, v2}, Lorg/apache/cordova/PluginManager;->instantiatePlugin(Ljava/lang/String;)Lorg/apache/cordova/CordovaPlugin;
 
     move-result-object v1
 
-    goto :goto_0
+    goto :goto_1
 .end method
 
 .method public init()V
-    .locals 4
+    .locals 2
 
     .prologue
-    const/4 v2, 0x0
-
-    .line 87
+    .line 88
     sget-object v0, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
 
     const-string v1, "init()"
 
     invoke-static {v0, v1}, Lorg/apache/cordova/LOG;->d(Ljava/lang/String;Ljava/lang/String;)V
 
+    .line 89
+    const/4 v0, 0x0
+
+    invoke-virtual {p0, v0}, Lorg/apache/cordova/PluginManager;->onPause(Z)V
+
     .line 90
-    iget-boolean v0, p0, Lorg/apache/cordova/PluginManager;->firstRun:Z
-
-    if-eqz v0, :cond_0
-
-    .line 91
-    invoke-virtual {p0}, Lorg/apache/cordova/PluginManager;->loadPlugins()V
-
-    .line 92
-    iput-boolean v2, p0, Lorg/apache/cordova/PluginManager;->firstRun:Z
-
-    .line 103
-    :goto_0
-    new-instance v0, Lorg/apache/cordova/PluginEntry;
-
-    const-string v1, "PluginManager"
-
-    new-instance v2, Lorg/apache/cordova/PluginManager$PluginManagerService;
-
-    const/4 v3, 0x0
-
-    invoke-direct {v2, p0, v3}, Lorg/apache/cordova/PluginManager$PluginManagerService;-><init>(Lorg/apache/cordova/PluginManager;Lorg/apache/cordova/PluginManager$PluginManagerService;)V
-
-    invoke-direct {v0, v1, v2}, Lorg/apache/cordova/PluginEntry;-><init>(Ljava/lang/String;Lorg/apache/cordova/CordovaPlugin;)V
-
-    invoke-virtual {p0, v0}, Lorg/apache/cordova/PluginManager;->addService(Lorg/apache/cordova/PluginEntry;)V
-
-    .line 106
-    invoke-virtual {p0}, Lorg/apache/cordova/PluginManager;->startupPlugins()V
-
-    .line 107
-    return-void
-
-    .line 97
-    :cond_0
-    invoke-virtual {p0, v2}, Lorg/apache/cordova/PluginManager;->onPause(Z)V
-
-    .line 98
     invoke-virtual {p0}, Lorg/apache/cordova/PluginManager;->onDestroy()V
 
-    .line 99
-    invoke-virtual {p0}, Lorg/apache/cordova/PluginManager;->clearPluginObjects()V
+    .line 91
+    iget-object v0, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
 
-    goto :goto_0
+    invoke-virtual {v0}, Ljava/util/HashMap;->clear()V
+
+    .line 92
+    invoke-virtual {p0}, Lorg/apache/cordova/PluginManager;->startupPlugins()V
+
+    .line 93
+    return-void
 .end method
 
 .method public loadPlugins()V
-    .locals 17
+    .locals 0
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
 
     .prologue
-    .line 114
-    move-object/from16 v0, p0
-
-    iget-object v13, v0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v13}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v13
-
-    invoke-virtual {v13}, Landroid/app/Activity;->getResources()Landroid/content/res/Resources;
-
-    move-result-object v13
-
-    const-string v14, "config"
-
-    const-string v15, "xml"
-
-    move-object/from16 v0, p0
-
-    iget-object v0, v0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
-
-    move-object/from16 v16, v0
-
-    invoke-interface/range {v16 .. v16}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v16
-
-    invoke-virtual/range {v16 .. v16}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
-
-    move-result-object v16
-
-    invoke-virtual/range {v16 .. v16}, Ljava/lang/Class;->getPackage()Ljava/lang/Package;
-
-    move-result-object v16
-
-    invoke-virtual/range {v16 .. v16}, Ljava/lang/Package;->getName()Ljava/lang/String;
-
-    move-result-object v16
-
-    invoke-virtual/range {v13 .. v16}, Landroid/content/res/Resources;->getIdentifier(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
-
-    move-result v5
-
-    .line 115
-    .local v5, "id":I
-    if-nez v5, :cond_1
-
-    .line 117
-    move-object/from16 v0, p0
-
-    iget-object v13, v0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v13}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v13
-
-    invoke-virtual {v13}, Landroid/app/Activity;->getResources()Landroid/content/res/Resources;
-
-    move-result-object v13
-
-    const-string v14, "config"
-
-    const-string v15, "xml"
-
-    move-object/from16 v0, p0
-
-    iget-object v0, v0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
-
-    move-object/from16 v16, v0
-
-    invoke-interface/range {v16 .. v16}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v16
-
-    invoke-virtual/range {v16 .. v16}, Landroid/app/Activity;->getPackageName()Ljava/lang/String;
-
-    move-result-object v16
-
-    invoke-virtual/range {v13 .. v16}, Landroid/content/res/Resources;->getIdentifier(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
-
-    move-result v5
-
-    .line 118
-    if-nez v5, :cond_1
-
-    .line 119
-    invoke-direct/range {p0 .. p0}, Lorg/apache/cordova/PluginManager;->pluginConfigurationMissing()V
-
-    .line 178
-    :cond_0
+    .line 97
     return-void
-
-    .line 124
-    :cond_1
-    move-object/from16 v0, p0
-
-    iget-object v13, v0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-interface {v13}, Lorg/apache/cordova/CordovaInterface;->getActivity()Landroid/app/Activity;
-
-    move-result-object v13
-
-    invoke-virtual {v13}, Landroid/app/Activity;->getResources()Landroid/content/res/Resources;
-
-    move-result-object v13
-
-    invoke-virtual {v13, v5}, Landroid/content/res/Resources;->getXml(I)Landroid/content/res/XmlResourceParser;
-
-    move-result-object v12
-
-    .line 125
-    .local v12, "xml":Landroid/content/res/XmlResourceParser;
-    const/4 v3, -0x1
-
-    .line 126
-    .local v3, "eventType":I
-    const-string v10, ""
-
-    .local v10, "service":Ljava/lang/String;
-    const-string v9, ""
-
-    .local v9, "pluginClass":Ljava/lang/String;
-    const-string v8, ""
-
-    .line 127
-    .local v8, "paramType":Ljava/lang/String;
-    const/4 v7, 0x0
-
-    .line 128
-    .local v7, "onload":Z
-    const/4 v6, 0x0
-
-    .line 129
-    .local v6, "insideFeature":Z
-    :goto_0
-    const/4 v13, 0x1
-
-    if-eq v3, v13, :cond_0
-
-    .line 130
-    const/4 v13, 0x2
-
-    if-ne v3, v13, :cond_9
-
-    .line 131
-    invoke-interface {v12}, Landroid/content/res/XmlResourceParser;->getName()Ljava/lang/String;
-
-    move-result-object v11
-
-    .line 132
-    .local v11, "strNode":Ljava/lang/String;
-    const-string v13, "url-filter"
-
-    invoke-virtual {v11, v13}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v13
-
-    if-eqz v13, :cond_4
-
-    .line 133
-    sget-object v13, Lorg/apache/cordova/PluginManager;->TAG:Ljava/lang/String;
-
-    new-instance v14, Ljava/lang/StringBuilder;
-
-    const-string v15, "Plugin "
-
-    invoke-direct {v14, v15}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v14, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v14
-
-    const-string v15, " is using deprecated tag <url-filter>"
-
-    invoke-virtual {v14, v15}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v14
-
-    invoke-virtual {v14}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v14
-
-    invoke-static {v13, v14}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 134
-    move-object/from16 v0, p0
-
-    iget-object v13, v0, Lorg/apache/cordova/PluginManager;->urlMap:Ljava/util/HashMap;
-
-    invoke-virtual {v13, v10}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
-
-    move-result-object v13
-
-    if-nez v13, :cond_2
-
-    .line 135
-    move-object/from16 v0, p0
-
-    iget-object v13, v0, Lorg/apache/cordova/PluginManager;->urlMap:Ljava/util/HashMap;
-
-    new-instance v14, Ljava/util/ArrayList;
-
-    const/4 v15, 0x2
-
-    invoke-direct {v14, v15}, Ljava/util/ArrayList;-><init>(I)V
-
-    invoke-virtual {v13, v10, v14}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
-
-    .line 137
-    :cond_2
-    move-object/from16 v0, p0
-
-    iget-object v13, v0, Lorg/apache/cordova/PluginManager;->urlMap:Ljava/util/HashMap;
-
-    invoke-virtual {v13, v10}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
-
-    move-result-object v4
-
-    check-cast v4, Ljava/util/List;
-
-    .line 138
-    .local v4, "filters":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
-    const/4 v13, 0x0
-
-    const-string v14, "value"
-
-    invoke-interface {v12, v13, v14}, Landroid/content/res/XmlResourceParser;->getAttributeValue(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v13
-
-    invoke-interface {v4, v13}, Ljava/util/List;->add(Ljava/lang/Object;)Z
-
-    .line 171
-    .end local v4    # "filters":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
-    .end local v11    # "strNode":Ljava/lang/String;
-    :cond_3
-    :goto_1
-    :try_start_0
-    invoke-interface {v12}, Landroid/content/res/XmlResourceParser;->next()I
-    :try_end_0
-    .catch Lorg/xmlpull/v1/XmlPullParserException; {:try_start_0 .. :try_end_0} :catch_0
-    .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_1
-
-    move-result v3
-
-    goto :goto_0
-
-    .line 140
-    .restart local v11    # "strNode":Ljava/lang/String;
-    :cond_4
-    const-string v13, "feature"
-
-    invoke-virtual {v11, v13}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v13
-
-    if-eqz v13, :cond_5
-
-    .line 143
-    const/4 v6, 0x1
-
-    .line 144
-    const/4 v13, 0x0
-
-    const-string v14, "name"
-
-    invoke-interface {v12, v13, v14}, Landroid/content/res/XmlResourceParser;->getAttributeValue(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v10
-
-    .line 145
-    goto :goto_1
-
-    .line 146
-    :cond_5
-    if-eqz v6, :cond_3
-
-    const-string v13, "param"
-
-    invoke-virtual {v11, v13}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v13
-
-    if-eqz v13, :cond_3
-
-    .line 147
-    const/4 v13, 0x0
-
-    const-string v14, "name"
-
-    invoke-interface {v12, v13, v14}, Landroid/content/res/XmlResourceParser;->getAttributeValue(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v8
-
-    .line 148
-    const-string v13, "service"
-
-    invoke-virtual {v8, v13}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v13
-
-    if-eqz v13, :cond_6
-
-    .line 149
-    const/4 v13, 0x0
-
-    const-string v14, "value"
-
-    invoke-interface {v12, v13, v14}, Landroid/content/res/XmlResourceParser;->getAttributeValue(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v10
-
-    goto :goto_1
-
-    .line 150
-    :cond_6
-    const-string v13, "package"
-
-    invoke-virtual {v8, v13}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v13
-
-    if-nez v13, :cond_7
-
-    const-string v13, "android-package"
-
-    invoke-virtual {v8, v13}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v13
-
-    if-eqz v13, :cond_8
-
-    .line 151
-    :cond_7
-    const/4 v13, 0x0
-
-    const-string v14, "value"
-
-    invoke-interface {v12, v13, v14}, Landroid/content/res/XmlResourceParser;->getAttributeValue(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v9
-
-    goto :goto_1
-
-    .line 152
-    :cond_8
-    const-string v13, "onload"
-
-    invoke-virtual {v8, v13}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v13
-
-    if-eqz v13, :cond_3
-
-    .line 153
-    const-string v13, "true"
-
-    const/4 v14, 0x0
-
-    const-string v15, "value"
-
-    invoke-interface {v12, v14, v15}, Landroid/content/res/XmlResourceParser;->getAttributeValue(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v14
-
-    invoke-virtual {v13, v14}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v7
-
-    .line 155
-    goto :goto_1
-
-    .line 156
-    .end local v11    # "strNode":Ljava/lang/String;
-    :cond_9
-    const/4 v13, 0x3
-
-    if-ne v3, v13, :cond_3
-
-    .line 158
-    invoke-interface {v12}, Landroid/content/res/XmlResourceParser;->getName()Ljava/lang/String;
-
-    move-result-object v11
-
-    .line 159
-    .restart local v11    # "strNode":Ljava/lang/String;
-    const-string v13, "feature"
-
-    invoke-virtual {v11, v13}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v13
-
-    if-nez v13, :cond_a
-
-    const-string v13, "plugin"
-
-    invoke-virtual {v11, v13}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v13
-
-    if-eqz v13, :cond_3
-
-    .line 161
-    :cond_a
-    new-instance v2, Lorg/apache/cordova/PluginEntry;
-
-    invoke-direct {v2, v10, v9, v7}, Lorg/apache/cordova/PluginEntry;-><init>(Ljava/lang/String;Ljava/lang/String;Z)V
-
-    .line 162
-    .local v2, "entry":Lorg/apache/cordova/PluginEntry;
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v2}, Lorg/apache/cordova/PluginManager;->addService(Lorg/apache/cordova/PluginEntry;)V
-
-    .line 165
-    const-string v10, ""
-
-    .line 166
-    const-string v9, ""
-
-    .line 167
-    const/4 v6, 0x0
-
-    goto/16 :goto_1
-
-    .line 172
-    .end local v2    # "entry":Lorg/apache/cordova/PluginEntry;
-    .end local v11    # "strNode":Ljava/lang/String;
-    :catch_0
-    move-exception v1
-
-    .line 173
-    .local v1, "e":Lorg/xmlpull/v1/XmlPullParserException;
-    invoke-virtual {v1}, Lorg/xmlpull/v1/XmlPullParserException;->printStackTrace()V
-
-    goto/16 :goto_0
-
-    .line 174
-    .end local v1    # "e":Lorg/xmlpull/v1/XmlPullParserException;
-    :catch_1
-    move-exception v1
-
-    .line 175
-    .local v1, "e":Ljava/io/IOException;
-    invoke-virtual {v1}, Ljava/io/IOException;->printStackTrace()V
-
-    goto/16 :goto_0
 .end method
 
 .method public onDestroy()V
     .locals 3
 
     .prologue
-    .line 338
-    iget-object v1, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
+    .line 254
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
 
-    invoke-virtual {v1}, Ljava/util/HashMap;->values()Ljava/util/Collection;
+    invoke-virtual {v2}, Ljava/util/HashMap;->values()Ljava/util/Collection;
 
-    move-result-object v1
+    move-result-object v2
 
-    invoke-interface {v1}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
-
-    move-result-object v1
-
-    :cond_0
-    :goto_0
-    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v2
-
-    if-nez v2, :cond_1
-
-    .line 343
-    return-void
-
-    .line 338
-    :cond_1
-    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v2}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
 
     move-result-object v0
 
-    check-cast v0, Lorg/apache/cordova/PluginEntry;
+    .local v0, "i$":Ljava/util/Iterator;
+    :goto_0
+    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
 
-    .line 339
-    .local v0, "entry":Lorg/apache/cordova/PluginEntry;
-    iget-object v2, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+    move-result v2
 
     if-eqz v2, :cond_0
 
-    .line 340
-    iget-object v2, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    invoke-virtual {v2}, Lorg/apache/cordova/CordovaPlugin;->onDestroy()V
+    move-result-object v1
+
+    check-cast v1, Lorg/apache/cordova/CordovaPlugin;
+
+    .line 255
+    .local v1, "plugin":Lorg/apache/cordova/CordovaPlugin;
+    invoke-virtual {v1}, Lorg/apache/cordova/CordovaPlugin;->onDestroy()V
 
     goto :goto_0
+
+    .line 257
+    .end local v1    # "plugin":Lorg/apache/cordova/CordovaPlugin;
+    :cond_0
+    return-void
 .end method
 
 .method public onNewIntent(Landroid/content/Intent;)V
@@ -1173,160 +807,169 @@
     .param p1, "intent"    # Landroid/content/Intent;
 
     .prologue
-    .line 372
-    iget-object v1, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
+    .line 284
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
 
-    invoke-virtual {v1}, Ljava/util/HashMap;->values()Ljava/util/Collection;
+    invoke-virtual {v2}, Ljava/util/HashMap;->values()Ljava/util/Collection;
+
+    move-result-object v2
+
+    invoke-interface {v2}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
+
+    move-result-object v0
+
+    .local v0, "i$":Ljava/util/Iterator;
+    :goto_0
+    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v1
 
-    invoke-interface {v1}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
+    check-cast v1, Lorg/apache/cordova/CordovaPlugin;
+
+    .line 285
+    .local v1, "plugin":Lorg/apache/cordova/CordovaPlugin;
+    invoke-virtual {v1, p1}, Lorg/apache/cordova/CordovaPlugin;->onNewIntent(Landroid/content/Intent;)V
+
+    goto :goto_0
+
+    .line 287
+    .end local v1    # "plugin":Lorg/apache/cordova/CordovaPlugin;
+    :cond_0
+    return-void
+.end method
+
+.method public onOverrideUrlLoading(Ljava/lang/String;)Z
+    .locals 8
+    .param p1, "url"    # Ljava/lang/String;
+
+    .prologue
+    .line 300
+    iget-object v6, p0, Lorg/apache/cordova/PluginManager;->entryMap:Ljava/util/HashMap;
+
+    invoke-virtual {v6}, Ljava/util/HashMap;->values()Ljava/util/Collection;
+
+    move-result-object v6
+
+    invoke-interface {v6}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
 
     move-result-object v1
 
     :cond_0
-    :goto_0
     invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
-    move-result v2
+    move-result v6
 
-    if-nez v2, :cond_1
+    if-eqz v6, :cond_3
 
-    .line 377
-    return-void
-
-    .line 372
-    :cond_1
     invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v0
 
     check-cast v0, Lorg/apache/cordova/PluginEntry;
 
-    .line 373
+    .line 301
     .local v0, "entry":Lorg/apache/cordova/PluginEntry;
-    iget-object v2, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+    iget-object v6, p0, Lorg/apache/cordova/PluginManager;->urlMap:Ljava/util/HashMap;
 
-    if-eqz v2, :cond_0
+    iget-object v7, v0, Lorg/apache/cordova/PluginEntry;->service:Ljava/lang/String;
 
-    .line 374
-    iget-object v2, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+    invoke-virtual {v6, v7}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
 
-    invoke-virtual {v2, p1}, Lorg/apache/cordova/CordovaPlugin;->onNewIntent(Landroid/content/Intent;)V
+    move-result-object v5
 
-    goto :goto_0
-.end method
+    check-cast v5, Ljava/util/List;
 
-.method public onOverrideUrlLoading(Ljava/lang/String;)Z
-    .locals 6
-    .param p1, "url"    # Ljava/lang/String;
+    .line 302
+    .local v5, "urlFilters":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
+    if-eqz v5, :cond_2
 
-    .prologue
-    .line 390
-    iget-object v3, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
-
-    invoke-virtual {v3}, Ljava/util/HashMap;->values()Ljava/util/Collection;
-
-    move-result-object v3
-
-    invoke-interface {v3}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
-
-    move-result-object v3
-
-    :cond_0
-    invoke-interface {v3}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v4
-
-    if-nez v4, :cond_1
-
-    .line 404
-    const/4 v3, 0x0
-
-    :goto_0
-    return v3
-
-    .line 390
-    :cond_1
-    invoke-interface {v3}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Lorg/apache/cordova/PluginEntry;
-
-    .line 391
-    .local v0, "entry":Lorg/apache/cordova/PluginEntry;
-    iget-object v4, p0, Lorg/apache/cordova/PluginManager;->urlMap:Ljava/util/HashMap;
-
-    iget-object v5, v0, Lorg/apache/cordova/PluginEntry;->service:Ljava/lang/String;
-
-    invoke-virtual {v4, v5}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+    .line 303
+    invoke-interface {v5}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
     move-result-object v2
 
-    check-cast v2, Ljava/util/List;
+    .local v2, "i$":Ljava/util/Iterator;
+    :cond_1
+    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
 
-    .line 392
-    .local v2, "urlFilters":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
-    if-eqz v2, :cond_3
+    move-result v6
 
-    .line 393
-    invoke-interface {v2}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+    if-eqz v6, :cond_0
+
+    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v4
 
+    check-cast v4, Ljava/lang/String;
+
+    .line 304
+    .local v4, "s":Ljava/lang/String;
+    invoke-virtual {p1, v4}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v6
+
+    if-eqz v6, :cond_1
+
+    .line 305
+    iget-object v6, v0, Lorg/apache/cordova/PluginEntry;->service:Ljava/lang/String;
+
+    invoke-virtual {p0, v6}, Lorg/apache/cordova/PluginManager;->getPlugin(Ljava/lang/String;)Lorg/apache/cordova/CordovaPlugin;
+
+    move-result-object v6
+
+    invoke-virtual {v6, p1}, Lorg/apache/cordova/CordovaPlugin;->onOverrideUrlLoading(Ljava/lang/String;)Z
+
+    move-result v6
+
+    .line 315
+    .end local v0    # "entry":Lorg/apache/cordova/PluginEntry;
+    .end local v2    # "i$":Ljava/util/Iterator;
+    .end local v4    # "s":Ljava/lang/String;
+    .end local v5    # "urlFilters":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
+    :goto_0
+    return v6
+
+    .line 309
+    .restart local v0    # "entry":Lorg/apache/cordova/PluginEntry;
+    .restart local v5    # "urlFilters":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     :cond_2
-    invoke-interface {v4}, Ljava/util/Iterator;->hasNext()Z
+    iget-object v6, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
 
-    move-result v5
+    iget-object v7, v0, Lorg/apache/cordova/PluginEntry;->service:Ljava/lang/String;
 
-    if-eqz v5, :cond_0
-
-    invoke-interface {v4}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v1
-
-    check-cast v1, Ljava/lang/String;
-
-    .line 394
-    .local v1, "s":Ljava/lang/String;
-    invoke-virtual {p1, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_2
-
-    .line 395
-    iget-object v3, v0, Lorg/apache/cordova/PluginEntry;->service:Ljava/lang/String;
-
-    invoke-virtual {p0, v3}, Lorg/apache/cordova/PluginManager;->getPlugin(Ljava/lang/String;)Lorg/apache/cordova/CordovaPlugin;
+    invoke-virtual {v6, v7}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
 
     move-result-object v3
 
+    check-cast v3, Lorg/apache/cordova/CordovaPlugin;
+
+    .line 310
+    .local v3, "plugin":Lorg/apache/cordova/CordovaPlugin;
+    if-eqz v3, :cond_0
+
     invoke-virtual {v3, p1}, Lorg/apache/cordova/CordovaPlugin;->onOverrideUrlLoading(Ljava/lang/String;)Z
 
-    move-result v3
+    move-result v6
+
+    if-eqz v6, :cond_0
+
+    .line 311
+    const/4 v6, 0x1
 
     goto :goto_0
 
-    .line 398
-    .end local v1    # "s":Ljava/lang/String;
+    .line 315
+    .end local v0    # "entry":Lorg/apache/cordova/PluginEntry;
+    .end local v3    # "plugin":Lorg/apache/cordova/CordovaPlugin;
+    .end local v5    # "urlFilters":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     :cond_3
-    iget-object v4, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
-
-    if-eqz v4, :cond_0
-
-    .line 399
-    iget-object v4, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
-
-    invoke-virtual {v4, p1}, Lorg/apache/cordova/CordovaPlugin;->onOverrideUrlLoading(Ljava/lang/String;)Z
-
-    move-result v4
-
-    if-eqz v4, :cond_0
-
-    .line 400
-    const/4 v3, 0x1
+    const/4 v6, 0x0
 
     goto :goto_0
 .end method
@@ -1336,56 +979,8 @@
     .param p1, "multitasking"    # Z
 
     .prologue
-    .line 314
-    iget-object v1, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
-
-    invoke-virtual {v1}, Ljava/util/HashMap;->values()Ljava/util/Collection;
-
-    move-result-object v1
-
-    invoke-interface {v1}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
-
-    move-result-object v1
-
-    :cond_0
-    :goto_0
-    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v2
-
-    if-nez v2, :cond_1
-
-    .line 319
-    return-void
-
-    .line 314
-    :cond_1
-    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Lorg/apache/cordova/PluginEntry;
-
-    .line 315
-    .local v0, "entry":Lorg/apache/cordova/PluginEntry;
-    iget-object v2, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
-
-    if-eqz v2, :cond_0
-
-    .line 316
-    iget-object v2, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
-
-    invoke-virtual {v2, p1}, Lorg/apache/cordova/CordovaPlugin;->onPause(Z)V
-
-    goto :goto_0
-.end method
-
-.method public onReset()V
-    .locals 3
-
-    .prologue
-    .line 411
-    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
+    .line 234
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
 
     invoke-virtual {v2}, Ljava/util/HashMap;->values()Ljava/util/Collection;
 
@@ -1395,37 +990,71 @@
 
     move-result-object v0
 
-    .line 412
-    .local v0, "it":Ljava/util/Iterator;, "Ljava/util/Iterator<Lorg/apache/cordova/PluginEntry;>;"
-    :cond_0
+    .local v0, "i$":Ljava/util/Iterator;
     :goto_0
     invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v2
 
-    if-nez v2, :cond_1
+    if-eqz v2, :cond_0
 
-    .line 418
-    return-void
-
-    .line 413
-    :cond_1
     invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Lorg/apache/cordova/CordovaPlugin;
+
+    .line 235
+    .local v1, "plugin":Lorg/apache/cordova/CordovaPlugin;
+    invoke-virtual {v1, p1}, Lorg/apache/cordova/CordovaPlugin;->onPause(Z)V
+
+    goto :goto_0
+
+    .line 237
+    .end local v1    # "plugin":Lorg/apache/cordova/CordovaPlugin;
+    :cond_0
+    return-void
+.end method
+
+.method public onReset()V
+    .locals 3
+
+    .prologue
+    .line 322
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
+
+    invoke-virtual {v2}, Ljava/util/HashMap;->values()Ljava/util/Collection;
 
     move-result-object v2
 
-    check-cast v2, Lorg/apache/cordova/PluginEntry;
+    invoke-interface {v2}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
 
-    iget-object v1, v2, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+    move-result-object v0
 
-    .line 414
+    .local v0, "i$":Ljava/util/Iterator;
+    :goto_0
+    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Lorg/apache/cordova/CordovaPlugin;
+
+    .line 323
     .local v1, "plugin":Lorg/apache/cordova/CordovaPlugin;
-    if-eqz v1, :cond_0
-
-    .line 415
     invoke-virtual {v1}, Lorg/apache/cordova/CordovaPlugin;->onReset()V
 
     goto :goto_0
+
+    .line 325
+    .end local v1    # "plugin":Lorg/apache/cordova/CordovaPlugin;
+    :cond_0
+    return-void
 .end method
 
 .method public onResume(Z)V
@@ -1433,48 +1062,41 @@
     .param p1, "multitasking"    # Z
 
     .prologue
-    .line 327
-    iget-object v1, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
+    .line 245
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
 
-    invoke-virtual {v1}, Ljava/util/HashMap;->values()Ljava/util/Collection;
+    invoke-virtual {v2}, Ljava/util/HashMap;->values()Ljava/util/Collection;
 
-    move-result-object v1
+    move-result-object v2
 
-    invoke-interface {v1}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
-
-    move-result-object v1
-
-    :cond_0
-    :goto_0
-    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v2
-
-    if-nez v2, :cond_1
-
-    .line 332
-    return-void
-
-    .line 327
-    :cond_1
-    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v2}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
 
     move-result-object v0
 
-    check-cast v0, Lorg/apache/cordova/PluginEntry;
+    .local v0, "i$":Ljava/util/Iterator;
+    :goto_0
+    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
 
-    .line 328
-    .local v0, "entry":Lorg/apache/cordova/PluginEntry;
-    iget-object v2, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+    move-result v2
 
     if-eqz v2, :cond_0
 
-    .line 329
-    iget-object v2, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    invoke-virtual {v2, p1}, Lorg/apache/cordova/CordovaPlugin;->onResume(Z)V
+    move-result-object v1
+
+    check-cast v1, Lorg/apache/cordova/CordovaPlugin;
+
+    .line 246
+    .local v1, "plugin":Lorg/apache/cordova/CordovaPlugin;
+    invoke-virtual {v1, p1}, Lorg/apache/cordova/CordovaPlugin;->onResume(Z)V
 
     goto :goto_0
+
+    .line 248
+    .end local v1    # "plugin":Lorg/apache/cordova/CordovaPlugin;
+    :cond_0
+    return-void
 .end method
 
 .method public postMessage(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;
@@ -1483,74 +1105,68 @@
     .param p2, "data"    # Ljava/lang/Object;
 
     .prologue
-    .line 353
-    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
+    .line 267
+    iget-object v3, p0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
 
-    invoke-interface {v2, p1, p2}, Lorg/apache/cordova/CordovaInterface;->onMessage(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;
+    invoke-interface {v3, p1, p2}, Lorg/apache/cordova/CordovaInterface;->onMessage(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;
 
     move-result-object v1
 
-    .line 354
+    .line 268
     .local v1, "obj":Ljava/lang/Object;
     if-eqz v1, :cond_0
 
-    move-object v2, v1
+    move-object v3, v1
 
-    .line 365
+    .line 277
     :goto_0
-    return-object v2
+    return-object v3
 
-    .line 357
+    .line 271
     :cond_0
-    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
+    iget-object v3, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
 
-    invoke-virtual {v2}, Ljava/util/HashMap;->values()Ljava/util/Collection;
+    invoke-virtual {v3}, Ljava/util/HashMap;->values()Ljava/util/Collection;
 
-    move-result-object v2
+    move-result-object v3
 
-    invoke-interface {v2}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
-
-    move-result-object v2
-
-    :cond_1
-    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v3
-
-    if-nez v3, :cond_2
-
-    .line 365
-    const/4 v2, 0x0
-
-    goto :goto_0
-
-    .line 357
-    :cond_2
-    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v3}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
 
     move-result-object v0
 
-    check-cast v0, Lorg/apache/cordova/PluginEntry;
+    .local v0, "i$":Ljava/util/Iterator;
+    :cond_1
+    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
 
-    .line 358
-    .local v0, "entry":Lorg/apache/cordova/PluginEntry;
-    iget-object v3, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+    move-result v3
 
-    if-eqz v3, :cond_1
+    if-eqz v3, :cond_2
 
-    .line 359
-    iget-object v3, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
+    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    invoke-virtual {v3, p1, p2}, Lorg/apache/cordova/CordovaPlugin;->onMessage(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;
+    move-result-object v2
+
+    check-cast v2, Lorg/apache/cordova/CordovaPlugin;
+
+    .line 272
+    .local v2, "plugin":Lorg/apache/cordova/CordovaPlugin;
+    invoke-virtual {v2, p1, p2}, Lorg/apache/cordova/CordovaPlugin;->onMessage(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;
 
     move-result-object v1
 
-    .line 360
+    .line 273
     if-eqz v1, :cond_1
 
-    move-object v2, v1
+    move-object v3, v1
 
-    .line 361
+    .line 274
+    goto :goto_0
+
+    .line 277
+    .end local v2    # "plugin":Lorg/apache/cordova/CordovaPlugin;
+    :cond_2
+    const/4 v3, 0x0
+
     goto :goto_0
 .end method
 
@@ -1559,8 +1175,124 @@
     .param p1, "uri"    # Landroid/net/Uri;
 
     .prologue
-    .line 429
-    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
+    .line 328
+    iget-object v3, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
+
+    invoke-virtual {v3}, Ljava/util/HashMap;->values()Ljava/util/Collection;
+
+    move-result-object v3
+
+    invoke-interface {v3}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
+
+    move-result-object v0
+
+    .local v0, "i$":Ljava/util/Iterator;
+    :cond_0
+    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v3
+
+    if-eqz v3, :cond_1
+
+    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Lorg/apache/cordova/CordovaPlugin;
+
+    .line 329
+    .local v1, "plugin":Lorg/apache/cordova/CordovaPlugin;
+    invoke-virtual {v1, p1}, Lorg/apache/cordova/CordovaPlugin;->remapUri(Landroid/net/Uri;)Landroid/net/Uri;
+
+    move-result-object v2
+
+    .line 330
+    .local v2, "ret":Landroid/net/Uri;
+    if-eqz v2, :cond_0
+
+    .line 334
+    .end local v1    # "plugin":Lorg/apache/cordova/CordovaPlugin;
+    .end local v2    # "ret":Landroid/net/Uri;
+    :goto_0
+    return-object v2
+
+    :cond_1
+    const/4 v2, 0x0
+
+    goto :goto_0
+.end method
+
+.method public setPluginEntries(Ljava/util/List;)V
+    .locals 3
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/List",
+            "<",
+            "Lorg/apache/cordova/PluginEntry;",
+            ">;)V"
+        }
+    .end annotation
+
+    .prologue
+    .line 75
+    .local p1, "pluginEntries":Ljava/util/List;, "Ljava/util/List<Lorg/apache/cordova/PluginEntry;>;"
+    const/4 v2, 0x0
+
+    invoke-virtual {p0, v2}, Lorg/apache/cordova/PluginManager;->onPause(Z)V
+
+    .line 76
+    invoke-virtual {p0}, Lorg/apache/cordova/PluginManager;->onDestroy()V
+
+    .line 77
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->pluginMap:Ljava/util/HashMap;
+
+    invoke-virtual {v2}, Ljava/util/HashMap;->clear()V
+
+    .line 78
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->urlMap:Ljava/util/HashMap;
+
+    invoke-virtual {v2}, Ljava/util/HashMap;->clear()V
+
+    .line 79
+    invoke-interface {p1}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+
+    move-result-object v1
+
+    .local v1, "i$":Ljava/util/Iterator;
+    :goto_0
+    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Lorg/apache/cordova/PluginEntry;
+
+    .line 80
+    .local v0, "entry":Lorg/apache/cordova/PluginEntry;
+    invoke-virtual {p0, v0}, Lorg/apache/cordova/PluginManager;->addService(Lorg/apache/cordova/PluginEntry;)V
+
+    goto :goto_0
+
+    .line 82
+    .end local v0    # "entry":Lorg/apache/cordova/PluginEntry;
+    :cond_0
+    return-void
+.end method
+
+.method public startupPlugins()V
+    .locals 3
+    .annotation runtime Ljava/lang/Deprecated;
+    .end annotation
+
+    .prologue
+    .line 112
+    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->entryMap:Ljava/util/HashMap;
 
     invoke-virtual {v2}, Ljava/util/HashMap;->values()Ljava/util/Collection;
 
@@ -1568,95 +1300,38 @@
 
     invoke-interface {v2}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
 
-    move-result-object v2
-
-    :cond_0
-    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v3
-
-    if-nez v3, :cond_1
-
-    .line 437
-    const/4 v1, 0x0
-
-    :goto_0
-    return-object v1
-
-    .line 429
-    :cond_1
-    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Lorg/apache/cordova/PluginEntry;
-
-    .line 430
-    .local v0, "entry":Lorg/apache/cordova/PluginEntry;
-    iget-object v3, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
-
-    if-eqz v3, :cond_0
-
-    .line 431
-    iget-object v3, v0, Lorg/apache/cordova/PluginEntry;->plugin:Lorg/apache/cordova/CordovaPlugin;
-
-    invoke-virtual {v3, p1}, Lorg/apache/cordova/CordovaPlugin;->remapUri(Landroid/net/Uri;)Landroid/net/Uri;
-
     move-result-object v1
 
-    .line 432
-    .local v1, "ret":Landroid/net/Uri;
-    if-eqz v1, :cond_0
-
-    goto :goto_0
-.end method
-
-.method public startupPlugins()V
-    .locals 4
-
-    .prologue
-    .line 193
-    iget-object v1, p0, Lorg/apache/cordova/PluginManager;->entries:Ljava/util/HashMap;
-
-    invoke-virtual {v1}, Ljava/util/HashMap;->values()Ljava/util/Collection;
-
-    move-result-object v1
-
-    invoke-interface {v1}, Ljava/util/Collection;->iterator()Ljava/util/Iterator;
-
-    move-result-object v1
-
+    .local v1, "i$":Ljava/util/Iterator;
     :cond_0
     :goto_0
     invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v2
 
-    if-nez v2, :cond_1
+    if-eqz v2, :cond_1
 
-    .line 198
-    return-void
-
-    .line 193
-    :cond_1
     invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v0
 
     check-cast v0, Lorg/apache/cordova/PluginEntry;
 
-    .line 194
+    .line 113
     .local v0, "entry":Lorg/apache/cordova/PluginEntry;
     iget-boolean v2, v0, Lorg/apache/cordova/PluginEntry;->onload:Z
 
     if-eqz v2, :cond_0
 
-    .line 195
-    iget-object v2, p0, Lorg/apache/cordova/PluginManager;->app:Lorg/apache/cordova/CordovaWebView;
+    .line 114
+    iget-object v2, v0, Lorg/apache/cordova/PluginEntry;->service:Ljava/lang/String;
 
-    iget-object v3, p0, Lorg/apache/cordova/PluginManager;->ctx:Lorg/apache/cordova/CordovaInterface;
-
-    invoke-virtual {v0, v2, v3}, Lorg/apache/cordova/PluginEntry;->createPlugin(Lorg/apache/cordova/CordovaWebView;Lorg/apache/cordova/CordovaInterface;)Lorg/apache/cordova/CordovaPlugin;
+    invoke-virtual {p0, v2}, Lorg/apache/cordova/PluginManager;->getPlugin(Ljava/lang/String;)Lorg/apache/cordova/CordovaPlugin;
 
     goto :goto_0
+
+    .line 117
+    .end local v0    # "entry":Lorg/apache/cordova/PluginEntry;
+    :cond_1
+    return-void
 .end method

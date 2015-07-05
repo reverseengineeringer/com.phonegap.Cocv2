@@ -1,4 +1,4 @@
-.class Lcom/squareup/okhttp/internal/spdy/IncomingStreamHandler$1;
+.class final Lcom/squareup/okhttp/internal/spdy/IncomingStreamHandler$1;
 .super Ljava/lang/Object;
 .source "IncomingStreamHandler.java"
 
@@ -12,7 +12,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x0
+    accessFlags = 0x8
     name = null
 .end annotation
 
@@ -25,7 +25,6 @@
     .line 23
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 1
     return-void
 .end method
 

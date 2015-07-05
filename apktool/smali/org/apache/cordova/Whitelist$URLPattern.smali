@@ -163,9 +163,13 @@
     .line 63
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "([a-z0-9.-]*\\.)?"
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     const/4 v2, 0x2
 
@@ -275,17 +279,9 @@
 
     move-result v4
 
-    if-lt v1, v4, :cond_0
-
-    .line 50
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v4
-
-    return-object v4
+    if-ge v1, v4, :cond_2
 
     .line 42
-    :cond_0
     invoke-virtual {p1, v1}, Ljava/lang/String;->charAt(I)C
 
     move-result v0
@@ -294,9 +290,9 @@
     .local v0, "c":C
     const/16 v4, 0x2a
 
-    if-ne v0, v4, :cond_2
+    if-ne v0, v4, :cond_1
 
-    if-eqz p2, :cond_2
+    if-eqz p2, :cond_1
 
     .line 44
     const-string v4, "."
@@ -304,7 +300,7 @@
     invoke-virtual {v2, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     .line 48
-    :cond_1
+    :cond_0
     :goto_1
     invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
@@ -314,7 +310,7 @@
     goto :goto_0
 
     .line 45
-    :cond_2
+    :cond_1
     const-string v4, "\\.[]{}()^$?+|"
 
     invoke-virtual {v4, v0}, Ljava/lang/String;->indexOf(I)I
@@ -323,7 +319,7 @@
 
     const/4 v5, -0x1
 
-    if-le v4, v5, :cond_1
+    if-le v4, v5, :cond_0
 
     .line 46
     const/16 v4, 0x5c
@@ -331,6 +327,15 @@
     invoke-virtual {v2, v4}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
     goto :goto_1
+
+    .line 50
+    .end local v0    # "c":C
+    :cond_2
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    return-object v4
 .end method
 
 
@@ -364,7 +369,6 @@
 
     if-eqz v2, :cond_4
 
-    .line 85
     :cond_0
     iget-object v2, p0, Lorg/apache/cordova/Whitelist$URLPattern;->host:Ljava/util/regex/Pattern;
 
@@ -386,7 +390,6 @@
 
     if-eqz v2, :cond_4
 
-    .line 86
     :cond_1
     iget-object v2, p0, Lorg/apache/cordova/Whitelist$URLPattern;->port:Ljava/lang/Integer;
 
@@ -408,7 +411,6 @@
 
     if-eqz v2, :cond_4
 
-    .line 87
     :cond_2
     iget-object v2, p0, Lorg/apache/cordova/Whitelist$URLPattern;->path:Ljava/util/regex/Pattern;
 
@@ -432,7 +434,6 @@
 
     if-eqz v2, :cond_4
 
-    .line 84
     :cond_3
     const/4 v1, 0x1
 

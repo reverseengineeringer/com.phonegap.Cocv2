@@ -56,7 +56,7 @@
     .end annotation
 
     .prologue
-    .line 278
+    .line 279
     .local p3, "clientProviderClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
     .local p4, "serverProviderClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
     invoke-direct {p0}, Lcom/squareup/okhttp/internal/Platform;-><init>()V
@@ -86,7 +86,7 @@
     .prologue
     const/4 v3, 0x0
 
-    .line 310
+    .line 309
     :try_start_0
     iget-object v4, p0, Lcom/squareup/okhttp/internal/Platform$JdkWithJettyNpnPlatform;->getMethod:Ljava/lang/reflect/Method;
 
@@ -113,14 +113,14 @@
     .line 311
     .local v2, "provider":Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;
     # getter for: Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->unsupported:Z
-    invoke-static {v2}, Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->access$0(Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;)Z
+    invoke-static {v2}, Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->access$200(Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;)Z
 
     move-result v4
 
     if-nez v4, :cond_1
 
     # getter for: Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->selected:Ljava/lang/String;
-    invoke-static {v2}, Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->access$1(Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;)Ljava/lang/String;
+    invoke-static {v2}, Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->access$300(Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;)Ljava/lang/String;
 
     move-result-object v4
 
@@ -137,10 +137,8 @@
     .local v1, "logger":Ljava/util/logging/Logger;
     sget-object v4, Ljava/util/logging/Level;->INFO:Ljava/util/logging/Level;
 
-    .line 314
     const-string v5, "NPN callback dropped so SPDY is disabled. Is npn-boot on the boot class path?"
 
-    .line 313
     invoke-virtual {v1, v4, v5}, Ljava/util/logging/Logger;->log(Ljava/util/logging/Level;Ljava/lang/String;)V
 
     .line 317
@@ -151,14 +149,14 @@
 
     :cond_1
     # getter for: Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->unsupported:Z
-    invoke-static {v2}, Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->access$0(Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;)Z
+    invoke-static {v2}, Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->access$200(Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;)Z
 
     move-result v4
 
     if-nez v4, :cond_0
 
     # getter for: Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->selected:Ljava/lang/String;
-    invoke-static {v2}, Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->access$1(Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;)Ljava/lang/String;
+    invoke-static {v2}, Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;->access$300(Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;)Ljava/lang/String;
 
     move-result-object v3
 
@@ -238,16 +236,44 @@
     :goto_0
     array-length v6, p2
 
-    if-lt v2, v6, :cond_0
+    if-ge v2, v6, :cond_0
+
+    .line 290
+    add-int/lit8 v1, v2, 0x1
+
+    .end local v2    # "i":I
+    .restart local v1    # "i":I
+    aget-byte v3, p2, v2
+
+    .line 291
+    .local v3, "length":I
+    new-instance v6, Ljava/lang/String;
+
+    const-string v7, "US-ASCII"
+
+    invoke-direct {v6, p2, v1, v3, v7}, Ljava/lang/String;-><init>([BIILjava/lang/String;)V
+
+    invoke-interface {v5, v6}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    .line 292
+    add-int/2addr v1, v3
+
+    move v2, v1
+
+    .line 293
+    .end local v1    # "i":I
+    .restart local v2    # "i":I
+    goto :goto_0
 
     .line 294
+    .end local v3    # "length":I
+    :cond_0
     const-class v6, Lcom/squareup/okhttp/internal/Platform;
 
     invoke-virtual {v6}, Ljava/lang/Class;->getClassLoader()Ljava/lang/ClassLoader;
 
     move-result-object v6
 
-    .line 295
     const/4 v7, 0x2
 
     new-array v7, v7, [Ljava/lang/Class;
@@ -264,12 +290,10 @@
 
     aput-object v9, v7, v8
 
-    .line 296
     new-instance v8, Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;
 
     invoke-direct {v8, v5}, Lcom/squareup/okhttp/internal/Platform$JettyNpnProvider;-><init>(Ljava/util/List;)V
 
-    .line 294
     invoke-static {v6, v7, v8}, Ljava/lang/reflect/Proxy;->newProxyInstance(Ljava/lang/ClassLoader;[Ljava/lang/Class;Ljava/lang/reflect/InvocationHandler;)Ljava/lang/Object;
 
     move-result-object v4
@@ -293,45 +317,17 @@
     aput-object v4, v8, v9
 
     invoke-virtual {v6, v7, v8}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
-
-    .line 305
-    return-void
-
-    .line 290
-    .end local v4    # "provider":Ljava/lang/Object;
-    :cond_0
-    add-int/lit8 v1, v2, 0x1
-
-    .end local v2    # "i":I
-    .restart local v1    # "i":I
-    aget-byte v3, p2, v2
-
-    .line 291
-    .local v3, "length":I
-    new-instance v6, Ljava/lang/String;
-
-    const-string v7, "US-ASCII"
-
-    invoke-direct {v6, p2, v1, v3, v7}, Ljava/lang/String;-><init>([BIILjava/lang/String;)V
-
-    invoke-interface {v5, v6}, Ljava/util/List;->add(Ljava/lang/Object;)Z
     :try_end_0
     .catch Ljava/io/UnsupportedEncodingException; {:try_start_0 .. :try_end_0} :catch_0
     .catch Ljava/lang/reflect/InvocationTargetException; {:try_start_0 .. :try_end_0} :catch_1
     .catch Ljava/lang/IllegalAccessException; {:try_start_0 .. :try_end_0} :catch_2
 
-    .line 292
-    add-int/2addr v1, v3
-
-    move v2, v1
-
-    .end local v1    # "i":I
-    .restart local v2    # "i":I
-    goto :goto_0
+    .line 305
+    return-void
 
     .line 298
     .end local v2    # "i":I
-    .end local v3    # "length":I
+    .end local v4    # "provider":Ljava/lang/Object;
     .end local v5    # "strings":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     :catch_0
     move-exception v0

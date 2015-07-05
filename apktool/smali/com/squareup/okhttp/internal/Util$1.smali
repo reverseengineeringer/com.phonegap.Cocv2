@@ -1,4 +1,4 @@
-.class Lcom/squareup/okhttp/internal/Util$1;
+.class final Lcom/squareup/okhttp/internal/Util$1;
 .super Ljava/lang/Object;
 .source "Util.java"
 
@@ -12,13 +12,13 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x0
+    accessFlags = 0x8
     name = null
 .end annotation
 
 
 # instance fields
-.field private final synthetic val$name:Ljava/lang/String;
+.field final synthetic val$name:Ljava/lang/String;
 
 
 # direct methods
@@ -26,10 +26,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 386
     iput-object p1, p0, Lcom/squareup/okhttp/internal/Util$1;->val$name:Ljava/lang/String;
 
-    .line 386
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void

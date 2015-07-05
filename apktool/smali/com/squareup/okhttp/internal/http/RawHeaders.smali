@@ -51,7 +51,6 @@
 
     sput-object v0, Lcom/squareup/okhttp/internal/http/RawHeaders;->FIELD_NAME_COMPARATOR:Ljava/util/Comparator;
 
-    .line 67
     return-void
 .end method
 
@@ -240,42 +239,37 @@
     .local p0, "map":Ljava/util/Map;, "Ljava/util/Map<Ljava/lang/String;Ljava/util/List<Ljava/lang/String;>;>;"
     if-nez p1, :cond_0
 
-    new-instance v5, Ljava/lang/UnsupportedOperationException;
+    new-instance v7, Ljava/lang/UnsupportedOperationException;
 
-    invoke-direct {v5}, Ljava/lang/UnsupportedOperationException;-><init>()V
+    invoke-direct {v7}, Ljava/lang/UnsupportedOperationException;-><init>()V
 
-    throw v5
+    throw v7
 
     .line 360
     :cond_0
-    new-instance v2, Lcom/squareup/okhttp/internal/http/RawHeaders;
+    new-instance v4, Lcom/squareup/okhttp/internal/http/RawHeaders;
 
-    invoke-direct {v2}, Lcom/squareup/okhttp/internal/http/RawHeaders;-><init>()V
+    invoke-direct {v4}, Lcom/squareup/okhttp/internal/http/RawHeaders;-><init>()V
 
     .line 361
-    .local v2, "result":Lcom/squareup/okhttp/internal/http/RawHeaders;
+    .local v4, "result":Lcom/squareup/okhttp/internal/http/RawHeaders;
     invoke-interface {p0}, Ljava/util/Map;->entrySet()Ljava/util/Set;
 
-    move-result-object v5
+    move-result-object v7
 
-    invoke-interface {v5}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
+    invoke-interface {v7}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
 
-    move-result-object v6
+    move-result-object v2
 
     :cond_1
     :goto_0
-    invoke-interface {v6}, Ljava/util/Iterator;->hasNext()Z
+    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
 
-    move-result v5
+    move-result v7
 
-    if-nez v5, :cond_2
+    if-eqz v7, :cond_3
 
-    .line 372
-    return-object v2
-
-    .line 361
-    :cond_2
-    invoke-interface {v6}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v0
 
@@ -293,63 +287,72 @@
     .local v1, "fieldName":Ljava/lang/String;
     invoke-interface {v0}, Ljava/util/Map$Entry;->getValue()Ljava/lang/Object;
 
-    move-result-object v4
+    move-result-object v6
 
-    check-cast v4, Ljava/util/List;
+    check-cast v6, Ljava/util/List;
 
     .line 364
-    .local v4, "values":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
-    if-eqz v1, :cond_3
+    .local v6, "values":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
+    if-eqz v1, :cond_2
 
     .line 365
-    invoke-interface {v4}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+    invoke-interface {v6}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
-    move-result-object v5
+    move-result-object v3
 
+    .local v3, "i$":Ljava/util/Iterator;
     :goto_1
-    invoke-interface {v5}, Ljava/util/Iterator;->hasNext()Z
+    invoke-interface {v3}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v7
 
     if-eqz v7, :cond_1
 
-    invoke-interface {v5}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v3
-
-    check-cast v3, Ljava/lang/String;
-
-    .line 366
-    .local v3, "value":Ljava/lang/String;
-    invoke-direct {v2, v1, v3}, Lcom/squareup/okhttp/internal/http/RawHeaders;->addLenient(Ljava/lang/String;Ljava/lang/String;)V
-
-    goto :goto_1
-
-    .line 368
-    .end local v3    # "value":Ljava/lang/String;
-    :cond_3
-    invoke-interface {v4}, Ljava/util/List;->isEmpty()Z
-
-    move-result v5
-
-    if-nez v5, :cond_1
-
-    .line 369
-    invoke-interface {v4}, Ljava/util/List;->size()I
-
-    move-result v5
-
-    add-int/lit8 v5, v5, -0x1
-
-    invoke-interface {v4, v5}, Ljava/util/List;->get(I)Ljava/lang/Object;
+    invoke-interface {v3}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v5
 
     check-cast v5, Ljava/lang/String;
 
-    invoke-virtual {v2, v5}, Lcom/squareup/okhttp/internal/http/RawHeaders;->setStatusLine(Ljava/lang/String;)V
+    .line 366
+    .local v5, "value":Ljava/lang/String;
+    invoke-direct {v4, v1, v5}, Lcom/squareup/okhttp/internal/http/RawHeaders;->addLenient(Ljava/lang/String;Ljava/lang/String;)V
+
+    goto :goto_1
+
+    .line 368
+    .end local v3    # "i$":Ljava/util/Iterator;
+    .end local v5    # "value":Ljava/lang/String;
+    :cond_2
+    invoke-interface {v6}, Ljava/util/List;->isEmpty()Z
+
+    move-result v7
+
+    if-nez v7, :cond_1
+
+    .line 369
+    invoke-interface {v6}, Ljava/util/List;->size()I
+
+    move-result v7
+
+    add-int/lit8 v7, v7, -0x1
+
+    invoke-interface {v6, v7}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v7
+
+    check-cast v7, Ljava/lang/String;
+
+    invoke-virtual {v4, v7}, Lcom/squareup/okhttp/internal/http/RawHeaders;->setStatusLine(Ljava/lang/String;)V
 
     goto :goto_0
+
+    .line 372
+    .end local v0    # "entry":Ljava/util/Map$Entry;, "Ljava/util/Map$Entry<Ljava/lang/String;Ljava/util/List<Ljava/lang/String;>;>;"
+    .end local v1    # "fieldName":Ljava/lang/String;
+    .end local v6    # "values":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
+    :cond_3
+    return-object v4
 .end method
 
 .method public static fromNameValueBlock(Ljava/util/List;)Lcom/squareup/okhttp/internal/http/RawHeaders;
@@ -387,9 +390,13 @@
 
     new-instance v10, Ljava/lang/StringBuilder;
 
+    invoke-direct {v10}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v11, "Unexpected name value block: "
 
-    invoke-direct {v10, v11}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v10, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v10
 
     invoke-virtual {v10, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
@@ -427,21 +434,9 @@
 
     move-result v9
 
-    if-lt v1, v9, :cond_1
-
-    .line 442
-    if-nez v5, :cond_6
-
-    new-instance v9, Ljava/net/ProtocolException;
-
-    const-string v10, "Expected \':status\' header not present"
-
-    invoke-direct {v9, v10}, Ljava/net/ProtocolException;-><init>(Ljava/lang/String;)V
-
-    throw v9
+    if-ge v1, v9, :cond_5
 
     .line 423
-    :cond_1
     invoke-interface {p0, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
     move-result-object v2
@@ -468,15 +463,9 @@
 
     move-result v9
 
-    if-lt v4, v9, :cond_2
-
-    .line 422
-    add-int/lit8 v1, v1, 0x2
-
-    goto :goto_0
+    if-ge v4, v9, :cond_4
 
     .line 426
-    :cond_2
     const/4 v9, 0x0
 
     invoke-virtual {v7, v9, v4}, Ljava/lang/String;->indexOf(II)I
@@ -487,7 +476,7 @@
     .local v0, "end":I
     const/4 v9, -0x1
 
-    if-ne v0, v9, :cond_3
+    if-ne v0, v9, :cond_1
 
     .line 428
     invoke-virtual {v7}, Ljava/lang/String;->length()I
@@ -495,7 +484,7 @@
     move-result v0
 
     .line 430
-    :cond_3
+    :cond_1
     invoke-virtual {v7, v4, v0}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
     move-result-object v6
@@ -508,7 +497,7 @@
 
     move-result v9
 
-    if-eqz v9, :cond_4
+    if-eqz v9, :cond_2
 
     .line 432
     move-object v5, v6
@@ -517,26 +506,26 @@
     :goto_2
     add-int/lit8 v4, v0, 0x1
 
+    .line 440
     goto :goto_1
 
     .line 433
-    :cond_4
+    :cond_2
     const-string v9, ":version"
 
     invoke-virtual {v9, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v9
 
-    if-eqz v9, :cond_5
+    if-eqz v9, :cond_3
 
     .line 434
     move-object v8, v6
 
-    .line 435
     goto :goto_2
 
     .line 436
-    :cond_5
+    :cond_3
     iget-object v9, v3, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
 
     invoke-interface {v9, v2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
@@ -548,12 +537,30 @@
 
     goto :goto_2
 
-    .line 443
+    .line 422
     .end local v0    # "end":I
+    .end local v6    # "value":Ljava/lang/String;
+    :cond_4
+    add-int/lit8 v1, v1, 0x2
+
+    goto :goto_0
+
+    .line 442
     .end local v2    # "name":Ljava/lang/String;
     .end local v4    # "start":I
-    .end local v6    # "value":Ljava/lang/String;
     .end local v7    # "values":Ljava/lang/String;
+    :cond_5
+    if-nez v5, :cond_6
+
+    new-instance v9, Ljava/net/ProtocolException;
+
+    const-string v10, "Expected \':status\' header not present"
+
+    invoke-direct {v9, v10}, Ljava/net/ProtocolException;-><init>(Ljava/lang/String;)V
+
+    throw v9
+
+    .line 443
     :cond_6
     if-nez v8, :cond_7
 
@@ -569,11 +576,11 @@
     :cond_7
     new-instance v9, Ljava/lang/StringBuilder;
 
-    invoke-static {v8}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-direct {v9}, Ljava/lang/StringBuilder;-><init>()V
 
-    move-result-object v10
+    invoke-virtual {v9, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-direct {v9, v10}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v9
 
     const-string v10, " "
 
@@ -617,16 +624,16 @@
 
     move-result v1
 
-    if-nez v1, :cond_0
-
-    .line 324
-    return-void
+    if-eqz v1, :cond_0
 
     .line 322
-    :cond_0
     invoke-virtual {p1, v0}, Lcom/squareup/okhttp/internal/http/RawHeaders;->addLine(Ljava/lang/String;)V
 
     goto :goto_0
+
+    .line 324
+    :cond_0
+    return-void
 .end method
 
 
@@ -690,9 +697,13 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "Unexpected header: "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -743,31 +754,32 @@
     .local p2, "headerFields":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     invoke-interface {p2}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
-    move-result-object v1
+    move-result-object v0
 
+    .local v0, "i$":Ljava/util/Iterator;
     :goto_0
-    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
+    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v2
 
-    if-nez v2, :cond_0
+    if-eqz v2, :cond_0
 
-    .line 213
-    return-void
+    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    .line 210
-    :cond_0
-    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    move-result-object v1
 
-    move-result-object v0
-
-    check-cast v0, Ljava/lang/String;
+    check-cast v1, Ljava/lang/String;
 
     .line 211
-    .local v0, "value":Ljava/lang/String;
-    invoke-virtual {p0, p1, v0}, Lcom/squareup/okhttp/internal/http/RawHeaders;->add(Ljava/lang/String;Ljava/lang/String;)V
+    .local v1, "value":Ljava/lang/String;
+    invoke-virtual {p0, p1, v1}, Lcom/squareup/okhttp/internal/http/RawHeaders;->add(Ljava/lang/String;Ljava/lang/String;)V
 
     goto :goto_0
+
+    .line 213
+    .end local v1    # "value":Ljava/lang/String;
+    :cond_0
+    return-void
 .end method
 
 .method public addLine(Ljava/lang/String;)V
@@ -893,16 +905,9 @@
 
     .local v0, "i":I
     :goto_0
-    if-gez v0, :cond_0
-
-    .line 263
-    const/4 v1, 0x0
-
-    :goto_1
-    return-object v1
+    if-ltz v0, :cond_1
 
     .line 259
-    :cond_0
     iget-object v1, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
 
     invoke-interface {v1, v0}, Ljava/util/List;->get(I)Ljava/lang/Object;
@@ -915,7 +920,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_1
+    if-eqz v1, :cond_0
 
     .line 260
     iget-object v1, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
@@ -928,13 +933,21 @@
 
     check-cast v1, Ljava/lang/String;
 
-    goto :goto_1
+    .line 263
+    :goto_1
+    return-object v1
 
     .line 258
-    :cond_1
+    :cond_0
     add-int/lit8 v0, v0, -0x2
 
     goto :goto_0
+
+    .line 263
+    :cond_1
+    const/4 v1, 0x0
+
+    goto :goto_1
 .end method
 
 .method public getAll(Ljava/util/Set;)Lcom/squareup/okhttp/internal/http/RawHeaders;
@@ -969,13 +982,9 @@
 
     move-result v3
 
-    if-lt v1, v3, :cond_0
-
-    .line 289
-    return-object v2
+    if-ge v1, v3, :cond_1
 
     .line 284
-    :cond_0
     iget-object v3, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
 
     invoke-interface {v3, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
@@ -990,7 +999,7 @@
 
     move-result v3
 
-    if-eqz v3, :cond_1
+    if-eqz v3, :cond_0
 
     .line 286
     iget-object v3, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
@@ -1006,10 +1015,15 @@
     invoke-virtual {v2, v0, v3}, Lcom/squareup/okhttp/internal/http/RawHeaders;->add(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 283
-    :cond_1
+    :cond_0
     add-int/lit8 v1, v1, 0x2
 
     goto :goto_0
+
+    .line 289
+    .end local v0    # "fieldName":Ljava/lang/String;
+    :cond_1
+    return-object v2
 .end method
 
 .method public getFieldName(I)Ljava/lang/String;
@@ -1192,17 +1206,9 @@
 
     move-result v2
 
-    if-lt v0, v2, :cond_0
-
-    .line 244
-    invoke-static {v1}, Ljava/util/Collections;->unmodifiableSet(Ljava/util/Set;)Ljava/util/Set;
-
-    move-result-object v2
-
-    return-object v2
+    if-ge v0, v2, :cond_0
 
     .line 242
-    :cond_0
     invoke-virtual {p0, v0}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getFieldName(I)Ljava/lang/String;
 
     move-result-object v2
@@ -1213,6 +1219,14 @@
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
+
+    .line 244
+    :cond_0
+    invoke-static {v1}, Ljava/util/Collections;->unmodifiableSet(Ljava/util/Set;)Ljava/util/Set;
+
+    move-result-object v2
+
+    return-object v2
 .end method
 
 .method public removeAll(Ljava/lang/String;)V
@@ -1231,13 +1245,9 @@
 
     move-result v1
 
-    if-lt v0, v1, :cond_0
-
-    .line 207
-    return-void
+    if-ge v0, v1, :cond_1
 
     .line 202
-    :cond_0
     iget-object v1, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
 
     invoke-interface {v1, v0}, Ljava/util/List;->get(I)Ljava/lang/Object;
@@ -1250,7 +1260,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_1
+    if-eqz v1, :cond_0
 
     .line 203
     iget-object v1, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
@@ -1263,10 +1273,14 @@
     invoke-interface {v1, v0}, Ljava/util/List;->remove(I)Ljava/lang/Object;
 
     .line 201
-    :cond_1
+    :cond_0
     add-int/lit8 v0, v0, 0x2
 
     goto :goto_0
+
+    .line 207
+    :cond_1
+    return-void
 .end method
 
 .method public set(Ljava/lang/String;Ljava/lang/String;)V
@@ -1355,14 +1369,12 @@
 
     if-eqz v4, :cond_1
 
-    .line 105
     invoke-virtual {p1}, Ljava/lang/String;->length()I
 
     move-result v4
 
     if-lt v4, v5, :cond_1
 
-    .line 106
     const/16 v4, 0x8
 
     invoke-virtual {p1, v4}, Ljava/lang/String;->charAt(I)C
@@ -1371,7 +1383,6 @@
 
     if-ne v4, v8, :cond_1
 
-    .line 107
     if-eqz v1, :cond_3
 
     invoke-virtual {p1, v5}, Ljava/lang/String;->charAt(I)C
@@ -1386,9 +1397,13 @@
 
     new-instance v5, Ljava/lang/StringBuilder;
 
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v6, "Unexpected status line: "
 
-    invoke-direct {v5, v6}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
 
     invoke-virtual {v5, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -1432,9 +1447,13 @@
 
     new-instance v5, Ljava/lang/StringBuilder;
 
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v6, "Unexpected status line: "
 
-    invoke-direct {v5, v6}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
 
     invoke-virtual {v5, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -1499,9 +1518,13 @@
 
     new-instance v5, Ljava/lang/StringBuilder;
 
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v6, "Unexpected status line: "
 
-    invoke-direct {v5, v6}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
 
     invoke-virtual {v5, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -1563,9 +1586,52 @@
 
     move-result v2
 
-    if-lt v0, v2, :cond_0
+    if-ge v0, v2, :cond_0
+
+    .line 297
+    iget-object v2, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
+
+    invoke-interface {v2, v0}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v2
+
+    check-cast v2, Ljava/lang/String;
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    const-string v3, ": "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    iget-object v2, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
+
+    add-int/lit8 v4, v0, 0x1
+
+    invoke-interface {v2, v4}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v2
+
+    check-cast v2, Ljava/lang/String;
+
+    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    const-string v3, "\r\n"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 296
+    add-int/lit8 v0, v0, 0x2
+
+    goto :goto_0
 
     .line 302
+    :cond_0
     const-string v2, "\r\n"
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
@@ -1582,52 +1648,6 @@
     move-result-object v2
 
     return-object v2
-
-    .line 297
-    :cond_0
-    iget-object v2, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
-
-    invoke-interface {v2, v0}, Ljava/util/List;->get(I)Ljava/lang/Object;
-
-    move-result-object v2
-
-    check-cast v2, Ljava/lang/String;
-
-    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    .line 298
-    const-string v3, ": "
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    .line 299
-    iget-object v2, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
-
-    add-int/lit8 v4, v0, 0x1
-
-    invoke-interface {v2, v4}, Ljava/util/List;->get(I)Ljava/lang/Object;
-
-    move-result-object v2
-
-    check-cast v2, Ljava/lang/String;
-
-    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    .line 300
-    const-string v3, "\r\n"
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    .line 296
-    add-int/lit8 v0, v0, 0x2
-
-    goto :goto_0
 .end method
 
 .method public toMultimap(Z)Ljava/util/Map;
@@ -1668,39 +1688,9 @@
 
     move-result v6
 
-    if-lt v2, v6, :cond_1
-
-    .line 344
-    if-eqz p1, :cond_3
-
-    iget-object v6, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->statusLine:Ljava/lang/String;
-
-    if-eqz v6, :cond_3
-
-    .line 345
-    iget-object v6, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->statusLine:Ljava/lang/String;
-
-    invoke-static {v6}, Ljava/util/Collections;->singletonList(Ljava/lang/Object;)Ljava/util/List;
-
-    move-result-object v6
-
-    invoke-static {v6}, Ljava/util/Collections;->unmodifiableList(Ljava/util/List;)Ljava/util/List;
-
-    move-result-object v6
-
-    invoke-interface {v4, v8, v6}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
-
-    .line 349
-    :cond_0
-    :goto_1
-    invoke-static {v4}, Ljava/util/Collections;->unmodifiableMap(Ljava/util/Map;)Ljava/util/Map;
-
-    move-result-object v6
-
-    return-object v6
+    if-ge v2, v6, :cond_1
 
     .line 333
-    :cond_1
     iget-object v6, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
 
     invoke-interface {v6, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
@@ -1737,13 +1727,13 @@
 
     .line 338
     .local v3, "otherValues":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
-    if-eqz v3, :cond_2
+    if-eqz v3, :cond_0
 
     .line 339
     invoke-interface {v0, v3}, Ljava/util/List;->addAll(Ljava/util/Collection;)Z
 
     .line 341
-    :cond_2
+    :cond_0
     invoke-interface {v0, v5}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
     .line 342
@@ -1758,15 +1748,45 @@
 
     goto :goto_0
 
-    .line 346
+    .line 344
     .end local v0    # "allValues":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     .end local v1    # "fieldName":Ljava/lang/String;
     .end local v3    # "otherValues":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     .end local v5    # "value":Ljava/lang/String;
+    :cond_1
+    if-eqz p1, :cond_3
+
+    iget-object v6, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->statusLine:Ljava/lang/String;
+
+    if-eqz v6, :cond_3
+
+    .line 345
+    iget-object v6, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->statusLine:Ljava/lang/String;
+
+    invoke-static {v6}, Ljava/util/Collections;->singletonList(Ljava/lang/Object;)Ljava/util/List;
+
+    move-result-object v6
+
+    invoke-static {v6}, Ljava/util/Collections;->unmodifiableList(Ljava/util/List;)Ljava/util/List;
+
+    move-result-object v6
+
+    invoke-interface {v4, v8, v6}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 349
+    :cond_2
+    :goto_1
+    invoke-static {v4}, Ljava/util/Collections;->unmodifiableMap(Ljava/util/Map;)Ljava/util/Map;
+
+    move-result-object v6
+
+    return-object v6
+
+    .line 346
     :cond_3
     iget-object v6, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->requestLine:Ljava/lang/String;
 
-    if-eqz v6, :cond_0
+    if-eqz v6, :cond_2
 
     .line 347
     iget-object v6, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->requestLine:Ljava/lang/String;
@@ -1820,13 +1840,9 @@
 
     move-result v6
 
-    if-lt v0, v6, :cond_0
-
-    .line 411
-    return-object v4
+    if-ge v0, v6, :cond_4
 
     .line 384
-    :cond_0
     iget-object v6, p0, Lcom/squareup/okhttp/internal/http/RawHeaders;->namesAndValues:Ljava/util/List;
 
     invoke-interface {v6, v0}, Ljava/util/List;->get(I)Ljava/lang/Object;
@@ -1861,58 +1877,54 @@
 
     move-result v6
 
-    if-nez v6, :cond_1
+    if-nez v6, :cond_0
 
-    .line 389
     const-string v6, "host"
 
     invoke-virtual {v2, v6}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_1
+    if-nez v6, :cond_0
 
-    .line 390
     const-string v6, "keep-alive"
 
     invoke-virtual {v2, v6}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_1
+    if-nez v6, :cond_0
 
-    .line 391
     const-string v6, "proxy-connection"
 
     invoke-virtual {v2, v6}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-nez v6, :cond_1
+    if-nez v6, :cond_0
 
-    .line 392
     const-string v6, "transfer-encoding"
 
     invoke-virtual {v2, v6}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-eqz v6, :cond_2
+    if-eqz v6, :cond_1
 
     .line 383
-    :cond_1
+    :cond_0
     :goto_1
     add-int/lit8 v0, v0, 0x2
 
     goto :goto_0
 
     .line 397
-    :cond_2
+    :cond_1
     invoke-interface {v3, v2}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
 
     move-result v6
 
-    if-eqz v6, :cond_3
+    if-eqz v6, :cond_2
 
     .line 398
     invoke-interface {v4, v2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
@@ -1923,7 +1935,7 @@
     goto :goto_1
 
     .line 404
-    :cond_3
+    :cond_2
     const/4 v1, 0x0
 
     .local v1, "j":I
@@ -1932,7 +1944,7 @@
 
     move-result v6
 
-    if-ge v1, v6, :cond_1
+    if-ge v1, v6, :cond_0
 
     .line 405
     invoke-interface {v4, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
@@ -1943,12 +1955,14 @@
 
     move-result v6
 
-    if-eqz v6, :cond_4
+    if-eqz v6, :cond_3
 
     .line 406
     add-int/lit8 v7, v1, 0x1
 
     new-instance v8, Ljava/lang/StringBuilder;
+
+    invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
 
     add-int/lit8 v6, v1, 0x1
 
@@ -1958,15 +1972,13 @@
 
     check-cast v6, Ljava/lang/String;
 
-    invoke-static {v6}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v8, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v6
 
-    invoke-direct {v8, v6}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    const-string v8, "\u0000"
 
-    const-string v6, "\u0000"
-
-    invoke-virtual {v8, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v6
 
@@ -1983,10 +1995,17 @@
     goto :goto_1
 
     .line 404
-    :cond_4
+    :cond_3
     add-int/lit8 v1, v1, 0x2
 
     goto :goto_2
+
+    .line 411
+    .end local v1    # "j":I
+    .end local v2    # "name":Ljava/lang/String;
+    .end local v5    # "value":Ljava/lang/String;
+    :cond_4
+    return-object v4
 .end method
 
 .method public values(Ljava/lang/String;)Ljava/util/List;
@@ -2018,22 +2037,9 @@
 
     move-result v2
 
-    if-lt v0, v2, :cond_0
-
-    .line 275
-    if-eqz v1, :cond_3
-
-    .line 276
-    invoke-static {v1}, Ljava/util/Collections;->unmodifiableList(Ljava/util/List;)Ljava/util/List;
-
-    move-result-object v2
-
-    .line 275
-    :goto_1
-    return-object v2
+    if-ge v0, v2, :cond_2
 
     .line 270
-    :cond_0
     invoke-virtual {p0, v0}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getFieldName(I)Ljava/lang/String;
 
     move-result-object v2
@@ -2042,10 +2048,10 @@
 
     move-result v2
 
-    if-eqz v2, :cond_2
+    if-eqz v2, :cond_1
 
     .line 271
-    if-nez v1, :cond_1
+    if-nez v1, :cond_0
 
     new-instance v1, Ljava/util/ArrayList;
 
@@ -2056,7 +2062,7 @@
 
     .line 272
     .restart local v1    # "result":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
-    :cond_1
+    :cond_0
     invoke-virtual {p0, v0}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getValue(I)Ljava/lang/String;
 
     move-result-object v2
@@ -2064,12 +2070,22 @@
     invoke-interface {v1, v2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
     .line 269
-    :cond_2
+    :cond_1
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
 
-    .line 277
+    .line 275
+    :cond_2
+    if-eqz v1, :cond_3
+
+    invoke-static {v1}, Ljava/util/Collections;->unmodifiableList(Ljava/util/List;)Ljava/util/List;
+
+    move-result-object v2
+
+    :goto_1
+    return-object v2
+
     :cond_3
     invoke-static {}, Ljava/util/Collections;->emptyList()Ljava/util/List;
 

@@ -31,31 +31,30 @@
 
 # direct methods
 .method constructor <init>()V
-    .locals 7
+    .locals 8
 
     .prologue
-    const/16 v1, 0x8
+    const/16 v2, 0x8
 
     .line 29
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     .line 31
-    new-instance v0, Ljava/util/concurrent/ThreadPoolExecutor;
+    new-instance v1, Ljava/util/concurrent/ThreadPoolExecutor;
 
-    .line 32
-    const-wide/16 v3, 0x3c
+    const-wide/16 v4, 0x3c
 
-    sget-object v5, Ljava/util/concurrent/TimeUnit;->SECONDS:Ljava/util/concurrent/TimeUnit;
+    sget-object v6, Ljava/util/concurrent/TimeUnit;->SECONDS:Ljava/util/concurrent/TimeUnit;
 
-    new-instance v6, Ljava/util/concurrent/LinkedBlockingQueue;
+    new-instance v7, Ljava/util/concurrent/LinkedBlockingQueue;
 
-    invoke-direct {v6}, Ljava/util/concurrent/LinkedBlockingQueue;-><init>()V
+    invoke-direct {v7}, Ljava/util/concurrent/LinkedBlockingQueue;-><init>()V
 
-    move v2, v1
+    move v3, v2
 
-    invoke-direct/range {v0 .. v6}, Ljava/util/concurrent/ThreadPoolExecutor;-><init>(IIJLjava/util/concurrent/TimeUnit;Ljava/util/concurrent/BlockingQueue;)V
+    invoke-direct/range {v1 .. v7}, Ljava/util/concurrent/ThreadPoolExecutor;-><init>(IIJLjava/util/concurrent/TimeUnit;Ljava/util/concurrent/BlockingQueue;)V
 
-    iput-object v0, p0, Lcom/squareup/okhttp/Dispatcher;->executorService:Ljava/util/concurrent/ThreadPoolExecutor;
+    iput-object v1, p0, Lcom/squareup/okhttp/Dispatcher;->executorService:Ljava/util/concurrent/ThreadPoolExecutor;
 
     .line 33
     new-instance v0, Ljava/util/LinkedHashMap;
@@ -64,7 +63,7 @@
 
     iput-object v0, p0, Lcom/squareup/okhttp/Dispatcher;->enqueuedJobs:Ljava/util/Map;
 
-    .line 29
+    .line 60
     return-void
 .end method
 
@@ -79,19 +78,19 @@
     monitor-enter p0
 
     :try_start_0
-    iget-object v2, p0, Lcom/squareup/okhttp/Dispatcher;->enqueuedJobs:Ljava/util/Map;
+    iget-object v3, p0, Lcom/squareup/okhttp/Dispatcher;->enqueuedJobs:Ljava/util/Map;
 
-    invoke-interface {v2, p1}, Ljava/util/Map;->remove(Ljava/lang/Object;)Ljava/lang/Object;
+    invoke-interface {v3, p1}, Ljava/util/Map;->remove(Ljava/lang/Object;)Ljava/lang/Object;
 
-    move-result-object v1
+    move-result-object v2
 
-    check-cast v1, Ljava/util/List;
+    check-cast v2, Ljava/util/List;
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     .line 49
-    .local v1, "jobs":Ljava/util/List;, "Ljava/util/List<Lcom/squareup/okhttp/Job;>;"
-    if-nez v1, :cond_1
+    .local v2, "jobs":Ljava/util/List;, "Ljava/util/List<Lcom/squareup/okhttp/Job;>;"
+    if-nez v2, :cond_1
 
     .line 53
     :cond_0
@@ -102,42 +101,44 @@
     .line 50
     :cond_1
     :try_start_1
-    invoke-interface {v1}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+    invoke-interface {v2}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
-    move-result-object v2
+    move-result-object v0
 
+    .local v0, "i$":Ljava/util/Iterator;
     :goto_0
-    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
+    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v3
 
     if-eqz v3, :cond_0
 
-    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    move-result-object v0
+    move-result-object v1
 
-    check-cast v0, Lcom/squareup/okhttp/Job;
+    check-cast v1, Lcom/squareup/okhttp/Job;
 
     .line 51
-    .local v0, "job":Lcom/squareup/okhttp/Job;
+    .local v1, "job":Lcom/squareup/okhttp/Job;
     iget-object v3, p0, Lcom/squareup/okhttp/Dispatcher;->executorService:Ljava/util/concurrent/ThreadPoolExecutor;
 
-    invoke-virtual {v3, v0}, Ljava/util/concurrent/ThreadPoolExecutor;->remove(Ljava/lang/Runnable;)Z
+    invoke-virtual {v3, v1}, Ljava/util/concurrent/ThreadPoolExecutor;->remove(Ljava/lang/Runnable;)Z
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     goto :goto_0
 
     .line 48
-    .end local v0    # "job":Lcom/squareup/okhttp/Job;
-    .end local v1    # "jobs":Ljava/util/List;, "Ljava/util/List<Lcom/squareup/okhttp/Job;>;"
+    .end local v0    # "i$":Ljava/util/Iterator;
+    .end local v1    # "job":Lcom/squareup/okhttp/Job;
+    .end local v2    # "jobs":Ljava/util/List;, "Ljava/util/List<Lcom/squareup/okhttp/Job;>;"
     :catchall_0
-    move-exception v2
+    move-exception v3
 
     monitor-exit p0
 
-    throw v2
+    throw v3
 .end method
 
 .method public declared-synchronized enqueue(Lcom/squareup/okhttp/OkHttpClient;Lcom/squareup/okhttp/Request;Lcom/squareup/okhttp/Response$Receiver;)V

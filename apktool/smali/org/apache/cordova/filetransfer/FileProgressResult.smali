@@ -13,10 +13,10 @@
 
 # direct methods
 .method public constructor <init>()V
-    .locals 3
+    .locals 4
 
     .prologue
-    const-wide/16 v1, 0x0
+    const-wide/16 v2, 0x0
 
     .line 27
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -27,12 +27,11 @@
     iput-boolean v0, p0, Lorg/apache/cordova/filetransfer/FileProgressResult;->lengthComputable:Z
 
     .line 30
-    iput-wide v1, p0, Lorg/apache/cordova/filetransfer/FileProgressResult;->loaded:J
+    iput-wide v2, p0, Lorg/apache/cordova/filetransfer/FileProgressResult;->loaded:J
 
     .line 31
-    iput-wide v1, p0, Lorg/apache/cordova/filetransfer/FileProgressResult;->total:J
+    iput-wide v2, p0, Lorg/apache/cordova/filetransfer/FileProgressResult;->total:J
 
-    .line 27
     return-void
 .end method
 
@@ -81,7 +80,7 @@
 .end method
 
 .method public setLoaded(J)V
-    .locals 0
+    .locals 1
     .param p1, "bytes"    # J
 
     .prologue
@@ -93,7 +92,7 @@
 .end method
 
 .method public setTotal(J)V
-    .locals 0
+    .locals 1
     .param p1, "bytes"    # J
 
     .prologue
@@ -116,12 +115,15 @@
     .line 58
     new-instance v1, Lorg/json/JSONObject;
 
-    .line 59
     new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
 
     const-string v2, "{loaded:"
 
-    invoke-direct {v0, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
 
     iget-wide v2, p0, Lorg/apache/cordova/filetransfer/FileProgressResult;->loaded:J
 
@@ -129,7 +131,6 @@
 
     move-result-object v0
 
-    .line 60
     const-string v2, ",total:"
 
     invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
@@ -142,7 +143,6 @@
 
     move-result-object v0
 
-    .line 61
     const-string v2, ",lengthComputable:"
 
     invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
@@ -166,17 +166,14 @@
 
     move-result-object v0
 
-    .line 59
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v0
 
-    .line 58
     invoke-direct {v1, v0}, Lorg/json/JSONObject;-><init>(Ljava/lang/String;)V
 
     return-object v1
 
-    .line 61
     :cond_0
     const-string v0, "false"
 

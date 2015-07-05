@@ -29,6 +29,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/org.apache.cordova.device/www/device.js",
+        "id": "org.apache.cordova.device.device",
+        "clobbers": [
+            "device"
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
         "id": "org.apache.cordova.dialogs.notification",
         "merges": [
@@ -151,6 +158,10 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/org.apache.cordova.file/www/fileSystems.js",
+        "id": "org.apache.cordova.file.fileSystems"
+    },
+    {
         "file": "plugins/org.apache.cordova.file/www/requestFileSystem.js",
         "id": "org.apache.cordova.file.requestFileSystem",
         "clobbers": [
@@ -160,9 +171,29 @@ module.exports = [
     {
         "file": "plugins/org.apache.cordova.file/www/resolveLocalFileSystemURI.js",
         "id": "org.apache.cordova.file.resolveLocalFileSystemURI",
-        "clobbers": [
-            "window.resolveLocalFileSystemURI"
+        "merges": [
+            "window"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.file/www/android/FileSystem.js",
+        "id": "org.apache.cordova.file.androidFileSystem",
+        "merges": [
+            "FileSystem"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.file/www/fileSystems-roots.js",
+        "id": "org.apache.cordova.file.fileSystems-roots",
+        "runs": true
+    },
+    {
+        "file": "plugins/org.apache.cordova.file/www/fileSystemPaths.js",
+        "id": "org.apache.cordova.file.fileSystemPaths",
+        "merges": [
+            "cordova"
+        ],
+        "runs": true
     },
     {
         "file": "plugins/org.apache.cordova.file-transfer/www/FileTransferError.js",
@@ -176,6 +207,13 @@ module.exports = [
         "id": "org.apache.cordova.file-transfer.FileTransfer",
         "clobbers": [
             "window.FileTransfer"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.inappbrowser/www/inappbrowser.js",
+        "id": "org.apache.cordova.inappbrowser.inappbrowser",
+        "clobbers": [
+            "window.open"
         ]
     },
     {
@@ -250,33 +288,66 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.vibration/www/vibration.js",
-        "id": "org.apache.cordova.vibration.notification",
-        "merges": [
-            "navigator.notification"
+        "file": "plugins/org.apache.cordova.statusbar/www/statusbar.js",
+        "id": "org.apache.cordova.statusbar.statusbar",
+        "clobbers": [
+            "window.StatusBar"
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.device/www/device.js",
-        "id": "org.apache.cordova.device.device",
+        "file": "plugins/org.apache.cordova.vibration/www/vibration.js",
+        "id": "org.apache.cordova.vibration.notification",
+        "merges": [
+            "navigator.notification",
+            "navigator"
+        ]
+    },
+    {
+        "file": "plugins/com.wezka.nativecamera/www/CameraConstants.js",
+        "id": "com.wezka.nativecamera.Camera",
         "clobbers": [
-            "device"
+            "Camera"
+        ]
+    },
+    {
+        "file": "plugins/com.wezka.nativecamera/www/CameraPopoverOptions.js",
+        "id": "com.wezka.nativecamera.CameraPopoverOptions",
+        "clobbers": [
+            "CameraPopoverOptions"
+        ]
+    },
+    {
+        "file": "plugins/com.wezka.nativecamera/www/Camera.js",
+        "id": "com.wezka.nativecamera.camera",
+        "clobbers": [
+            "navigator.camera"
+        ]
+    },
+    {
+        "file": "plugins/com.wezka.nativecamera/www/CameraPopoverHandle.js",
+        "id": "com.wezka.nativecamera.CameraPopoverHandle",
+        "clobbers": [
+            "CameraPopoverHandle"
         ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "org.apache.cordova.camera": "0.2.3",
-    "org.apache.cordova.console": "0.2.8",
-    "org.apache.cordova.dialogs": "0.2.2",
-    "org.apache.cordova.file": "0.2.3",
-    "org.apache.cordova.file-transfer": "0.3.3",
-    "org.apache.cordova.media-capture": "0.2.2",
-    "org.apache.cordova.network-information": "0.2.3",
-    "org.apache.cordova.splashscreen": "0.2.2",
-    "org.apache.cordova.vibration": "0.3.2",
-    "org.apache.cordova.device": "0.2.9"
+    "org.apache.cordova.camera": "0.3.4",
+    "org.apache.cordova.console": "0.2.12",
+    "org.apache.cordova.device": "0.2.13",
+    "org.apache.cordova.dialogs": "0.2.11",
+    "org.apache.cordova.file": "1.3.2",
+    "org.apache.cordova.file-transfer": "0.4.8",
+    "org.apache.cordova.geolocation": "0.3.11",
+    "org.apache.cordova.inappbrowser": "0.6.0",
+    "org.apache.cordova.media-capture": "0.3.5",
+    "org.apache.cordova.network-information": "0.2.14",
+    "org.apache.cordova.splashscreen": "0.3.5",
+    "org.apache.cordova.statusbar": "0.1.10",
+    "org.apache.cordova.vibration": "0.3.12",
+    "com.wezka.nativecamera": "0.1.2"
 }
 // BOTTOM OF METADATA
 });

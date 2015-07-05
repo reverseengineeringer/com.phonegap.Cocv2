@@ -20,9 +20,9 @@
 # instance fields
 .field final synthetic this$0:Lorg/apache/cordova/CordovaActivity;
 
-.field private final synthetic val$errorUrl:Ljava/lang/String;
+.field final synthetic val$errorUrl:Ljava/lang/String;
 
-.field private final synthetic val$me:Lorg/apache/cordova/CordovaActivity;
+.field final synthetic val$me:Lorg/apache/cordova/CordovaActivity;
 
 
 # direct methods
@@ -30,14 +30,13 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 808
     iput-object p1, p0, Lorg/apache/cordova/CordovaActivity$2;->this$0:Lorg/apache/cordova/CordovaActivity;
 
     iput-object p2, p0, Lorg/apache/cordova/CordovaActivity$2;->val$me:Lorg/apache/cordova/CordovaActivity;
 
     iput-object p3, p0, Lorg/apache/cordova/CordovaActivity$2;->val$errorUrl:Ljava/lang/String;
 
-    .line 921
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -49,12 +48,12 @@
     .locals 5
 
     .prologue
-    .line 924
+    .line 811
     iget-object v0, p0, Lorg/apache/cordova/CordovaActivity$2;->val$me:Lorg/apache/cordova/CordovaActivity;
 
     invoke-virtual {v0}, Lorg/apache/cordova/CordovaActivity;->spinnerStop()V
 
-    .line 925
+    .line 812
     iget-object v0, p0, Lorg/apache/cordova/CordovaActivity$2;->val$me:Lorg/apache/cordova/CordovaActivity;
 
     iget-object v0, v0, Lorg/apache/cordova/CordovaActivity;->appView:Lorg/apache/cordova/CordovaWebView;
@@ -69,6 +68,6 @@
 
     invoke-virtual {v0, v1, v2, v3, v4}, Lorg/apache/cordova/CordovaWebView;->showWebPage(Ljava/lang/String;ZZLjava/util/HashMap;)V
 
-    .line 926
+    .line 813
     return-void
 .end method

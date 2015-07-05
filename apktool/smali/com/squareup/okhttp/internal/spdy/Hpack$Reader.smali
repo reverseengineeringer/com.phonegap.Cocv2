@@ -142,7 +142,7 @@
     check-cast v0, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->name:Ljava/lang/String;
-    invoke-static {v0}, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->access$0(Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)Ljava/lang/String;
+    invoke-static {v0}, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->access$000(Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)Ljava/lang/String;
 
     move-result-object v0
 
@@ -164,7 +164,7 @@
     check-cast v0, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->value:Ljava/lang/String;
-    invoke-static {v0}, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->access$1(Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)Ljava/lang/String;
+    invoke-static {v0}, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->access$100(Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)Ljava/lang/String;
 
     move-result-object v0
 
@@ -172,12 +172,12 @@
 .end method
 
 .method private insertIntoHeaderTable(ILcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)V
-    .locals 7
+    .locals 8
     .param p1, "index"    # I
     .param p2, "entry"    # Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     .prologue
-    const-wide/16 v5, 0x1000
+    const-wide/16 v6, 0x1000
 
     .line 262
     invoke-virtual {p2}, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->length()I
@@ -211,11 +211,11 @@
 
     .line 268
     :cond_0
-    int-to-long v1, v0
+    int-to-long v2, v0
 
-    cmp-long v1, v1, v5
+    cmp-long v1, v2, v6
 
-    if-lez v1, :cond_2
+    if-lez v1, :cond_1
 
     .line 269
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->headerTable:Ljava/util/List;
@@ -223,15 +223,15 @@
     invoke-interface {v1}, Ljava/util/List;->clear()V
 
     .line 270
-    const-wide/16 v1, 0x0
+    const-wide/16 v2, 0x0
 
-    iput-wide v1, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bufferSize:J
+    iput-wide v2, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bufferSize:J
 
     .line 272
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->emittedHeaders:Ljava/util/List;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->name:Ljava/lang/String;
-    invoke-static {p2}, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->access$0(Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)Ljava/lang/String;
+    invoke-static {p2}, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->access$000(Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)Ljava/lang/String;
 
     move-result-object v2
 
@@ -241,7 +241,7 @@
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->emittedHeaders:Ljava/util/List;
 
     # getter for: Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->value:Ljava/lang/String;
-    invoke-static {p2}, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->access$1(Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)Ljava/lang/String;
+    invoke-static {p2}, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->access$100(Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)Ljava/lang/String;
 
     move-result-object v2
 
@@ -251,8 +251,20 @@
     :goto_0
     return-void
 
-    .line 279
+    .line 278
     :cond_1
+    :goto_1
+    iget-wide v2, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bufferSize:J
+
+    int-to-long v4, v0
+
+    add-long/2addr v2, v4
+
+    cmp-long v1, v2, v6
+
+    if-lez v1, :cond_2
+
+    .line 279
     const/4 v1, 0x0
 
     invoke-direct {p0, v1}, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->remove(I)V
@@ -260,19 +272,10 @@
     .line 280
     add-int/lit8 p1, p1, -0x1
 
-    .line 278
-    :cond_2
-    iget-wide v1, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bufferSize:J
-
-    int-to-long v3, v0
-
-    add-long/2addr v1, v3
-
-    cmp-long v1, v1, v5
-
-    if-gtz v1, :cond_1
+    goto :goto_1
 
     .line 283
+    :cond_2
     if-gez p1, :cond_3
 
     .line 284
@@ -284,14 +287,14 @@
     invoke-interface {v1, p1, p2}, Ljava/util/List;->add(ILjava/lang/Object;)V
 
     .line 292
-    :goto_1
-    iget-wide v1, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bufferSize:J
+    :goto_2
+    iget-wide v2, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bufferSize:J
 
-    int-to-long v3, v0
+    int-to-long v4, v0
 
-    add-long/2addr v1, v3
+    add-long/2addr v2, v4
 
-    iput-wide v1, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bufferSize:J
+    iput-wide v2, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bufferSize:J
 
     .line 293
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->referenceSet:Ljava/util/BitSet;
@@ -315,7 +318,7 @@
 
     invoke-interface {v1, p1, p2}, Ljava/util/List;->add(ILjava/lang/Object;)V
 
-    goto :goto_1
+    goto :goto_2
 
     .line 289
     :cond_4
@@ -323,7 +326,7 @@
 
     invoke-interface {v1, p1, p2}, Ljava/util/List;->set(ILjava/lang/Object;)Ljava/lang/Object;
 
-    goto :goto_1
+    goto :goto_2
 .end method
 
 .method private readByte()I
@@ -630,12 +633,12 @@
 .end method
 
 .method private remove(I)V
-    .locals 5
+    .locals 4
     .param p1, "index"    # I
 
     .prologue
     .line 297
-    iget-wide v1, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bufferSize:J
+    iget-wide v2, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bufferSize:J
 
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->headerTable:Ljava/util/List;
 
@@ -649,9 +652,9 @@
 
     move-result v0
 
-    int-to-long v3, v0
+    int-to-long v0, v0
 
-    sub-long v0, v1, v3
+    sub-long v0, v2, v0
 
     iput-wide v0, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bufferSize:J
 
@@ -678,13 +681,9 @@
     :goto_0
     const/4 v1, -0x1
 
-    if-ne v0, v1, :cond_0
-
-    .line 187
-    return-void
+    if-eq v0, v1, :cond_0
 
     .line 184
-    :cond_0
     iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->emittedHeaders:Ljava/util/List;
 
     invoke-direct {p0, v0}, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->getName(I)Ljava/lang/String;
@@ -712,6 +711,10 @@
     move-result v0
 
     goto :goto_0
+
+    .line 187
+    :cond_0
+    return-void
 .end method
 
 .method public getAndReset()Ljava/util/List;
@@ -777,13 +780,9 @@
 
     cmp-long v2, v2, v4
 
-    if-gtz v2, :cond_0
-
-    .line 180
-    return-void
+    if-lez v2, :cond_7
 
     .line 156
-    :cond_0
     invoke-direct {p0}, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->readByte()I
 
     move-result v0
@@ -792,7 +791,7 @@
     .local v0, "b":I
     and-int/lit16 v2, v0, 0x80
 
-    if-eqz v2, :cond_1
+    if-eqz v2, :cond_0
 
     .line 159
     const/16 v2, 0x7f
@@ -809,8 +808,8 @@
 
     .line 161
     .end local v1    # "index":I
-    :cond_1
-    if-ne v0, v8, :cond_2
+    :cond_0
+    if-ne v0, v8, :cond_1
 
     .line 162
     invoke-direct {p0}, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->readLiteralHeaderWithoutIndexingNewName()V
@@ -818,10 +817,10 @@
     goto :goto_0
 
     .line 163
-    :cond_2
+    :cond_1
     and-int/lit16 v2, v0, 0xe0
 
-    if-ne v2, v8, :cond_3
+    if-ne v2, v8, :cond_2
 
     .line 164
     invoke-virtual {p0, v0, v6}, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->readInt(II)I
@@ -838,8 +837,8 @@
 
     .line 166
     .end local v1    # "index":I
-    :cond_3
-    if-ne v0, v7, :cond_4
+    :cond_2
+    if-ne v0, v7, :cond_3
 
     .line 167
     invoke-direct {p0}, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->readLiteralHeaderWithIncrementalIndexingNewName()V
@@ -847,10 +846,10 @@
     goto :goto_0
 
     .line 168
-    :cond_4
+    :cond_3
     and-int/lit16 v2, v0, 0xe0
 
-    if-ne v2, v7, :cond_5
+    if-ne v2, v7, :cond_4
 
     .line 169
     invoke-virtual {p0, v0, v6}, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->readInt(II)I
@@ -867,8 +866,8 @@
 
     .line 171
     .end local v1    # "index":I
-    :cond_5
-    if-nez v0, :cond_6
+    :cond_4
+    if-nez v0, :cond_5
 
     .line 172
     invoke-direct {p0}, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->readLiteralHeaderWithSubstitutionIndexingNewName()V
@@ -876,10 +875,10 @@
     goto :goto_0
 
     .line 173
-    :cond_6
+    :cond_5
     and-int/lit16 v2, v0, 0xc0
 
-    if-nez v2, :cond_7
+    if-nez v2, :cond_6
 
     .line 174
     const/16 v2, 0x3f
@@ -898,12 +897,17 @@
 
     .line 177
     .end local v1    # "index":I
-    :cond_7
+    :cond_6
     new-instance v2, Ljava/lang/AssertionError;
 
     invoke-direct {v2}, Ljava/lang/AssertionError;-><init>()V
 
     throw v2
+
+    .line 180
+    .end local v0    # "b":I
+    :cond_7
+    return-void
 .end method
 
 .method readInt(II)I
@@ -961,7 +965,6 @@
     .line 318
     add-int/lit8 v3, v3, 0x7
 
-    .line 319
     goto :goto_1
 
     .line 320
@@ -977,7 +980,7 @@
 .end method
 
 .method public readString()Ljava/lang/String;
-    .locals 7
+    .locals 8
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/io/IOException;
@@ -1004,13 +1007,13 @@
 
     .line 335
     .local v0, "encoded":[B
-    iget-wide v3, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bytesLeft:J
+    iget-wide v4, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bytesLeft:J
 
-    int-to-long v5, v2
+    int-to-long v6, v2
 
-    sub-long/2addr v3, v5
+    sub-long/2addr v4, v6
 
-    iput-wide v3, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bytesLeft:J
+    iput-wide v4, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->bytesLeft:J
 
     .line 336
     iget-object v3, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;->in:Ljava/io/DataInputStream;

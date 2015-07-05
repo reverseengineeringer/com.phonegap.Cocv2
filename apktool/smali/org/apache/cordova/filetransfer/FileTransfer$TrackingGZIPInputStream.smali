@@ -29,13 +29,13 @@
     .end annotation
 
     .prologue
-    .line 132
+    .line 134
     invoke-direct {p0, p1}, Lorg/apache/cordova/filetransfer/FileTransfer$TrackingInputStream;-><init>(Ljava/io/InputStream;)V
 
-    .line 133
+    .line 135
     iput-object p1, p0, Lorg/apache/cordova/filetransfer/FileTransfer$TrackingGZIPInputStream;->gzin:Lorg/apache/cordova/filetransfer/FileTransfer$ExposedGZIPInputStream;
 
-    .line 134
+    .line 136
     return-void
 .end method
 
@@ -45,7 +45,7 @@
     .locals 2
 
     .prologue
-    .line 136
+    .line 138
     iget-object v0, p0, Lorg/apache/cordova/filetransfer/FileTransfer$TrackingGZIPInputStream;->gzin:Lorg/apache/cordova/filetransfer/FileTransfer$ExposedGZIPInputStream;
 
     invoke-virtual {v0}, Lorg/apache/cordova/filetransfer/FileTransfer$ExposedGZIPInputStream;->getInflater()Ljava/util/zip/Inflater;

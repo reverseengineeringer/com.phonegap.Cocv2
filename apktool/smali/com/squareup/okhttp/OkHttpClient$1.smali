@@ -17,7 +17,7 @@
 # instance fields
 .field final synthetic this$0:Lcom/squareup/okhttp/OkHttpClient;
 
-.field private final synthetic val$protocol:Ljava/lang/String;
+.field final synthetic val$protocol:Ljava/lang/String;
 
 
 # direct methods
@@ -25,12 +25,11 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 392
     iput-object p1, p0, Lcom/squareup/okhttp/OkHttpClient$1;->this$0:Lcom/squareup/okhttp/OkHttpClient;
 
     iput-object p2, p0, Lcom/squareup/okhttp/OkHttpClient$1;->val$protocol:Ljava/lang/String;
 
-    .line 392
     invoke-direct {p0}, Ljava/net/URLStreamHandler;-><init>()V
 
     return-void

@@ -53,78 +53,66 @@
 
     const/4 v1, 0x0
 
-    .line 155
     const-string v2, "No result"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x1
 
-    .line 156
     const-string v2, "OK"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x2
 
-    .line 157
     const-string v2, "Class not found"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x3
 
-    .line 158
     const-string v2, "Illegal access"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x4
 
-    .line 159
     const-string v2, "Instantiation error"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x5
 
-    .line 160
     const-string v2, "Malformed url"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x6
 
-    .line 161
     const-string v2, "IO error"
 
     aput-object v2, v0, v1
 
     const/4 v1, 0x7
 
-    .line 162
     const-string v2, "Invalid action"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x8
 
-    .line 163
     const-string v2, "JSON error"
 
     aput-object v2, v0, v1
 
     const/16 v1, 0x9
 
-    .line 164
     const-string v2, "Error"
 
     aput-object v2, v0, v1
 
-    .line 154
     sput-object v0, Lorg/apache/cordova/PluginResult;->StatusMessages:[Ljava/lang/String;
 
-    .line 165
     return-void
 .end method
 
@@ -149,7 +137,7 @@
 .end method
 
 .method public constructor <init>(Lorg/apache/cordova/PluginResult$Status;F)V
-    .locals 1
+    .locals 2
     .param p1, "status"    # Lorg/apache/cordova/PluginResult$Status;
     .param p2, "f"    # F
 
@@ -179,6 +167,12 @@
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
 
+    const-string v1, ""
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
     invoke-virtual {v0, p2}, Ljava/lang/StringBuilder;->append(F)Ljava/lang/StringBuilder;
 
     move-result-object v0
@@ -194,7 +188,7 @@
 .end method
 
 .method public constructor <init>(Lorg/apache/cordova/PluginResult$Status;I)V
-    .locals 1
+    .locals 2
     .param p1, "status"    # Lorg/apache/cordova/PluginResult$Status;
     .param p2, "i"    # I
 
@@ -223,6 +217,12 @@
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v1, ""
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
 
     invoke-virtual {v0, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
@@ -466,9 +466,13 @@
     .line 116
     new-instance v0, Ljava/lang/StringBuilder;
 
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v1, "{\"status\":"
 
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
 
     iget v1, p0, Lorg/apache/cordova/PluginResult;->status:I
 
@@ -670,9 +674,13 @@
     .line 141
     new-instance v0, Ljava/lang/StringBuilder;
 
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v1, "cordova.callbackError(\'"
 
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
 
     invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -715,9 +723,13 @@
     .line 136
     new-instance v0, Ljava/lang/StringBuilder;
 
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v1, "cordova.callbackSuccess(\'"
 
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
 
     invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 

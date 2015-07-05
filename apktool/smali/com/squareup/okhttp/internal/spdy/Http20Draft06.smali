@@ -9,8 +9,8 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Lcom/squareup/okhttp/internal/spdy/Http20Draft06$Reader;,
-        Lcom/squareup/okhttp/internal/spdy/Http20Draft06$Writer;
+        Lcom/squareup/okhttp/internal/spdy/Http20Draft06$Writer;,
+        Lcom/squareup/okhttp/internal/spdy/Http20Draft06$Reader;
     }
 .end annotation
 
@@ -68,7 +68,7 @@
     :try_end_0
     .catch Ljava/io/UnsupportedEncodingException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 59
+    .line 41
     return-void
 
     .line 38
@@ -91,14 +91,15 @@
     .line 33
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
+    .line 274
     return-void
 .end method
 
-.method static synthetic access$0()[B
+.method static synthetic access$000()[B
     .locals 1
 
     .prologue
-    .line 34
+    .line 33
     sget-object v0, Lcom/squareup/okhttp/internal/spdy/Http20Draft06;->CONNECTION_HEADER:[B
 
     return-object v0

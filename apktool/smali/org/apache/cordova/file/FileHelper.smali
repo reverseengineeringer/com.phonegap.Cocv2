@@ -434,7 +434,6 @@
     .line 62
     const/4 v8, 0x0
 
-    .line 64
     goto :goto_0
 
     .line 65

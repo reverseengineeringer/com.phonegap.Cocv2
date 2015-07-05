@@ -17,26 +17,25 @@
 # instance fields
 .field final synthetic this$0:Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
 
-.field private final synthetic val$deltaWindowSize:I
+.field final synthetic val$deltaWindowSize:I
 
-.field private final synthetic val$streamId:I
+.field final synthetic val$streamId:I
 
 
 # direct methods
 .method varargs constructor <init>(Lcom/squareup/okhttp/internal/spdy/SpdyConnection;Ljava/lang/String;[Ljava/lang/Object;II)V
     .locals 0
-    .param p2, "$anonymous0"    # Ljava/lang/String;
-    .param p3, "$anonymous1"    # [Ljava/lang/Object;
+    .param p2, "x0"    # Ljava/lang/String;
+    .param p3, "x1"    # [Ljava/lang/Object;
 
     .prologue
-    .line 1
+    .line 207
     iput-object p1, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$2;->this$0:Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
 
     iput p4, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$2;->val$streamId:I
 
     iput p5, p0, Lcom/squareup/okhttp/internal/spdy/SpdyConnection$2;->val$deltaWindowSize:I
 
-    .line 207
     invoke-direct {p0, p2, p3}, Lcom/squareup/okhttp/internal/NamedRunnable;-><init>(Ljava/lang/String;[Ljava/lang/Object;)V
 
     return-void

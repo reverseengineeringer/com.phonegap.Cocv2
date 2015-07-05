@@ -15,7 +15,7 @@
 
 
 # static fields
-.field public static final config:I = 0x7f030000
+.field public static final config:I = 0x7f040000
 
 
 # direct methods
@@ -23,7 +23,7 @@
     .locals 0
 
     .prologue
-    .line 20
+    .line 43
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void

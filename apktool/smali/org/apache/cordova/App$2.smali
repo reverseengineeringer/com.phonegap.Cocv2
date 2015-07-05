@@ -26,10 +26,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 119
     iput-object p1, p0, Lorg/apache/cordova/App$2;->this$0:Lorg/apache/cordova/App;
 
-    .line 122
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -41,7 +40,7 @@
     .locals 2
 
     .prologue
-    .line 124
+    .line 121
     iget-object v0, p0, Lorg/apache/cordova/App$2;->this$0:Lorg/apache/cordova/App;
 
     iget-object v0, v0, Lorg/apache/cordova/App;->webView:Lorg/apache/cordova/CordovaWebView;
@@ -50,6 +49,6 @@
 
     invoke-virtual {v0, v1}, Lorg/apache/cordova/CordovaWebView;->clearCache(Z)V
 
-    .line 125
+    .line 122
     return-void
 .end method

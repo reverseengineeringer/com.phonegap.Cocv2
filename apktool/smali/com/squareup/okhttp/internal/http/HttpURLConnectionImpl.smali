@@ -207,17 +207,14 @@
 
     if-eq v1, v4, :cond_2
 
-    .line 316
     const/16 v4, 0x12d
 
     if-eq v1, v4, :cond_2
 
-    .line 317
     const/16 v4, 0x12e
 
     if-eq v1, v4, :cond_2
 
-    .line 318
     const/16 v4, 0x12f
 
     if-ne v1, v4, :cond_3
@@ -276,10 +273,8 @@
 
     move-object v4, v0
 
-    .line 334
     check-cast v4, Lcom/squareup/okhttp/internal/http/RetryableOutputStream;
 
-    .line 333
     invoke-direct {p0, v3, v5, v6, v4}, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->newHttpEngine(Ljava/lang/String;Lcom/squareup/okhttp/internal/http/RawHeaders;Lcom/squareup/okhttp/Connection;Lcom/squareup/okhttp/internal/http/RetryableOutputStream;)Lcom/squareup/okhttp/internal/http/HttpEngine;
 
     move-result-object v4
@@ -347,49 +342,46 @@
 
     .line 377
     .local v1, "requestBody":Ljava/io/OutputStream;
-    if-eqz v1, :cond_4
+    if-eqz v1, :cond_1
 
-    .line 378
     instance-of v6, v1, Lcom/squareup/okhttp/internal/http/RetryableOutputStream;
 
-    if-nez v6, :cond_4
+    if-eqz v6, :cond_5
 
-    move v0, v4
+    :cond_1
+    move v0, v5
 
     .line 379
     .local v0, "canRetryRequestBody":Z
     :goto_0
-    if-nez v3, :cond_1
+    if-nez v3, :cond_2
 
     iget-object v6, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
 
     iget-object v6, v6, Lcom/squareup/okhttp/internal/http/HttpEngine;->connection:Lcom/squareup/okhttp/Connection;
 
-    if-eqz v6, :cond_3
+    if-eqz v6, :cond_4
 
-    .line 380
-    :cond_1
-    if-eqz v3, :cond_2
+    :cond_2
+    if-eqz v3, :cond_3
 
     invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/RouteSelector;->hasNext()Z
 
     move-result v6
 
-    if-eqz v6, :cond_3
+    if-eqz v6, :cond_4
 
-    .line 381
-    :cond_2
+    :cond_3
     invoke-direct {p0, p1}, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->isRecoverable(Ljava/io/IOException;)Z
 
     move-result v6
 
-    if-eqz v6, :cond_3
+    if-eqz v6, :cond_4
 
-    .line 382
-    if-nez v0, :cond_5
+    if-nez v0, :cond_6
 
     .line 383
-    :cond_3
+    :cond_4
     iput-object p1, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->httpEngineFailure:Ljava/io/IOException;
 
     .line 391
@@ -397,15 +389,15 @@
     return v4
 
     .end local v0    # "canRetryRequestBody":Z
-    :cond_4
-    move v0, v5
+    :cond_5
+    move v0, v4
 
     .line 377
     goto :goto_0
 
     .line 387
     .restart local v0    # "canRetryRequestBody":Z
-    :cond_5
+    :cond_6
     iget-object v4, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
 
     invoke-virtual {v4, v5}, Lcom/squareup/okhttp/internal/http/HttpEngine;->release(Z)V
@@ -567,13 +559,13 @@
 
     new-instance v2, Ljava/lang/StringBuilder;
 
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
     iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->method:Ljava/lang/String;
 
-    invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
-
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v2
 
     const-string v3, " does not support writing"
 
@@ -601,7 +593,7 @@
 
     const/4 v3, 0x0
 
-    .line 398
+    .line 397
     instance-of v4, p1, Ljavax/net/ssl/SSLHandshakeException;
 
     if-eqz v4, :cond_0
@@ -783,7 +775,6 @@
 
     if-eqz v0, :cond_0
 
-    .line 420
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
 
     iget-object v0, v0, Lcom/squareup/okhttp/internal/http/HttpEngine;->connection:Lcom/squareup/okhttp/Connection;
@@ -813,7 +804,7 @@
     :goto_1
     return-object v0
 
-    .line 421
+    .line 419
     .end local v4    # "selectedProxy":Ljava/net/Proxy;
     .end local v9    # "responseCode":I
     :cond_0
@@ -855,7 +846,6 @@
 
     move-result-object v0
 
-    .line 431
     invoke-virtual {p0}, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->getResponseCode()I
 
     move-result v1
@@ -872,10 +862,8 @@
 
     iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->rawRequestHeaders:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
-    .line 432
     iget-object v5, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->url:Ljava/net/URL;
 
-    .line 430
     invoke-static/range {v0 .. v5}, Lcom/squareup/okhttp/internal/http/HttpAuthenticator;->processAuthHeader(Lcom/squareup/okhttp/OkAuthenticator;ILcom/squareup/okhttp/internal/http/RawHeaders;Lcom/squareup/okhttp/internal/http/RawHeaders;Ljava/net/Proxy;Ljava/net/URL;)Z
 
     move-result v6
@@ -924,9 +912,13 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "Too many redirects: "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     iget v2, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->redirectionCount:I
 
@@ -971,7 +963,7 @@
     .line 449
     sget-object v0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl$Retry;->NONE:Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl$Retry;
 
-    goto :goto_1
+    goto/16 :goto_1
 
     .line 451
     :cond_5
@@ -1130,6 +1122,8 @@
     goto/16 :goto_1
 
     .line 423
+    nop
+
     :sswitch_data_0
     .sparse-switch
         0x12c -> :sswitch_2
@@ -1143,66 +1137,69 @@
 .end method
 
 .method private setTransports(Ljava/lang/String;Z)V
-    .locals 5
+    .locals 7
     .param p1, "transportsString"    # Ljava/lang/String;
     .param p2, "append"    # Z
 
     .prologue
     .line 564
-    new-instance v1, Ljava/util/ArrayList;
+    new-instance v4, Ljava/util/ArrayList;
 
-    invoke-direct {v1}, Ljava/util/ArrayList;-><init>()V
+    invoke-direct {v4}, Ljava/util/ArrayList;-><init>()V
 
     .line 565
-    .local v1, "transportsList":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
+    .local v4, "transportsList":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     if-eqz p2, :cond_0
 
     .line 566
-    iget-object v2, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->client:Lcom/squareup/okhttp/OkHttpClient;
+    iget-object v5, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->client:Lcom/squareup/okhttp/OkHttpClient;
 
-    invoke-virtual {v2}, Lcom/squareup/okhttp/OkHttpClient;->getTransports()Ljava/util/List;
+    invoke-virtual {v5}, Lcom/squareup/okhttp/OkHttpClient;->getTransports()Ljava/util/List;
 
-    move-result-object v2
+    move-result-object v5
 
-    invoke-interface {v1, v2}, Ljava/util/List;->addAll(Ljava/util/Collection;)Z
+    invoke-interface {v4, v5}, Ljava/util/List;->addAll(Ljava/util/Collection;)Z
 
     .line 568
     :cond_0
-    const-string v2, ","
+    const-string v5, ","
 
-    const/4 v3, -0x1
+    const/4 v6, -0x1
 
-    invoke-virtual {p1, v2, v3}, Ljava/lang/String;->split(Ljava/lang/String;I)[Ljava/lang/String;
+    invoke-virtual {p1, v5, v6}, Ljava/lang/String;->split(Ljava/lang/String;I)[Ljava/lang/String;
 
-    move-result-object v3
+    move-result-object v0
 
-    array-length v4, v3
+    .local v0, "arr$":[Ljava/lang/String;
+    array-length v2, v0
 
-    const/4 v2, 0x0
+    .local v2, "len$":I
+    const/4 v1, 0x0
 
+    .local v1, "i$":I
     :goto_0
-    if-lt v2, v4, :cond_1
+    if-ge v1, v2, :cond_1
+
+    aget-object v3, v0, v1
+
+    .line 569
+    .local v3, "transport":Ljava/lang/String;
+    invoke-interface {v4, v3}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    .line 568
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_0
 
     .line 571
-    iget-object v2, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->client:Lcom/squareup/okhttp/OkHttpClient;
+    .end local v3    # "transport":Ljava/lang/String;
+    :cond_1
+    iget-object v5, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->client:Lcom/squareup/okhttp/OkHttpClient;
 
-    invoke-virtual {v2, v1}, Lcom/squareup/okhttp/OkHttpClient;->setTransports(Ljava/util/List;)Lcom/squareup/okhttp/OkHttpClient;
+    invoke-virtual {v5, v4}, Lcom/squareup/okhttp/OkHttpClient;->setTransports(Ljava/util/List;)Lcom/squareup/okhttp/OkHttpClient;
 
     .line 572
     return-void
-
-    .line 568
-    :cond_1
-    aget-object v0, v3, v2
-
-    .line 569
-    .local v0, "transport":Ljava/lang/String;
-    invoke-interface {v1, v0}, Ljava/util/List;->add(Ljava/lang/Object;)Z
-
-    .line 568
-    add-int/lit8 v2, v2, 0x1
-
-    goto :goto_0
 .end method
 
 
@@ -1251,9 +1248,13 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "Ignoring header "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -1728,9 +1729,13 @@
 
     new-instance v3, Ljava/lang/StringBuilder;
 
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v4, "No response body exists; responseCode="
 
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
 
     invoke-virtual {p0}, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->getResponseCode()I
 
@@ -1781,9 +1786,13 @@
 
     new-instance v2, Ljava/lang/StringBuilder;
 
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v3, "method does not support a request body: "
 
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
 
     iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->method:Ljava/lang/String;
 
@@ -1890,11 +1899,11 @@
 
     new-instance v4, Ljava/lang/StringBuilder;
 
-    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    move-result-object v5
+    invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-direct {v4, v5}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v4
 
     const-string v5, ":"
 
@@ -1955,10 +1964,8 @@
     .line 169
     new-instance v0, Ljava/lang/IllegalStateException;
 
-    .line 170
     const-string v1, "Cannot access request header fields after connection is set"
 
-    .line 169
     invoke-direct {v0, v1}, Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V
 
     throw v0
@@ -2059,11 +2066,11 @@
     .line 229
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->client:Lcom/squareup/okhttp/OkHttpClient;
 
-    int-to-long v1, p1
+    int-to-long v2, p1
 
-    sget-object v3, Ljava/util/concurrent/TimeUnit;->MILLISECONDS:Ljava/util/concurrent/TimeUnit;
+    sget-object v1, Ljava/util/concurrent/TimeUnit;->MILLISECONDS:Ljava/util/concurrent/TimeUnit;
 
-    invoke-virtual {v0, v1, v2, v3}, Lcom/squareup/okhttp/OkHttpClient;->setConnectTimeout(JLjava/util/concurrent/TimeUnit;)V
+    invoke-virtual {v0, v2, v3, v1}, Lcom/squareup/okhttp/OkHttpClient;->setConnectTimeout(JLjava/util/concurrent/TimeUnit;)V
 
     .line 230
     return-void
@@ -2084,7 +2091,7 @@
 .end method
 
 .method public setFixedLengthStreamingMode(J)V
-    .locals 2
+    .locals 3
     .param p1, "contentLength"    # J
 
     .prologue
@@ -2158,11 +2165,11 @@
     .line 237
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpURLConnectionImpl;->client:Lcom/squareup/okhttp/OkHttpClient;
 
-    int-to-long v1, p1
+    int-to-long v2, p1
 
-    sget-object v3, Ljava/util/concurrent/TimeUnit;->MILLISECONDS:Ljava/util/concurrent/TimeUnit;
+    sget-object v1, Ljava/util/concurrent/TimeUnit;->MILLISECONDS:Ljava/util/concurrent/TimeUnit;
 
-    invoke-virtual {v0, v1, v2, v3}, Lcom/squareup/okhttp/OkHttpClient;->setReadTimeout(JLjava/util/concurrent/TimeUnit;)V
+    invoke-virtual {v0, v2, v3, v1}, Lcom/squareup/okhttp/OkHttpClient;->setReadTimeout(JLjava/util/concurrent/TimeUnit;)V
 
     .line 238
     return-void
@@ -2212,9 +2219,13 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "Ignoring header "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 

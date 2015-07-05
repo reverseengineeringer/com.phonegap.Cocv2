@@ -17,21 +17,24 @@
 # instance fields
 .field final synthetic this$1:Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;
 
-.field private final synthetic val$editor:Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
+.field final synthetic val$editor:Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
+
+.field final synthetic val$this$0:Lcom/squareup/okhttp/HttpResponseCache;
 
 
 # direct methods
-.method constructor <init>(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;Ljava/io/OutputStream;Lcom/squareup/okhttp/internal/DiskLruCache$Editor;)V
+.method constructor <init>(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;Ljava/io/OutputStream;Lcom/squareup/okhttp/HttpResponseCache;Lcom/squareup/okhttp/internal/DiskLruCache$Editor;)V
     .locals 0
-    .param p2, "$anonymous0"    # Ljava/io/OutputStream;
+    .param p2, "x0"    # Ljava/io/OutputStream;
 
     .prologue
-    .line 1
+    .line 387
     iput-object p1, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl$1;->this$1:Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;
 
-    iput-object p3, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl$1;->val$editor:Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
+    iput-object p3, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl$1;->val$this$0:Lcom/squareup/okhttp/HttpResponseCache;
 
-    .line 387
+    iput-object p4, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl$1;->val$editor:Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
+
     invoke-direct {p0, p2}, Ljava/io/FilterOutputStream;-><init>(Ljava/io/OutputStream;)V
 
     return-void
@@ -51,10 +54,7 @@
     .line 389
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl$1;->this$1:Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;
 
-    # getter for: Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->this$0:Lcom/squareup/okhttp/HttpResponseCache;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->access$2(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;)Lcom/squareup/okhttp/HttpResponseCache;
-
-    move-result-object v1
+    iget-object v1, v0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->this$0:Lcom/squareup/okhttp/HttpResponseCache;
 
     monitor-enter v1
 
@@ -63,7 +63,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl$1;->this$1:Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;
 
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->done:Z
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->access$0(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;)Z
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->access$700(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;)Z
 
     move-result v0
 
@@ -82,26 +82,18 @@
 
     const/4 v2, 0x1
 
-    invoke-static {v0, v2}, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->access$1(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;Z)V
+    # setter for: Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->done:Z
+    invoke-static {v0, v2}, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->access$702(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;Z)Z
 
     .line 394
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl$1;->this$1:Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;
 
-    # getter for: Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->this$0:Lcom/squareup/okhttp/HttpResponseCache;
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->access$2(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;)Lcom/squareup/okhttp/HttpResponseCache;
+    iget-object v0, v0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->this$0:Lcom/squareup/okhttp/HttpResponseCache;
 
-    move-result-object v0
+    # operator++ for: Lcom/squareup/okhttp/HttpResponseCache;->writeSuccessCount:I
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache;->access$808(Lcom/squareup/okhttp/HttpResponseCache;)I
 
-    # getter for: Lcom/squareup/okhttp/HttpResponseCache;->writeSuccessCount:I
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache;->access$4(Lcom/squareup/okhttp/HttpResponseCache;)I
-
-    move-result v2
-
-    add-int/lit8 v2, v2, 0x1
-
-    invoke-static {v0, v2}, Lcom/squareup/okhttp/HttpResponseCache;->access$5(Lcom/squareup/okhttp/HttpResponseCache;I)V
-
-    .line 389
+    .line 395
     monitor-exit v1
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
@@ -116,7 +108,7 @@
 
     goto :goto_0
 
-    .line 389
+    .line 395
     :catchall_0
     move-exception v0
 

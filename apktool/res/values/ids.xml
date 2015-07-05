@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="preview">false</item>
+    <item type="id" name="linearLayout">false</item>
+    <item type="id" name="flipCamera">false</item>
+    <item type="id" name="captureButton">false</item>
+    <item type="id" name="flashButton">false</item>
+    <item type="id" name="viewfinderArea">false</item>
+    <item type="id" name="viewfinder">false</item>
+</resources>

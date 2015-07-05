@@ -6,9 +6,9 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;,
+        Lcom/squareup/okhttp/internal/spdy/Hpack$Writer;,
         Lcom/squareup/okhttp/internal/spdy/Hpack$Reader;,
-        Lcom/squareup/okhttp/internal/spdy/Hpack$Writer;
+        Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
     }
 .end annotation
 
@@ -69,7 +69,6 @@
 
     new-array v0, v0, [Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
-    .line 54
     new-instance v1, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v2, ":scheme"
@@ -80,7 +79,6 @@
 
     aput-object v1, v0, v5
 
-    .line 55
     new-instance v1, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v2, ":scheme"
@@ -91,7 +89,6 @@
 
     aput-object v1, v0, v6
 
-    .line 56
     new-instance v1, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v2, ":host"
@@ -102,7 +99,6 @@
 
     aput-object v1, v0, v7
 
-    .line 57
     new-instance v1, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v2, ":path"
@@ -113,7 +109,6 @@
 
     aput-object v1, v0, v8
 
-    .line 58
     new-instance v1, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v2, ":method"
@@ -126,7 +121,6 @@
 
     const/4 v1, 0x5
 
-    .line 59
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "accept"
@@ -139,7 +133,6 @@
 
     const/4 v1, 0x6
 
-    .line 60
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "accept-charset"
@@ -152,7 +145,6 @@
 
     const/4 v1, 0x7
 
-    .line 61
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "accept-encoding"
@@ -165,7 +157,6 @@
 
     const/16 v1, 0x8
 
-    .line 62
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "accept-language"
@@ -178,7 +169,6 @@
 
     const/16 v1, 0x9
 
-    .line 63
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "cookie"
@@ -191,7 +181,6 @@
 
     const/16 v1, 0xa
 
-    .line 64
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "if-modified-since"
@@ -204,7 +193,6 @@
 
     const/16 v1, 0xb
 
-    .line 65
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "user-agent"
@@ -217,7 +205,6 @@
 
     const/16 v1, 0xc
 
-    .line 66
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "referer"
@@ -230,7 +217,6 @@
 
     const/16 v1, 0xd
 
-    .line 67
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "authorization"
@@ -243,7 +229,6 @@
 
     const/16 v1, 0xe
 
-    .line 68
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "allow"
@@ -256,7 +241,6 @@
 
     const/16 v1, 0xf
 
-    .line 69
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "cache-control"
@@ -269,7 +253,6 @@
 
     const/16 v1, 0x10
 
-    .line 70
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "connection"
@@ -282,7 +265,6 @@
 
     const/16 v1, 0x11
 
-    .line 71
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "content-length"
@@ -295,7 +277,6 @@
 
     const/16 v1, 0x12
 
-    .line 72
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "content-type"
@@ -308,7 +289,6 @@
 
     const/16 v1, 0x13
 
-    .line 73
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "date"
@@ -321,7 +301,6 @@
 
     const/16 v1, 0x14
 
-    .line 74
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "expect"
@@ -334,7 +313,6 @@
 
     const/16 v1, 0x15
 
-    .line 75
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "from"
@@ -347,7 +325,6 @@
 
     const/16 v1, 0x16
 
-    .line 76
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "if-match"
@@ -360,7 +337,6 @@
 
     const/16 v1, 0x17
 
-    .line 77
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "if-none-match"
@@ -373,7 +349,6 @@
 
     const/16 v1, 0x18
 
-    .line 78
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "if-range"
@@ -386,7 +361,6 @@
 
     const/16 v1, 0x19
 
-    .line 79
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "if-unmodified-since"
@@ -399,7 +373,6 @@
 
     const/16 v1, 0x1a
 
-    .line 80
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "max-forwards"
@@ -412,7 +385,6 @@
 
     const/16 v1, 0x1b
 
-    .line 81
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "proxy-authorization"
@@ -425,7 +397,6 @@
 
     const/16 v1, 0x1c
 
-    .line 82
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "range"
@@ -438,7 +409,6 @@
 
     const/16 v1, 0x1d
 
-    .line 83
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "via"
@@ -460,7 +430,6 @@
 
     new-array v0, v0, [Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
-    .line 87
     new-instance v1, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v2, ":status"
@@ -471,7 +440,6 @@
 
     aput-object v1, v0, v5
 
-    .line 88
     new-instance v1, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v2, "age"
@@ -482,7 +450,6 @@
 
     aput-object v1, v0, v6
 
-    .line 89
     new-instance v1, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v2, "cache-control"
@@ -493,7 +460,6 @@
 
     aput-object v1, v0, v7
 
-    .line 90
     new-instance v1, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v2, "content-length"
@@ -504,7 +470,6 @@
 
     aput-object v1, v0, v8
 
-    .line 91
     new-instance v1, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v2, "content-type"
@@ -517,7 +482,6 @@
 
     const/4 v1, 0x5
 
-    .line 92
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "date"
@@ -530,7 +494,6 @@
 
     const/4 v1, 0x6
 
-    .line 93
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "etag"
@@ -543,7 +506,6 @@
 
     const/4 v1, 0x7
 
-    .line 94
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "expires"
@@ -556,7 +518,6 @@
 
     const/16 v1, 0x8
 
-    .line 95
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "last-modified"
@@ -569,7 +530,6 @@
 
     const/16 v1, 0x9
 
-    .line 96
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "server"
@@ -582,7 +542,6 @@
 
     const/16 v1, 0xa
 
-    .line 97
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "set-cookie"
@@ -595,7 +554,6 @@
 
     const/16 v1, 0xb
 
-    .line 98
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "vary"
@@ -608,7 +566,6 @@
 
     const/16 v1, 0xc
 
-    .line 99
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "via"
@@ -621,7 +578,6 @@
 
     const/16 v1, 0xd
 
-    .line 100
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "access-control-allow-origin"
@@ -634,7 +590,6 @@
 
     const/16 v1, 0xe
 
-    .line 101
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "accept-ranges"
@@ -647,7 +602,6 @@
 
     const/16 v1, 0xf
 
-    .line 102
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "allow"
@@ -660,7 +614,6 @@
 
     const/16 v1, 0x10
 
-    .line 103
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "connection"
@@ -673,7 +626,6 @@
 
     const/16 v1, 0x11
 
-    .line 104
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "content-disposition"
@@ -686,7 +638,6 @@
 
     const/16 v1, 0x12
 
-    .line 105
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "content-encoding"
@@ -699,7 +650,6 @@
 
     const/16 v1, 0x13
 
-    .line 106
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "content-language"
@@ -712,7 +662,6 @@
 
     const/16 v1, 0x14
 
-    .line 107
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "content-location"
@@ -725,7 +674,6 @@
 
     const/16 v1, 0x15
 
-    .line 108
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "content-range"
@@ -738,7 +686,6 @@
 
     const/16 v1, 0x16
 
-    .line 109
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "link"
@@ -751,7 +698,6 @@
 
     const/16 v1, 0x17
 
-    .line 110
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "location"
@@ -764,7 +710,6 @@
 
     const/16 v1, 0x18
 
-    .line 111
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "proxy-authenticate"
@@ -777,7 +722,6 @@
 
     const/16 v1, 0x19
 
-    .line 112
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "refresh"
@@ -790,7 +734,6 @@
 
     const/16 v1, 0x1a
 
-    .line 113
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "retry-after"
@@ -803,7 +746,6 @@
 
     const/16 v1, 0x1b
 
-    .line 114
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "strict-transport-security"
@@ -816,7 +758,6 @@
 
     const/16 v1, 0x1c
 
-    .line 115
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "transfer-encoding"
@@ -829,7 +770,6 @@
 
     const/16 v1, 0x1d
 
-    .line 116
     new-instance v2, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     const-string v3, "www-authenticate"
@@ -846,7 +786,6 @@
 
     sput-object v0, Lcom/squareup/okhttp/internal/spdy/Hpack;->INITIAL_SERVER_TO_CLIENT_HEADER_TABLE:Ljava/util/List;
 
-    .line 121
     return-void
 .end method
 

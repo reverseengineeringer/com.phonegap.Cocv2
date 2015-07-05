@@ -26,10 +26,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 142
     iput-object p1, p0, Lcom/squareup/okhttp/ConnectionPool$2;->this$0:Lcom/squareup/okhttp/ConnectionPool;
 
-    .line 142
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void

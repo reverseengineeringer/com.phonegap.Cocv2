@@ -20,13 +20,13 @@
 # instance fields
 .field final synthetic this$0:Lorg/apache/cordova/CordovaWebView;
 
-.field private final synthetic val$currentLoadUrlTimeout:I
+.field final synthetic val$currentLoadUrlTimeout:I
 
-.field private final synthetic val$loadError:Ljava/lang/Runnable;
+.field final synthetic val$loadError:Ljava/lang/Runnable;
 
-.field private final synthetic val$loadUrlTimeoutValue:I
+.field final synthetic val$loadUrlTimeoutValue:I
 
-.field private final synthetic val$me:Lorg/apache/cordova/CordovaWebView;
+.field final synthetic val$me:Lorg/apache/cordova/CordovaWebView;
 
 
 # direct methods
@@ -34,7 +34,7 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 403
     iput-object p1, p0, Lorg/apache/cordova/CordovaWebView$3;->this$0:Lorg/apache/cordova/CordovaWebView;
 
     iput p2, p0, Lorg/apache/cordova/CordovaWebView$3;->val$loadUrlTimeoutValue:I
@@ -45,7 +45,6 @@
 
     iput-object p5, p0, Lorg/apache/cordova/CordovaWebView$3;->val$loadError:Ljava/lang/Runnable;
 
-    .line 477
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -54,29 +53,29 @@
 
 # virtual methods
 .method public run()V
-    .locals 3
+    .locals 4
 
     .prologue
-    .line 480
+    .line 406
     :try_start_0
     monitor-enter p0
     :try_end_0
     .catch Ljava/lang/InterruptedException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 481
+    .line 407
     :try_start_1
     iget v1, p0, Lorg/apache/cordova/CordovaWebView$3;->val$loadUrlTimeoutValue:I
 
-    int-to-long v1, v1
+    int-to-long v2, v1
 
-    invoke-virtual {p0, v1, v2}, Ljava/lang/Object;->wait(J)V
+    invoke-virtual {p0, v2, v3}, Ljava/lang/Object;->wait(J)V
 
-    .line 480
+    .line 408
     monitor-exit p0
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 488
+    .line 414
     :goto_0
     iget-object v1, p0, Lorg/apache/cordova/CordovaWebView$3;->val$me:Lorg/apache/cordova/CordovaWebView;
 
@@ -86,11 +85,11 @@
 
     if-ne v1, v2, :cond_0
 
-    .line 489
+    .line 415
     iget-object v1, p0, Lorg/apache/cordova/CordovaWebView$3;->val$me:Lorg/apache/cordova/CordovaWebView;
 
     # getter for: Lorg/apache/cordova/CordovaWebView;->cordova:Lorg/apache/cordova/CordovaInterface;
-    invoke-static {v1}, Lorg/apache/cordova/CordovaWebView;->access$1(Lorg/apache/cordova/CordovaWebView;)Lorg/apache/cordova/CordovaInterface;
+    invoke-static {v1}, Lorg/apache/cordova/CordovaWebView;->access$000(Lorg/apache/cordova/CordovaWebView;)Lorg/apache/cordova/CordovaInterface;
 
     move-result-object v1
 
@@ -102,11 +101,11 @@
 
     invoke-virtual {v1, v2}, Landroid/app/Activity;->runOnUiThread(Ljava/lang/Runnable;)V
 
-    .line 491
+    .line 417
     :cond_0
     return-void
 
-    .line 480
+    .line 408
     :catchall_0
     move-exception v1
 
@@ -120,11 +119,11 @@
     :try_end_3
     .catch Ljava/lang/InterruptedException; {:try_start_3 .. :try_end_3} :catch_0
 
-    .line 483
+    .line 409
     :catch_0
     move-exception v0
 
-    .line 484
+    .line 410
     .local v0, "e":Ljava/lang/InterruptedException;
     invoke-virtual {v0}, Ljava/lang/InterruptedException;->printStackTrace()V
 

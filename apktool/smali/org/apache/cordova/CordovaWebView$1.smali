@@ -5,7 +5,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lorg/apache/cordova/CordovaWebView;->setup()V
+    value = Lorg/apache/cordova/CordovaWebView;->initWebViewSettings()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -23,10 +23,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 255
     iput-object p1, p0, Lorg/apache/cordova/CordovaWebView$1;->this$0:Lorg/apache/cordova/CordovaWebView;
 
-    .line 331
     invoke-direct {p0}, Landroid/content/BroadcastReceiver;-><init>()V
 
     return-void
@@ -40,12 +39,15 @@
     .param p2, "intent"    # Landroid/content/Intent;
 
     .prologue
-    .line 334
+    .line 258
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebView$1;->this$0:Lorg/apache/cordova/CordovaWebView;
 
-    # invokes: Lorg/apache/cordova/CordovaWebView;->updateUserAgentString()V
-    invoke-static {v0}, Lorg/apache/cordova/CordovaWebView;->access$0(Lorg/apache/cordova/CordovaWebView;)V
+    invoke-virtual {v0}, Lorg/apache/cordova/CordovaWebView;->getSettings()Landroid/webkit/WebSettings;
 
-    .line 335
+    move-result-object v0
+
+    invoke-virtual {v0}, Landroid/webkit/WebSettings;->getUserAgentString()Ljava/lang/String;
+
+    .line 259
     return-void
 .end method

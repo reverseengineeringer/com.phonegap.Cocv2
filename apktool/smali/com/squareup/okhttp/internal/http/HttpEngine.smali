@@ -67,7 +67,6 @@
 
     sput-object v0, Lcom/squareup/okhttp/internal/http/HttpEngine;->GATEWAY_TIMEOUT_RESPONSE:Ljava/net/CacheResponse;
 
-    .line 89
     return-void
 .end method
 
@@ -86,13 +85,13 @@
     .end annotation
 
     .prologue
-    .line 153
+    .line 154
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     .line 111
-    const-wide/16 v1, -0x1
+    const-wide/16 v2, -0x1
 
-    iput-wide v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->sentRequestMillis:J
+    iput-wide v2, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->sentRequestMillis:J
 
     .line 155
     iput-object p1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->client:Lcom/squareup/okhttp/OkHttpClient;
@@ -183,9 +182,13 @@
     :cond_0
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "Java"
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     const-string v2, "java.version"
 
@@ -237,11 +240,11 @@
     .line 604
     new-instance v2, Ljava/lang/StringBuilder;
 
-    invoke-static {v1}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
 
-    move-result-object v3
+    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v2
 
     const-string v3, ":"
 
@@ -356,7 +359,7 @@
     .local v4, "responseCache":Lcom/squareup/okhttp/OkResponseCache;
     if-eqz v4, :cond_0
 
-    .line 225
+    .line 224
     iget-object v6, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->uri:Ljava/net/URI;
 
     iget-object v7, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->method:Ljava/lang/String;
@@ -373,7 +376,6 @@
 
     move-result-object v8
 
-    .line 224
     invoke-interface {v4, v6, v7, v8}, Lcom/squareup/okhttp/OkResponseCache;->get(Ljava/net/URI;Ljava/lang/String;Ljava/util/Map;)Ljava/net/CacheResponse;
 
     move-result-object v0
@@ -402,10 +404,8 @@
 
     if-eqz v6, :cond_2
 
-    .line 231
     if-eqz v5, :cond_2
 
-    .line 232
     iget-object v6, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->cachedResponseBody:Ljava/io/InputStream;
 
     if-nez v6, :cond_3
@@ -424,30 +424,30 @@
 
     invoke-static {v5, v6}, Lcom/squareup/okhttp/internal/http/RawHeaders;->fromMultimap(Ljava/util/Map;Z)Lcom/squareup/okhttp/internal/http/RawHeaders;
 
-    move-result-object v3
+    move-result-object v1
 
     .line 238
-    .local v3, "rawResponseHeaders":Lcom/squareup/okhttp/internal/http/RawHeaders;
+    .local v1, "rawResponseHeaders":Lcom/squareup/okhttp/internal/http/RawHeaders;
     new-instance v6, Lcom/squareup/okhttp/internal/http/ResponseHeaders;
 
     iget-object v7, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->uri:Ljava/net/URI;
 
-    invoke-direct {v6, v7, v3}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;-><init>(Ljava/net/URI;Lcom/squareup/okhttp/internal/http/RawHeaders;)V
+    invoke-direct {v6, v7, v1}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;-><init>(Ljava/net/URI;Lcom/squareup/okhttp/internal/http/RawHeaders;)V
 
     iput-object v6, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->cachedResponseHeaders:Lcom/squareup/okhttp/internal/http/ResponseHeaders;
 
     .line 239
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
-    move-result-wide v1
+    move-result-wide v2
 
     .line 240
-    .local v1, "now":J
+    .local v2, "now":J
     iget-object v6, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->cachedResponseHeaders:Lcom/squareup/okhttp/internal/http/ResponseHeaders;
 
     iget-object v7, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
-    invoke-virtual {v6, v1, v2, v7}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->chooseResponseSource(JLcom/squareup/okhttp/internal/http/RequestHeaders;)Lcom/squareup/okhttp/ResponseSource;
+    invoke-virtual {v6, v2, v3, v7}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->chooseResponseSource(JLcom/squareup/okhttp/internal/http/RequestHeaders;)Lcom/squareup/okhttp/ResponseSource;
 
     move-result-object v6
 
@@ -597,48 +597,48 @@
 
     .prologue
     .line 509
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
-    invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getHeaders()Lcom/squareup/okhttp/internal/http/RawHeaders;
+    invoke-virtual {v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getHeaders()Lcom/squareup/okhttp/internal/http/RawHeaders;
 
-    move-result-object v3
+    move-result-object v1
 
     invoke-virtual {p0}, Lcom/squareup/okhttp/internal/http/HttpEngine;->getRequestLine()Ljava/lang/String;
 
     move-result-object v4
 
-    invoke-virtual {v3, v4}, Lcom/squareup/okhttp/internal/http/RawHeaders;->setRequestLine(Ljava/lang/String;)V
+    invoke-virtual {v1, v4}, Lcom/squareup/okhttp/internal/http/RawHeaders;->setRequestLine(Ljava/lang/String;)V
 
     .line 511
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
-    invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getUserAgent()Ljava/lang/String;
+    invoke-virtual {v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getUserAgent()Ljava/lang/String;
 
-    move-result-object v3
+    move-result-object v1
 
-    if-nez v3, :cond_0
+    if-nez v1, :cond_0
 
     .line 512
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
     invoke-static {}, Lcom/squareup/okhttp/internal/http/HttpEngine;->getDefaultUserAgent()Ljava/lang/String;
 
     move-result-object v4
 
-    invoke-virtual {v3, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setUserAgent(Ljava/lang/String;)V
+    invoke-virtual {v1, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setUserAgent(Ljava/lang/String;)V
 
     .line 515
     :cond_0
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
-    invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getHost()Ljava/lang/String;
+    invoke-virtual {v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getHost()Ljava/lang/String;
 
-    move-result-object v3
+    move-result-object v1
 
-    if-nez v3, :cond_1
+    if-nez v1, :cond_1
 
     .line 516
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
     iget-object v4, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->policy:Lcom/squareup/okhttp/internal/http/Policy;
 
@@ -650,114 +650,113 @@
 
     move-result-object v4
 
-    invoke-virtual {v3, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setHost(Ljava/lang/String;)V
+    invoke-virtual {v1, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setHost(Ljava/lang/String;)V
 
     .line 519
     :cond_1
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->connection:Lcom/squareup/okhttp/Connection;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->connection:Lcom/squareup/okhttp/Connection;
 
-    if-eqz v3, :cond_2
+    if-eqz v1, :cond_2
 
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->connection:Lcom/squareup/okhttp/Connection;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->connection:Lcom/squareup/okhttp/Connection;
 
-    invoke-virtual {v3}, Lcom/squareup/okhttp/Connection;->getHttpMinorVersion()I
+    invoke-virtual {v1}, Lcom/squareup/okhttp/Connection;->getHttpMinorVersion()I
 
-    move-result v3
+    move-result v1
 
-    if-eqz v3, :cond_3
+    if-eqz v1, :cond_3
 
-    .line 520
     :cond_2
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
-    invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getConnection()Ljava/lang/String;
+    invoke-virtual {v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getConnection()Ljava/lang/String;
 
-    move-result-object v3
+    move-result-object v1
 
-    if-nez v3, :cond_3
+    if-nez v1, :cond_3
 
     .line 521
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
     const-string v4, "Keep-Alive"
 
-    invoke-virtual {v3, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setConnection(Ljava/lang/String;)V
+    invoke-virtual {v1, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setConnection(Ljava/lang/String;)V
 
     .line 524
     :cond_3
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
-    invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getAcceptEncoding()Ljava/lang/String;
+    invoke-virtual {v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getAcceptEncoding()Ljava/lang/String;
 
-    move-result-object v3
+    move-result-object v1
 
-    if-nez v3, :cond_4
+    if-nez v1, :cond_4
 
     .line 525
-    const/4 v3, 0x1
+    const/4 v1, 0x1
 
-    iput-boolean v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->transparentGzip:Z
+    iput-boolean v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->transparentGzip:Z
 
     .line 526
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
     const-string v4, "gzip"
 
-    invoke-virtual {v3, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setAcceptEncoding(Ljava/lang/String;)V
+    invoke-virtual {v1, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setAcceptEncoding(Ljava/lang/String;)V
 
     .line 529
     :cond_4
     invoke-virtual {p0}, Lcom/squareup/okhttp/internal/http/HttpEngine;->hasRequestBody()Z
 
-    move-result v3
+    move-result v1
 
-    if-eqz v3, :cond_5
+    if-eqz v1, :cond_5
 
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
-    invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getContentType()Ljava/lang/String;
+    invoke-virtual {v1}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getContentType()Ljava/lang/String;
 
-    move-result-object v3
+    move-result-object v1
 
-    if-nez v3, :cond_5
+    if-nez v1, :cond_5
 
     .line 530
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
     const-string v4, "application/x-www-form-urlencoded"
 
-    invoke-virtual {v3, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setContentType(Ljava/lang/String;)V
+    invoke-virtual {v1, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setContentType(Ljava/lang/String;)V
 
     .line 533
     :cond_5
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->policy:Lcom/squareup/okhttp/internal/http/Policy;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->policy:Lcom/squareup/okhttp/internal/http/Policy;
 
-    invoke-interface {v3}, Lcom/squareup/okhttp/internal/http/Policy;->getIfModifiedSince()J
+    invoke-interface {v1}, Lcom/squareup/okhttp/internal/http/Policy;->getIfModifiedSince()J
 
-    move-result-wide v1
+    move-result-wide v2
 
     .line 534
-    .local v1, "ifModifiedSince":J
-    const-wide/16 v3, 0x0
+    .local v2, "ifModifiedSince":J
+    const-wide/16 v4, 0x0
 
-    cmp-long v3, v1, v3
+    cmp-long v1, v2, v4
 
-    if-eqz v3, :cond_6
+    if-eqz v1, :cond_6
 
     .line 535
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
     new-instance v4, Ljava/util/Date;
 
-    invoke-direct {v4, v1, v2}, Ljava/util/Date;-><init>(J)V
+    invoke-direct {v4, v2, v3}, Ljava/util/Date;-><init>(J)V
 
-    invoke-virtual {v3, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setIfModifiedSince(Ljava/util/Date;)V
+    invoke-virtual {v1, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setIfModifiedSince(Ljava/util/Date;)V
 
     .line 538
     :cond_6
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->client:Lcom/squareup/okhttp/OkHttpClient;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->client:Lcom/squareup/okhttp/OkHttpClient;
 
-    invoke-virtual {v3}, Lcom/squareup/okhttp/OkHttpClient;->getCookieHandler()Ljava/net/CookieHandler;
+    invoke-virtual {v1}, Lcom/squareup/okhttp/OkHttpClient;->getCookieHandler()Ljava/net/CookieHandler;
 
     move-result-object v0
 
@@ -766,9 +765,8 @@
     if-eqz v0, :cond_7
 
     .line 540
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
-    .line 541
     iget-object v4, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->uri:Ljava/net/URI;
 
     iget-object v5, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestHeaders:Lcom/squareup/okhttp/internal/http/RequestHeaders;
@@ -787,8 +785,7 @@
 
     move-result-object v4
 
-    .line 540
-    invoke-virtual {v3, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->addCookies(Ljava/util/Map;)V
+    invoke-virtual {v1, v4}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->addCookies(Ljava/util/Map;)V
 
     .line 543
     :cond_7
@@ -832,9 +829,13 @@
     .line 575
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "/"
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -1137,7 +1138,6 @@
 
     move-result v2
 
-    .line 288
     iget-object v5, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->client:Lcom/squareup/okhttp/OkHttpClient;
 
     invoke-virtual {v5}, Lcom/squareup/okhttp/OkHttpClient;->getAuthenticator()Lcom/squareup/okhttp/OkAuthenticator;
@@ -1156,7 +1156,6 @@
 
     move-result-object v7
 
-    .line 287
     invoke-direct/range {v0 .. v7}, Lcom/squareup/okhttp/Address;-><init>(Ljava/lang/String;ILjavax/net/ssl/SSLSocketFactory;Ljavax/net/ssl/HostnameVerifier;Lcom/squareup/okhttp/OkAuthenticator;Ljava/net/Proxy;Ljava/util/List;)V
 
     .line 289
@@ -1171,7 +1170,6 @@
 
     move-result-object v8
 
-    .line 290
     iget-object v2, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->client:Lcom/squareup/okhttp/OkHttpClient;
 
     invoke-virtual {v2}, Lcom/squareup/okhttp/OkHttpClient;->getConnectionPool()Lcom/squareup/okhttp/ConnectionPool;
@@ -1190,7 +1188,6 @@
 
     invoke-direct/range {v5 .. v11}, Lcom/squareup/okhttp/internal/http/RouteSelector;-><init>(Lcom/squareup/okhttp/Address;Ljava/net/URI;Ljava/net/ProxySelector;Lcom/squareup/okhttp/ConnectionPool;Lcom/squareup/okhttp/internal/Dns;Lcom/squareup/okhttp/RouteDatabase;)V
 
-    .line 289
     iput-object v5, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->routeSelector:Lcom/squareup/okhttp/internal/http/RouteSelector;
 
     .line 292
@@ -1414,7 +1411,7 @@
     .locals 3
 
     .prologue
-    .line 552
+    .line 551
     iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->connection:Lcom/squareup/okhttp/Connection;
 
     if-eqz v1, :cond_0
@@ -1435,13 +1432,13 @@
     :goto_0
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     iget-object v2, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->method:Ljava/lang/String;
 
-    invoke-static {v2}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v2
-
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v1
 
     const-string v2, " "
 
@@ -1473,7 +1470,7 @@
 
     return-object v1
 
-    .line 552
+    .line 551
     .end local v0    # "protocol":Ljava/lang/String;
     :cond_1
     const-string v0, "HTTP/1.0"
@@ -1611,15 +1608,16 @@
 
     move-result v0
 
-    if-nez v0, :cond_0
+    if-eqz v0, :cond_1
 
-    const/4 v0, 0x0
+    :cond_0
+    const/4 v0, 0x1
 
     :goto_0
     return v0
 
-    :cond_0
-    const/4 v0, 0x1
+    :cond_1
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method
@@ -1645,7 +1643,7 @@
 .end method
 
 .method public final hasResponseBody()Z
-    .locals 7
+    .locals 8
 
     .prologue
     const/4 v2, 0x1
@@ -1690,13 +1688,11 @@
 
     if-lt v0, v3, :cond_3
 
-    .line 487
     :cond_2
     const/16 v3, 0xcc
 
     if-eq v0, v3, :cond_3
 
-    .line 488
     const/16 v3, 0x130
 
     if-eq v0, v3, :cond_3
@@ -1712,11 +1708,11 @@
 
     invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->getContentLength()J
 
-    move-result-wide v3
+    move-result-wide v4
 
-    const-wide/16 v5, -0x1
+    const-wide/16 v6, -0x1
 
-    cmp-long v3, v3, v5
+    cmp-long v3, v4, v6
 
     if-nez v3, :cond_4
 
@@ -1744,18 +1740,15 @@
 
     if-nez v0, :cond_0
 
-    .line 591
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->policy:Lcom/squareup/okhttp/internal/http/Policy;
 
     invoke-interface {v0}, Lcom/squareup/okhttp/internal/http/Policy;->usingProxy()Z
 
     move-result v0
 
-    .line 590
     :goto_0
     return v0
 
-    .line 592
     :cond_0
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->connection:Lcom/squareup/okhttp/Connection;
 
@@ -1839,11 +1832,11 @@
     if-eqz v3, :cond_0
 
     .line 627
-    iget-wide v3, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->sentRequestMillis:J
+    iget-wide v4, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->sentRequestMillis:J
 
-    const-wide/16 v5, -0x1
+    const-wide/16 v6, -0x1
 
-    cmp-long v3, v3, v5
+    cmp-long v3, v4, v6
 
     if-nez v3, :cond_4
 
@@ -2113,7 +2106,6 @@
 
     if-eqz v0, :cond_1
 
-    .line 446
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->transport:Lcom/squareup/okhttp/internal/http/Transport;
 
     iget-object v1, p0, Lcom/squareup/okhttp/internal/http/HttpEngine;->requestBodyOut:Ljava/io/OutputStream;

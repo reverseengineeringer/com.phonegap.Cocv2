@@ -59,7 +59,7 @@
 
     iget-object v1, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->cacheOut:Ljava/io/OutputStream;
 
-    invoke-direct {v0, p0, v1, p2}, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl$1;-><init>(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;Ljava/io/OutputStream;Lcom/squareup/okhttp/internal/DiskLruCache$Editor;)V
+    invoke-direct {v0, p0, v1, p1, p2}, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl$1;-><init>(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;Ljava/io/OutputStream;Lcom/squareup/okhttp/HttpResponseCache;Lcom/squareup/okhttp/internal/DiskLruCache$Editor;)V
 
     iput-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->body:Ljava/io/OutputStream;
 
@@ -67,40 +67,33 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;)Z
+.method static synthetic access$700(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;)Z
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;
 
     .prologue
-    .line 381
+    .line 378
     iget-boolean v0, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->done:Z
 
     return v0
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;Z)V
+.method static synthetic access$702(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;Z)Z
     .locals 0
-
-    .prologue
-    .line 381
-    iput-boolean p1, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->done:Z
-
-    return-void
-.end method
-
-.method static synthetic access$2(Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;)Lcom/squareup/okhttp/HttpResponseCache;
-    .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;
+    .param p1, "x1"    # Z
 
     .prologue
     .line 378
-    iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->this$0:Lcom/squareup/okhttp/HttpResponseCache;
+    iput-boolean p1, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->done:Z
 
-    return-object v0
+    return p1
 .end method
 
 
 # virtual methods
 .method public abort()V
-    .locals 3
+    .locals 2
 
     .prologue
     .line 409
@@ -130,16 +123,10 @@
     .line 414
     iget-object v0, p0, Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;->this$0:Lcom/squareup/okhttp/HttpResponseCache;
 
-    # getter for: Lcom/squareup/okhttp/HttpResponseCache;->writeAbortCount:I
-    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache;->access$6(Lcom/squareup/okhttp/HttpResponseCache;)I
+    # operator++ for: Lcom/squareup/okhttp/HttpResponseCache;->writeAbortCount:I
+    invoke-static {v0}, Lcom/squareup/okhttp/HttpResponseCache;->access$908(Lcom/squareup/okhttp/HttpResponseCache;)I
 
-    move-result v2
-
-    add-int/lit8 v2, v2, 0x1
-
-    invoke-static {v0, v2}, Lcom/squareup/okhttp/HttpResponseCache;->access$7(Lcom/squareup/okhttp/HttpResponseCache;I)V
-
-    .line 409
+    .line 415
     monitor-exit v1
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
@@ -165,7 +152,7 @@
 
     goto :goto_0
 
-    .line 409
+    .line 415
     :catchall_0
     move-exception v0
 

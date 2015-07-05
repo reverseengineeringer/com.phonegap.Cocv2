@@ -1,4 +1,4 @@
-.class Lcom/squareup/okhttp/internal/DiskLruCache$2;
+.class final Lcom/squareup/okhttp/internal/DiskLruCache$2;
 .super Ljava/io/OutputStream;
 .source "DiskLruCache.java"
 
@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x0
+    accessFlags = 0x8
     name = null
 .end annotation
 
@@ -22,7 +22,6 @@
     .line 709
     invoke-direct {p0}, Ljava/io/OutputStream;-><init>()V
 
-    .line 1
     return-void
 .end method
 

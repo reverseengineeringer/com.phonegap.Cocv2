@@ -111,11 +111,12 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/internal/StrictLineReader;)Ljava/nio/charset/Charset;
+.method static synthetic access$000(Lcom/squareup/okhttp/internal/StrictLineReader;)Ljava/nio/charset/Charset;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/StrictLineReader;
 
     .prologue
-    .line 50
+    .line 45
     iget-object v0, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->charset:Ljava/nio/charset/Charset;
 
     return-object v0
@@ -201,14 +202,14 @@
 
     invoke-virtual {v0}, Ljava/io/InputStream;->close()V
 
-    .line 109
+    .line 114
     :cond_0
     monitor-exit v1
 
     .line 115
     return-void
 
-    .line 109
+    .line 114
     :catchall_0
     move-exception v0
 
@@ -254,9 +255,13 @@
 
     new-instance v3, Ljava/lang/StringBuilder;
 
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v4, "expected an int but was \""
 
-    invoke-direct {v3, v4}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
 
     invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -308,7 +313,7 @@
 
     throw v4
 
-    .line 126
+    .line 175
     :catchall_0
     move-exception v4
 
@@ -338,104 +343,19 @@
     :goto_0
     iget v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->end:I
 
-    if-ne v0, v4, :cond_4
-
-    .line 148
-    new-instance v2, Lcom/squareup/okhttp/internal/StrictLineReader$1;
-
-    iget v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->end:I
-
-    iget v6, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
-
-    sub-int/2addr v4, v6
-
-    add-int/lit8 v4, v4, 0x50
-
-    invoke-direct {v2, p0, v4}, Lcom/squareup/okhttp/internal/StrictLineReader$1;-><init>(Lcom/squareup/okhttp/internal/StrictLineReader;I)V
-
-    .line 160
-    .local v2, "out":Ljava/io/ByteArrayOutputStream;
-    :cond_2
-    iget-object v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->buf:[B
-
-    iget v6, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
-
-    iget v7, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->end:I
-
-    iget v8, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
-
-    sub-int/2addr v7, v8
-
-    invoke-virtual {v2, v4, v6, v7}, Ljava/io/ByteArrayOutputStream;->write([BII)V
-
-    .line 162
-    const/4 v4, -0x1
-
-    iput v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->end:I
-
-    .line 163
-    invoke-direct {p0}, Lcom/squareup/okhttp/internal/StrictLineReader;->fillBuf()V
-
-    .line 165
-    iget v0, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
-
-    :goto_1
-    iget v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->end:I
-
-    if-eq v0, v4, :cond_2
-
-    .line 166
-    iget-object v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->buf:[B
-
-    aget-byte v4, v4, v0
-
-    if-ne v4, v9, :cond_7
-
-    .line 167
-    iget v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
-
-    if-eq v0, v4, :cond_3
-
-    .line 168
-    iget-object v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->buf:[B
-
-    iget v6, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
-
-    iget v7, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
-
-    sub-int v7, v0, v7
-
-    invoke-virtual {v2, v4, v6, v7}, Ljava/io/ByteArrayOutputStream;->write([BII)V
-
-    .line 170
-    :cond_3
-    add-int/lit8 v4, v0, 0x1
-
-    iput v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
-
-    .line 171
-    invoke-virtual {v2}, Ljava/io/ByteArrayOutputStream;->toString()Ljava/lang/String;
-
-    move-result-object v3
-
-    monitor-exit v5
-
-    .end local v2    # "out":Ljava/io/ByteArrayOutputStream;
-    :goto_2
-    return-object v3
+    if-eq v0, v4, :cond_4
 
     .line 139
-    :cond_4
     iget-object v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->buf:[B
 
     aget-byte v4, v4, v0
 
-    if-ne v4, v9, :cond_6
+    if-ne v4, v9, :cond_3
 
     .line 140
     iget v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
 
-    if-eq v0, v4, :cond_5
+    if-eq v0, v4, :cond_2
 
     iget-object v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->buf:[B
 
@@ -445,13 +365,13 @@
 
     const/16 v6, 0xd
 
-    if-ne v4, v6, :cond_5
+    if-ne v4, v6, :cond_2
 
     add-int/lit8 v1, v0, -0x1
 
     .line 141
     .local v1, "lineEnd":I
-    :goto_3
+    :goto_1
     new-instance v3, Ljava/lang/String;
 
     iget-object v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->buf:[B
@@ -478,29 +398,113 @@
 
     .line 143
     monitor-exit v5
+
+    .line 171
+    .end local v1    # "lineEnd":I
+    .end local v3    # "res":Ljava/lang/String;
+    :goto_2
+    return-object v3
+
+    :cond_2
+    move v1, v0
+
+    .line 140
+    goto :goto_1
+
+    .line 138
+    :cond_3
+    add-int/lit8 v0, v0, 0x1
+
+    goto :goto_0
+
+    .line 148
+    :cond_4
+    new-instance v2, Lcom/squareup/okhttp/internal/StrictLineReader$1;
+
+    iget v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->end:I
+
+    iget v6, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
+
+    sub-int/2addr v4, v6
+
+    add-int/lit8 v4, v4, 0x50
+
+    invoke-direct {v2, p0, v4}, Lcom/squareup/okhttp/internal/StrictLineReader$1;-><init>(Lcom/squareup/okhttp/internal/StrictLineReader;I)V
+
+    .line 160
+    .local v2, "out":Ljava/io/ByteArrayOutputStream;
+    :cond_5
+    iget-object v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->buf:[B
+
+    iget v6, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
+
+    iget v7, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->end:I
+
+    iget v8, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
+
+    sub-int/2addr v7, v8
+
+    invoke-virtual {v2, v4, v6, v7}, Ljava/io/ByteArrayOutputStream;->write([BII)V
+
+    .line 162
+    const/4 v4, -0x1
+
+    iput v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->end:I
+
+    .line 163
+    invoke-direct {p0}, Lcom/squareup/okhttp/internal/StrictLineReader;->fillBuf()V
+
+    .line 165
+    iget v0, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
+
+    :goto_3
+    iget v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->end:I
+
+    if-eq v0, v4, :cond_5
+
+    .line 166
+    iget-object v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->buf:[B
+
+    aget-byte v4, v4, v0
+
+    if-ne v4, v9, :cond_7
+
+    .line 167
+    iget v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
+
+    if-eq v0, v4, :cond_6
+
+    .line 168
+    iget-object v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->buf:[B
+
+    iget v6, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
+
+    iget v7, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
+
+    sub-int v7, v0, v7
+
+    invoke-virtual {v2, v4, v6, v7}, Ljava/io/ByteArrayOutputStream;->write([BII)V
+
+    .line 170
+    :cond_6
+    add-int/lit8 v4, v0, 0x1
+
+    iput v4, p0, Lcom/squareup/okhttp/internal/StrictLineReader;->pos:I
+
+    .line 171
+    invoke-virtual {v2}, Ljava/io/ByteArrayOutputStream;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    monitor-exit v5
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     goto :goto_2
 
-    .end local v1    # "lineEnd":I
-    .end local v3    # "res":Ljava/lang/String;
-    :cond_5
-    move v1, v0
-
-    .line 140
-    goto :goto_3
-
-    .line 138
-    :cond_6
-    add-int/lit8 v0, v0, 0x1
-
-    goto :goto_0
-
     .line 165
-    .restart local v2    # "out":Ljava/io/ByteArrayOutputStream;
     :cond_7
     add-int/lit8 v0, v0, 0x1
 
-    goto :goto_1
+    goto :goto_3
 .end method

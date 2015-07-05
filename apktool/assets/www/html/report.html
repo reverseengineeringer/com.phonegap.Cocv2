@@ -151,7 +151,37 @@
                         <option>Other</option>
                     </select>
                 </li>
-                <!-- end tree maintenance -->                
+                <!-- end tree maintenance -->
+                <!-- taxi complaint fields -->
+                <li id='taxi_complaints_medallion_num_li' class='hidden'>
+                    <label for='taxi_complaint_medallion_num'>Medallion #:</label>
+                    <input type='text' id='medallion_number'>
+                </li>
+                <li id='taxi_complaints_plate_num_li' class='hidden'>
+                    <label for='taxi_complaint_medallion_num'>Plate #:</label>
+                    <input type='text' id='plate_number'>
+                </li>
+                <li id='taxi_complaints_pickup_time_li' class='hidden'>
+                    <label for='taxi_complaint_pickup_time'>Pickup Time:</label>
+                    <input type='time' class='fullwidthfix' id='time'>
+                </li>
+                <li id='taxi_complaints_date_li' class='hidden'>
+                    <label for='taxi_complaint_date'>Date:</label>
+                    <input type='date' class='fullwidthfix' id='date'>
+                        </li>
+                <li id='taxi_complaints_report_type_li' class='hidden'>
+                    <label for='taxi_complaint_report_type'>Report:</label>
+                    <select id='report'>
+                        <option>Refused to transport</option>
+                        <option>Overcharged</option>
+                        <option>Rude and Discourteous</option>
+                        <option>Refused to take credit card</option>
+                        <option>Wrong route or location</option>
+                        <option>Compliment</option>
+                        <option>Other</option>
+                    </select>
+                </li>
+                <!-- end taxi complaint -->
 				<!--  end conditionals -->
 				<li>
 					<label for='description' class='textarea' type='text'>Include additional info (optional)</label>

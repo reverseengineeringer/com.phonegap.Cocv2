@@ -63,24 +63,31 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;)I
+.method static synthetic access$000(Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;)I
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;
 
     .prologue
-    .line 39
+    .line 36
     iget v0, p0, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->compressedLimit:I
 
     return v0
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;I)V
-    .locals 0
+.method static synthetic access$020(Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;I)I
+    .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;
+    .param p1, "x1"    # I
 
     .prologue
-    .line 39
-    iput p1, p0, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->compressedLimit:I
+    .line 36
+    iget v0, p0, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->compressedLimit:I
 
-    return-void
+    sub-int/2addr v0, p1
+
+    iput v0, p0, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->compressedLimit:I
+
+    return v0
 .end method
 
 .method private doneReading()V
@@ -117,9 +124,13 @@
 
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "compressedLimit > 0: "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     iget v2, p0, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->compressedLimit:I
 
@@ -239,9 +250,13 @@
 
     new-instance v7, Ljava/lang/StringBuilder;
 
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v8, "numberOfPairs < 0: "
 
-    invoke-direct {v7, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
 
     invoke-virtual {v7, v4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
@@ -288,9 +303,13 @@
 
     new-instance v7, Ljava/lang/StringBuilder;
 
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v8, "numberOfPairs > 1024: "
 
-    invoke-direct {v7, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
 
     invoke-virtual {v7, v4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
@@ -318,16 +337,9 @@
 
     .local v2, "i":I
     :goto_0
-    if-lt v2, v4, :cond_2
-
-    .line 109
-    invoke-direct {p0}, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->doneReading()V
-
-    .line 111
-    return-object v1
+    if-ge v2, v4, :cond_3
 
     .line 102
-    :cond_2
     invoke-direct {p0}, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->readString()Ljava/lang/String;
 
     move-result-object v3
@@ -344,7 +356,7 @@
 
     move-result v6
 
-    if-nez v6, :cond_3
+    if-nez v6, :cond_2
 
     new-instance v6, Ljava/io/IOException;
 
@@ -355,16 +367,25 @@
     throw v6
 
     .line 105
-    :cond_3
+    :cond_2
     invoke-interface {v1, v3}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
     .line 106
     invoke-interface {v1, v5}, Ljava/util/List;->add(Ljava/lang/Object;)Z
-    :try_end_1
-    .catch Ljava/util/zip/DataFormatException; {:try_start_1 .. :try_end_1} :catch_0
 
     .line 101
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
+
+    .line 109
+    .end local v3    # "name":Ljava/lang/String;
+    .end local v5    # "values":Ljava/lang/String;
+    :cond_3
+    invoke-direct {p0}, Lcom/squareup/okhttp/internal/spdy/NameValueBlockReader;->doneReading()V
+    :try_end_1
+    .catch Ljava/util/zip/DataFormatException; {:try_start_1 .. :try_end_1} :catch_0
+
+    .line 111
+    return-object v1
 .end method

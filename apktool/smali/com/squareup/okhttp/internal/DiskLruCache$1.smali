@@ -36,10 +36,9 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 164
     iput-object p1, p0, Lcom/squareup/okhttp/internal/DiskLruCache$1;->this$0:Lcom/squareup/okhttp/internal/DiskLruCache;
 
-    .line 164
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -56,7 +55,7 @@
     .end annotation
 
     .prologue
-    .line 1
+    .line 164
     invoke-virtual {p0}, Lcom/squareup/okhttp/internal/DiskLruCache$1;->call()Ljava/lang/Void;
 
     move-result-object v0
@@ -85,7 +84,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$1;->this$0:Lcom/squareup/okhttp/internal/DiskLruCache;
 
     # getter for: Lcom/squareup/okhttp/internal/DiskLruCache;->journalWriter:Ljava/io/Writer;
-    invoke-static {v0}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$0(Lcom/squareup/okhttp/internal/DiskLruCache;)Ljava/io/Writer;
+    invoke-static {v0}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$000(Lcom/squareup/okhttp/internal/DiskLruCache;)Ljava/io/Writer;
 
     move-result-object v0
 
@@ -103,13 +102,13 @@
     iget-object v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$1;->this$0:Lcom/squareup/okhttp/internal/DiskLruCache;
 
     # invokes: Lcom/squareup/okhttp/internal/DiskLruCache;->trimToSize()V
-    invoke-static {v0}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$1(Lcom/squareup/okhttp/internal/DiskLruCache;)V
+    invoke-static {v0}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$100(Lcom/squareup/okhttp/internal/DiskLruCache;)V
 
     .line 171
     iget-object v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$1;->this$0:Lcom/squareup/okhttp/internal/DiskLruCache;
 
     # invokes: Lcom/squareup/okhttp/internal/DiskLruCache;->journalRebuildRequired()Z
-    invoke-static {v0}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$2(Lcom/squareup/okhttp/internal/DiskLruCache;)Z
+    invoke-static {v0}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$200(Lcom/squareup/okhttp/internal/DiskLruCache;)Z
 
     move-result v0
 
@@ -119,16 +118,17 @@
     iget-object v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$1;->this$0:Lcom/squareup/okhttp/internal/DiskLruCache;
 
     # invokes: Lcom/squareup/okhttp/internal/DiskLruCache;->rebuildJournal()V
-    invoke-static {v0}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$3(Lcom/squareup/okhttp/internal/DiskLruCache;)V
+    invoke-static {v0}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$300(Lcom/squareup/okhttp/internal/DiskLruCache;)V
 
     .line 173
     iget-object v0, p0, Lcom/squareup/okhttp/internal/DiskLruCache$1;->this$0:Lcom/squareup/okhttp/internal/DiskLruCache;
 
     const/4 v2, 0x0
 
-    invoke-static {v0, v2}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$4(Lcom/squareup/okhttp/internal/DiskLruCache;I)V
+    # setter for: Lcom/squareup/okhttp/internal/DiskLruCache;->redundantOpCount:I
+    invoke-static {v0, v2}, Lcom/squareup/okhttp/internal/DiskLruCache;->access$402(Lcom/squareup/okhttp/internal/DiskLruCache;I)I
 
-    .line 166
+    .line 175
     :cond_1
     monitor-exit v1
 

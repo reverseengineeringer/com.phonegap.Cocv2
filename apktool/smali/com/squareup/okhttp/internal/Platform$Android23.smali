@@ -46,7 +46,7 @@
     .end annotation
 
     .prologue
-    .line 196
+    .line 197
     .local p1, "openSslSocketClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
     invoke-direct {p0}, Lcom/squareup/okhttp/internal/Platform;-><init>()V
 
@@ -63,21 +63,15 @@
     return-void
 .end method
 
-.method synthetic constructor <init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lcom/squareup/okhttp/internal/Platform$Android23;)V
+.method synthetic constructor <init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lcom/squareup/okhttp/internal/Platform$1;)V
     .locals 0
+    .param p1, "x0"    # Ljava/lang/Class;
+    .param p2, "x1"    # Ljava/lang/reflect/Method;
+    .param p3, "x2"    # Ljava/lang/reflect/Method;
+    .param p4, "x3"    # Lcom/squareup/okhttp/internal/Platform$1;
 
     .prologue
-    .line 196
-    invoke-direct {p0, p1, p2, p3}, Lcom/squareup/okhttp/internal/Platform$Android23;-><init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;)V
-
-    return-void
-.end method
-
-.method synthetic constructor <init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lcom/squareup/okhttp/internal/Platform$Android23;Lcom/squareup/okhttp/internal/Platform$Android23;)V
-    .locals 0
-
-    .prologue
-    .line 196
+    .line 191
     invoke-direct {p0, p1, p2, p3}, Lcom/squareup/okhttp/internal/Platform$Android23;-><init>(Ljava/lang/Class;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;)V
 
     return-void

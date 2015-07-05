@@ -208,9 +208,9 @@
     :cond_1
     iget-object v4, p0, Lcom/squareup/okhttp/internal/spdy/Http20Draft06$Reader;->in:Ljava/io/DataInputStream;
 
-    int-to-long v5, v3
+    int-to-long v6, v3
 
-    invoke-static {v4, v5, v6}, Lcom/squareup/okhttp/internal/Util;->skipByReading(Ljava/io/InputStream;J)J
+    invoke-static {v4, v6, v7}, Lcom/squareup/okhttp/internal/Util;->skipByReading(Ljava/io/InputStream;J)J
 
     move-result-wide v4
 
@@ -310,14 +310,12 @@
 
     const/4 v5, -0x1
 
-    .line 160
     sget-object v8, Lcom/squareup/okhttp/internal/spdy/HeadersMode;->HTTP_20_HEADERS:Lcom/squareup/okhttp/internal/spdy/HeadersMode;
 
     move-object v1, p1
 
     move/from16 v4, p4
 
-    .line 159
     invoke-interface/range {v1 .. v8}, Lcom/squareup/okhttp/internal/spdy/FrameReader$Handler;->headers(ZZIIILjava/util/List;Lcom/squareup/okhttp/internal/spdy/HeadersMode;)V
 
     .line 161
@@ -762,16 +760,9 @@
 
     .local v0, "i":I
     :goto_0
-    if-lt v0, p3, :cond_2
-
-    .line 224
-    invoke-interface {p1, v8, v2}, Lcom/squareup/okhttp/internal/spdy/FrameReader$Handler;->settings(ZLcom/squareup/okhttp/internal/spdy/Settings;)V
-
-    .line 225
-    return-void
+    if-ge v0, p3, :cond_2
 
     .line 218
-    :cond_2
     iget-object v5, p0, Lcom/squareup/okhttp/internal/spdy/Http20Draft06$Reader;->in:Ljava/io/DataInputStream;
 
     invoke-virtual {v5}, Ljava/io/DataInputStream;->readInt()I
@@ -800,6 +791,16 @@
     add-int/lit8 v0, v0, 0x8
 
     goto :goto_0
+
+    .line 224
+    .end local v1    # "id":I
+    .end local v3    # "value":I
+    .end local v4    # "w1":I
+    :cond_2
+    invoke-interface {p1, v8, v2}, Lcom/squareup/okhttp/internal/spdy/FrameReader$Handler;->settings(ZLcom/squareup/okhttp/internal/spdy/Settings;)V
+
+    .line 225
+    return-void
 .end method
 
 .method private readWindowUpdate(Lcom/squareup/okhttp/internal/spdy/FrameReader$Handler;III)V
@@ -1060,7 +1061,7 @@
     .line 82
     :cond_1
     # getter for: Lcom/squareup/okhttp/internal/spdy/Http20Draft06;->CONNECTION_HEADER:[B
-    invoke-static {}, Lcom/squareup/okhttp/internal/spdy/Http20Draft06;->access$0()[B
+    invoke-static {}, Lcom/squareup/okhttp/internal/spdy/Http20Draft06;->access$000()[B
 
     move-result-object v1
 
@@ -1076,7 +1077,7 @@
 
     .line 84
     # getter for: Lcom/squareup/okhttp/internal/spdy/Http20Draft06;->CONNECTION_HEADER:[B
-    invoke-static {}, Lcom/squareup/okhttp/internal/spdy/Http20Draft06;->access$0()[B
+    invoke-static {}, Lcom/squareup/okhttp/internal/spdy/Http20Draft06;->access$000()[B
 
     move-result-object v1
 
@@ -1089,11 +1090,14 @@
     .line 85
     new-instance v1, Ljava/lang/StringBuilder;
 
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v2, "Expected a connection header but was "
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 86
+    move-result-object v1
+
     invoke-static {v0}, Ljava/util/Arrays;->toString([B)Ljava/lang/String;
 
     move-result-object v2
@@ -1102,7 +1106,6 @@
 
     move-result-object v1
 
-    .line 85
     invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v1

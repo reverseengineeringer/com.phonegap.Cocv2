@@ -39,13 +39,9 @@
 
     move-result v5
 
-    if-lt v3, v5, :cond_0
-
-    .line 61
-    return-void
+    if-ge v3, v5, :cond_3
 
     .line 29
-    :cond_0
     move v4, v3
 
     .line 30
@@ -71,7 +67,7 @@
 
     move-result v5
 
-    if-eq v3, v5, :cond_1
+    if-eq v3, v5, :cond_0
 
     invoke-virtual {p0, v3}, Ljava/lang/String;->charAt(I)C
 
@@ -79,7 +75,7 @@
 
     const/16 v6, 0x2c
 
-    if-eq v5, v6, :cond_1
+    if-eq v5, v6, :cond_0
 
     invoke-virtual {p0, v3}, Ljava/lang/String;->charAt(I)C
 
@@ -87,10 +83,10 @@
 
     const/16 v6, 0x3b
 
-    if-ne v5, v6, :cond_2
+    if-ne v5, v6, :cond_1
 
     .line 34
-    :cond_1
+    :cond_0
     add-int/lit8 v3, v3, 0x1
 
     .line 35
@@ -101,7 +97,7 @@
     goto :goto_0
 
     .line 39
-    :cond_2
+    :cond_1
     add-int/lit8 v3, v3, 0x1
 
     .line 40
@@ -114,7 +110,7 @@
 
     move-result v5
 
-    if-ge v3, v5, :cond_3
+    if-ge v3, v5, :cond_2
 
     invoke-virtual {p0, v3}, Ljava/lang/String;->charAt(I)C
 
@@ -122,7 +118,7 @@
 
     const/16 v6, 0x22
 
-    if-ne v5, v6, :cond_3
+    if-ne v5, v6, :cond_2
 
     .line 46
     add-int/lit8 v3, v3, 0x1
@@ -156,7 +152,7 @@
     .line 54
     .end local v1    # "parameter":Ljava/lang/String;
     .end local v2    # "parameterStart":I
-    :cond_3
+    :cond_2
     move v2, v3
 
     .line 55
@@ -178,10 +174,18 @@
 
     .restart local v1    # "parameter":Ljava/lang/String;
     goto :goto_1
+
+    .line 61
+    .end local v0    # "directive":Ljava/lang/String;
+    .end local v1    # "parameter":Ljava/lang/String;
+    .end local v2    # "parameterStart":I
+    .end local v4    # "tokenStart":I
+    :cond_3
+    return-void
 .end method
 
 .method public static parseSeconds(Ljava/lang/String;)I
-    .locals 5
+    .locals 6
     .param p0, "value"    # Ljava/lang/String;
 
     .prologue
@@ -191,52 +195,52 @@
     :try_end_0
     .catch Ljava/lang/NumberFormatException; {:try_start_0 .. :try_end_0} :catch_0
 
-    move-result-wide v1
+    move-result-wide v2
 
     .line 98
-    .local v1, "seconds":J
-    const-wide/32 v3, 0x7fffffff
+    .local v2, "seconds":J
+    const-wide/32 v4, 0x7fffffff
 
-    cmp-long v3, v1, v3
+    cmp-long v1, v2, v4
 
-    if-lez v3, :cond_0
+    if-lez v1, :cond_0
 
     .line 99
-    const v3, 0x7fffffff
+    const v1, 0x7fffffff
 
     .line 106
-    .end local v1    # "seconds":J
+    .end local v2    # "seconds":J
     :goto_0
-    return v3
+    return v1
 
     .line 100
-    .restart local v1    # "seconds":J
+    .restart local v2    # "seconds":J
     :cond_0
-    const-wide/16 v3, 0x0
+    const-wide/16 v4, 0x0
 
-    cmp-long v3, v1, v3
+    cmp-long v1, v2, v4
 
-    if-gez v3, :cond_1
+    if-gez v1, :cond_1
 
     .line 101
-    const/4 v3, 0x0
+    const/4 v1, 0x0
 
     goto :goto_0
 
     .line 103
     :cond_1
-    long-to-int v3, v1
+    long-to-int v1, v2
 
     goto :goto_0
 
     .line 105
-    .end local v1    # "seconds":J
+    .end local v2    # "seconds":J
     :catch_0
     move-exception v0
 
     .line 106
     .local v0, "e":Ljava/lang/NumberFormatException;
-    const/4 v3, -0x1
+    const/4 v1, -0x1
 
     goto :goto_0
 .end method
@@ -254,14 +258,9 @@
 
     move-result v0
 
-    if-lt p1, v0, :cond_1
-
-    .line 74
-    :cond_0
-    return p1
+    if-ge p1, v0, :cond_0
 
     .line 70
-    :cond_1
     invoke-virtual {p0, p1}, Ljava/lang/String;->charAt(I)C
 
     move-result v0
@@ -272,9 +271,14 @@
 
     const/4 v1, -0x1
 
-    if-ne v0, v1, :cond_0
+    if-eq v0, v1, :cond_1
+
+    .line 74
+    :cond_0
+    return p1
 
     .line 69
+    :cond_1
     add-int/lit8 p1, p1, 0x1
 
     goto :goto_0
@@ -292,14 +296,9 @@
 
     move-result v1
 
-    if-lt p1, v1, :cond_1
-
-    .line 88
-    :cond_0
-    return p1
+    if-ge p1, v1, :cond_0
 
     .line 83
-    :cond_1
     invoke-virtual {p0, p1}, Ljava/lang/String;->charAt(I)C
 
     move-result v0
@@ -308,14 +307,20 @@
     .local v0, "c":C
     const/16 v1, 0x20
 
-    if-eq v0, v1, :cond_2
+    if-eq v0, v1, :cond_1
 
     const/16 v1, 0x9
 
-    if-ne v0, v1, :cond_0
+    if-eq v0, v1, :cond_1
+
+    .line 88
+    .end local v0    # "c":C
+    :cond_0
+    return p1
 
     .line 82
-    :cond_2
+    .restart local v0    # "c":C
+    :cond_1
     add-int/lit8 p1, p1, 0x1
 
     goto :goto_0

@@ -66,13 +66,9 @@
 
     .local v1, "size":I
     :goto_0
-    if-lt v0, v1, :cond_0
-
-    .line 355
-    return-void
+    if-ge v0, v1, :cond_0
 
     .line 351
-    :cond_0
     iget-object v2, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Writer;->out:Ljava/io/OutputStream;
 
     const/16 v3, 0x60
@@ -103,6 +99,10 @@
     add-int/lit8 v0, v0, 0x2
 
     goto :goto_0
+
+    .line 355
+    :cond_0
+    return-void
 .end method
 
 .method public writeInt(III)V
@@ -146,17 +146,9 @@
     :goto_1
     const/16 v1, 0x80
 
-    if-ge p1, v1, :cond_1
-
-    .line 374
-    iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Writer;->out:Ljava/io/OutputStream;
-
-    invoke-virtual {v1, p1}, Ljava/io/OutputStream;->write(I)V
-
-    goto :goto_0
+    if-lt p1, v1, :cond_1
 
     .line 370
-    :cond_1
     and-int/lit8 v0, p1, 0x7f
 
     .line 371
@@ -170,7 +162,17 @@
     .line 372
     ushr-int/lit8 p1, p1, 0x7
 
+    .line 373
     goto :goto_1
+
+    .line 374
+    .end local v0    # "b":I
+    :cond_1
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$Writer;->out:Ljava/io/OutputStream;
+
+    invoke-virtual {v1, p1}, Ljava/io/OutputStream;->write(I)V
+
+    goto :goto_0
 .end method
 
 .method public writeString(Ljava/lang/String;)V

@@ -6,17 +6,16 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;,
-        Lcom/squareup/okhttp/HttpResponseCache$Entry;,
+        Lcom/squareup/okhttp/HttpResponseCache$3;,
+        Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;,
         Lcom/squareup/okhttp/HttpResponseCache$EntryCacheResponse;,
-        Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;
+        Lcom/squareup/okhttp/HttpResponseCache$Entry;,
+        Lcom/squareup/okhttp/HttpResponseCache$CacheRequestImpl;
     }
 .end annotation
 
 
 # static fields
-.field private static synthetic $SWITCH_TABLE$com$squareup$okhttp$ResponseSource:[I = null
-
 .field private static final ENTRY_BODY:I = 0x1
 
 .field private static final ENTRY_COUNT:I = 0x2
@@ -43,89 +42,6 @@
 
 
 # direct methods
-.method static synthetic $SWITCH_TABLE$com$squareup$okhttp$ResponseSource()[I
-    .locals 3
-
-    .prologue
-    .line 118
-    sget-object v0, Lcom/squareup/okhttp/HttpResponseCache;->$SWITCH_TABLE$com$squareup$okhttp$ResponseSource:[I
-
-    if-eqz v0, :cond_0
-
-    :goto_0
-    return-object v0
-
-    :cond_0
-    invoke-static {}, Lcom/squareup/okhttp/ResponseSource;->values()[Lcom/squareup/okhttp/ResponseSource;
-
-    move-result-object v0
-
-    array-length v0, v0
-
-    new-array v0, v0, [I
-
-    :try_start_0
-    sget-object v1, Lcom/squareup/okhttp/ResponseSource;->CACHE:Lcom/squareup/okhttp/ResponseSource;
-
-    invoke-virtual {v1}, Lcom/squareup/okhttp/ResponseSource;->ordinal()I
-
-    move-result v1
-
-    const/4 v2, 0x1
-
-    aput v2, v0, v1
-    :try_end_0
-    .catch Ljava/lang/NoSuchFieldError; {:try_start_0 .. :try_end_0} :catch_2
-
-    :goto_1
-    :try_start_1
-    sget-object v1, Lcom/squareup/okhttp/ResponseSource;->CONDITIONAL_CACHE:Lcom/squareup/okhttp/ResponseSource;
-
-    invoke-virtual {v1}, Lcom/squareup/okhttp/ResponseSource;->ordinal()I
-
-    move-result v1
-
-    const/4 v2, 0x2
-
-    aput v2, v0, v1
-    :try_end_1
-    .catch Ljava/lang/NoSuchFieldError; {:try_start_1 .. :try_end_1} :catch_1
-
-    :goto_2
-    :try_start_2
-    sget-object v1, Lcom/squareup/okhttp/ResponseSource;->NETWORK:Lcom/squareup/okhttp/ResponseSource;
-
-    invoke-virtual {v1}, Lcom/squareup/okhttp/ResponseSource;->ordinal()I
-
-    move-result v1
-
-    const/4 v2, 0x3
-
-    aput v2, v0, v1
-    :try_end_2
-    .catch Ljava/lang/NoSuchFieldError; {:try_start_2 .. :try_end_2} :catch_0
-
-    :goto_3
-    sput-object v0, Lcom/squareup/okhttp/HttpResponseCache;->$SWITCH_TABLE$com$squareup$okhttp$ResponseSource:[I
-
-    goto :goto_0
-
-    :catch_0
-    move-exception v1
-
-    goto :goto_3
-
-    :catch_1
-    move-exception v1
-
-    goto :goto_2
-
-    :catch_2
-    move-exception v1
-
-    goto :goto_1
-.end method
-
 .method public constructor <init>(Ljava/io/File;J)V
     .locals 2
     .param p1, "directory"    # Ljava/io/File;
@@ -188,11 +104,14 @@
     goto :goto_0
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/HttpResponseCache;Ljava/lang/String;Ljava/net/URI;)Z
+.method static synthetic access$000(Lcom/squareup/okhttp/HttpResponseCache;Ljava/lang/String;Ljava/net/URI;)Z
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache;
+    .param p1, "x1"    # Ljava/lang/String;
+    .param p2, "x2"    # Ljava/net/URI;
 
     .prologue
-    .line 251
+    .line 118
     invoke-direct {p0, p1, p2}, Lcom/squareup/okhttp/HttpResponseCache;->maybeRemove(Ljava/lang/String;Ljava/net/URI;)Z
 
     move-result v0
@@ -200,8 +119,11 @@
     return v0
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/HttpResponseCache;Ljava/net/CacheResponse;Ljava/net/HttpURLConnection;)V
+.method static synthetic access$100(Lcom/squareup/okhttp/HttpResponseCache;Ljava/net/CacheResponse;Ljava/net/HttpURLConnection;)V
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache;
+    .param p1, "x1"    # Ljava/net/CacheResponse;
+    .param p2, "x2"    # Ljava/net/HttpURLConnection;
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/io/IOException;
@@ -209,82 +131,76 @@
     .end annotation
 
     .prologue
-    .line 264
+    .line 118
     invoke-direct {p0, p1, p2}, Lcom/squareup/okhttp/HttpResponseCache;->update(Ljava/net/CacheResponse;Ljava/net/HttpURLConnection;)V
 
     return-void
 .end method
 
-.method static synthetic access$2(Lcom/squareup/okhttp/HttpResponseCache;)V
-    .locals 0
-
-    .prologue
-    .line 362
-    invoke-direct {p0}, Lcom/squareup/okhttp/HttpResponseCache;->trackConditionalCacheHit()V
-
-    return-void
-.end method
-
-.method static synthetic access$3(Lcom/squareup/okhttp/HttpResponseCache;Lcom/squareup/okhttp/ResponseSource;)V
-    .locals 0
-
-    .prologue
-    .line 348
-    invoke-direct {p0, p1}, Lcom/squareup/okhttp/HttpResponseCache;->trackResponse(Lcom/squareup/okhttp/ResponseSource;)V
-
-    return-void
-.end method
-
-.method static synthetic access$4(Lcom/squareup/okhttp/HttpResponseCache;)I
+.method static synthetic access$1000(Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;)Ljava/io/InputStream;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;
 
     .prologue
-    .line 128
-    iget v0, p0, Lcom/squareup/okhttp/HttpResponseCache;->writeSuccessCount:I
-
-    return v0
-.end method
-
-.method static synthetic access$5(Lcom/squareup/okhttp/HttpResponseCache;I)V
-    .locals 0
-
-    .prologue
-    .line 128
-    iput p1, p0, Lcom/squareup/okhttp/HttpResponseCache;->writeSuccessCount:I
-
-    return-void
-.end method
-
-.method static synthetic access$6(Lcom/squareup/okhttp/HttpResponseCache;)I
-    .locals 1
-
-    .prologue
-    .line 129
-    iget v0, p0, Lcom/squareup/okhttp/HttpResponseCache;->writeAbortCount:I
-
-    return v0
-.end method
-
-.method static synthetic access$7(Lcom/squareup/okhttp/HttpResponseCache;I)V
-    .locals 0
-
-    .prologue
-    .line 129
-    iput p1, p0, Lcom/squareup/okhttp/HttpResponseCache;->writeAbortCount:I
-
-    return-void
-.end method
-
-.method static synthetic access$8(Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;)Ljava/io/InputStream;
-    .locals 1
-
-    .prologue
-    .line 641
+    .line 118
     invoke-static {p0}, Lcom/squareup/okhttp/HttpResponseCache;->newBodyInputStream(Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;)Ljava/io/InputStream;
 
     move-result-object v0
 
     return-object v0
+.end method
+
+.method static synthetic access$200(Lcom/squareup/okhttp/HttpResponseCache;)V
+    .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache;
+
+    .prologue
+    .line 118
+    invoke-direct {p0}, Lcom/squareup/okhttp/HttpResponseCache;->trackConditionalCacheHit()V
+
+    return-void
+.end method
+
+.method static synthetic access$300(Lcom/squareup/okhttp/HttpResponseCache;Lcom/squareup/okhttp/ResponseSource;)V
+    .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache;
+    .param p1, "x1"    # Lcom/squareup/okhttp/ResponseSource;
+
+    .prologue
+    .line 118
+    invoke-direct {p0, p1}, Lcom/squareup/okhttp/HttpResponseCache;->trackResponse(Lcom/squareup/okhttp/ResponseSource;)V
+
+    return-void
+.end method
+
+.method static synthetic access$808(Lcom/squareup/okhttp/HttpResponseCache;)I
+    .locals 2
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache;
+
+    .prologue
+    .line 118
+    iget v0, p0, Lcom/squareup/okhttp/HttpResponseCache;->writeSuccessCount:I
+
+    add-int/lit8 v1, v0, 0x1
+
+    iput v1, p0, Lcom/squareup/okhttp/HttpResponseCache;->writeSuccessCount:I
+
+    return v0
+.end method
+
+.method static synthetic access$908(Lcom/squareup/okhttp/HttpResponseCache;)I
+    .locals 2
+    .param p0, "x0"    # Lcom/squareup/okhttp/HttpResponseCache;
+
+    .prologue
+    .line 118
+    iget v0, p0, Lcom/squareup/okhttp/HttpResponseCache;->writeAbortCount:I
+
+    add-int/lit8 v1, v0, 0x1
+
+    iput v1, p0, Lcom/squareup/okhttp/HttpResponseCache;->writeAbortCount:I
+
+    return v0
 .end method
 
 .method private getHttpEngine(Ljava/net/URLConnection;)Lcom/squareup/okhttp/internal/http/HttpEngine;
@@ -357,15 +273,12 @@
 
     if-nez v0, :cond_0
 
-    .line 253
     const-string v0, "DELETE"
 
-    .line 252
     invoke-virtual {p1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v0
 
-    .line 253
     if-eqz v0, :cond_1
 
     .line 255
@@ -466,9 +379,7 @@
     iput v0, p0, Lcom/squareup/okhttp/HttpResponseCache;->requestCount:I
 
     .line 351
-    invoke-static {}, Lcom/squareup/okhttp/HttpResponseCache;->$SWITCH_TABLE$com$squareup$okhttp$ResponseSource()[I
-
-    move-result-object v0
+    sget-object v0, Lcom/squareup/okhttp/HttpResponseCache$3;->$SwitchMap$com$squareup$okhttp$ResponseSource:[I
 
     invoke-virtual {p1}, Lcom/squareup/okhttp/ResponseSource;->ordinal()I
 
@@ -559,7 +470,7 @@
 
     move-result-object v4
 
-    .line 270
+    .line 269
     .local v4, "response":Lcom/squareup/okhttp/internal/http/ResponseHeaders;
     invoke-virtual {v3}, Lcom/squareup/okhttp/internal/http/HttpEngine;->getRequestHeaders()Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
@@ -589,12 +500,11 @@
 
     if-eqz v8, :cond_1
 
-    .line 273
     check-cast p1, Lcom/squareup/okhttp/HttpResponseCache$EntryCacheResponse;
 
     .end local p1    # "conditionalCacheHit":Ljava/net/CacheResponse;
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$EntryCacheResponse;->snapshot:Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;
-    invoke-static {p1}, Lcom/squareup/okhttp/HttpResponseCache$EntryCacheResponse;->access$0(Lcom/squareup/okhttp/HttpResponseCache$EntryCacheResponse;)Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;
+    invoke-static {p1}, Lcom/squareup/okhttp/HttpResponseCache$EntryCacheResponse;->access$500(Lcom/squareup/okhttp/HttpResponseCache$EntryCacheResponse;)Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;
 
     move-result-object v5
 
@@ -626,7 +536,7 @@
     :goto_1
     return-void
 
-    .line 274
+    .line 272
     .end local v1    # "editor":Lcom/squareup/okhttp/internal/DiskLruCache$Editor;
     .end local v5    # "snapshot":Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;
     .restart local p1    # "conditionalCacheHit":Ljava/net/CacheResponse;
@@ -635,7 +545,7 @@
 
     .end local p1    # "conditionalCacheHit":Ljava/net/CacheResponse;
     # getter for: Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->snapshot:Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;
-    invoke-static {p1}, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->access$0(Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;)Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;
+    invoke-static {p1}, Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;->access$600(Lcom/squareup/okhttp/HttpResponseCache$EntrySecureCacheResponse;)Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;
 
     move-result-object v5
 
@@ -818,7 +728,7 @@
     .restart local v3    # "snapshot":Lcom/squareup/okhttp/internal/DiskLruCache$Snapshot;
     :cond_1
     # invokes: Lcom/squareup/okhttp/HttpResponseCache$Entry;->isHttps()Z
-    invoke-static {v1}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$4(Lcom/squareup/okhttp/HttpResponseCache$Entry;)Z
+    invoke-static {v1}, Lcom/squareup/okhttp/HttpResponseCache$Entry;->access$400(Lcom/squareup/okhttp/HttpResponseCache$Entry;)Z
 
     move-result v4
 
@@ -830,7 +740,6 @@
 
     goto :goto_0
 
-    .line 198
     :cond_2
     new-instance v4, Lcom/squareup/okhttp/HttpResponseCache$EntryCacheResponse;
 
@@ -1089,7 +998,7 @@
 
     if-nez v9, :cond_0
 
-    .line 231
+    .line 230
     invoke-virtual {v4}, Lcom/squareup/okhttp/internal/http/HttpEngine;->getRequestHeaders()Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
     move-result-object v9

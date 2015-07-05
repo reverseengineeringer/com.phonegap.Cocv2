@@ -39,7 +39,6 @@
     .line 32
     iput-object v2, p0, Lorg/apache/cordova/filetransfer/FileUploadResult;->objectId:Ljava/lang/String;
 
-    .line 27
     return-void
 .end method
 
@@ -86,7 +85,7 @@
 .end method
 
 .method public setBytesSent(J)V
-    .locals 0
+    .locals 1
     .param p1, "bytes"    # J
 
     .prologue
@@ -145,12 +144,15 @@
     .line 67
     new-instance v0, Lorg/json/JSONObject;
 
-    .line 68
     new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
     const-string v2, "{bytesSent:"
 
-    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
 
     iget-wide v2, p0, Lorg/apache/cordova/filetransfer/FileUploadResult;->bytesSent:J
 
@@ -158,7 +160,6 @@
 
     move-result-object v1
 
-    .line 69
     const-string v2, ",responseCode:"
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
@@ -171,7 +172,6 @@
 
     move-result-object v1
 
-    .line 70
     const-string v2, ",response:"
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
@@ -188,7 +188,6 @@
 
     move-result-object v1
 
-    .line 71
     const-string v2, ",objectId:"
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
@@ -211,12 +210,10 @@
 
     move-result-object v1
 
-    .line 68
     invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v1
 
-    .line 67
     invoke-direct {v0, v1}, Lorg/json/JSONObject;-><init>(Ljava/lang/String;)V
 
     return-object v0

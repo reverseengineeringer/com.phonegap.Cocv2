@@ -23,21 +23,23 @@
     .locals 1
 
     .prologue
-    .line 287
+    .line 290
     iput-object p1, p0, Lorg/apache/cordova/NativeToJsMessageQueue$PollingBridgeMode;->this$0:Lorg/apache/cordova/NativeToJsMessageQueue;
 
     const/4 v0, 0x0
 
-    invoke-direct {p0, p1, v0}, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;)V
+    invoke-direct {p0, p1, v0}, Lorg/apache/cordova/NativeToJsMessageQueue$BridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$1;)V
 
     return-void
 .end method
 
-.method synthetic constructor <init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$PollingBridgeMode;)V
+.method synthetic constructor <init>(Lorg/apache/cordova/NativeToJsMessageQueue;Lorg/apache/cordova/NativeToJsMessageQueue$1;)V
     .locals 0
+    .param p1, "x0"    # Lorg/apache/cordova/NativeToJsMessageQueue;
+    .param p2, "x1"    # Lorg/apache/cordova/NativeToJsMessageQueue$1;
 
     .prologue
-    .line 287
+    .line 290
     invoke-direct {p0, p1}, Lorg/apache/cordova/NativeToJsMessageQueue$PollingBridgeMode;-><init>(Lorg/apache/cordova/NativeToJsMessageQueue;)V
 
     return-void
@@ -49,6 +51,6 @@
     .locals 0
 
     .prologue
-    .line 289
+    .line 292
     return-void
 .end method

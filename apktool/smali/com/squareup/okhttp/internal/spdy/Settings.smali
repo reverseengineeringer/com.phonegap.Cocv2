@@ -60,7 +60,6 @@
 
     iput-object v0, p0, Lcom/squareup/okhttp/internal/spdy/Settings;->values:[I
 
-    .line 18
     return-void
 .end method
 
@@ -437,18 +436,14 @@
     :goto_0
     const/16 v1, 0xa
 
-    if-lt v0, v1, :cond_0
-
-    .line 186
-    return-void
+    if-ge v0, v1, :cond_1
 
     .line 183
-    :cond_0
     invoke-virtual {p1, v0}, Lcom/squareup/okhttp/internal/spdy/Settings;->isSet(I)Z
 
     move-result v1
 
-    if-nez v1, :cond_1
+    if-nez v1, :cond_0
 
     .line 182
     :goto_1
@@ -457,7 +452,7 @@
     goto :goto_0
 
     .line 184
-    :cond_1
+    :cond_0
     invoke-virtual {p1, v0}, Lcom/squareup/okhttp/internal/spdy/Settings;->flags(I)I
 
     move-result v1
@@ -469,6 +464,10 @@
     invoke-virtual {p0, v0, v1, v2}, Lcom/squareup/okhttp/internal/spdy/Settings;->set(III)V
 
     goto :goto_1
+
+    .line 186
+    :cond_1
+    return-void
 .end method
 
 .method persistValue(I)Z

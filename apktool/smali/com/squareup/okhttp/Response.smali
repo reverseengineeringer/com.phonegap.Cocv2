@@ -6,9 +6,10 @@
 # annotations
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
-        Lcom/squareup/okhttp/Response$Body;,
+        Lcom/squareup/okhttp/Response$1;,
         Lcom/squareup/okhttp/Response$Builder;,
-        Lcom/squareup/okhttp/Response$Receiver;
+        Lcom/squareup/okhttp/Response$Receiver;,
+        Lcom/squareup/okhttp/Response$Body;
     }
 .end annotation
 
@@ -36,7 +37,7 @@
 
     .line 47
     # getter for: Lcom/squareup/okhttp/Response$Builder;->request:Lcom/squareup/okhttp/Request;
-    invoke-static {p1}, Lcom/squareup/okhttp/Response$Builder;->access$0(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/Request;
+    invoke-static {p1}, Lcom/squareup/okhttp/Response$Builder;->access$000(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/Request;
 
     move-result-object v0
 
@@ -44,7 +45,7 @@
 
     .line 48
     # getter for: Lcom/squareup/okhttp/Response$Builder;->code:I
-    invoke-static {p1}, Lcom/squareup/okhttp/Response$Builder;->access$1(Lcom/squareup/okhttp/Response$Builder;)I
+    invoke-static {p1}, Lcom/squareup/okhttp/Response$Builder;->access$100(Lcom/squareup/okhttp/Response$Builder;)I
 
     move-result v0
 
@@ -54,7 +55,7 @@
     new-instance v0, Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     # getter for: Lcom/squareup/okhttp/Response$Builder;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
-    invoke-static {p1}, Lcom/squareup/okhttp/Response$Builder;->access$2(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/internal/http/RawHeaders;
+    invoke-static {p1}, Lcom/squareup/okhttp/Response$Builder;->access$200(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     move-result-object v1
 
@@ -64,7 +65,7 @@
 
     .line 50
     # getter for: Lcom/squareup/okhttp/Response$Builder;->body:Lcom/squareup/okhttp/Response$Body;
-    invoke-static {p1}, Lcom/squareup/okhttp/Response$Builder;->access$3(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/Response$Body;
+    invoke-static {p1}, Lcom/squareup/okhttp/Response$Builder;->access$300(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/Response$Body;
 
     move-result-object v0
 
@@ -72,7 +73,7 @@
 
     .line 51
     # getter for: Lcom/squareup/okhttp/Response$Builder;->redirectedBy:Lcom/squareup/okhttp/Response;
-    invoke-static {p1}, Lcom/squareup/okhttp/Response$Builder;->access$4(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/Response;
+    invoke-static {p1}, Lcom/squareup/okhttp/Response$Builder;->access$400(Lcom/squareup/okhttp/Response$Builder;)Lcom/squareup/okhttp/Response;
 
     move-result-object v0
 
@@ -82,11 +83,13 @@
     return-void
 .end method
 
-.method synthetic constructor <init>(Lcom/squareup/okhttp/Response$Builder;Lcom/squareup/okhttp/Response;)V
+.method synthetic constructor <init>(Lcom/squareup/okhttp/Response$Builder;Lcom/squareup/okhttp/Response$1;)V
     .locals 0
+    .param p1, "x0"    # Lcom/squareup/okhttp/Response$Builder;
+    .param p2, "x1"    # Lcom/squareup/okhttp/Response$1;
 
     .prologue
-    .line 46
+    .line 39
     invoke-direct {p0, p1}, Lcom/squareup/okhttp/Response;-><init>(Lcom/squareup/okhttp/Response$Builder;)V
 
     return-void

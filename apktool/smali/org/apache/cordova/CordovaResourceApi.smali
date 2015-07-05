@@ -72,7 +72,6 @@
 
     sput-object v0, Lorg/apache/cordova/CordovaResourceApi;->httpClient:Lcom/squareup/okhttp/OkHttpClient;
 
-    .line 87
     return-void
 .end method
 
@@ -115,17 +114,17 @@
     .locals 3
 
     .prologue
-    .line 376
+    .line 379
     iget-boolean v1, p0, Lorg/apache/cordova/CordovaResourceApi;->threadCheckingEnabled:Z
 
     if-eqz v1, :cond_1
 
-    .line 377
+    .line 380
     invoke-static {}, Ljava/lang/Thread;->currentThread()Ljava/lang/Thread;
 
     move-result-object v0
 
-    .line 378
+    .line 381
     .local v0, "curThread":Ljava/lang/Thread;
     invoke-static {}, Landroid/os/Looper;->getMainLooper()Landroid/os/Looper;
 
@@ -137,7 +136,7 @@
 
     if-ne v0, v1, :cond_0
 
-    .line 379
+    .line 382
     new-instance v1, Ljava/lang/IllegalStateException;
 
     const-string v2, "Do not perform IO operations on the UI thread. Use CordovaInterface.getThreadPool() instead."
@@ -146,13 +145,13 @@
 
     throw v1
 
-    .line 381
+    .line 384
     :cond_0
     sget-object v1, Lorg/apache/cordova/CordovaResourceApi;->jsThread:Ljava/lang/Thread;
 
     if-ne v0, v1, :cond_1
 
-    .line 382
+    .line 385
     new-instance v1, Ljava/lang/IllegalStateException;
 
     const-string v2, "Tried to perform an IO operation on the WebCore thread. Use CordovaInterface.getThreadPool() instead."
@@ -161,7 +160,7 @@
 
     throw v1
 
-    .line 385
+    .line 388
     .end local v0    # "curThread":Ljava/lang/Thread;
     :cond_1
     return-void
@@ -172,14 +171,14 @@
     .param p0, "uri"    # Landroid/net/Uri;
 
     .prologue
-    .line 424
+    .line 427
     invoke-virtual {p0}, Landroid/net/Uri;->isAbsolute()Z
 
     move-result v0
 
     if-nez v0, :cond_0
 
-    .line 425
+    .line 428
     new-instance v0, Ljava/lang/IllegalArgumentException;
 
     const-string v1, "Relative URIs are not supported."
@@ -188,7 +187,7 @@
 
     throw v0
 
-    .line 427
+    .line 430
     :cond_0
     return-void
 .end method
@@ -202,12 +201,12 @@
 
     const/4 v6, 0x0
 
-    .line 388
+    .line 391
     invoke-virtual {p1}, Landroid/net/Uri;->getSchemeSpecificPart()Ljava/lang/String;
 
     move-result-object v2
 
-    .line 389
+    .line 392
     .local v2, "uriAsString":Ljava/lang/String;
     const/16 v4, 0x2c
 
@@ -215,18 +214,18 @@
 
     move-result v0
 
-    .line 390
+    .line 393
     .local v0, "commaPos":I
     const/4 v4, -0x1
 
     if-ne v0, v4, :cond_1
 
-    .line 397
+    .line 400
     :cond_0
     :goto_0
     return-object v3
 
-    .line 393
+    .line 396
     :cond_1
     invoke-virtual {v2, v6, v0}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
@@ -238,13 +237,13 @@
 
     move-result-object v1
 
-    .line 394
+    .line 397
     .local v1, "mimeParts":[Ljava/lang/String;
     array-length v4, v1
 
     if-lez v4, :cond_0
 
-    .line 395
+    .line 398
     aget-object v3, v1, v6
 
     goto :goto_0
@@ -255,10 +254,10 @@
     .param p1, "path"    # Ljava/lang/String;
 
     .prologue
-    .line 203
+    .line 206
     move-object v0, p1
 
-    .line 204
+    .line 207
     .local v0, "extension":Ljava/lang/String;
     const/16 v2, 0x2e
 
@@ -266,20 +265,20 @@
 
     move-result v1
 
-    .line 205
+    .line 208
     .local v1, "lastDot":I
     const/4 v2, -0x1
 
     if-eq v1, v2, :cond_0
 
-    .line 206
+    .line 209
     add-int/lit8 v2, v1, 0x1
 
     invoke-virtual {v0, v2}, Ljava/lang/String;->substring(I)Ljava/lang/String;
 
     move-result-object v0
 
-    .line 209
+    .line 212
     :cond_0
     invoke-static {}, Ljava/util/Locale;->getDefault()Ljava/util/Locale;
 
@@ -289,7 +288,7 @@
 
     move-result-object v0
 
-    .line 210
+    .line 213
     const-string v2, "3ga"
 
     invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -298,14 +297,14 @@
 
     if-eqz v2, :cond_1
 
-    .line 211
+    .line 214
     const-string v2, "audio/3gpp"
 
-    .line 216
+    .line 219
     :goto_0
     return-object v2
 
-    .line 212
+    .line 215
     :cond_1
     const-string v2, "js"
 
@@ -315,12 +314,12 @@
 
     if-eqz v2, :cond_2
 
-    .line 214
+    .line 217
     const-string v2, "text/javascript"
 
     goto :goto_0
 
-    .line 216
+    .line 219
     :cond_2
     invoke-static {}, Landroid/webkit/MimeTypeMap;->getSingleton()Landroid/webkit/MimeTypeMap;
 
@@ -338,15 +337,15 @@
     .param p0, "uri"    # Landroid/net/Uri;
 
     .prologue
-    .line 110
+    .line 111
     invoke-static {p0}, Lorg/apache/cordova/CordovaResourceApi;->assertNonRelative(Landroid/net/Uri;)V
 
-    .line 111
+    .line 112
     invoke-virtual {p0}, Landroid/net/Uri;->getScheme()Ljava/lang/String;
 
     move-result-object v0
 
-    .line 112
+    .line 113
     .local v0, "scheme":Ljava/lang/String;
     const-string v1, "content"
 
@@ -356,14 +355,14 @@
 
     if-eqz v1, :cond_0
 
-    .line 113
+    .line 114
     const/4 v1, 0x2
 
-    .line 133
+    .line 134
     :goto_0
     return v1
 
-    .line 115
+    .line 116
     :cond_0
     const-string v1, "android.resource"
 
@@ -373,12 +372,12 @@
 
     if-eqz v1, :cond_1
 
-    .line 116
+    .line 117
     const/4 v1, 0x3
 
     goto :goto_0
 
-    .line 118
+    .line 119
     :cond_1
     const-string v1, "file"
 
@@ -388,7 +387,7 @@
 
     if-eqz v1, :cond_3
 
-    .line 119
+    .line 120
     invoke-virtual {p0}, Landroid/net/Uri;->getPath()Ljava/lang/String;
 
     move-result-object v1
@@ -401,18 +400,18 @@
 
     if-eqz v1, :cond_2
 
-    .line 120
+    .line 121
     const/4 v1, 0x1
 
     goto :goto_0
 
-    .line 122
+    .line 123
     :cond_2
     const/4 v1, 0x0
 
     goto :goto_0
 
-    .line 124
+    .line 125
     :cond_3
     const-string v1, "data"
 
@@ -422,12 +421,12 @@
 
     if-eqz v1, :cond_4
 
-    .line 125
+    .line 126
     const/4 v1, 0x4
 
     goto :goto_0
 
-    .line 127
+    .line 128
     :cond_4
     const-string v1, "http"
 
@@ -437,12 +436,12 @@
 
     if-eqz v1, :cond_5
 
-    .line 128
+    .line 129
     const/4 v1, 0x5
 
     goto :goto_0
 
-    .line 130
+    .line 131
     :cond_5
     const-string v1, "https"
 
@@ -452,12 +451,12 @@
 
     if-eqz v1, :cond_6
 
-    .line 131
+    .line 132
     const/4 v1, 0x6
 
     goto :goto_0
 
-    .line 133
+    .line 134
     :cond_6
     const/4 v1, -0x1
 
@@ -473,12 +472,12 @@
 
     const/4 v4, 0x0
 
-    .line 401
+    .line 404
     invoke-virtual {p1}, Landroid/net/Uri;->getSchemeSpecificPart()Ljava/lang/String;
 
     move-result-object v13
 
-    .line 402
+    .line 405
     .local v13, "uriAsString":Ljava/lang/String;
     const/16 v0, 0x2c
 
@@ -486,17 +485,17 @@
 
     move-result v8
 
-    .line 403
+    .line 406
     .local v8, "commaPos":I
     const/4 v0, -0x1
 
     if-ne v8, v0, :cond_0
 
-    .line 420
+    .line 423
     :goto_0
     return-object v6
 
-    .line 406
+    .line 409
     :cond_0
     invoke-virtual {v13, v4, v8}, Ljava/lang/String;->substring(II)Ljava/lang/String;
 
@@ -508,24 +507,24 @@
 
     move-result-object v12
 
-    .line 407
+    .line 410
     .local v12, "mimeParts":[Ljava/lang/String;
     const/4 v3, 0x0
 
-    .line 408
+    .line 411
     .local v3, "contentType":Ljava/lang/String;
     const/4 v7, 0x0
 
-    .line 409
+    .line 412
     .local v7, "base64":Z
     array-length v0, v12
 
     if-lez v0, :cond_1
 
-    .line 410
+    .line 413
     aget-object v3, v12, v4
 
-    .line 412
+    .line 415
     :cond_1
     const/4 v11, 0x1
 
@@ -533,16 +532,37 @@
     :goto_1
     array-length v0, v12
 
-    if-lt v11, v0, :cond_2
+    if-ge v11, v0, :cond_3
+
+    .line 416
+    const-string v0, "base64"
+
+    aget-object v1, v12, v11
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_2
 
     .line 417
+    const/4 v7, 0x1
+
+    .line 415
+    :cond_2
+    add-int/lit8 v11, v11, 0x1
+
+    goto :goto_1
+
+    .line 420
+    :cond_3
     add-int/lit8 v0, v8, 0x1
 
     invoke-virtual {v13, v0}, Ljava/lang/String;->substring(I)Ljava/lang/String;
 
     move-result-object v10
 
-    .line 418
+    .line 421
     .local v10, "dataPartAsString":Ljava/lang/String;
     if-eqz v7, :cond_4
 
@@ -550,14 +570,14 @@
 
     move-result-object v9
 
-    .line 419
+    .line 422
     .local v9, "data":[B
     :goto_2
     new-instance v2, Ljava/io/ByteArrayInputStream;
 
     invoke-direct {v2, v9}, Ljava/io/ByteArrayInputStream;-><init>([B)V
 
-    .line 420
+    .line 423
     .local v2, "inputStream":Ljava/io/InputStream;
     new-instance v0, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
 
@@ -573,32 +593,9 @@
 
     goto :goto_0
 
-    .line 413
+    .line 421
     .end local v2    # "inputStream":Ljava/io/InputStream;
     .end local v9    # "data":[B
-    .end local v10    # "dataPartAsString":Ljava/lang/String;
-    :cond_2
-    const-string v0, "base64"
-
-    aget-object v1, v12, v11
-
-    invoke-virtual {v0, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_3
-
-    .line 414
-    const/4 v7, 0x1
-
-    .line 412
-    :cond_3
-    add-int/lit8 v11, v11, 0x1
-
-    goto :goto_1
-
-    .line 418
-    .restart local v10    # "dataPartAsString":Ljava/lang/String;
     :cond_4
     const-string v0, "UTF-8"
 
@@ -622,7 +619,7 @@
     .end annotation
 
     .prologue
-    .line 372
+    .line 375
     invoke-virtual {p0, p1}, Lorg/apache/cordova/CordovaResourceApi;->openForRead(Landroid/net/Uri;)Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
 
     move-result-object v0
@@ -633,7 +630,7 @@
 
     invoke-virtual {p0, v0, v1}, Lorg/apache/cordova/CordovaResourceApi;->copyResource(Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;Ljava/io/OutputStream;)V
 
-    .line 373
+    .line 376
     return-void
 .end method
 
@@ -648,19 +645,19 @@
     .end annotation
 
     .prologue
-    .line 367
+    .line 370
     invoke-virtual {p0, p1}, Lorg/apache/cordova/CordovaResourceApi;->openForRead(Landroid/net/Uri;)Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
 
     move-result-object v0
 
     invoke-virtual {p0, v0, p2}, Lorg/apache/cordova/CordovaResourceApi;->copyResource(Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;Ljava/io/OutputStream;)V
 
-    .line 368
+    .line 371
     return-void
 .end method
 
 .method public copyResource(Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;Ljava/io/OutputStream;)V
-    .locals 13
+    .locals 14
     .param p1, "input"    # Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
     .param p2, "outputStream"    # Ljava/io/OutputStream;
     .annotation system Ldalvik/annotation/Throws;
@@ -670,148 +667,150 @@
     .end annotation
 
     .prologue
-    .line 333
+    .line 336
     invoke-direct {p0}, Lorg/apache/cordova/CordovaResourceApi;->assertBackgroundThread()V
 
-    .line 335
+    .line 338
     :try_start_0
-    iget-object v10, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->inputStream:Ljava/io/InputStream;
-
-    .line 336
-    .local v10, "inputStream":Ljava/io/InputStream;
-    instance-of v11, v10, Ljava/io/FileInputStream;
-
-    if-eqz v11, :cond_3
-
-    instance-of v11, p2, Ljava/io/FileOutputStream;
-
-    if-eqz v11, :cond_3
-
-    .line 337
     iget-object v11, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->inputStream:Ljava/io/InputStream;
 
-    check-cast v11, Ljava/io/FileInputStream;
+    .line 339
+    .local v11, "inputStream":Ljava/io/InputStream;
+    instance-of v12, v11, Ljava/io/FileInputStream;
 
-    invoke-virtual {v11}, Ljava/io/FileInputStream;->getChannel()Ljava/nio/channels/FileChannel;
+    if-eqz v12, :cond_3
 
-    move-result-object v2
+    move-object/from16 v0, p2
 
-    .line 338
-    .local v2, "inChannel":Ljava/nio/channels/FileChannel;
-    move-object v0, p2
+    instance-of v12, v0, Ljava/io/FileOutputStream;
+
+    if-eqz v12, :cond_3
+
+    .line 340
+    iget-object v12, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->inputStream:Ljava/io/InputStream;
+
+    check-cast v12, Ljava/io/FileInputStream;
+
+    invoke-virtual {v12}, Ljava/io/FileInputStream;->getChannel()Ljava/nio/channels/FileChannel;
+
+    move-result-object v3
+
+    .line 341
+    .local v3, "inChannel":Ljava/nio/channels/FileChannel;
+    move-object/from16 v0, p2
 
     check-cast v0, Ljava/io/FileOutputStream;
 
-    move-object v11, v0
+    move-object v12, v0
 
-    invoke-virtual {v11}, Ljava/io/FileOutputStream;->getChannel()Ljava/nio/channels/FileChannel;
+    invoke-virtual {v12}, Ljava/io/FileOutputStream;->getChannel()Ljava/nio/channels/FileChannel;
 
-    move-result-object v1
-
-    .line 339
-    .local v1, "outChannel":Ljava/nio/channels/FileChannel;
-    const-wide/16 v3, 0x0
-
-    .line 340
-    .local v3, "offset":J
-    iget-wide v5, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->length:J
-
-    .line 341
-    .local v5, "length":J
-    iget-object v11, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->assetFd:Landroid/content/res/AssetFileDescriptor;
-
-    if-eqz v11, :cond_0
+    move-result-object v2
 
     .line 342
-    iget-object v11, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->assetFd:Landroid/content/res/AssetFileDescriptor;
+    .local v2, "outChannel":Ljava/nio/channels/FileChannel;
+    const-wide/16 v4, 0x0
 
-    invoke-virtual {v11}, Landroid/content/res/AssetFileDescriptor;->getStartOffset()J
-
-    move-result-wide v3
+    .line 343
+    .local v4, "offset":J
+    iget-wide v6, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->length:J
 
     .line 344
+    .local v6, "length":J
+    iget-object v12, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->assetFd:Landroid/content/res/AssetFileDescriptor;
+
+    if-eqz v12, :cond_0
+
+    .line 345
+    iget-object v12, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->assetFd:Landroid/content/res/AssetFileDescriptor;
+
+    invoke-virtual {v12}, Landroid/content/res/AssetFileDescriptor;->getStartOffset()J
+
+    move-result-wide v4
+
+    .line 347
     :cond_0
-    invoke-virtual/range {v1 .. v6}, Ljava/nio/channels/FileChannel;->transferFrom(Ljava/nio/channels/ReadableByteChannel;JJ)J
+    invoke-virtual/range {v2 .. v7}, Ljava/nio/channels/FileChannel;->transferFrom(Ljava/nio/channels/ReadableByteChannel;JJ)J
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 359
-    .end local v1    # "outChannel":Ljava/nio/channels/FileChannel;
-    .end local v2    # "inChannel":Ljava/nio/channels/FileChannel;
-    .end local v3    # "offset":J
-    .end local v5    # "length":J
+    .line 362
+    .end local v2    # "outChannel":Ljava/nio/channels/FileChannel;
+    .end local v3    # "inChannel":Ljava/nio/channels/FileChannel;
+    .end local v4    # "offset":J
+    .end local v6    # "length":J
     :cond_1
-    iget-object v11, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->inputStream:Ljava/io/InputStream;
+    iget-object v12, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->inputStream:Ljava/io/InputStream;
 
-    invoke-virtual {v11}, Ljava/io/InputStream;->close()V
+    invoke-virtual {v12}, Ljava/io/InputStream;->close()V
 
-    .line 360
+    .line 363
     if-eqz p2, :cond_2
 
-    .line 361
-    invoke-virtual {p2}, Ljava/io/OutputStream;->close()V
-
     .line 364
+    invoke-virtual/range {p2 .. p2}, Ljava/io/OutputStream;->close()V
+
+    .line 367
     :cond_2
     return-void
 
-    .line 346
+    .line 349
     :cond_3
-    const/16 v7, 0x2000
-
-    .line 347
-    .local v7, "BUFFER_SIZE":I
-    const/16 v11, 0x2000
-
-    :try_start_1
-    new-array v8, v11, [B
+    const/16 v8, 0x2000
 
     .line 350
-    .local v8, "buffer":[B
-    :goto_0
-    const/4 v11, 0x0
-
+    .local v8, "BUFFER_SIZE":I
     const/16 v12, 0x2000
 
-    invoke-virtual {v10, v8, v11, v12}, Ljava/io/InputStream;->read([BII)I
+    :try_start_1
+    new-array v9, v12, [B
 
-    move-result v9
+    .line 353
+    .local v9, "buffer":[B
+    :goto_0
+    const/4 v12, 0x0
 
-    .line 352
-    .local v9, "bytesRead":I
-    if-lez v9, :cond_1
+    const/16 v13, 0x2000
+
+    invoke-virtual {v11, v9, v12, v13}, Ljava/io/InputStream;->read([BII)I
+
+    move-result v10
 
     .line 355
-    const/4 v11, 0x0
+    .local v10, "bytesRead":I
+    if-lez v10, :cond_1
 
-    invoke-virtual {p2, v8, v11, v9}, Ljava/io/OutputStream;->write([BII)V
+    .line 358
+    const/4 v12, 0x0
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v9, v12, v10}, Ljava/io/OutputStream;->write([BII)V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     goto :goto_0
 
-    .line 358
-    .end local v7    # "BUFFER_SIZE":I
-    .end local v8    # "buffer":[B
-    .end local v9    # "bytesRead":I
-    .end local v10    # "inputStream":Ljava/io/InputStream;
+    .line 362
+    .end local v8    # "BUFFER_SIZE":I
+    .end local v9    # "buffer":[B
+    .end local v10    # "bytesRead":I
+    .end local v11    # "inputStream":Ljava/io/InputStream;
     :catchall_0
-    move-exception v11
+    move-exception v12
 
-    .line 359
-    iget-object v12, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->inputStream:Ljava/io/InputStream;
+    iget-object v13, p1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;->inputStream:Ljava/io/InputStream;
 
-    invoke-virtual {v12}, Ljava/io/InputStream;->close()V
-
-    .line 360
-    if-eqz p2, :cond_4
-
-    .line 361
-    invoke-virtual {p2}, Ljava/io/OutputStream;->close()V
+    invoke-virtual {v13}, Ljava/io/InputStream;->close()V
 
     .line 363
+    if-eqz p2, :cond_4
+
+    .line 364
+    invoke-virtual/range {p2 .. p2}, Ljava/io/OutputStream;->close()V
+
     :cond_4
-    throw v11
+    throw v12
 .end method
 
 .method public createHttpConnection(Landroid/net/Uri;)Ljava/net/HttpURLConnection;
@@ -824,10 +823,10 @@
     .end annotation
 
     .prologue
-    .line 326
+    .line 329
     invoke-direct {p0}, Lorg/apache/cordova/CordovaResourceApi;->assertBackgroundThread()V
 
-    .line 327
+    .line 330
     sget-object v0, Lorg/apache/cordova/CordovaResourceApi;->httpClient:Lcom/squareup/okhttp/OkHttpClient;
 
     new-instance v1, Ljava/net/URL;
@@ -850,21 +849,21 @@
     .param p1, "uri"    # Landroid/net/Uri;
 
     .prologue
-    .line 177
+    .line 178
     invoke-static {p1}, Lorg/apache/cordova/CordovaResourceApi;->getUriType(Landroid/net/Uri;)I
 
     move-result v1
 
     packed-switch v1, :pswitch_data_0
 
-    .line 199
+    .line 200
     :goto_0
     const/4 v1, 0x0
 
     :goto_1
     return-object v1
 
-    .line 180
+    .line 181
     :pswitch_0
     invoke-virtual {p1}, Landroid/net/Uri;->getPath()Ljava/lang/String;
 
@@ -876,7 +875,7 @@
 
     goto :goto_1
 
-    .line 183
+    .line 184
     :pswitch_1
     iget-object v1, p0, Lorg/apache/cordova/CordovaResourceApi;->contentResolver:Landroid/content/ContentResolver;
 
@@ -886,7 +885,7 @@
 
     goto :goto_1
 
-    .line 185
+    .line 186
     :pswitch_2
     invoke-direct {p0, p1}, Lorg/apache/cordova/CordovaResourceApi;->getDataUriMimeType(Landroid/net/Uri;)Ljava/lang/String;
 
@@ -894,7 +893,7 @@
 
     goto :goto_1
 
-    .line 190
+    .line 191
     :pswitch_3
     :try_start_0
     sget-object v1, Lorg/apache/cordova/CordovaResourceApi;->httpClient:Lcom/squareup/okhttp/OkHttpClient;
@@ -911,18 +910,18 @@
 
     move-result-object v0
 
-    .line 191
+    .line 192
     .local v0, "conn":Ljava/net/HttpURLConnection;
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Ljava/net/HttpURLConnection;->setDoInput(Z)V
 
-    .line 192
+    .line 193
     const-string v1, "HEAD"
 
     invoke-virtual {v0, v1}, Ljava/net/HttpURLConnection;->setRequestMethod(Ljava/lang/String;)V
 
-    .line 193
+    .line 194
     const-string v1, "Content-Type"
 
     invoke-virtual {v0, v1}, Ljava/net/HttpURLConnection;->getHeaderField(Ljava/lang/String;)Ljava/lang/String;
@@ -933,14 +932,14 @@
 
     goto :goto_1
 
-    .line 194
+    .line 195
     .end local v0    # "conn":Ljava/net/HttpURLConnection;
     :catch_0
     move-exception v1
 
     goto :goto_0
 
-    .line 177
+    .line 178
     nop
 
     :pswitch_data_0
@@ -972,23 +971,23 @@
     .prologue
     const/4 v3, 0x0
 
-    .line 151
+    .line 152
     invoke-direct {p0}, Lorg/apache/cordova/CordovaResourceApi;->assertBackgroundThread()V
 
-    .line 152
+    .line 153
     invoke-static {p1}, Lorg/apache/cordova/CordovaResourceApi;->getUriType(Landroid/net/Uri;)I
 
     move-result v0
 
     packed-switch v0, :pswitch_data_0
 
-    .line 173
+    .line 174
     :cond_0
     :goto_0
     :pswitch_0
     return-object v3
 
-    .line 154
+    .line 155
     :pswitch_1
     new-instance v3, Ljava/io/File;
 
@@ -1000,7 +999,7 @@
 
     goto :goto_0
 
-    .line 156
+    .line 157
     :pswitch_2
     iget-object v0, p0, Lorg/apache/cordova/CordovaResourceApi;->contentResolver:Landroid/content/ContentResolver;
 
@@ -1016,11 +1015,11 @@
 
     move-result-object v7
 
-    .line 157
+    .line 158
     .local v7, "cursor":Landroid/database/Cursor;
     if-eqz v7, :cond_0
 
-    .line 159
+    .line 160
     :try_start_0
     sget-object v0, Lorg/apache/cordova/CordovaResourceApi;->LOCAL_FILE_PROJECTION:[Ljava/lang/String;
 
@@ -1032,7 +1031,7 @@
 
     move-result v6
 
-    .line 160
+    .line 161
     .local v6, "columnIndex":I
     const/4 v0, -0x1
 
@@ -1044,50 +1043,45 @@
 
     if-lez v0, :cond_1
 
-    .line 161
+    .line 162
     invoke-interface {v7}, Landroid/database/Cursor;->moveToFirst()Z
 
-    .line 162
+    .line 163
     invoke-interface {v7, v6}, Landroid/database/Cursor;->getString(I)Ljava/lang/String;
 
     move-result-object v8
 
-    .line 163
+    .line 164
     .local v8, "realPath":Ljava/lang/String;
     if-eqz v8, :cond_1
 
-    .line 164
+    .line 165
     new-instance v3, Ljava/io/File;
 
     invoke-direct {v3, v8}, Ljava/io/File;-><init>(Ljava/lang/String;)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 168
+    .line 169
     invoke-interface {v7}, Landroid/database/Cursor;->close()V
 
     goto :goto_0
 
-    .line 167
-    .end local v6    # "columnIndex":I
     .end local v8    # "realPath":Ljava/lang/String;
-    :catchall_0
-    move-exception v0
-
-    .line 168
-    invoke-interface {v7}, Landroid/database/Cursor;->close()V
-
-    .line 169
-    throw v0
-
-    .line 168
-    .restart local v6    # "columnIndex":I
     :cond_1
     invoke-interface {v7}, Landroid/database/Cursor;->close()V
 
     goto :goto_0
 
-    .line 152
+    .end local v6    # "columnIndex":I
+    :catchall_0
+    move-exception v0
+
+    invoke-interface {v7}, Landroid/database/Cursor;->close()V
+
+    throw v0
+
+    .line 153
     :pswitch_data_0
     .packed-switch 0x0
         :pswitch_1
@@ -1106,7 +1100,7 @@
     .end annotation
 
     .prologue
-    .line 228
+    .line 231
     const/4 v0, 0x0
 
     invoke-virtual {p0, p1, v0}, Lorg/apache/cordova/CordovaResourceApi;->openForRead(Landroid/net/Uri;Z)Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
@@ -1117,7 +1111,7 @@
 .end method
 
 .method public openForRead(Landroid/net/Uri;Z)Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
-    .locals 19
+    .locals 20
     .param p1, "uri"    # Landroid/net/Uri;
     .param p2, "skipThreadCheck"    # Z
     .annotation system Ldalvik/annotation/Throws;
@@ -1127,313 +1121,319 @@
     .end annotation
 
     .prologue
-    .line 240
+    .line 243
     if-nez p2, :cond_0
 
-    .line 241
+    .line 244
     invoke-direct/range {p0 .. p0}, Lorg/apache/cordova/CordovaResourceApi;->assertBackgroundThread()V
 
-    .line 243
+    .line 246
     :cond_0
     invoke-static/range {p1 .. p1}, Lorg/apache/cordova/CordovaResourceApi;->getUriType(Landroid/net/Uri;)I
 
-    move-result v1
+    move-result v2
 
-    packed-switch v1, :pswitch_data_0
+    packed-switch v2, :pswitch_data_0
 
-    .line 291
+    .line 294
     :cond_1
-    new-instance v1, Ljava/io/FileNotFoundException;
+    new-instance v2, Ljava/io/FileNotFoundException;
 
-    new-instance v2, Ljava/lang/StringBuilder;
+    new-instance v3, Ljava/lang/StringBuilder;
 
-    const-string v8, "URI not supported by CordovaResourceApi: "
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-direct {v2, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    const-string v10, "URI not supported by CordovaResourceApi: "
+
+    invoke-virtual {v3, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
 
     move-object/from16 v0, p1
 
-    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual {v3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    move-result-object v2
+    move-result-object v3
 
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v2
+    move-result-object v3
 
-    invoke-direct {v1, v2}, Ljava/io/FileNotFoundException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v2, v3}, Ljava/io/FileNotFoundException;-><init>(Ljava/lang/String;)V
 
-    throw v1
+    throw v2
 
-    .line 245
+    .line 248
     :pswitch_0
-    new-instance v3, Ljava/io/FileInputStream;
+    new-instance v4, Ljava/io/FileInputStream;
 
     invoke-virtual/range {p1 .. p1}, Landroid/net/Uri;->getPath()Ljava/lang/String;
 
-    move-result-object v1
+    move-result-object v2
 
-    invoke-direct {v3, v1}, Ljava/io/FileInputStream;-><init>(Ljava/lang/String;)V
+    invoke-direct {v4, v2}, Ljava/io/FileInputStream;-><init>(Ljava/lang/String;)V
 
-    .line 246
-    .local v3, "inputStream":Ljava/io/FileInputStream;
+    .line 249
+    .local v4, "inputStream":Ljava/io/FileInputStream;
     invoke-virtual/range {p1 .. p1}, Landroid/net/Uri;->getPath()Ljava/lang/String;
 
-    move-result-object v1
+    move-result-object v2
 
     move-object/from16 v0, p0
 
-    invoke-direct {v0, v1}, Lorg/apache/cordova/CordovaResourceApi;->getMimeTypeFromPath(Ljava/lang/String;)Ljava/lang/String;
+    invoke-direct {v0, v2}, Lorg/apache/cordova/CordovaResourceApi;->getMimeTypeFromPath(Ljava/lang/String;)Ljava/lang/String;
 
-    move-result-object v4
+    move-result-object v5
 
-    .line 247
-    .local v4, "mimeType":Ljava/lang/String;
-    invoke-virtual {v3}, Ljava/io/FileInputStream;->getChannel()Ljava/nio/channels/FileChannel;
+    .line 250
+    .local v5, "mimeType":Ljava/lang/String;
+    invoke-virtual {v4}, Ljava/io/FileInputStream;->getChannel()Ljava/nio/channels/FileChannel;
 
-    move-result-object v1
+    move-result-object v2
 
-    invoke-virtual {v1}, Ljava/nio/channels/FileChannel;->size()J
+    invoke-virtual {v2}, Ljava/nio/channels/FileChannel;->size()J
 
-    move-result-wide v5
-
-    .line 248
-    .local v5, "length":J
-    new-instance v1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
-
-    const/4 v7, 0x0
-
-    move-object/from16 v2, p1
-
-    invoke-direct/range {v1 .. v7}, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;-><init>(Landroid/net/Uri;Ljava/io/InputStream;Ljava/lang/String;JLandroid/content/res/AssetFileDescriptor;)V
-
-    .line 288
-    .end local v3    # "inputStream":Ljava/io/FileInputStream;
-    .end local v4    # "mimeType":Ljava/lang/String;
-    .end local v5    # "length":J
-    :goto_0
-    return-object v1
+    move-result-wide v6
 
     .line 251
+    .local v6, "length":J
+    new-instance v2, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
+
+    const/4 v8, 0x0
+
+    move-object/from16 v3, p1
+
+    invoke-direct/range {v2 .. v8}, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;-><init>(Landroid/net/Uri;Ljava/io/InputStream;Ljava/lang/String;JLandroid/content/res/AssetFileDescriptor;)V
+
+    .line 291
+    .end local v4    # "inputStream":Ljava/io/FileInputStream;
+    .end local v5    # "mimeType":Ljava/lang/String;
+    .end local v6    # "length":J
+    :goto_0
+    return-object v2
+
+    .line 254
     :pswitch_1
     invoke-virtual/range {p1 .. p1}, Landroid/net/Uri;->getPath()Ljava/lang/String;
 
-    move-result-object v1
+    move-result-object v2
 
-    const/16 v2, 0xf
+    const/16 v3, 0xf
 
-    invoke-virtual {v1, v2}, Ljava/lang/String;->substring(I)Ljava/lang/String;
+    invoke-virtual {v2, v3}, Ljava/lang/String;->substring(I)Ljava/lang/String;
 
-    move-result-object v15
+    move-result-object v9
 
-    .line 252
-    .local v15, "assetPath":Ljava/lang/String;
-    const/4 v7, 0x0
+    .line 255
+    .local v9, "assetPath":Ljava/lang/String;
+    const/4 v8, 0x0
 
-    .line 254
-    .local v7, "assetFd":Landroid/content/res/AssetFileDescriptor;
-    const-wide/16 v5, -0x1
+    .line 257
+    .local v8, "assetFd":Landroid/content/res/AssetFileDescriptor;
+    const-wide/16 v6, -0x1
 
-    .line 256
-    .restart local v5    # "length":J
+    .line 259
+    .restart local v6    # "length":J
     :try_start_0
     move-object/from16 v0, p0
 
-    iget-object v1, v0, Lorg/apache/cordova/CordovaResourceApi;->assetManager:Landroid/content/res/AssetManager;
+    iget-object v2, v0, Lorg/apache/cordova/CordovaResourceApi;->assetManager:Landroid/content/res/AssetManager;
 
-    invoke-virtual {v1, v15}, Landroid/content/res/AssetManager;->openFd(Ljava/lang/String;)Landroid/content/res/AssetFileDescriptor;
-
-    move-result-object v7
-
-    .line 257
-    invoke-virtual {v7}, Landroid/content/res/AssetFileDescriptor;->createInputStream()Ljava/io/FileInputStream;
-
-    move-result-object v3
-
-    .line 258
-    .local v3, "inputStream":Ljava/io/InputStream;
-    invoke-virtual {v7}, Landroid/content/res/AssetFileDescriptor;->getLength()J
-    :try_end_0
-    .catch Ljava/io/FileNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
-
-    move-result-wide v5
-
-    .line 263
-    :goto_1
-    move-object/from16 v0, p0
-
-    invoke-direct {v0, v15}, Lorg/apache/cordova/CordovaResourceApi;->getMimeTypeFromPath(Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 264
-    .restart local v4    # "mimeType":Ljava/lang/String;
-    new-instance v1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
-
-    move-object/from16 v2, p1
-
-    invoke-direct/range {v1 .. v7}, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;-><init>(Landroid/net/Uri;Ljava/io/InputStream;Ljava/lang/String;JLandroid/content/res/AssetFileDescriptor;)V
-
-    goto :goto_0
-
-    .line 259
-    .end local v3    # "inputStream":Ljava/io/InputStream;
-    .end local v4    # "mimeType":Ljava/lang/String;
-    :catch_0
-    move-exception v17
-
-    .line 261
-    .local v17, "e":Ljava/io/FileNotFoundException;
-    move-object/from16 v0, p0
-
-    iget-object v1, v0, Lorg/apache/cordova/CordovaResourceApi;->assetManager:Landroid/content/res/AssetManager;
-
-    invoke-virtual {v1, v15}, Landroid/content/res/AssetManager;->open(Ljava/lang/String;)Ljava/io/InputStream;
-
-    move-result-object v3
-
-    .restart local v3    # "inputStream":Ljava/io/InputStream;
-    goto :goto_1
-
-    .line 268
-    .end local v3    # "inputStream":Ljava/io/InputStream;
-    .end local v5    # "length":J
-    .end local v7    # "assetFd":Landroid/content/res/AssetFileDescriptor;
-    .end local v15    # "assetPath":Ljava/lang/String;
-    .end local v17    # "e":Ljava/io/FileNotFoundException;
-    :pswitch_2
-    move-object/from16 v0, p0
-
-    iget-object v1, v0, Lorg/apache/cordova/CordovaResourceApi;->contentResolver:Landroid/content/ContentResolver;
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v1, v0}, Landroid/content/ContentResolver;->getType(Landroid/net/Uri;)Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 269
-    .restart local v4    # "mimeType":Ljava/lang/String;
-    move-object/from16 v0, p0
-
-    iget-object v1, v0, Lorg/apache/cordova/CordovaResourceApi;->contentResolver:Landroid/content/ContentResolver;
-
-    const-string v2, "r"
-
-    move-object/from16 v0, p1
-
-    invoke-virtual {v1, v0, v2}, Landroid/content/ContentResolver;->openAssetFileDescriptor(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/res/AssetFileDescriptor;
-
-    move-result-object v7
-
-    .line 270
-    .restart local v7    # "assetFd":Landroid/content/res/AssetFileDescriptor;
-    invoke-virtual {v7}, Landroid/content/res/AssetFileDescriptor;->createInputStream()Ljava/io/FileInputStream;
-
-    move-result-object v3
-
-    .line 271
-    .restart local v3    # "inputStream":Ljava/io/InputStream;
-    invoke-virtual {v7}, Landroid/content/res/AssetFileDescriptor;->getLength()J
-
-    move-result-wide v5
-
-    .line 272
-    .restart local v5    # "length":J
-    new-instance v1, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
-
-    move-object/from16 v2, p1
-
-    invoke-direct/range {v1 .. v7}, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;-><init>(Landroid/net/Uri;Ljava/io/InputStream;Ljava/lang/String;JLandroid/content/res/AssetFileDescriptor;)V
-
-    goto :goto_0
-
-    .line 275
-    .end local v3    # "inputStream":Ljava/io/InputStream;
-    .end local v4    # "mimeType":Ljava/lang/String;
-    .end local v5    # "length":J
-    .end local v7    # "assetFd":Landroid/content/res/AssetFileDescriptor;
-    :pswitch_3
-    invoke-direct/range {p0 .. p1}, Lorg/apache/cordova/CordovaResourceApi;->readDataUri(Landroid/net/Uri;)Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
-
-    move-result-object v18
-
-    .line 276
-    .local v18, "ret":Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
-    if-eqz v18, :cond_1
-
-    move-object/from16 v1, v18
-
-    .line 279
-    goto :goto_0
-
-    .line 283
-    .end local v18    # "ret":Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
-    :pswitch_4
-    sget-object v1, Lorg/apache/cordova/CordovaResourceApi;->httpClient:Lcom/squareup/okhttp/OkHttpClient;
-
-    new-instance v2, Ljava/net/URL;
-
-    invoke-virtual/range {p1 .. p1}, Landroid/net/Uri;->toString()Ljava/lang/String;
+    invoke-virtual {v2, v9}, Landroid/content/res/AssetManager;->openFd(Ljava/lang/String;)Landroid/content/res/AssetFileDescriptor;
 
     move-result-object v8
 
-    invoke-direct {v2, v8}, Ljava/net/URL;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v1, v2}, Lcom/squareup/okhttp/OkHttpClient;->open(Ljava/net/URL;)Ljava/net/HttpURLConnection;
-
-    move-result-object v16
-
-    .line 284
-    .local v16, "conn":Ljava/net/HttpURLConnection;
-    const/4 v1, 0x1
-
-    move-object/from16 v0, v16
-
-    invoke-virtual {v0, v1}, Ljava/net/HttpURLConnection;->setDoInput(Z)V
-
-    .line 285
-    const-string v1, "Content-Type"
-
-    move-object/from16 v0, v16
-
-    invoke-virtual {v0, v1}, Ljava/net/HttpURLConnection;->getHeaderField(Ljava/lang/String;)Ljava/lang/String;
+    .line 260
+    invoke-virtual {v8}, Landroid/content/res/AssetFileDescriptor;->createInputStream()Ljava/io/FileInputStream;
 
     move-result-object v4
 
-    .line 286
-    .restart local v4    # "mimeType":Ljava/lang/String;
-    invoke-virtual/range {v16 .. v16}, Ljava/net/HttpURLConnection;->getContentLength()I
+    .line 261
+    .local v4, "inputStream":Ljava/io/InputStream;
+    invoke-virtual {v8}, Landroid/content/res/AssetFileDescriptor;->getLength()J
+    :try_end_0
+    .catch Ljava/io/FileNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
 
-    move-result v5
+    move-result-wide v6
+
+    .line 266
+    :goto_1
+    move-object/from16 v0, p0
+
+    invoke-direct {v0, v9}, Lorg/apache/cordova/CordovaResourceApi;->getMimeTypeFromPath(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v5
+
+    .line 267
+    .restart local v5    # "mimeType":Ljava/lang/String;
+    new-instance v2, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
+
+    move-object/from16 v3, p1
+
+    invoke-direct/range {v2 .. v8}, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;-><init>(Landroid/net/Uri;Ljava/io/InputStream;Ljava/lang/String;JLandroid/content/res/AssetFileDescriptor;)V
+
+    goto :goto_0
+
+    .line 262
+    .end local v4    # "inputStream":Ljava/io/InputStream;
+    .end local v5    # "mimeType":Ljava/lang/String;
+    :catch_0
+    move-exception v18
+
+    .line 264
+    .local v18, "e":Ljava/io/FileNotFoundException;
+    move-object/from16 v0, p0
+
+    iget-object v2, v0, Lorg/apache/cordova/CordovaResourceApi;->assetManager:Landroid/content/res/AssetManager;
+
+    invoke-virtual {v2, v9}, Landroid/content/res/AssetManager;->open(Ljava/lang/String;)Ljava/io/InputStream;
+
+    move-result-object v4
+
+    .restart local v4    # "inputStream":Ljava/io/InputStream;
+    goto :goto_1
+
+    .line 271
+    .end local v4    # "inputStream":Ljava/io/InputStream;
+    .end local v6    # "length":J
+    .end local v8    # "assetFd":Landroid/content/res/AssetFileDescriptor;
+    .end local v9    # "assetPath":Ljava/lang/String;
+    .end local v18    # "e":Ljava/io/FileNotFoundException;
+    :pswitch_2
+    move-object/from16 v0, p0
+
+    iget-object v2, v0, Lorg/apache/cordova/CordovaResourceApi;->contentResolver:Landroid/content/ContentResolver;
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v2, v0}, Landroid/content/ContentResolver;->getType(Landroid/net/Uri;)Ljava/lang/String;
+
+    move-result-object v5
+
+    .line 272
+    .restart local v5    # "mimeType":Ljava/lang/String;
+    move-object/from16 v0, p0
+
+    iget-object v2, v0, Lorg/apache/cordova/CordovaResourceApi;->contentResolver:Landroid/content/ContentResolver;
+
+    const-string v3, "r"
+
+    move-object/from16 v0, p1
+
+    invoke-virtual {v2, v0, v3}, Landroid/content/ContentResolver;->openAssetFileDescriptor(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/res/AssetFileDescriptor;
+
+    move-result-object v8
+
+    .line 273
+    .restart local v8    # "assetFd":Landroid/content/res/AssetFileDescriptor;
+    invoke-virtual {v8}, Landroid/content/res/AssetFileDescriptor;->createInputStream()Ljava/io/FileInputStream;
+
+    move-result-object v4
+
+    .line 274
+    .restart local v4    # "inputStream":Ljava/io/InputStream;
+    invoke-virtual {v8}, Landroid/content/res/AssetFileDescriptor;->getLength()J
+
+    move-result-wide v6
+
+    .line 275
+    .restart local v6    # "length":J
+    new-instance v2, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
+
+    move-object/from16 v3, p1
+
+    invoke-direct/range {v2 .. v8}, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;-><init>(Landroid/net/Uri;Ljava/io/InputStream;Ljava/lang/String;JLandroid/content/res/AssetFileDescriptor;)V
+
+    goto :goto_0
+
+    .line 278
+    .end local v4    # "inputStream":Ljava/io/InputStream;
+    .end local v5    # "mimeType":Ljava/lang/String;
+    .end local v6    # "length":J
+    .end local v8    # "assetFd":Landroid/content/res/AssetFileDescriptor;
+    :pswitch_3
+    invoke-direct/range {p0 .. p1}, Lorg/apache/cordova/CordovaResourceApi;->readDataUri(Landroid/net/Uri;)Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
+
+    move-result-object v19
+
+    .line 279
+    .local v19, "ret":Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
+    if-eqz v19, :cond_1
+
+    move-object/from16 v2, v19
+
+    .line 282
+    goto :goto_0
+
+    .line 286
+    .end local v19    # "ret":Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
+    :pswitch_4
+    sget-object v2, Lorg/apache/cordova/CordovaResourceApi;->httpClient:Lcom/squareup/okhttp/OkHttpClient;
+
+    new-instance v3, Ljava/net/URL;
+
+    invoke-virtual/range {p1 .. p1}, Landroid/net/Uri;->toString()Ljava/lang/String;
+
+    move-result-object v10
+
+    invoke-direct {v3, v10}, Ljava/net/URL;-><init>(Ljava/lang/String;)V
+
+    invoke-virtual {v2, v3}, Lcom/squareup/okhttp/OkHttpClient;->open(Ljava/net/URL;)Ljava/net/HttpURLConnection;
+
+    move-result-object v17
 
     .line 287
-    .local v5, "length":I
-    invoke-virtual/range {v16 .. v16}, Ljava/net/HttpURLConnection;->getInputStream()Ljava/io/InputStream;
+    .local v17, "conn":Ljava/net/HttpURLConnection;
+    const/4 v2, 0x1
 
-    move-result-object v3
+    move-object/from16 v0, v17
+
+    invoke-virtual {v0, v2}, Ljava/net/HttpURLConnection;->setDoInput(Z)V
 
     .line 288
-    .restart local v3    # "inputStream":Ljava/io/InputStream;
-    new-instance v8, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
+    const-string v2, "Content-Type"
 
-    int-to-long v12, v5
+    move-object/from16 v0, v17
 
-    const/4 v14, 0x0
+    invoke-virtual {v0, v2}, Ljava/net/HttpURLConnection;->getHeaderField(Ljava/lang/String;)Ljava/lang/String;
 
-    move-object/from16 v9, p1
+    move-result-object v5
 
-    move-object v10, v3
+    .line 289
+    .restart local v5    # "mimeType":Ljava/lang/String;
+    invoke-virtual/range {v17 .. v17}, Ljava/net/HttpURLConnection;->getContentLength()I
 
-    move-object v11, v4
+    move-result v6
 
-    invoke-direct/range {v8 .. v14}, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;-><init>(Landroid/net/Uri;Ljava/io/InputStream;Ljava/lang/String;JLandroid/content/res/AssetFileDescriptor;)V
+    .line 290
+    .local v6, "length":I
+    invoke-virtual/range {v17 .. v17}, Ljava/net/HttpURLConnection;->getInputStream()Ljava/io/InputStream;
 
-    move-object v1, v8
+    move-result-object v4
+
+    .line 291
+    .restart local v4    # "inputStream":Ljava/io/InputStream;
+    new-instance v10, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;
+
+    int-to-long v14, v6
+
+    const/16 v16, 0x0
+
+    move-object/from16 v11, p1
+
+    move-object v12, v4
+
+    move-object v13, v5
+
+    invoke-direct/range {v10 .. v16}, Lorg/apache/cordova/CordovaResourceApi$OpenForReadResult;-><init>(Landroid/net/Uri;Ljava/io/InputStream;Ljava/lang/String;JLandroid/content/res/AssetFileDescriptor;)V
+
+    move-object v2, v10
 
     goto/16 :goto_0
 
-    .line 243
+    .line 246
+    nop
+
     :pswitch_data_0
     .packed-switch 0x0
         :pswitch_0
@@ -1456,7 +1456,7 @@
     .end annotation
 
     .prologue
-    .line 295
+    .line 298
     const/4 v0, 0x0
 
     invoke-virtual {p0, p1, v0}, Lorg/apache/cordova/CordovaResourceApi;->openOutputStream(Landroid/net/Uri;Z)Ljava/io/OutputStream;
@@ -1477,25 +1477,29 @@
     .end annotation
 
     .prologue
-    .line 306
+    .line 309
     invoke-direct {p0}, Lorg/apache/cordova/CordovaResourceApi;->assertBackgroundThread()V
 
-    .line 307
+    .line 310
     invoke-static {p1}, Lorg/apache/cordova/CordovaResourceApi;->getUriType(Landroid/net/Uri;)I
 
     move-result v3
 
     packed-switch v3, :pswitch_data_0
 
-    .line 322
+    .line 325
     :pswitch_0
     new-instance v3, Ljava/io/FileNotFoundException;
 
     new-instance v4, Ljava/lang/StringBuilder;
 
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v5, "URI not supported by CordovaResourceApi: "
 
-    invoke-direct {v4, v5}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
 
     invoke-virtual {v4, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
@@ -1509,7 +1513,7 @@
 
     throw v3
 
-    .line 309
+    .line 312
     :pswitch_1
     new-instance v1, Ljava/io/File;
 
@@ -1519,32 +1523,32 @@
 
     invoke-direct {v1, v3}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 310
+    .line 313
     .local v1, "localFile":Ljava/io/File;
     invoke-virtual {v1}, Ljava/io/File;->getParentFile()Ljava/io/File;
 
     move-result-object v2
 
-    .line 311
+    .line 314
     .local v2, "parent":Ljava/io/File;
     if-eqz v2, :cond_0
 
-    .line 312
+    .line 315
     invoke-virtual {v2}, Ljava/io/File;->mkdirs()Z
 
-    .line 314
+    .line 317
     :cond_0
     new-instance v3, Ljava/io/FileOutputStream;
 
     invoke-direct {v3, v1, p2}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;Z)V
 
-    .line 319
+    .line 322
     .end local v1    # "localFile":Ljava/io/File;
     .end local v2    # "parent":Ljava/io/File;
     :goto_0
     return-object v3
 
-    .line 318
+    .line 321
     :pswitch_2
     iget-object v4, p0, Lorg/apache/cordova/CordovaResourceApi;->contentResolver:Landroid/content/ContentResolver;
 
@@ -1557,7 +1561,7 @@
 
     move-result-object v0
 
-    .line 319
+    .line 322
     .local v0, "assetFd":Landroid/content/res/AssetFileDescriptor;
     invoke-virtual {v0}, Landroid/content/res/AssetFileDescriptor;->createOutputStream()Ljava/io/FileOutputStream;
 
@@ -1565,14 +1569,14 @@
 
     goto :goto_0
 
-    .line 318
+    .line 321
     .end local v0    # "assetFd":Landroid/content/res/AssetFileDescriptor;
     :cond_1
     const-string v3, "w"
 
     goto :goto_1
 
-    .line 307
+    .line 310
     nop
 
     :pswitch_data_0
@@ -1589,7 +1593,7 @@
     .param p1, "path"    # Ljava/lang/String;
 
     .prologue
-    .line 143
+    .line 144
     new-instance v0, Ljava/io/File;
 
     invoke-direct {v0, p1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
@@ -1614,17 +1618,17 @@
     .param p1, "uri"    # Landroid/net/Uri;
 
     .prologue
-    .line 137
+    .line 138
     invoke-static {p1}, Lorg/apache/cordova/CordovaResourceApi;->assertNonRelative(Landroid/net/Uri;)V
 
-    .line 138
+    .line 139
     iget-object v1, p0, Lorg/apache/cordova/CordovaResourceApi;->pluginManager:Lorg/apache/cordova/PluginManager;
 
     invoke-virtual {v1, p1}, Lorg/apache/cordova/PluginManager;->remapUri(Landroid/net/Uri;)Landroid/net/Uri;
 
     move-result-object v0
 
-    .line 139
+    .line 140
     .local v0, "pluginUri":Landroid/net/Uri;
     if-eqz v0, :cond_0
 

@@ -302,7 +302,6 @@
 
     move-result-object v2
 
-    .line 58
     invoke-static {v8}, Lcom/squareup/okhttp/internal/http/HttpEngine;->getOriginAddress(Ljava/net/URL;)Ljava/lang/String;
 
     move-result-object v4
@@ -315,7 +314,6 @@
 
     move-result-object v5
 
-    .line 57
     invoke-virtual/range {v0 .. v5}, Lcom/squareup/okhttp/internal/http/RawHeaders;->addSpdyRequestHeaders(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 
     .line 59

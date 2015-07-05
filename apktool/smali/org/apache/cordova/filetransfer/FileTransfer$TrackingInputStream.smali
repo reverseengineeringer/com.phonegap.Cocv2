@@ -20,10 +20,10 @@
     .param p1, "in"    # Ljava/io/InputStream;
 
     .prologue
-    .line 110
+    .line 112
     invoke-direct {p0, p1}, Ljava/io/FilterInputStream;-><init>(Ljava/io/InputStream;)V
 
-    .line 111
+    .line 113
     return-void
 .end method
 

@@ -465,24 +465,9 @@
 
     .local v1, "i":I
     :goto_0
-    if-lt v1, v4, :cond_1
-
-    .line 273
-    and-int/lit8 v9, p2, 0x1
-
-    if-eqz v9, :cond_2
-
-    .line 274
-    .local v0, "clearPrevious":Z
-    :goto_1
-    invoke-interface {p1, v0, v5}, Lcom/squareup/okhttp/internal/spdy/FrameReader$Handler;->settings(ZLcom/squareup/okhttp/internal/spdy/Settings;)V
-
-    .line 275
-    return-void
+    if-ge v1, v4, :cond_1
 
     .line 267
-    .end local v0    # "clearPrevious":Z
-    :cond_1
     iget-object v9, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Reader;->in:Ljava/io/DataInputStream;
 
     invoke-virtual {v9}, Ljava/io/DataInputStream;->readInt()I
@@ -520,10 +505,25 @@
 
     goto :goto_0
 
+    .line 273
     .end local v2    # "id":I
     .end local v3    # "idFlags":I
     .end local v6    # "value":I
     .end local v7    # "w1":I
+    :cond_1
+    and-int/lit8 v9, p2, 0x1
+
+    if-eqz v9, :cond_2
+
+    .line 274
+    .local v0, "clearPrevious":Z
+    :goto_1
+    invoke-interface {p1, v0, v5}, Lcom/squareup/okhttp/internal/spdy/FrameReader$Handler;->settings(ZLcom/squareup/okhttp/internal/spdy/Settings;)V
+
+    .line 275
+    return-void
+
+    .end local v0    # "clearPrevious":Z
     :cond_2
     move v0, v8
 
@@ -686,14 +686,13 @@
 
     const/4 v1, 0x1
 
-    .line 204
+    .line 203
     .local v1, "outFinished":Z
     :goto_1
     sget-object v7, Lcom/squareup/okhttp/internal/spdy/HeadersMode;->SPDY_SYN_STREAM:Lcom/squareup/okhttp/internal/spdy/HeadersMode;
 
     move-object v0, p1
 
-    .line 203
     invoke-interface/range {v0 .. v7}, Lcom/squareup/okhttp/internal/spdy/FrameReader$Handler;->headers(ZZIIILjava/util/List;Lcom/squareup/okhttp/internal/spdy/HeadersMode;)V
 
     .line 205
@@ -809,7 +808,7 @@
 .end method
 
 .method public nextFrame(Lcom/squareup/okhttp/internal/spdy/FrameReader$Handler;)Z
-    .locals 13
+    .locals 14
     .param p1, "handler"    # Lcom/squareup/okhttp/internal/spdy/FrameReader$Handler;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -893,9 +892,13 @@
 
     new-instance v11, Ljava/lang/StringBuilder;
 
+    invoke-direct {v11}, Ljava/lang/StringBuilder;-><init>()V
+
     const-string v12, "version != 3: "
 
-    invoke-direct {v11, v12}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v11
 
     invoke-virtual {v11, v7}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
@@ -1033,9 +1036,9 @@
     :pswitch_a
     iget-object v10, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Reader;->in:Ljava/io/DataInputStream;
 
-    int-to-long v11, v4
+    int-to-long v12, v4
 
-    invoke-static {v10, v11, v12}, Lcom/squareup/okhttp/internal/Util;->skipByReading(Ljava/io/InputStream;J)J
+    invoke-static {v10, v12, v13}, Lcom/squareup/okhttp/internal/Util;->skipByReading(Ljava/io/InputStream;J)J
 
     .line 178
     new-instance v10, Ljava/lang/UnsupportedOperationException;

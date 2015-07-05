@@ -20,11 +20,11 @@
 # instance fields
 .field final synthetic this$0:Lorg/apache/cordova/CordovaWebView;
 
-.field private final synthetic val$me:Lorg/apache/cordova/CordovaWebView;
+.field final synthetic val$me:Lorg/apache/cordova/CordovaWebView;
 
-.field private final synthetic val$timeoutCheck:Ljava/lang/Runnable;
+.field final synthetic val$timeoutCheck:Ljava/lang/Runnable;
 
-.field private final synthetic val$url:Ljava/lang/String;
+.field final synthetic val$url:Ljava/lang/String;
 
 
 # direct methods
@@ -32,7 +32,7 @@
     .locals 0
 
     .prologue
-    .line 1
+    .line 421
     iput-object p1, p0, Lorg/apache/cordova/CordovaWebView$4;->this$0:Lorg/apache/cordova/CordovaWebView;
 
     iput-object p2, p0, Lorg/apache/cordova/CordovaWebView$4;->val$timeoutCheck:Ljava/lang/Runnable;
@@ -41,7 +41,6 @@
 
     iput-object p4, p0, Lorg/apache/cordova/CordovaWebView$4;->val$url:Ljava/lang/String;
 
-    .line 495
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -53,11 +52,11 @@
     .locals 2
 
     .prologue
-    .line 497
+    .line 423
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebView$4;->this$0:Lorg/apache/cordova/CordovaWebView;
 
     # getter for: Lorg/apache/cordova/CordovaWebView;->cordova:Lorg/apache/cordova/CordovaInterface;
-    invoke-static {v0}, Lorg/apache/cordova/CordovaWebView;->access$1(Lorg/apache/cordova/CordovaWebView;)Lorg/apache/cordova/CordovaInterface;
+    invoke-static {v0}, Lorg/apache/cordova/CordovaWebView;->access$000(Lorg/apache/cordova/CordovaWebView;)Lorg/apache/cordova/CordovaInterface;
 
     move-result-object v0
 
@@ -69,13 +68,13 @@
 
     invoke-interface {v0, v1}, Ljava/util/concurrent/ExecutorService;->execute(Ljava/lang/Runnable;)V
 
-    .line 498
+    .line 424
     iget-object v0, p0, Lorg/apache/cordova/CordovaWebView$4;->val$me:Lorg/apache/cordova/CordovaWebView;
 
     iget-object v1, p0, Lorg/apache/cordova/CordovaWebView$4;->val$url:Ljava/lang/String;
 
     invoke-virtual {v0, v1}, Lorg/apache/cordova/CordovaWebView;->loadUrlNow(Ljava/lang/String;)V
 
-    .line 499
+    .line 425
     return-void
 .end method

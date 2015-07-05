@@ -134,7 +134,7 @@
     iget-object v0, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;->httpEngine:Lcom/squareup/okhttp/internal/http/HttpEngine;
 
     # invokes: Lcom/squareup/okhttp/internal/http/HttpTransport;->discardStream(Lcom/squareup/okhttp/internal/http/HttpEngine;Ljava/io/InputStream;)Z
-    invoke-static {v0, p0}, Lcom/squareup/okhttp/internal/http/HttpTransport;->access$0(Lcom/squareup/okhttp/internal/http/HttpEngine;Ljava/io/InputStream;)Z
+    invoke-static {v0, p0}, Lcom/squareup/okhttp/internal/http/HttpTransport;->access$200(Lcom/squareup/okhttp/internal/http/HttpEngine;Ljava/io/InputStream;)Z
 
     move-result v0
 
@@ -153,7 +153,7 @@
 .end method
 
 .method public read([BII)I
-    .locals 9
+    .locals 10
     .param p1, "buffer"    # [B
     .param p2, "offset"    # I
     .param p3, "count"    # I
@@ -164,7 +164,7 @@
     .end annotation
 
     .prologue
-    const-wide/16 v7, 0x0
+    const-wide/16 v8, 0x0
 
     const/4 v1, -0x1
 
@@ -179,7 +179,7 @@
     .line 387
     iget-wide v2, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;->bytesRemaining:J
 
-    cmp-long v2, v2, v7
+    cmp-long v2, v2, v8
 
     if-nez v2, :cond_1
 
@@ -194,15 +194,15 @@
     :cond_1
     iget-object v2, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;->in:Ljava/io/InputStream;
 
-    int-to-long v3, p3
+    int-to-long v4, p3
 
-    iget-wide v5, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;->bytesRemaining:J
+    iget-wide v6, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;->bytesRemaining:J
 
-    invoke-static {v3, v4, v5, v6}, Ljava/lang/Math;->min(JJ)J
+    invoke-static {v4, v5, v6, v7}, Ljava/lang/Math;->min(JJ)J
 
-    move-result-wide v3
+    move-result-wide v4
 
-    long-to-int v3, v3
+    long-to-int v3, v4
 
     invoke-virtual {v2, p1, p2, v3}, Ljava/io/InputStream;->read([BII)I
 
@@ -226,21 +226,21 @@
 
     .line 395
     :cond_2
-    iget-wide v1, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;->bytesRemaining:J
+    iget-wide v2, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;->bytesRemaining:J
 
-    int-to-long v3, v0
+    int-to-long v4, v0
 
-    sub-long/2addr v1, v3
+    sub-long/2addr v2, v4
 
-    iput-wide v1, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;->bytesRemaining:J
+    iput-wide v2, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;->bytesRemaining:J
 
     .line 396
     invoke-virtual {p0, p1, p2, v0}, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;->cacheWrite([BII)V
 
     .line 397
-    iget-wide v1, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;->bytesRemaining:J
+    iget-wide v2, p0, Lcom/squareup/okhttp/internal/http/HttpTransport$FixedLengthInputStream;->bytesRemaining:J
 
-    cmp-long v1, v1, v7
+    cmp-long v1, v2, v8
 
     if-nez v1, :cond_0
 

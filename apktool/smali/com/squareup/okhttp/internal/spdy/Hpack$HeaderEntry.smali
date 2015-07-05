@@ -40,21 +40,23 @@
     return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)Ljava/lang/String;
+.method static synthetic access$000(Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)Ljava/lang/String;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     .prologue
-    .line 34
+    .line 33
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->name:Ljava/lang/String;
 
     return-object v0
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)Ljava/lang/String;
+.method static synthetic access$100(Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;)Ljava/lang/String;
     .locals 1
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;
 
     .prologue
-    .line 35
+    .line 33
     iget-object v0, p0, Lcom/squareup/okhttp/internal/spdy/Hpack$HeaderEntry;->value:Ljava/lang/String;
 
     return-object v0

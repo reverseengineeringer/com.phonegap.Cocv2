@@ -74,6 +74,8 @@
     .line 38
     new-instance v0, Ljava/lang/StringBuilder;
 
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
     invoke-static {}, Lcom/squareup/okhttp/internal/Platform;->get()Lcom/squareup/okhttp/internal/Platform;
 
     move-result-object v1
@@ -82,11 +84,9 @@
 
     move-result-object v1
 
-    invoke-static {v1}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v0
 
     const-string v1, "-Sent-Millis"
 
@@ -103,6 +103,8 @@
     .line 41
     new-instance v0, Ljava/lang/StringBuilder;
 
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
     invoke-static {}, Lcom/squareup/okhttp/internal/Platform;->get()Lcom/squareup/okhttp/internal/Platform;
 
     move-result-object v1
@@ -111,11 +113,9 @@
 
     move-result-object v1
 
-    invoke-static {v1}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v0
 
     const-string v1, "-Received-Millis"
 
@@ -132,6 +132,8 @@
     .line 44
     new-instance v0, Ljava/lang/StringBuilder;
 
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
     invoke-static {}, Lcom/squareup/okhttp/internal/Platform;->get()Lcom/squareup/okhttp/internal/Platform;
 
     move-result-object v1
@@ -140,11 +142,9 @@
 
     move-result-object v1
 
-    invoke-static {v1}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v0
 
     const-string v1, "-Response-Source"
 
@@ -161,6 +161,8 @@
     .line 47
     new-instance v0, Ljava/lang/StringBuilder;
 
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
     invoke-static {}, Lcom/squareup/okhttp/internal/Platform;->get()Lcom/squareup/okhttp/internal/Platform;
 
     move-result-object v1
@@ -169,11 +171,9 @@
 
     move-result-object v1
 
-    invoke-static {v1}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v1
-
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v0
 
     const-string v1, "-Selected-Transport"
 
@@ -196,31 +196,31 @@
     .param p2, "headers"    # Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     .prologue
-    const/4 v5, -0x1
+    const/4 v8, -0x1
 
     .line 121
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     .line 91
-    iput v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->maxAgeSeconds:I
+    iput v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->maxAgeSeconds:I
 
     .line 98
-    iput v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->sMaxAgeSeconds:I
+    iput v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->sMaxAgeSeconds:I
 
     .line 110
-    iput v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->ageSeconds:I
+    iput v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->ageSeconds:I
 
     .line 113
     invoke-static {}, Ljava/util/Collections;->emptySet()Ljava/util/Set;
 
-    move-result-object v5
+    move-result-object v8
 
-    iput-object v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->varyFields:Ljava/util/Set;
+    iput-object v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->varyFields:Ljava/util/Set;
 
     .line 117
-    const-wide/16 v5, -0x1
+    const-wide/16 v8, -0x1
 
-    iput-wide v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->contentLength:J
+    iput-wide v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->contentLength:J
 
     .line 122
     iput-object p1, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->uri:Ljava/net/URI;
@@ -229,282 +229,284 @@
     iput-object p2, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     .line 125
-    new-instance v1, Lcom/squareup/okhttp/internal/http/ResponseHeaders$1;
+    new-instance v2, Lcom/squareup/okhttp/internal/http/ResponseHeaders$1;
 
-    invoke-direct {v1, p0}, Lcom/squareup/okhttp/internal/http/ResponseHeaders$1;-><init>(Lcom/squareup/okhttp/internal/http/ResponseHeaders;)V
+    invoke-direct {v2, p0}, Lcom/squareup/okhttp/internal/http/ResponseHeaders$1;-><init>(Lcom/squareup/okhttp/internal/http/ResponseHeaders;)V
 
     .line 143
-    .local v1, "handler":Lcom/squareup/okhttp/internal/http/HeaderParser$CacheControlHandler;
-    const/4 v2, 0x0
+    .local v2, "handler":Lcom/squareup/okhttp/internal/http/HeaderParser$CacheControlHandler;
+    const/4 v3, 0x0
 
-    .local v2, "i":I
+    .local v3, "i":I
     :goto_0
     invoke-virtual {p2}, Lcom/squareup/okhttp/internal/http/RawHeaders;->length()I
 
-    move-result v5
+    move-result v8
 
-    if-lt v2, v5, :cond_0
-
-    .line 189
-    return-void
+    if-ge v3, v8, :cond_10
 
     .line 144
-    :cond_0
-    invoke-virtual {p2, v2}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getFieldName(I)Ljava/lang/String;
+    invoke-virtual {p2, v3}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getFieldName(I)Ljava/lang/String;
 
-    move-result-object v0
+    move-result-object v1
 
     .line 145
-    .local v0, "fieldName":Ljava/lang/String;
-    invoke-virtual {p2, v2}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getValue(I)Ljava/lang/String;
+    .local v1, "fieldName":Ljava/lang/String;
+    invoke-virtual {p2, v3}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getValue(I)Ljava/lang/String;
 
-    move-result-object v3
+    move-result-object v6
 
     .line 146
-    .local v3, "value":Ljava/lang/String;
-    const-string v5, "Cache-Control"
+    .local v6, "value":Ljava/lang/String;
+    const-string v8, "Cache-Control"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_2
+    if-eqz v8, :cond_1
 
     .line 147
-    invoke-static {v3, v1}, Lcom/squareup/okhttp/internal/http/HeaderParser;->parseCacheControl(Ljava/lang/String;Lcom/squareup/okhttp/internal/http/HeaderParser$CacheControlHandler;)V
+    invoke-static {v6, v2}, Lcom/squareup/okhttp/internal/http/HeaderParser;->parseCacheControl(Ljava/lang/String;Lcom/squareup/okhttp/internal/http/HeaderParser$CacheControlHandler;)V
 
     .line 143
-    :cond_1
+    :cond_0
     :goto_1
-    add-int/lit8 v2, v2, 0x1
+    add-int/lit8 v3, v3, 0x1
 
     goto :goto_0
 
     .line 148
-    :cond_2
-    const-string v5, "Date"
+    :cond_1
+    const-string v8, "Date"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_3
+    if-eqz v8, :cond_2
 
     .line 149
-    invoke-static {v3}, Lcom/squareup/okhttp/internal/http/HttpDate;->parse(Ljava/lang/String;)Ljava/util/Date;
+    invoke-static {v6}, Lcom/squareup/okhttp/internal/http/HttpDate;->parse(Ljava/lang/String;)Ljava/util/Date;
 
-    move-result-object v5
+    move-result-object v8
 
-    iput-object v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->servedDate:Ljava/util/Date;
+    iput-object v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->servedDate:Ljava/util/Date;
 
     goto :goto_1
 
     .line 150
-    :cond_3
-    const-string v5, "Expires"
+    :cond_2
+    const-string v8, "Expires"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_4
+    if-eqz v8, :cond_3
 
     .line 151
-    invoke-static {v3}, Lcom/squareup/okhttp/internal/http/HttpDate;->parse(Ljava/lang/String;)Ljava/util/Date;
+    invoke-static {v6}, Lcom/squareup/okhttp/internal/http/HttpDate;->parse(Ljava/lang/String;)Ljava/util/Date;
 
-    move-result-object v5
+    move-result-object v8
 
-    iput-object v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->expires:Ljava/util/Date;
+    iput-object v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->expires:Ljava/util/Date;
 
     goto :goto_1
 
     .line 152
-    :cond_4
-    const-string v5, "Last-Modified"
+    :cond_3
+    const-string v8, "Last-Modified"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_5
+    if-eqz v8, :cond_4
 
     .line 153
-    invoke-static {v3}, Lcom/squareup/okhttp/internal/http/HttpDate;->parse(Ljava/lang/String;)Ljava/util/Date;
+    invoke-static {v6}, Lcom/squareup/okhttp/internal/http/HttpDate;->parse(Ljava/lang/String;)Ljava/util/Date;
 
-    move-result-object v5
+    move-result-object v8
 
-    iput-object v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->lastModified:Ljava/util/Date;
+    iput-object v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->lastModified:Ljava/util/Date;
 
     goto :goto_1
 
     .line 154
-    :cond_5
-    const-string v5, "ETag"
+    :cond_4
+    const-string v8, "ETag"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_6
+    if-eqz v8, :cond_5
 
     .line 155
-    iput-object v3, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->etag:Ljava/lang/String;
+    iput-object v6, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->etag:Ljava/lang/String;
 
     goto :goto_1
 
     .line 156
-    :cond_6
-    const-string v5, "Pragma"
+    :cond_5
+    const-string v8, "Pragma"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_7
+    if-eqz v8, :cond_6
 
     .line 157
-    const-string v5, "no-cache"
+    const-string v8, "no-cache"
 
-    invoke-virtual {v5, v3}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v6}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_1
+    if-eqz v8, :cond_0
 
     .line 158
-    const/4 v5, 0x1
+    const/4 v8, 0x1
 
-    iput-boolean v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->noCache:Z
+    iput-boolean v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->noCache:Z
 
     goto :goto_1
 
     .line 160
-    :cond_7
-    const-string v5, "Age"
+    :cond_6
+    const-string v8, "Age"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_8
+    if-eqz v8, :cond_7
 
     .line 161
-    invoke-static {v3}, Lcom/squareup/okhttp/internal/http/HeaderParser;->parseSeconds(Ljava/lang/String;)I
+    invoke-static {v6}, Lcom/squareup/okhttp/internal/http/HeaderParser;->parseSeconds(Ljava/lang/String;)I
 
-    move-result v5
+    move-result v8
 
-    iput v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->ageSeconds:I
+    iput v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->ageSeconds:I
 
     goto :goto_1
 
     .line 162
-    :cond_8
-    const-string v5, "Vary"
+    :cond_7
+    const-string v8, "Vary"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_a
+    if-eqz v8, :cond_9
 
     .line 164
-    iget-object v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->varyFields:Ljava/util/Set;
-
-    invoke-interface {v5}, Ljava/util/Set;->isEmpty()Z
-
-    move-result v5
-
-    if-eqz v5, :cond_9
-
-    .line 165
-    new-instance v5, Ljava/util/TreeSet;
-
-    sget-object v6, Ljava/lang/String;->CASE_INSENSITIVE_ORDER:Ljava/util/Comparator;
-
-    invoke-direct {v5, v6}, Ljava/util/TreeSet;-><init>(Ljava/util/Comparator;)V
-
-    iput-object v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->varyFields:Ljava/util/Set;
-
-    .line 167
-    :cond_9
-    const-string v5, ","
-
-    invoke-virtual {v3, v5}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
-
-    move-result-object v6
-
-    array-length v7, v6
-
-    const/4 v5, 0x0
-
-    :goto_2
-    if-ge v5, v7, :cond_1
-
-    aget-object v4, v6, v5
-
-    .line 168
-    .local v4, "varyField":Ljava/lang/String;
     iget-object v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->varyFields:Ljava/util/Set;
 
-    invoke-virtual {v4}, Ljava/lang/String;->trim()Ljava/lang/String;
+    invoke-interface {v8}, Ljava/util/Set;->isEmpty()Z
+
+    move-result v8
+
+    if-eqz v8, :cond_8
+
+    .line 165
+    new-instance v8, Ljava/util/TreeSet;
+
+    sget-object v9, Ljava/lang/String;->CASE_INSENSITIVE_ORDER:Ljava/util/Comparator;
+
+    invoke-direct {v8, v9}, Ljava/util/TreeSet;-><init>(Ljava/util/Comparator;)V
+
+    iput-object v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->varyFields:Ljava/util/Set;
+
+    .line 167
+    :cond_8
+    const-string v8, ","
+
+    invoke-virtual {v6, v8}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
+
+    move-result-object v0
+
+    .local v0, "arr$":[Ljava/lang/String;
+    array-length v5, v0
+
+    .local v5, "len$":I
+    const/4 v4, 0x0
+
+    .local v4, "i$":I
+    :goto_2
+    if-ge v4, v5, :cond_0
+
+    aget-object v7, v0, v4
+
+    .line 168
+    .local v7, "varyField":Ljava/lang/String;
+    iget-object v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->varyFields:Ljava/util/Set;
+
+    invoke-virtual {v7}, Ljava/lang/String;->trim()Ljava/lang/String;
 
     move-result-object v9
 
     invoke-interface {v8, v9}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
 
     .line 167
-    add-int/lit8 v5, v5, 0x1
+    add-int/lit8 v4, v4, 0x1
 
     goto :goto_2
 
     .line 170
-    .end local v4    # "varyField":Ljava/lang/String;
-    :cond_a
-    const-string v5, "Content-Encoding"
+    .end local v0    # "arr$":[Ljava/lang/String;
+    .end local v4    # "i$":I
+    .end local v5    # "len$":I
+    .end local v7    # "varyField":Ljava/lang/String;
+    :cond_9
+    const-string v8, "Content-Encoding"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_b
+    if-eqz v8, :cond_a
 
     .line 171
-    iput-object v3, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->contentEncoding:Ljava/lang/String;
+    iput-object v6, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->contentEncoding:Ljava/lang/String;
 
     goto/16 :goto_1
 
     .line 172
-    :cond_b
-    const-string v5, "Transfer-Encoding"
+    :cond_a
+    const-string v8, "Transfer-Encoding"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_c
+    if-eqz v8, :cond_b
 
     .line 173
-    iput-object v3, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->transferEncoding:Ljava/lang/String;
+    iput-object v6, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->transferEncoding:Ljava/lang/String;
 
     goto/16 :goto_1
 
     .line 174
-    :cond_c
-    const-string v5, "Content-Length"
+    :cond_b
+    const-string v8, "Content-Length"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_d
+    if-eqz v8, :cond_c
 
     .line 176
     :try_start_0
-    invoke-static {v3}, Ljava/lang/Long;->parseLong(Ljava/lang/String;)J
+    invoke-static {v6}, Ljava/lang/Long;->parseLong(Ljava/lang/String;)J
 
-    move-result-wide v5
+    move-result-wide v8
 
-    iput-wide v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->contentLength:J
+    iput-wide v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->contentLength:J
     :try_end_0
     .catch Ljava/lang/NumberFormatException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -512,147 +514,165 @@
 
     .line 177
     :catch_0
-    move-exception v5
+    move-exception v8
 
     goto/16 :goto_1
 
     .line 179
-    :cond_d
-    const-string v5, "Content-Type"
+    :cond_c
+    const-string v8, "Content-Type"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_e
+    if-eqz v8, :cond_d
 
     .line 180
-    iput-object v3, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->contentType:Ljava/lang/String;
+    iput-object v6, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->contentType:Ljava/lang/String;
 
     goto/16 :goto_1
 
     .line 181
-    :cond_e
-    const-string v5, "Connection"
+    :cond_d
+    const-string v8, "Connection"
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_f
+    if-eqz v8, :cond_e
 
     .line 182
-    iput-object v3, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->connection:Ljava/lang/String;
+    iput-object v6, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->connection:Ljava/lang/String;
 
     goto/16 :goto_1
 
     .line 183
-    :cond_f
-    sget-object v5, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->SENT_MILLIS:Ljava/lang/String;
+    :cond_e
+    sget-object v8, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->SENT_MILLIS:Ljava/lang/String;
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_10
+    if-eqz v8, :cond_f
 
     .line 184
-    invoke-static {v3}, Ljava/lang/Long;->parseLong(Ljava/lang/String;)J
+    invoke-static {v6}, Ljava/lang/Long;->parseLong(Ljava/lang/String;)J
 
-    move-result-wide v5
+    move-result-wide v8
 
-    iput-wide v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->sentRequestMillis:J
+    iput-wide v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->sentRequestMillis:J
 
     goto/16 :goto_1
 
     .line 185
-    :cond_10
-    sget-object v5, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->RECEIVED_MILLIS:Ljava/lang/String;
+    :cond_f
+    sget-object v8, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->RECEIVED_MILLIS:Ljava/lang/String;
 
-    invoke-virtual {v5, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+    invoke-virtual {v8, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
-    move-result v5
+    move-result v8
 
-    if-eqz v5, :cond_1
+    if-eqz v8, :cond_0
 
     .line 186
-    invoke-static {v3}, Ljava/lang/Long;->parseLong(Ljava/lang/String;)J
+    invoke-static {v6}, Ljava/lang/Long;->parseLong(Ljava/lang/String;)J
 
-    move-result-wide v5
+    move-result-wide v8
 
-    iput-wide v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->receivedResponseMillis:J
+    iput-wide v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->receivedResponseMillis:J
 
     goto/16 :goto_1
+
+    .line 189
+    .end local v1    # "fieldName":Ljava/lang/String;
+    .end local v6    # "value":Ljava/lang/String;
+    :cond_10
+    return-void
 .end method
 
-.method static synthetic access$0(Lcom/squareup/okhttp/internal/http/ResponseHeaders;Z)V
+.method static synthetic access$002(Lcom/squareup/okhttp/internal/http/ResponseHeaders;Z)Z
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/ResponseHeaders;
+    .param p1, "x1"    # Z
 
     .prologue
-    .line 82
+    .line 35
     iput-boolean p1, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->noCache:Z
 
-    return-void
+    return p1
 .end method
 
-.method static synthetic access$1(Lcom/squareup/okhttp/internal/http/ResponseHeaders;Z)V
+.method static synthetic access$102(Lcom/squareup/okhttp/internal/http/ResponseHeaders;Z)Z
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/ResponseHeaders;
+    .param p1, "x1"    # Z
 
     .prologue
-    .line 85
+    .line 35
     iput-boolean p1, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->noStore:Z
 
-    return-void
+    return p1
 .end method
 
-.method static synthetic access$2(Lcom/squareup/okhttp/internal/http/ResponseHeaders;I)V
+.method static synthetic access$202(Lcom/squareup/okhttp/internal/http/ResponseHeaders;I)I
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/ResponseHeaders;
+    .param p1, "x1"    # I
 
     .prologue
-    .line 91
+    .line 35
     iput p1, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->maxAgeSeconds:I
 
-    return-void
+    return p1
 .end method
 
-.method static synthetic access$3(Lcom/squareup/okhttp/internal/http/ResponseHeaders;I)V
+.method static synthetic access$302(Lcom/squareup/okhttp/internal/http/ResponseHeaders;I)I
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/ResponseHeaders;
+    .param p1, "x1"    # I
 
     .prologue
-    .line 98
+    .line 35
     iput p1, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->sMaxAgeSeconds:I
 
-    return-void
+    return p1
 .end method
 
-.method static synthetic access$4(Lcom/squareup/okhttp/internal/http/ResponseHeaders;Z)V
+.method static synthetic access$402(Lcom/squareup/okhttp/internal/http/ResponseHeaders;Z)Z
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/ResponseHeaders;
+    .param p1, "x1"    # Z
 
     .prologue
-    .line 107
+    .line 35
     iput-boolean p1, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->isPublic:Z
 
-    return-void
+    return p1
 .end method
 
-.method static synthetic access$5(Lcom/squareup/okhttp/internal/http/ResponseHeaders;Z)V
+.method static synthetic access$502(Lcom/squareup/okhttp/internal/http/ResponseHeaders;Z)Z
     .locals 0
+    .param p0, "x0"    # Lcom/squareup/okhttp/internal/http/ResponseHeaders;
+    .param p1, "x1"    # Z
 
     .prologue
-    .line 108
+    .line 35
     iput-boolean p1, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->mustRevalidate:Z
 
-    return-void
+    return p1
 .end method
 
 .method private computeAge(J)J
-    .locals 12
+    .locals 13
     .param p1, "nowMillis"    # J
 
     .prologue
     const-wide/16 v0, 0x0
 
-    .line 302
+    .line 301
     iget-object v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->servedDate:Ljava/util/Date;
 
     if-eqz v8, :cond_0
@@ -671,7 +691,7 @@
 
     move-result-wide v0
 
-    .line 304
+    .line 303
     .local v0, "apparentReceivedAge":J
     :cond_0
     iget v8, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->ageSeconds:I
@@ -684,9 +704,9 @@
 
     iget v9, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->ageSeconds:I
 
-    int-to-long v9, v9
+    int-to-long v10, v9
 
-    invoke-virtual {v8, v9, v10}, Ljava/util/concurrent/TimeUnit;->toMillis(J)J
+    invoke-virtual {v8, v10, v11}, Ljava/util/concurrent/TimeUnit;->toMillis(J)J
 
     move-result-wide v8
 
@@ -723,7 +743,7 @@
     :cond_1
     move-wide v2, v0
 
-    .line 305
+    .line 303
     goto :goto_0
 .end method
 
@@ -745,9 +765,9 @@
 
     iget v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->maxAgeSeconds:I
 
-    int-to-long v5, v5
+    int-to-long v6, v5
 
-    invoke-virtual {v4, v5, v6}, Ljava/util/concurrent/TimeUnit;->toMillis(J)J
+    invoke-virtual {v4, v6, v7}, Ljava/util/concurrent/TimeUnit;->toMillis(J)J
 
     move-result-wide v4
 
@@ -884,7 +904,6 @@
 
     if-nez v0, :cond_0
 
-    .line 504
     const-string v0, "Keep-Alive"
 
     invoke-virtual {v0, p0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
@@ -893,7 +912,6 @@
 
     if-nez v0, :cond_0
 
-    .line 505
     const-string v0, "Proxy-Authenticate"
 
     invoke-virtual {v0, p0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
@@ -902,7 +920,6 @@
 
     if-nez v0, :cond_0
 
-    .line 506
     const-string v0, "Proxy-Authorization"
 
     invoke-virtual {v0, p0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
@@ -911,7 +928,6 @@
 
     if-nez v0, :cond_0
 
-    .line 507
     const-string v0, "TE"
 
     invoke-virtual {v0, p0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
@@ -920,7 +936,6 @@
 
     if-nez v0, :cond_0
 
-    .line 508
     const-string v0, "Trailers"
 
     invoke-virtual {v0, p0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
@@ -929,7 +944,6 @@
 
     if-nez v0, :cond_0
 
-    .line 509
     const-string v0, "Transfer-Encoding"
 
     invoke-virtual {v0, p0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
@@ -938,7 +952,6 @@
 
     if-nez v0, :cond_0
 
-    .line 510
     const-string v0, "Upgrade"
 
     invoke-virtual {v0, p0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
@@ -947,7 +960,6 @@
 
     if-nez v0, :cond_0
 
-    .line 503
     const/4 v0, 0x1
 
     :goto_0
@@ -988,44 +1000,46 @@
 
 # virtual methods
 .method public chooseResponseSource(JLcom/squareup/okhttp/internal/http/RequestHeaders;)Lcom/squareup/okhttp/ResponseSource;
-    .locals 15
+    .locals 17
     .param p1, "nowMillis"    # J
     .param p3, "request"    # Lcom/squareup/okhttp/internal/http/RequestHeaders;
 
     .prologue
     .line 399
-    move-object/from16 v0, p3
+    move-object/from16 v0, p0
 
-    invoke-virtual {p0, v0}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->isCacheable(Lcom/squareup/okhttp/internal/http/RequestHeaders;)Z
+    move-object/from16 v1, p3
 
-    move-result v11
+    invoke-virtual {v0, v1}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->isCacheable(Lcom/squareup/okhttp/internal/http/RequestHeaders;)Z
 
-    if-nez v11, :cond_0
+    move-result v12
+
+    if-nez v12, :cond_0
 
     .line 400
-    sget-object v11, Lcom/squareup/okhttp/ResponseSource;->NETWORK:Lcom/squareup/okhttp/ResponseSource;
+    sget-object v12, Lcom/squareup/okhttp/ResponseSource;->NETWORK:Lcom/squareup/okhttp/ResponseSource;
 
     .line 445
     :goto_0
-    return-object v11
+    return-object v12
 
     .line 403
     :cond_0
     invoke-virtual/range {p3 .. p3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->isNoCache()Z
 
-    move-result v11
+    move-result v12
 
-    if-nez v11, :cond_1
+    if-nez v12, :cond_1
 
     invoke-virtual/range {p3 .. p3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->hasConditions()Z
 
-    move-result v11
+    move-result v12
 
-    if-eqz v11, :cond_2
+    if-eqz v12, :cond_2
 
     .line 404
     :cond_1
-    sget-object v11, Lcom/squareup/okhttp/ResponseSource;->NETWORK:Lcom/squareup/okhttp/ResponseSource;
+    sget-object v12, Lcom/squareup/okhttp/ResponseSource;->NETWORK:Lcom/squareup/okhttp/ResponseSource;
 
     goto :goto_0
 
@@ -1033,218 +1047,238 @@
     :cond_2
     invoke-direct/range {p0 .. p2}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->computeAge(J)J
 
-    move-result-wide v1
+    move-result-wide v2
 
     .line 408
-    .local v1, "ageMillis":J
-    invoke-direct {p0}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->computeFreshnessLifetime()J
+    .local v2, "ageMillis":J
+    invoke-direct/range {p0 .. p0}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->computeFreshnessLifetime()J
 
-    move-result-wide v3
+    move-result-wide v4
 
     .line 410
-    .local v3, "freshMillis":J
-    invoke-virtual/range {p3 .. p3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getMaxAgeSeconds()I
-
-    move-result v11
-
-    const/4 v12, -0x1
-
-    if-eq v11, v12, :cond_3
-
-    .line 411
-    sget-object v11, Ljava/util/concurrent/TimeUnit;->SECONDS:Ljava/util/concurrent/TimeUnit;
-
+    .local v4, "freshMillis":J
     invoke-virtual/range {p3 .. p3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getMaxAgeSeconds()I
 
     move-result v12
 
-    int-to-long v12, v12
+    const/4 v13, -0x1
 
-    invoke-virtual {v11, v12, v13}, Ljava/util/concurrent/TimeUnit;->toMillis(J)J
+    if-eq v12, v13, :cond_3
 
-    move-result-wide v11
+    .line 411
+    sget-object v12, Ljava/util/concurrent/TimeUnit;->SECONDS:Ljava/util/concurrent/TimeUnit;
 
-    invoke-static {v3, v4, v11, v12}, Ljava/lang/Math;->min(JJ)J
+    invoke-virtual/range {p3 .. p3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getMaxAgeSeconds()I
 
-    move-result-wide v3
+    move-result v13
+
+    int-to-long v14, v13
+
+    invoke-virtual {v12, v14, v15}, Ljava/util/concurrent/TimeUnit;->toMillis(J)J
+
+    move-result-wide v12
+
+    invoke-static {v4, v5, v12, v13}, Ljava/lang/Math;->min(JJ)J
+
+    move-result-wide v4
 
     .line 414
     :cond_3
-    const-wide/16 v7, 0x0
+    const-wide/16 v8, 0x0
 
     .line 415
-    .local v7, "minFreshMillis":J
-    invoke-virtual/range {p3 .. p3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getMinFreshSeconds()I
-
-    move-result v11
-
-    const/4 v12, -0x1
-
-    if-eq v11, v12, :cond_4
-
-    .line 416
-    sget-object v11, Ljava/util/concurrent/TimeUnit;->SECONDS:Ljava/util/concurrent/TimeUnit;
-
+    .local v8, "minFreshMillis":J
     invoke-virtual/range {p3 .. p3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getMinFreshSeconds()I
 
     move-result v12
 
-    int-to-long v12, v12
+    const/4 v13, -0x1
 
-    invoke-virtual {v11, v12, v13}, Ljava/util/concurrent/TimeUnit;->toMillis(J)J
+    if-eq v12, v13, :cond_4
 
-    move-result-wide v7
+    .line 416
+    sget-object v12, Ljava/util/concurrent/TimeUnit;->SECONDS:Ljava/util/concurrent/TimeUnit;
+
+    invoke-virtual/range {p3 .. p3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getMinFreshSeconds()I
+
+    move-result v13
+
+    int-to-long v14, v13
+
+    invoke-virtual {v12, v14, v15}, Ljava/util/concurrent/TimeUnit;->toMillis(J)J
+
+    move-result-wide v8
 
     .line 419
     :cond_4
-    const-wide/16 v5, 0x0
+    const-wide/16 v6, 0x0
 
     .line 420
-    .local v5, "maxStaleMillis":J
-    iget-boolean v11, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->mustRevalidate:Z
+    .local v6, "maxStaleMillis":J
+    move-object/from16 v0, p0
 
-    if-nez v11, :cond_5
+    iget-boolean v12, v0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->mustRevalidate:Z
 
-    invoke-virtual/range {p3 .. p3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getMaxStaleSeconds()I
-
-    move-result v11
-
-    const/4 v12, -0x1
-
-    if-eq v11, v12, :cond_5
-
-    .line 421
-    sget-object v11, Ljava/util/concurrent/TimeUnit;->SECONDS:Ljava/util/concurrent/TimeUnit;
+    if-nez v12, :cond_5
 
     invoke-virtual/range {p3 .. p3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getMaxStaleSeconds()I
 
     move-result v12
 
-    int-to-long v12, v12
+    const/4 v13, -0x1
 
-    invoke-virtual {v11, v12, v13}, Ljava/util/concurrent/TimeUnit;->toMillis(J)J
+    if-eq v12, v13, :cond_5
 
-    move-result-wide v5
+    .line 421
+    sget-object v12, Ljava/util/concurrent/TimeUnit;->SECONDS:Ljava/util/concurrent/TimeUnit;
+
+    invoke-virtual/range {p3 .. p3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->getMaxStaleSeconds()I
+
+    move-result v13
+
+    int-to-long v14, v13
+
+    invoke-virtual {v12, v14, v15}, Ljava/util/concurrent/TimeUnit;->toMillis(J)J
+
+    move-result-wide v6
 
     .line 424
     :cond_5
-    iget-boolean v11, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->noCache:Z
+    move-object/from16 v0, p0
 
-    if-nez v11, :cond_8
+    iget-boolean v12, v0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->noCache:Z
 
-    add-long v11, v1, v7
+    if-nez v12, :cond_8
 
-    add-long v13, v3, v5
+    add-long v12, v2, v8
 
-    cmp-long v11, v11, v13
+    add-long v14, v4, v6
 
-    if-gez v11, :cond_8
+    cmp-long v12, v12, v14
+
+    if-gez v12, :cond_8
 
     .line 425
-    add-long v11, v1, v7
+    add-long v12, v2, v8
 
-    cmp-long v11, v11, v3
+    cmp-long v12, v12, v4
 
-    if-ltz v11, :cond_6
+    if-ltz v12, :cond_6
 
     .line 426
-    iget-object v11, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
+    move-object/from16 v0, p0
 
-    const-string v12, "Warning"
+    iget-object v12, v0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
-    const-string v13, "110 HttpURLConnection \"Response is stale\""
+    const-string v13, "Warning"
 
-    invoke-virtual {v11, v12, v13}, Lcom/squareup/okhttp/internal/http/RawHeaders;->add(Ljava/lang/String;Ljava/lang/String;)V
+    const-string v14, "110 HttpURLConnection \"Response is stale\""
+
+    invoke-virtual {v12, v13, v14}, Lcom/squareup/okhttp/internal/http/RawHeaders;->add(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 428
     :cond_6
-    const-wide/32 v9, 0x5265c00
+    const-wide/32 v10, 0x5265c00
 
     .line 429
-    .local v9, "oneDayMillis":J
-    cmp-long v11, v1, v9
+    .local v10, "oneDayMillis":J
+    cmp-long v12, v2, v10
 
-    if-lez v11, :cond_7
+    if-lez v12, :cond_7
 
-    invoke-direct {p0}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->isFreshnessLifetimeHeuristic()Z
+    invoke-direct/range {p0 .. p0}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->isFreshnessLifetimeHeuristic()Z
 
-    move-result v11
+    move-result v12
 
-    if-eqz v11, :cond_7
+    if-eqz v12, :cond_7
 
     .line 430
-    iget-object v11, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
+    move-object/from16 v0, p0
 
-    const-string v12, "Warning"
+    iget-object v12, v0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
-    const-string v13, "113 HttpURLConnection \"Heuristic expiration\""
+    const-string v13, "Warning"
 
-    invoke-virtual {v11, v12, v13}, Lcom/squareup/okhttp/internal/http/RawHeaders;->add(Ljava/lang/String;Ljava/lang/String;)V
+    const-string v14, "113 HttpURLConnection \"Heuristic expiration\""
+
+    invoke-virtual {v12, v13, v14}, Lcom/squareup/okhttp/internal/http/RawHeaders;->add(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 432
     :cond_7
-    sget-object v11, Lcom/squareup/okhttp/ResponseSource;->CACHE:Lcom/squareup/okhttp/ResponseSource;
+    sget-object v12, Lcom/squareup/okhttp/ResponseSource;->CACHE:Lcom/squareup/okhttp/ResponseSource;
 
     goto/16 :goto_0
 
     .line 435
-    .end local v9    # "oneDayMillis":J
+    .end local v10    # "oneDayMillis":J
     :cond_8
-    iget-object v11, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->lastModified:Ljava/util/Date;
+    move-object/from16 v0, p0
 
-    if-eqz v11, :cond_b
+    iget-object v12, v0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->lastModified:Ljava/util/Date;
+
+    if-eqz v12, :cond_b
 
     .line 436
-    iget-object v11, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->lastModified:Ljava/util/Date;
+    move-object/from16 v0, p0
+
+    iget-object v12, v0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->lastModified:Ljava/util/Date;
 
     move-object/from16 v0, p3
 
-    invoke-virtual {v0, v11}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setIfModifiedSince(Ljava/util/Date;)V
+    invoke-virtual {v0, v12}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setIfModifiedSince(Ljava/util/Date;)V
 
     .line 441
     :cond_9
     :goto_1
-    iget-object v11, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->etag:Ljava/lang/String;
+    move-object/from16 v0, p0
 
-    if-eqz v11, :cond_a
+    iget-object v12, v0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->etag:Ljava/lang/String;
+
+    if-eqz v12, :cond_a
 
     .line 442
-    iget-object v11, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->etag:Ljava/lang/String;
+    move-object/from16 v0, p0
+
+    iget-object v12, v0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->etag:Ljava/lang/String;
 
     move-object/from16 v0, p3
 
-    invoke-virtual {v0, v11}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setIfNoneMatch(Ljava/lang/String;)V
+    invoke-virtual {v0, v12}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setIfNoneMatch(Ljava/lang/String;)V
 
     .line 445
     :cond_a
     invoke-virtual/range {p3 .. p3}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->hasConditions()Z
 
-    move-result v11
+    move-result v12
 
-    if-eqz v11, :cond_c
+    if-eqz v12, :cond_c
 
-    sget-object v11, Lcom/squareup/okhttp/ResponseSource;->CONDITIONAL_CACHE:Lcom/squareup/okhttp/ResponseSource;
+    sget-object v12, Lcom/squareup/okhttp/ResponseSource;->CONDITIONAL_CACHE:Lcom/squareup/okhttp/ResponseSource;
 
     goto/16 :goto_0
 
     .line 437
     :cond_b
-    iget-object v11, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->servedDate:Ljava/util/Date;
+    move-object/from16 v0, p0
 
-    if-eqz v11, :cond_9
+    iget-object v12, v0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->servedDate:Ljava/util/Date;
+
+    if-eqz v12, :cond_9
 
     .line 438
-    iget-object v11, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->servedDate:Ljava/util/Date;
+    move-object/from16 v0, p0
+
+    iget-object v12, v0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->servedDate:Ljava/util/Date;
 
     move-object/from16 v0, p3
 
-    invoke-virtual {v0, v11}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setIfModifiedSince(Ljava/util/Date;)V
+    invoke-virtual {v0, v12}, Lcom/squareup/okhttp/internal/http/RequestHeaders;->setIfModifiedSince(Ljava/util/Date;)V
 
     goto :goto_1
 
     .line 445
     :cond_c
-    sget-object v11, Lcom/squareup/okhttp/ResponseSource;->NETWORK:Lcom/squareup/okhttp/ResponseSource;
+    sget-object v12, Lcom/squareup/okhttp/ResponseSource;->NETWORK:Lcom/squareup/okhttp/ResponseSource;
 
     goto/16 :goto_0
 .end method
@@ -1285,31 +1319,9 @@
 
     move-result v4
 
-    if-lt v1, v4, :cond_0
-
-    .line 488
-    const/4 v1, 0x0
-
-    :goto_1
-    iget-object v4, p1, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
-
-    invoke-virtual {v4}, Lcom/squareup/okhttp/internal/http/RawHeaders;->length()I
-
-    move-result v4
-
-    if-lt v1, v4, :cond_4
-
-    .line 495
-    new-instance v4, Lcom/squareup/okhttp/internal/http/ResponseHeaders;
-
-    iget-object v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->uri:Ljava/net/URI;
-
-    invoke-direct {v4, v5, v2}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;-><init>(Ljava/net/URI;Lcom/squareup/okhttp/internal/http/RawHeaders;)V
-
-    return-object v4
+    if-ge v1, v4, :cond_3
 
     .line 478
-    :cond_0
     iget-object v4, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     invoke-virtual {v4, v1}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getFieldName(I)Ljava/lang/String;
@@ -1332,7 +1344,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_2
+    if-eqz v4, :cond_1
 
     const-string v4, "1"
 
@@ -1340,22 +1352,22 @@
 
     move-result v4
 
-    if-eqz v4, :cond_2
+    if-eqz v4, :cond_1
 
     .line 477
-    :cond_1
-    :goto_2
+    :cond_0
+    :goto_1
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
     .line 483
-    :cond_2
+    :cond_1
     invoke-static {v0}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->isEndToEnd(Ljava/lang/String;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_3
+    if-eqz v4, :cond_2
 
     iget-object v4, p1, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
@@ -1363,18 +1375,30 @@
 
     move-result-object v4
 
-    if-nez v4, :cond_1
+    if-nez v4, :cond_0
 
     .line 484
-    :cond_3
+    :cond_2
     invoke-virtual {v2, v0, v3}, Lcom/squareup/okhttp/internal/http/RawHeaders;->add(Ljava/lang/String;Ljava/lang/String;)V
 
-    goto :goto_2
+    goto :goto_1
 
-    .line 489
+    .line 488
     .end local v0    # "fieldName":Ljava/lang/String;
     .end local v3    # "value":Ljava/lang/String;
-    :cond_4
+    :cond_3
+    const/4 v1, 0x0
+
+    :goto_2
+    iget-object v4, p1, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
+
+    invoke-virtual {v4}, Lcom/squareup/okhttp/internal/http/RawHeaders;->length()I
+
+    move-result v4
+
+    if-ge v1, v4, :cond_5
+
+    .line 489
     iget-object v4, p1, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
 
     invoke-virtual {v4, v1}, Lcom/squareup/okhttp/internal/http/RawHeaders;->getFieldName(I)Ljava/lang/String;
@@ -1387,7 +1411,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_5
+    if-eqz v4, :cond_4
 
     .line 491
     iget-object v4, p1, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->headers:Lcom/squareup/okhttp/internal/http/RawHeaders;
@@ -1399,10 +1423,21 @@
     invoke-virtual {v2, v0, v4}, Lcom/squareup/okhttp/internal/http/RawHeaders;->add(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 488
-    :cond_5
+    :cond_4
     add-int/lit8 v1, v1, 0x1
 
-    goto :goto_1
+    goto :goto_2
+
+    .line 495
+    .end local v0    # "fieldName":Ljava/lang/String;
+    :cond_5
+    new-instance v4, Lcom/squareup/okhttp/internal/http/ResponseHeaders;
+
+    iget-object v5, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->uri:Ljava/net/URI;
+
+    invoke-direct {v4, v5, v2}, Lcom/squareup/okhttp/internal/http/ResponseHeaders;-><init>(Ljava/net/URI;Lcom/squareup/okhttp/internal/http/RawHeaders;)V
+
+    return-object v4
 .end method
 
 .method public getConnection()Ljava/lang/String;
@@ -1596,22 +1631,18 @@
 
     if-eq v0, v2, :cond_1
 
-    .line 352
     const/16 v2, 0xcb
 
     if-eq v0, v2, :cond_1
 
-    .line 353
     const/16 v2, 0x12c
 
     if-eq v0, v2, :cond_1
 
-    .line 354
     const/16 v2, 0x12d
 
     if-eq v0, v2, :cond_1
 
-    .line 355
     const/16 v2, 0x19a
 
     if-eq v0, v2, :cond_1
@@ -1777,15 +1808,15 @@
 
     new-instance v2, Ljava/lang/StringBuilder;
 
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
     invoke-virtual {p1}, Lcom/squareup/okhttp/ResponseSource;->toString()Ljava/lang/String;
 
     move-result-object v3
 
-    invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
-
-    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+    move-result-object v2
 
     const-string v3, " "
 
@@ -1870,7 +1901,7 @@
 .end method
 
 .method public validate(Lcom/squareup/okhttp/internal/http/ResponseHeaders;)Z
-    .locals 5
+    .locals 6
     .param p1, "networkResponse"    # Lcom/squareup/okhttp/internal/http/ResponseHeaders;
 
     .prologue
@@ -1898,25 +1929,23 @@
 
     if-eqz v1, :cond_2
 
-    .line 461
     iget-object v1, p1, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->lastModified:Ljava/util/Date;
 
     if-eqz v1, :cond_2
 
-    .line 462
     iget-object v1, p1, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->lastModified:Ljava/util/Date;
 
     invoke-virtual {v1}, Ljava/util/Date;->getTime()J
 
-    move-result-wide v1
+    move-result-wide v2
 
-    iget-object v3, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->lastModified:Ljava/util/Date;
+    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->lastModified:Ljava/util/Date;
 
-    invoke-virtual {v3}, Ljava/util/Date;->getTime()J
+    invoke-virtual {v1}, Ljava/util/Date;->getTime()J
 
-    move-result-wide v3
+    move-result-wide v4
 
-    cmp-long v1, v1, v3
+    cmp-long v1, v2, v4
 
     if-ltz v1, :cond_0
 
@@ -1953,27 +1982,20 @@
     .line 386
     .local p1, "cachedRequest":Ljava/util/Map;, "Ljava/util/Map<Ljava/lang/String;Ljava/util/List<Ljava/lang/String;>;>;"
     .local p2, "newRequest":Ljava/util/Map;, "Ljava/util/Map<Ljava/lang/String;Ljava/util/List<Ljava/lang/String;>;>;"
-    iget-object v1, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->varyFields:Ljava/util/Set;
+    iget-object v2, p0, Lcom/squareup/okhttp/internal/http/ResponseHeaders;->varyFields:Ljava/util/Set;
 
-    invoke-interface {v1}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
+    invoke-interface {v2}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
 
     move-result-object v1
 
+    .local v1, "i$":Ljava/util/Iterator;
     :cond_0
     invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v2
 
-    if-nez v2, :cond_1
+    if-eqz v2, :cond_1
 
-    .line 391
-    const/4 v1, 0x1
-
-    :goto_0
-    return v1
-
-    .line 386
-    :cond_1
     invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v0
@@ -1997,7 +2019,15 @@
     if-nez v2, :cond_0
 
     .line 388
-    const/4 v1, 0x0
+    const/4 v2, 0x0
+
+    .line 391
+    .end local v0    # "field":Ljava/lang/String;
+    :goto_0
+    return v2
+
+    :cond_1
+    const/4 v2, 0x1
 
     goto :goto_0
 .end method

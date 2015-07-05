@@ -68,7 +68,6 @@
     .line 300
     new-instance v1, Ljava/io/DataOutputStream;
 
-    .line 301
     invoke-static {}, Lcom/squareup/okhttp/internal/Platform;->get()Lcom/squareup/okhttp/internal/Platform;
 
     move-result-object v2
@@ -83,7 +82,6 @@
 
     invoke-direct {v1, v2}, Ljava/io/DataOutputStream;-><init>(Ljava/io/OutputStream;)V
 
-    .line 300
     iput-object v1, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Writer;->nameValueBlockOut:Ljava/io/DataOutputStream;
 
     .line 302
@@ -111,56 +109,47 @@
     .prologue
     .line 385
     .local p1, "nameValueBlock":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
-    iget-object v2, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Writer;->nameValueBlockBuffer:Ljava/io/ByteArrayOutputStream;
+    iget-object v3, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Writer;->nameValueBlockBuffer:Ljava/io/ByteArrayOutputStream;
 
-    invoke-virtual {v2}, Ljava/io/ByteArrayOutputStream;->reset()V
+    invoke-virtual {v3}, Ljava/io/ByteArrayOutputStream;->reset()V
 
     .line 386
     invoke-interface {p1}, Ljava/util/List;->size()I
 
-    move-result v2
+    move-result v3
 
-    div-int/lit8 v0, v2, 0x2
+    div-int/lit8 v1, v3, 0x2
 
     .line 387
-    .local v0, "numberOfPairs":I
-    iget-object v2, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Writer;->nameValueBlockOut:Ljava/io/DataOutputStream;
+    .local v1, "numberOfPairs":I
+    iget-object v3, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Writer;->nameValueBlockOut:Ljava/io/DataOutputStream;
 
-    invoke-virtual {v2, v0}, Ljava/io/DataOutputStream;->writeInt(I)V
+    invoke-virtual {v3, v1}, Ljava/io/DataOutputStream;->writeInt(I)V
 
     .line 388
     invoke-interface {p1}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
-    move-result-object v2
+    move-result-object v0
 
+    .local v0, "i$":Ljava/util/Iterator;
     :goto_0
-    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
+    invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v3
 
-    if-nez v3, :cond_0
+    if-eqz v3, :cond_0
 
-    .line 392
-    iget-object v2, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Writer;->nameValueBlockOut:Ljava/io/DataOutputStream;
+    invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    invoke-virtual {v2}, Ljava/io/DataOutputStream;->flush()V
+    move-result-object v2
 
-    .line 393
-    return-void
-
-    .line 388
-    :cond_0
-    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v1
-
-    check-cast v1, Ljava/lang/String;
+    check-cast v2, Ljava/lang/String;
 
     .line 389
-    .local v1, "s":Ljava/lang/String;
+    .local v2, "s":Ljava/lang/String;
     iget-object v3, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Writer;->nameValueBlockOut:Ljava/io/DataOutputStream;
 
-    invoke-virtual {v1}, Ljava/lang/String;->length()I
+    invoke-virtual {v2}, Ljava/lang/String;->length()I
 
     move-result v4
 
@@ -171,13 +160,23 @@
 
     const-string v4, "UTF-8"
 
-    invoke-virtual {v1, v4}, Ljava/lang/String;->getBytes(Ljava/lang/String;)[B
+    invoke-virtual {v2, v4}, Ljava/lang/String;->getBytes(Ljava/lang/String;)[B
 
     move-result-object v4
 
     invoke-virtual {v3, v4}, Ljava/io/DataOutputStream;->write([B)V
 
     goto :goto_0
+
+    .line 392
+    .end local v2    # "s":Ljava/lang/String;
+    :cond_0
+    iget-object v3, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Writer;->nameValueBlockOut:Ljava/io/DataOutputStream;
+
+    invoke-virtual {v3}, Ljava/io/DataOutputStream;->flush()V
+
+    .line 393
+    return-void
 .end method
 
 
@@ -632,24 +631,29 @@
     .end annotation
 
     .prologue
-    const/4 v4, 0x1
+    const/4 v4, 0x0
+
+    const/4 v2, 0x1
 
     .line 423
     monitor-enter p0
 
     :try_start_0
-    iget-boolean v5, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Writer;->client:Z
+    iget-boolean v6, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Writer;->client:Z
 
-    rem-int/lit8 v6, p2, 0x2
+    rem-int/lit8 v5, p2, 0x2
 
-    if-ne v6, v4, :cond_0
+    if-ne v5, v2, :cond_0
+
+    move v5, v2
 
     :goto_0
-    xor-int v2, v5, v4
+    if-eq v6, v5, :cond_1
 
     .line 424
     .local v2, "payloadIsReply":Z
-    if-eq p1, v2, :cond_1
+    :goto_1
+    if-eq p1, v2, :cond_2
 
     new-instance v4, Ljava/lang/IllegalArgumentException;
 
@@ -671,13 +675,18 @@
     throw v4
 
     :cond_0
-    const/4 v4, 0x0
+    move v5, v4
 
     goto :goto_0
 
+    :cond_1
+    move v2, v4
+
+    goto :goto_1
+
     .line 425
     .restart local v2    # "payloadIsReply":Z
-    :cond_1
+    :cond_2
     const/4 v3, 0x6
 
     .line 426
@@ -878,28 +887,14 @@
     :goto_0
     const/16 v6, 0xa
 
-    if-le v1, v6, :cond_0
-
-    .line 409
-    iget-object v6, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Writer;->out:Ljava/io/DataOutputStream;
-
-    invoke-virtual {v6}, Ljava/io/DataOutputStream;->flush()V
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    .line 410
-    monitor-exit p0
-
-    return-void
+    if-gt v1, v6, :cond_1
 
     .line 404
-    :cond_0
-    :try_start_1
     invoke-virtual {p1, v1}, Lcom/squareup/okhttp/internal/spdy/Settings;->isSet(I)Z
 
     move-result v6
 
-    if-nez v6, :cond_1
+    if-nez v6, :cond_0
 
     .line 403
     :goto_1
@@ -908,7 +903,7 @@
     goto :goto_0
 
     .line 405
-    :cond_1
+    :cond_0
     invoke-virtual {p1, v1}, Lcom/squareup/okhttp/internal/spdy/Settings;->flags(I)I
 
     move-result v3
@@ -935,8 +930,8 @@
     move-result v7
 
     invoke-virtual {v6, v7}, Ljava/io/DataOutputStream;->writeInt(I)V
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     goto :goto_1
 
@@ -951,6 +946,23 @@
     monitor-exit p0
 
     throw v6
+
+    .line 409
+    .restart local v1    # "i":I
+    .restart local v2    # "length":I
+    .restart local v4    # "size":I
+    :cond_1
+    :try_start_1
+    iget-object v6, p0, Lcom/squareup/okhttp/internal/spdy/Spdy3$Writer;->out:Ljava/io/DataOutputStream;
+
+    invoke-virtual {v6}, Ljava/io/DataOutputStream;->flush()V
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    .line 410
+    monitor-exit p0
+
+    return-void
 .end method
 
 .method public declared-synchronized synReply(ZILjava/util/List;)V
