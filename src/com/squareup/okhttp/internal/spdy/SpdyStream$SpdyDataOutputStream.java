@@ -38,8 +38,8 @@ final class SpdyStream$SpdyDataOutputStream
     if (finished) {
       throw new IOException("stream finished");
     }
-    if (SpdyStream.access$3(this$0) != null) {
-      throw new IOException("stream was reset: " + SpdyStream.access$3(this$0));
+    if (SpdyStream.access$1000(this$0) != null) {
+      throw new IOException("stream was reset: " + SpdyStream.access$1000(this$0));
     }
   }
   
@@ -50,8 +50,8 @@ final class SpdyStream$SpdyDataOutputStream
     {
       try
       {
-        if (unacknowledgedBytes + paramInt < SpdyStream.access$6(this$0)) {
-          return;
+        if (unacknowledgedBytes + paramInt < SpdyStream.access$1300(this$0)) {
+          break;
         }
         this$0.wait();
         if ((!paramBoolean) && (closed)) {
@@ -65,8 +65,8 @@ final class SpdyStream$SpdyDataOutputStream
       if (finished) {
         throw new IOException("stream finished");
       }
-    } while (SpdyStream.access$3(this$0) == null);
-    throw new IOException("stream was reset: " + SpdyStream.access$3(this$0));
+    } while (SpdyStream.access$1000(this$0) == null);
+    throw new IOException("stream was reset: " + SpdyStream.access$1000(this$0));
   }
   
   private void writeFrame(boolean paramBoolean)
@@ -78,7 +78,7 @@ final class SpdyStream$SpdyDataOutputStream
     {
       waitUntilWritable(i, paramBoolean);
       unacknowledgedBytes += i;
-      SpdyStream.access$0(this$0).writeData(SpdyStream.access$1(this$0), paramBoolean, buffer, 0, pos);
+      SpdyStream.access$800(this$0).writeData(SpdyStream.access$700(this$0), paramBoolean, buffer, 0, pos);
       pos = 0;
       return;
     }
@@ -94,11 +94,11 @@ final class SpdyStream$SpdyDataOutputStream
         return;
       }
       closed = true;
-      if (!access$5this$0).finished) {
+      if (!access$1200this$0).finished) {
         writeFrame(true);
       }
-      SpdyStream.access$0(this$0).flush();
-      SpdyStream.access$4(this$0);
+      SpdyStream.access$800(this$0).flush();
+      SpdyStream.access$1100(this$0);
       return;
     }
   }
@@ -111,7 +111,7 @@ final class SpdyStream$SpdyDataOutputStream
     if (pos > 0)
     {
       writeFrame(false);
-      SpdyStream.access$0(this$0).flush();
+      SpdyStream.access$800(this$0).flush();
     }
   }
   
@@ -127,11 +127,8 @@ final class SpdyStream$SpdyDataOutputStream
     assert (!Thread.holdsLock(this$0));
     Util.checkOffsetAndCount(paramArrayOfByte.length, paramInt1, paramInt2);
     checkNotClosed();
-    for (;;)
+    while (paramInt2 > 0)
     {
-      if (paramInt2 <= 0) {
-        return;
-      }
       if (pos == buffer.length) {
         writeFrame(false);
       }

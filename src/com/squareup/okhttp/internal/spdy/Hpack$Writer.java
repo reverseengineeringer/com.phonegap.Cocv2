@@ -18,11 +18,8 @@ class Hpack$Writer
   {
     int i = 0;
     int j = paramList.size();
-    for (;;)
+    while (i < j)
     {
-      if (i >= j) {
-        return;
-      }
       out.write(96);
       writeString((String)paramList.get(i));
       writeString((String)paramList.get(i + 1));
@@ -40,16 +37,12 @@ class Hpack$Writer
     }
     out.write(paramInt3 | paramInt2);
     paramInt1 -= paramInt2;
-    for (;;)
+    while (paramInt1 >= 128)
     {
-      if (paramInt1 < 128)
-      {
-        out.write(paramInt1);
-        return;
-      }
       out.write(paramInt1 & 0x7F | 0x80);
       paramInt1 >>>= 7;
     }
+    out.write(paramInt1);
   }
   
   public void writeString(String paramString)

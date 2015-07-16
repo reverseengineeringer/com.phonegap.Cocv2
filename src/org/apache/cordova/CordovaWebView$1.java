@@ -3,6 +3,7 @@ package org.apache.cordova;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.webkit.WebSettings;
 
 class CordovaWebView$1
   extends BroadcastReceiver
@@ -11,7 +12,7 @@ class CordovaWebView$1
   
   public void onReceive(Context paramContext, Intent paramIntent)
   {
-    CordovaWebView.access$0(this$0);
+    this$0.getSettings().getUserAgentString();
   }
 }
 

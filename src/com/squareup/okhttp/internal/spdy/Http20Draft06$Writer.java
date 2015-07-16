@@ -67,7 +67,7 @@ final class Http20Draft06$Writer
     //   13: return
     //   14: aload_0
     //   15: getfield 29	com/squareup/okhttp/internal/spdy/Http20Draft06$Writer:out	Ljava/io/DataOutputStream;
-    //   18: invokestatic 77	com/squareup/okhttp/internal/spdy/Http20Draft06:access$0	()[B
+    //   18: invokestatic 77	com/squareup/okhttp/internal/spdy/Http20Draft06:access$000	()[B
     //   21: invokevirtual 81	java/io/DataOutputStream:write	([B)V
     //   24: goto -13 -> 11
     //   27: astore_2
@@ -183,16 +183,18 @@ final class Http20Draft06$Writer
         out.writeInt((0xFFFF & i * 8) << 16 | 0x400 | 0x0);
         out.writeInt(0);
         i = 0;
-        if (i >= 10) {
-          return;
-        }
-        if (paramSettings.isSet(i))
+        if (i < 10)
         {
+          if (!paramSettings.isSet(i)) {
+            break label91;
+          }
           out.writeInt(0xFFFFFF & i);
           out.writeInt(paramSettings.get(i));
         }
       }
       finally {}
+      return;
+      label91:
       i += 1;
     }
   }

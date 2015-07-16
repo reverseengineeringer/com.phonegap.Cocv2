@@ -4,6 +4,8 @@ public enum ResponseSource
 {
   CACHE,  CONDITIONAL_CACHE,  NETWORK;
   
+  private ResponseSource() {}
+  
   public boolean requiresConnection()
   {
     return (this == CONDITIONAL_CACHE) || (this == NETWORK);

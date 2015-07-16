@@ -8,7 +8,9 @@ import org.json.JSONException;
 public class CordovaPlugin
 {
   public CordovaInterface cordova;
+  @Deprecated
   public String id;
+  protected CordovaPreferences preferences;
   public CordovaWebView webView;
   
   static
@@ -39,12 +41,7 @@ public class CordovaPlugin
     return execute(paramString, new CordovaArgs(paramJSONArray), paramCallbackContext);
   }
   
-  public void initialize(CordovaInterface paramCordovaInterface, CordovaWebView paramCordovaWebView)
-  {
-    assert (cordova == null);
-    cordova = paramCordovaInterface;
-    webView = paramCordovaWebView;
-  }
+  public void initialize(CordovaInterface paramCordovaInterface, CordovaWebView paramCordovaWebView) {}
   
   public void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent) {}
   
@@ -67,6 +64,18 @@ public class CordovaPlugin
   public void onReset() {}
   
   public void onResume(boolean paramBoolean) {}
+  
+  protected void pluginInitialize() {}
+  
+  public final void privateInitialize(CordovaInterface paramCordovaInterface, CordovaWebView paramCordovaWebView, CordovaPreferences paramCordovaPreferences)
+  {
+    assert (cordova == null);
+    cordova = paramCordovaInterface;
+    webView = paramCordovaWebView;
+    preferences = paramCordovaPreferences;
+    initialize(paramCordovaInterface, paramCordovaWebView);
+    pluginInitialize();
+  }
   
   public Uri remapUri(Uri paramUri)
   {

@@ -101,18 +101,17 @@ public final class RouteSelector
       hasNextProxy = false;
       return userSpecifiedProxy;
     }
-    if (proxySelectorProxies != null) {}
-    Proxy localProxy;
-    do
-    {
-      if (!proxySelectorProxies.hasNext())
+    if (proxySelectorProxies != null) {
+      while (proxySelectorProxies.hasNext())
       {
-        hasNextProxy = false;
-        return Proxy.NO_PROXY;
+        Proxy localProxy = (Proxy)proxySelectorProxies.next();
+        if (localProxy.type() != Proxy.Type.DIRECT) {
+          return localProxy;
+        }
       }
-      localProxy = (Proxy)proxySelectorProxies.next();
-    } while (localProxy.type() == Proxy.Type.DIRECT);
-    return localProxy;
+    }
+    hasNextProxy = false;
+    return Proxy.NO_PROXY;
   }
   
   private int nextTlsMode()
@@ -198,35 +197,31 @@ public final class RouteSelector
     for (;;)
     {
       localObject = pool.get(address);
-      if (localObject == null)
-      {
-        if (hasNextTlsMode()) {
-          break label119;
-        }
-        if (hasNextInetSocketAddress()) {
-          break label107;
-        }
-        if (hasNextProxy()) {
-          break label91;
-        }
-        if (hasNextPostponed()) {
-          break;
-        }
-        throw new NoSuchElementException();
+      if (localObject == null) {
+        break;
       }
       if ((paramString.equals("GET")) || (((Connection)localObject).isReadable())) {
         return (Connection)localObject;
       }
       ((Connection)localObject).close();
     }
-    return new Connection(nextPostponed());
-    label91:
-    lastProxy = nextProxy();
-    resetNextInetSocketAddress(lastProxy);
-    label107:
-    lastInetSocketAddress = nextInetSocketAddress();
-    resetNextTlsMode();
-    label119:
+    if (!hasNextTlsMode())
+    {
+      if (!hasNextInetSocketAddress())
+      {
+        if (!hasNextProxy())
+        {
+          if (!hasNextPostponed()) {
+            throw new NoSuchElementException();
+          }
+          return new Connection(nextPostponed());
+        }
+        lastProxy = nextProxy();
+        resetNextInetSocketAddress(lastProxy);
+      }
+      lastInetSocketAddress = nextInetSocketAddress();
+      resetNextTlsMode();
+    }
     if (nextTlsMode() == 1) {}
     for (;;)
     {

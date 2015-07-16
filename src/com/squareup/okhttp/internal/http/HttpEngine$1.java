@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class HttpEngine$1
+final class HttpEngine$1
   extends CacheResponse
 {
   public InputStream getBody()

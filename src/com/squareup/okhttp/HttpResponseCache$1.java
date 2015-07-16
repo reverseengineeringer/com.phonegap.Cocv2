@@ -23,7 +23,7 @@ class HttpResponseCache$1
   public void maybeRemove(String paramString, URI paramURI)
     throws IOException
   {
-    HttpResponseCache.access$0(this$0, paramString, paramURI);
+    HttpResponseCache.access$000(this$0, paramString, paramURI);
   }
   
   public CacheRequest put(URI paramURI, URLConnection paramURLConnection)
@@ -34,18 +34,18 @@ class HttpResponseCache$1
   
   public void trackConditionalCacheHit()
   {
-    HttpResponseCache.access$2(this$0);
+    HttpResponseCache.access$200(this$0);
   }
   
   public void trackResponse(ResponseSource paramResponseSource)
   {
-    HttpResponseCache.access$3(this$0, paramResponseSource);
+    HttpResponseCache.access$300(this$0, paramResponseSource);
   }
   
   public void update(CacheResponse paramCacheResponse, HttpURLConnection paramHttpURLConnection)
     throws IOException
   {
-    HttpResponseCache.access$1(this$0, paramCacheResponse, paramHttpURLConnection);
+    HttpResponseCache.access$100(this$0, paramCacheResponse, paramHttpURLConnection);
   }
 }
 

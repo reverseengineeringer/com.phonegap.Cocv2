@@ -27,7 +27,7 @@ class Whitelist$URLPattern
           {
             host = null;
             if ((paramString3 != null) && (!"*".equals(paramString3))) {
-              break label165;
+              break label168;
             }
             port = null;
             if ((paramString4 != null) && (!"/*".equals(paramString4))) {
@@ -42,7 +42,7 @@ class Whitelist$URLPattern
           continue;
         }
         if (!paramString2.startsWith("*.")) {
-          break label148;
+          break label151;
         }
       }
       catch (NumberFormatException paramString1)
@@ -51,10 +51,10 @@ class Whitelist$URLPattern
       }
       host = Pattern.compile("([a-z0-9.-]*\\.)?" + regexFromPattern(paramString2.substring(2), false), 2);
       continue;
-      label148:
+      label151:
       host = Pattern.compile(regexFromPattern(paramString2, false), 2);
       continue;
-      label165:
+      label168:
       port = Integer.valueOf(Integer.parseInt(paramString3, 10));
     }
     path = Pattern.compile(regexFromPattern(paramString4, true));
@@ -64,22 +64,23 @@ class Whitelist$URLPattern
   {
     StringBuilder localStringBuilder = new StringBuilder();
     int i = 0;
-    if (i >= paramString.length()) {
-      return localStringBuilder.toString();
-    }
-    char c = paramString.charAt(i);
-    if ((c == '*') && (paramBoolean)) {
-      localStringBuilder.append(".");
-    }
-    for (;;)
+    if (i < paramString.length())
     {
-      localStringBuilder.append(c);
-      i += 1;
-      break;
-      if ("\\.[]{}()^$?+|".indexOf(c) > -1) {
-        localStringBuilder.append('\\');
+      char c = paramString.charAt(i);
+      if ((c == '*') && (paramBoolean)) {
+        localStringBuilder.append(".");
+      }
+      for (;;)
+      {
+        localStringBuilder.append(c);
+        i += 1;
+        break;
+        if ("\\.[]{}()^$?+|".indexOf(c) > -1) {
+          localStringBuilder.append('\\');
+        }
       }
     }
+    return localStringBuilder.toString();
   }
   
   public boolean matches(Uri paramUri)

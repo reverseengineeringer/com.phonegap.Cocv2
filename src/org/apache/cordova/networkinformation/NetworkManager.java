@@ -15,11 +15,14 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class NetworkManager
   extends CordovaPlugin
 {
   public static final String CDMA = "cdma";
+  public static final String CELLULAR = "cellular";
   public static final String EDGE = "edge";
   public static final String EHRPD = "ehrpd";
   public static final String GPRS = "gprs";
@@ -47,25 +50,37 @@ public class NetworkManager
   public static final String WIFI = "wifi";
   public static final String WIMAX = "wimax";
   private CallbackContext connectionCallbackContext;
-  private String lastStatus = "";
-  BroadcastReceiver receiver = null;
-  private boolean registered = false;
+  private JSONObject lastInfo = null;
+  BroadcastReceiver receiver;
   ConnectivityManager sockMan;
   
-  private String getConnectionInfo(NetworkInfo paramNetworkInfo)
+  private JSONObject getConnectionInfo(NetworkInfo paramNetworkInfo)
   {
-    String str = "none";
+    Object localObject2 = "none";
+    Object localObject1 = "";
     if (paramNetworkInfo != null) {
       if (paramNetworkInfo.isConnected()) {
-        break label41;
+        break label105;
       }
     }
-    label41:
-    for (str = "none";; str = getType(paramNetworkInfo))
+    for (localObject1 = "none";; localObject1 = getType(paramNetworkInfo))
     {
-      Log.d("CordovaNetworkManager", "Connection Type: " + str);
-      return str;
+      paramNetworkInfo = paramNetworkInfo.getExtraInfo();
+      localObject2 = localObject1;
+      localObject1 = paramNetworkInfo;
+      Log.d("CordovaNetworkManager", "Connection Type: " + (String)localObject2);
+      Log.d("CordovaNetworkManager", "Connection Extra Info: " + (String)localObject1);
+      paramNetworkInfo = new JSONObject();
+      label105:
+      try
+      {
+        paramNetworkInfo.put("type", localObject2);
+        paramNetworkInfo.put("extraInfo", localObject1);
+        return paramNetworkInfo;
+      }
+      catch (JSONException localJSONException) {}
     }
+    return paramNetworkInfo;
   }
   
   private String getType(NetworkInfo paramNetworkInfo)
@@ -76,7 +91,7 @@ public class NetworkManager
       if (str.toLowerCase().equals("wifi")) {
         return "wifi";
       }
-      if (str.toLowerCase().equals("mobile"))
+      if ((str.toLowerCase().equals("mobile")) || (str.toLowerCase().equals("cellular")))
       {
         paramNetworkInfo = paramNetworkInfo.getSubtypeName();
         if ((paramNetworkInfo.toLowerCase().equals("gsm")) || (paramNetworkInfo.toLowerCase().equals("gprs")) || (paramNetworkInfo.toLowerCase().equals("edge"))) {
@@ -110,12 +125,21 @@ public class NetworkManager
   
   private void updateConnectionInfo(NetworkInfo paramNetworkInfo)
   {
-    paramNetworkInfo = getConnectionInfo(paramNetworkInfo);
-    if (!paramNetworkInfo.equals(lastStatus))
-    {
-      sendUpdate(paramNetworkInfo);
-      lastStatus = paramNetworkInfo;
+    JSONObject localJSONObject = getConnectionInfo(paramNetworkInfo);
+    if (!localJSONObject.equals(lastInfo)) {
+      paramNetworkInfo = "";
     }
+    try
+    {
+      String str = localJSONObject.get("type").toString();
+      paramNetworkInfo = str;
+    }
+    catch (JSONException localJSONException)
+    {
+      for (;;) {}
+    }
+    sendUpdate(paramNetworkInfo);
+    lastInfo = localJSONObject;
   }
   
   public boolean execute(String paramString, JSONArray paramJSONArray, CallbackContext paramCallbackContext)
@@ -123,12 +147,22 @@ public class NetworkManager
     if (paramString.equals("getConnectionInfo"))
     {
       connectionCallbackContext = paramCallbackContext;
-      paramString = sockMan.getActiveNetworkInfo();
-      paramString = new PluginResult(PluginResult.Status.OK, getConnectionInfo(paramString));
-      paramString.setKeepCallback(true);
-      paramCallbackContext.sendPluginResult(paramString);
-      return true;
+      paramJSONArray = sockMan.getActiveNetworkInfo();
+      paramString = "";
     }
+    try
+    {
+      paramJSONArray = getConnectionInfo(paramJSONArray).get("type").toString();
+      paramString = paramJSONArray;
+    }
+    catch (JSONException paramJSONArray)
+    {
+      for (;;) {}
+    }
+    paramString = new PluginResult(PluginResult.Status.OK, paramString);
+    paramString.setKeepCallback(true);
+    paramCallbackContext.sendPluginResult(paramString);
+    return true;
     return false;
   }
   
@@ -137,8 +171,8 @@ public class NetworkManager
     super.initialize(paramCordovaInterface, paramCordovaWebView);
     sockMan = ((ConnectivityManager)paramCordovaInterface.getActivity().getSystemService("connectivity"));
     connectionCallbackContext = null;
-    paramCordovaWebView = new IntentFilter();
-    paramCordovaWebView.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+    paramCordovaInterface = new IntentFilter();
+    paramCordovaInterface.addAction("android.net.conn.CONNECTIVITY_CHANGE");
     if (receiver == null)
     {
       receiver = new BroadcastReceiver()
@@ -150,23 +184,28 @@ public class NetworkManager
           }
         }
       };
-      paramCordovaInterface.getActivity().registerReceiver(receiver, paramCordovaWebView);
-      registered = true;
+      paramCordovaWebView.getContext().registerReceiver(receiver, paramCordovaInterface);
     }
   }
   
   public void onDestroy()
   {
-    if ((receiver != null) && (registered)) {}
+    if (receiver != null) {}
     try
     {
-      cordova.getActivity().unregisterReceiver(receiver);
-      registered = false;
+      webView.getContext().unregisterReceiver(receiver);
       return;
     }
     catch (Exception localException)
     {
-      Log.e("NetworkManager", "Error unregistering network receiver: " + localException.getMessage(), localException);
+      for (;;)
+      {
+        Log.e("NetworkManager", "Error unregistering network receiver: " + localException.getMessage(), localException);
+      }
+    }
+    finally
+    {
+      receiver = null;
     }
   }
 }

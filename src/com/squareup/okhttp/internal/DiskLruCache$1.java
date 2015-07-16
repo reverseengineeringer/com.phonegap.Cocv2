@@ -12,14 +12,14 @@ class DiskLruCache$1
   {
     synchronized (this$0)
     {
-      if (DiskLruCache.access$0(this$0) == null) {
+      if (DiskLruCache.access$000(this$0) == null) {
         return null;
       }
-      DiskLruCache.access$1(this$0);
-      if (DiskLruCache.access$2(this$0))
+      DiskLruCache.access$100(this$0);
+      if (DiskLruCache.access$200(this$0))
       {
-        DiskLruCache.access$3(this$0);
-        DiskLruCache.access$4(this$0, 0);
+        DiskLruCache.access$300(this$0);
+        DiskLruCache.access$402(this$0, 0);
       }
       return null;
     }

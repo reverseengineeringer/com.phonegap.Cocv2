@@ -1,43 +1,36 @@
 package org.apache.cordova.dialogs;
 
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnClickListener;
-import org.apache.cordova.CallbackContext;
+import android.app.Activity;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.PluginResult;
-import org.apache.cordova.PluginResult.Status;
 
 class Notification$1
   implements Runnable
 {
-  Notification$1(Notification paramNotification, CordovaInterface paramCordovaInterface, String paramString1, String paramString2, String paramString3, CallbackContext paramCallbackContext) {}
+  Notification$1(Notification paramNotification, long paramLong) {}
   
   public void run()
   {
-    AlertDialog.Builder localBuilder = new AlertDialog.Builder(val$cordova.getActivity());
-    localBuilder.setMessage(val$message);
-    localBuilder.setTitle(val$title);
-    localBuilder.setCancelable(true);
-    localBuilder.setPositiveButton(val$buttonLabel, new DialogInterface.OnClickListener()
-    {
-      public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
+    Object localObject = RingtoneManager.getDefaultUri(2);
+    localObject = RingtoneManager.getRingtone(this$0.cordova.getActivity().getBaseContext(), (Uri)localObject);
+    if (localObject != null) {
+      for (long l1 = 0L; l1 < val$count; l1 += 1L)
       {
-        paramAnonymousDialogInterface.dismiss();
-        val$callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, 0));
+        ((Ringtone)localObject).play();
+        long l2 = 5000L;
+        while ((((Ringtone)localObject).isPlaying()) && (l2 > 0L))
+        {
+          l2 -= 100L;
+          try
+          {
+            Thread.sleep(100L);
+          }
+          catch (InterruptedException localInterruptedException) {}
+        }
       }
-    });
-    localBuilder.setOnCancelListener(new DialogInterface.OnCancelListener()
-    {
-      public void onCancel(DialogInterface paramAnonymousDialogInterface)
-      {
-        paramAnonymousDialogInterface.dismiss();
-        val$callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, 0));
-      }
-    });
-    localBuilder.create();
-    localBuilder.show();
+    }
   }
 }
 

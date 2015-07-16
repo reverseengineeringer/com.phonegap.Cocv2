@@ -15,7 +15,7 @@ class SpdyConnection$3
   {
     try
     {
-      SpdyConnection.access$15(this$0, val$reply, val$payload1, val$payload2, val$ping);
+      SpdyConnection.access$700(this$0, val$reply, val$payload1, val$payload2, val$ping);
       return;
     }
     catch (IOException localIOException) {}

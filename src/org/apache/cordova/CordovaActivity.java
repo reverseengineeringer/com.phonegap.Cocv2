@@ -10,8 +10,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.os.Build.VERSION;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,14 +18,16 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.webkit.ValueCallback;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.json.JSONException;
@@ -40,26 +41,26 @@ public class CordovaActivity
   private static int ACTIVITY_RUNNING;
   private static int ACTIVITY_STARTING;
   public static String TAG = "CordovaActivity";
-  private Object LOG_TAG;
   protected CordovaPlugin activityResultCallback = null;
   protected boolean activityResultKeepRunning;
   private int activityState = 0;
   protected CordovaWebView appView;
-  private int backgroundColor = -16777216;
-  protected boolean cancelLoadUrl = false;
+  protected Whitelist externalWhitelist;
   private String initCallbackClass;
+  protected Whitelist internalWhitelist;
   protected boolean keepRunning = true;
-  private Intent lastIntent;
-  private int lastRequestCode;
-  private Object lastResponseCode;
+  protected String launchUrl;
   protected int loadUrlTimeoutValue = 20000;
-  private Object responseCode;
+  protected ArrayList<PluginEntry> pluginEntries;
+  protected CordovaPreferences preferences;
+  @Deprecated
   protected LinearLayout root;
   protected ProgressDialog spinnerDialog = null;
   protected Dialog splashDialog;
   protected int splashscreen = 0;
   protected int splashscreenTime = 3000;
   private final ExecutorService threadPool = Executors.newCachedThreadPool();
+  @Deprecated
   protected CordovaWebViewClient webViewClient;
   
   static
@@ -76,6 +77,7 @@ public class CordovaActivity
     }
   }
   
+  @Deprecated
   public boolean backHistory()
   {
     if (appView != null) {
@@ -85,10 +87,7 @@ public class CordovaActivity
   }
   
   @Deprecated
-  public void cancelLoadUrl()
-  {
-    cancelLoadUrl = true;
-  }
+  public void cancelLoadUrl() {}
   
   public void clearAuthenticationTokens()
   {
@@ -97,6 +96,7 @@ public class CordovaActivity
     }
   }
   
+  @Deprecated
   public void clearCache()
   {
     if (appView == null) {
@@ -105,9 +105,32 @@ public class CordovaActivity
     appView.clearCache(true);
   }
   
+  @Deprecated
   public void clearHistory()
   {
     appView.clearHistory();
+  }
+  
+  protected void createViews()
+  {
+    LOG.d(TAG, "CordovaActivity.createViews()");
+    Object localObject = getWindowManager().getDefaultDisplay();
+    root = new LinearLayoutSoftKeyboardDetect(this, ((Display)localObject).getWidth(), ((Display)localObject).getHeight());
+    root.setOrientation(1);
+    root.setLayoutParams(new LinearLayout.LayoutParams(-1, -1, 0.0F));
+    appView.setId(100);
+    appView.setLayoutParams(new LinearLayout.LayoutParams(-1, -1, 1.0F));
+    appView.setVisibility(4);
+    localObject = appView.getParent();
+    if ((localObject != null) && (localObject != root))
+    {
+      LOG.d(TAG, "removing appView from existing parent");
+      ((ViewGroup)localObject).removeView(appView);
+    }
+    root.addView(appView);
+    setContentView(root);
+    int i = preferences.getInteger("BackgroundColor", -16777216);
+    root.setBackgroundColor(i);
   }
   
   public void displayError(final String paramString1, final String paramString2, final String paramString3, final boolean paramBoolean)
@@ -163,34 +186,10 @@ public class CordovaActivity
     return null;
   }
   
+  @Deprecated
   public boolean getBooleanProperty(String paramString, boolean paramBoolean)
   {
-    Bundle localBundle = getIntent().getExtras();
-    if (localBundle == null) {}
-    for (;;)
-    {
-      return paramBoolean;
-      String str = paramString.toLowerCase(Locale.getDefault());
-      try
-      {
-        paramString = (Boolean)localBundle.get(str);
-        if (paramString == null) {
-          continue;
-        }
-        return paramString.booleanValue();
-      }
-      catch (ClassCastException paramString)
-      {
-        for (;;)
-        {
-          if ("true".equals(localBundle.get(str).toString())) {
-            paramString = Boolean.valueOf(true);
-          } else {
-            paramString = Boolean.valueOf(false);
-          }
-        }
-      }
-    }
+    return preferences.getBoolean(paramString, paramBoolean);
   }
   
   @Deprecated
@@ -200,68 +199,22 @@ public class CordovaActivity
     return this;
   }
   
+  @Deprecated
   public double getDoubleProperty(String paramString, double paramDouble)
   {
-    Bundle localBundle = getIntent().getExtras();
-    if (localBundle == null) {}
-    for (;;)
-    {
-      return paramDouble;
-      String str = paramString.toLowerCase(Locale.getDefault());
-      try
-      {
-        paramString = (Double)localBundle.get(str);
-        if (paramString == null) {
-          continue;
-        }
-        return paramString.doubleValue();
-      }
-      catch (ClassCastException paramString)
-      {
-        for (;;)
-        {
-          paramString = Double.valueOf(Double.parseDouble(localBundle.get(str).toString()));
-        }
-      }
-    }
+    return preferences.getDouble(paramString, paramDouble);
   }
   
+  @Deprecated
   public int getIntegerProperty(String paramString, int paramInt)
   {
-    Bundle localBundle = getIntent().getExtras();
-    if (localBundle == null) {}
-    for (;;)
-    {
-      return paramInt;
-      String str = paramString.toLowerCase(Locale.getDefault());
-      try
-      {
-        paramString = (Integer)localBundle.get(str);
-        if (paramString == null) {
-          continue;
-        }
-        return paramString.intValue();
-      }
-      catch (ClassCastException paramString)
-      {
-        for (;;)
-        {
-          paramString = Integer.valueOf(Integer.parseInt(localBundle.get(str).toString()));
-        }
-      }
-    }
+    return preferences.getInteger(paramString, paramInt);
   }
   
+  @Deprecated
   public String getStringProperty(String paramString1, String paramString2)
   {
-    Bundle localBundle = getIntent().getExtras();
-    if (localBundle == null) {}
-    do
-    {
-      return paramString2;
-      paramString1 = localBundle.getString(paramString1.toLowerCase(Locale.getDefault()));
-    } while (paramString1 == null);
-    return paramString1;
+    return preferences.getString(paramString1, paramString2);
   }
   
   public ExecutorService getThreadPool()
@@ -271,33 +224,68 @@ public class CordovaActivity
   
   public void init()
   {
-    CordovaWebView localCordovaWebView = makeWebView();
-    init(localCordovaWebView, makeWebViewClient(localCordovaWebView), makeChromeClient(localCordovaWebView));
+    init(appView, null, null);
   }
   
+  @Deprecated
   @SuppressLint({"NewApi"})
   public void init(CordovaWebView paramCordovaWebView, CordovaWebViewClient paramCordovaWebViewClient, CordovaChromeClient paramCordovaChromeClient)
   {
     LOG.d(TAG, "CordovaActivity.init()");
-    appView = paramCordovaWebView;
-    appView.setId(100);
-    appView.setWebViewClient(paramCordovaWebViewClient);
-    appView.setWebChromeClient(paramCordovaChromeClient);
-    paramCordovaWebViewClient.setWebView(appView);
-    paramCordovaChromeClient.setWebView(appView);
-    appView.setLayoutParams(new LinearLayout.LayoutParams(-1, -1, 1.0F));
-    if ((getBooleanProperty("DisallowOverscroll", false)) && (Build.VERSION.SDK_INT >= 9)) {
-      appView.setOverScrollMode(2);
+    CordovaWebView localCordovaWebView;
+    if (paramCordovaWebView != null)
+    {
+      appView = paramCordovaWebView;
+      if (appView.pluginManager == null)
+      {
+        localCordovaWebView = appView;
+        if (paramCordovaWebViewClient == null) {
+          break label108;
+        }
+        paramCordovaWebView = paramCordovaWebViewClient;
+        label40:
+        if (paramCordovaChromeClient == null) {
+          break label120;
+        }
+      }
     }
-    appView.setVisibility(4);
-    root.addView(appView);
-    setContentView(root);
-    cancelLoadUrl = false;
+    for (;;)
+    {
+      localCordovaWebView.init(this, paramCordovaWebView, paramCordovaChromeClient, pluginEntries, internalWhitelist, externalWhitelist, preferences);
+      if (preferences.getBoolean("DisallowOverscroll", false)) {
+        appView.setOverScrollMode(2);
+      }
+      createViews();
+      setVolumeControlStream(3);
+      return;
+      paramCordovaWebView = makeWebView();
+      break;
+      label108:
+      paramCordovaWebView = makeWebViewClient(appView);
+      break label40;
+      label120:
+      paramCordovaChromeClient = makeChromeClient(appView);
+    }
   }
   
+  @Deprecated
   public boolean isUrlWhiteListed(String paramString)
   {
-    return Config.isUrlWhiteListed(paramString);
+    return internalWhitelist.isUrlWhiteListed(paramString);
+  }
+  
+  protected void loadConfig()
+  {
+    ConfigXmlParser localConfigXmlParser = new ConfigXmlParser();
+    localConfigXmlParser.parse(this);
+    preferences = localConfigXmlParser.getPreferences();
+    preferences.setPreferencesBundle(getIntent().getExtras());
+    preferences.copyIntoIntentExtras(this);
+    internalWhitelist = localConfigXmlParser.getInternalWhitelist();
+    externalWhitelist = localConfigXmlParser.getExternalWhitelist();
+    launchUrl = localConfigXmlParser.getLaunchUrl();
+    pluginEntries = localConfigXmlParser.getPluginEntries();
+    Config.parser = localConfigXmlParser;
   }
   
   void loadSpinner()
@@ -307,7 +295,7 @@ public class CordovaActivity
     int i;
     if ((appView == null) || (!appView.canGoBack()))
     {
-      str1 = getStringProperty("LoadingDialog", null);
+      str1 = preferences.getString("LoadingDialog", null);
       if (str1 != null)
       {
         str3 = "";
@@ -316,7 +304,7 @@ public class CordovaActivity
         {
           i = str1.indexOf(',');
           if (i <= 0) {
-            break label93;
+            break label99;
           }
           str3 = str1.substring(0, i);
         }
@@ -326,9 +314,9 @@ public class CordovaActivity
     {
       spinnerStart(str3, str2);
       return;
-      str1 = getStringProperty("LoadingPageDialog", null);
+      str1 = preferences.getString("LoadingPageDialog", null);
       break;
-      label93:
+      label99:
       str3 = "";
     }
   }
@@ -338,17 +326,16 @@ public class CordovaActivity
     if (appView == null) {
       init();
     }
-    splashscreenTime = getIntegerProperty("SplashScreenDelay", splashscreenTime);
-    if (splashscreenTime > 0)
+    splashscreenTime = preferences.getInteger("SplashScreenDelay", splashscreenTime);
+    String str = preferences.getString("SplashScreen", null);
+    if ((splashscreenTime > 0) && (str != null))
     {
-      splashscreen = getIntegerProperty("SplashScreen", 0);
+      splashscreen = getResources().getIdentifier(str, "drawable", getClass().getPackage().getName());
       if (splashscreen != 0) {
         showSplashScreen(splashscreenTime);
       }
     }
-    backgroundColor = getIntegerProperty("BackgroundColor", -16777216);
-    root.setBackgroundColor(backgroundColor);
-    keepRunning = getBooleanProperty("KeepRunning", true);
+    keepRunning = preferences.getBoolean("KeepRunning", true);
     if (appView.getParent() != null) {
       loadSpinner();
     }
@@ -368,7 +355,7 @@ public class CordovaActivity
   
   protected CordovaChromeClient makeChromeClient(CordovaWebView paramCordovaWebView)
   {
-    return new CordovaChromeClient(this, paramCordovaWebView);
+    return paramCordovaWebView.makeWebChromeClient(this);
   }
   
   protected CordovaWebView makeWebView()
@@ -378,10 +365,7 @@ public class CordovaActivity
   
   protected CordovaWebViewClient makeWebViewClient(CordovaWebView paramCordovaWebView)
   {
-    if (Build.VERSION.SDK_INT < 11) {
-      return new CordovaWebViewClient(this, paramCordovaWebView);
-    }
-    return new IceCreamCordovaWebViewClient(this, paramCordovaWebView);
+    return paramCordovaWebView.makeWebViewClient(this);
   }
   
   protected void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent)
@@ -398,10 +382,10 @@ public class CordovaActivity
         return;
       }
       if ((paramIntent != null) && (paramInt2 == -1)) {
-        break label201;
+        break label207;
       }
     }
-    label201:
+    label207:
     for (Object localObject1 = null;; localObject1 = paramIntent.getData())
     {
       Log.d(TAG, "result = " + localObject1);
@@ -426,37 +410,31 @@ public class CordovaActivity
     }
   }
   
-  public void onConfigurationChanged(Configuration paramConfiguration)
-  {
-    super.onConfigurationChanged(paramConfiguration);
-  }
-  
   public void onCreate(Bundle paramBundle)
   {
-    Config.init(this);
+    LOG.i(TAG, "Apache Cordova native platform version 3.6.4 is starting");
     LOG.d(TAG, "CordovaActivity.onCreate()");
-    super.onCreate(paramBundle);
-    if (paramBundle != null) {
-      initCallbackClass = paramBundle.getString("callbackClass");
-    }
-    if (!getBooleanProperty("ShowTitle", false)) {
+    loadConfig();
+    if (!preferences.getBoolean("ShowTitle", false)) {
       getWindow().requestFeature(1);
     }
-    if (getBooleanProperty("SetFullscreen", false))
+    if (preferences.getBoolean("SetFullscreen", false))
     {
       Log.d(TAG, "The SetFullscreen configuration is deprecated in favor of Fullscreen, and will be removed in a future version.");
       getWindow().setFlags(1024, 1024);
     }
     for (;;)
     {
-      paramBundle = getWindowManager().getDefaultDisplay();
-      root = new LinearLayoutSoftKeyboardDetect(this, paramBundle.getWidth(), paramBundle.getHeight());
-      root.setOrientation(1);
-      root.setBackgroundColor(backgroundColor);
-      root.setLayoutParams(new LinearLayout.LayoutParams(-1, -1, 0.0F));
-      setVolumeControlStream(3);
+      super.onCreate(paramBundle);
+      if (paramBundle != null) {
+        initCallbackClass = paramBundle.getString("callbackClass");
+      }
       return;
-      getWindow().setFlags(2048, 2048);
+      if (preferences.getBoolean("Fullscreen", false)) {
+        getWindow().setFlags(1024, 1024);
+      } else {
+        getWindow().setFlags(2048, 2048);
+      }
     }
   }
   
@@ -505,40 +483,44 @@ public class CordovaActivity
         removeSplashScreen();
       }
     }
-    for (;;)
+    do
     {
-      return null;
-      if ((splashDialog == null) || (!splashDialog.isShowing()))
+      do
       {
-        splashscreen = getIntegerProperty("SplashScreen", 0);
+        do
+        {
+          return null;
+        } while ((splashDialog != null) && (splashDialog.isShowing()));
+        paramString = preferences.getString("SplashScreen", null);
+        if (paramString != null) {
+          splashscreen = getResources().getIdentifier(paramString, "drawable", getClass().getPackage().getName());
+        }
         showSplashScreen(splashscreenTime);
-        continue;
-        if ("spinner".equals(paramString))
-        {
-          if ("stop".equals(paramObject.toString()))
-          {
-            spinnerStop();
-            appView.setVisibility(0);
-          }
+        return null;
+        if (!"spinner".equals(paramString)) {
+          break;
         }
-        else if ("onReceivedError".equals(paramString))
+      } while (!"stop".equals(paramObject.toString()));
+      spinnerStop();
+      appView.setVisibility(0);
+      return null;
+      if ("onReceivedError".equals(paramString))
+      {
+        paramString = (JSONObject)paramObject;
+        try
         {
-          paramString = (JSONObject)paramObject;
-          try
-          {
-            onReceivedError(paramString.getInt("errorCode"), paramString.getString("description"), paramString.getString("url"));
-          }
-          catch (JSONException paramString)
-          {
-            paramString.printStackTrace();
-          }
+          onReceivedError(paramString.getInt("errorCode"), paramString.getString("description"), paramString.getString("url"));
+          return null;
         }
-        else if ("exit".equals(paramString))
+        catch (JSONException paramString)
         {
-          endActivity();
+          paramString.printStackTrace();
+          return null;
         }
       }
-    }
+    } while (!"exit".equals(paramString));
+    endActivity();
+    return null;
   }
   
   protected void onNewIntent(Intent paramIntent)
@@ -575,8 +557,8 @@ public class CordovaActivity
   
   public void onReceivedError(int paramInt, final String paramString1, final String paramString2)
   {
-    final String str = getStringProperty("errorUrl", null);
-    if ((str != null) && ((str.startsWith("file://")) || (Config.isUrlWhiteListed(str))) && (!paramString2.equals(str)))
+    final String str = preferences.getString("errorUrl", null);
+    if ((str != null) && ((str.startsWith("file://")) || (internalWhitelist.isUrlWhiteListed(str))) && (!paramString2.equals(str)))
     {
       runOnUiThread(new Runnable()
       {
@@ -588,8 +570,8 @@ public class CordovaActivity
       });
       return;
     }
-    if (paramInt == -2) {}
-    for (final boolean bool = false;; bool = true)
+    if (paramInt != -2) {}
+    for (final boolean bool = true;; bool = false)
     {
       runOnUiThread(new Runnable()
       {
@@ -609,10 +591,7 @@ public class CordovaActivity
   protected void onResume()
   {
     super.onResume();
-    Config.init(this);
     LOG.d(TAG, "Resuming the App");
-    String str = getStringProperty("ErrorUrl", null);
-    LOG.d(TAG, "CB-3064: The errorUrl is " + str);
     if (activityState == ACTIVITY_STARTING) {
       activityState = ACTIVITY_RUNNING;
     }
@@ -622,6 +601,7 @@ public class CordovaActivity
       {
         return;
       } while (appView == null);
+      getWindow().getDecorView().requestFocus();
       appView.handleResume(keepRunning, activityResultKeepRunning);
     } while (((keepRunning) && (!activityResultKeepRunning)) || (!activityResultKeepRunning));
     keepRunning = activityResultKeepRunning;
@@ -660,10 +640,11 @@ public class CordovaActivity
     }
   }
   
+  @Deprecated
   public void sendJavascript(String paramString)
   {
     if (appView != null) {
-      appView.jsMessageQueue.addJavaScript(paramString);
+      appView.bridge.getMessageQueue().addJavaScript(paramString);
     }
   }
   
@@ -718,7 +699,7 @@ public class CordovaActivity
         localLinearLayout.setMinimumHeight(localDisplay.getHeight());
         localLinearLayout.setMinimumWidth(localDisplay.getWidth());
         localLinearLayout.setOrientation(1);
-        localLinearLayout.setBackgroundColor(jdField_this.getIntegerProperty("backgroundColor", -16777216));
+        localLinearLayout.setBackgroundColor(preferences.getInteger("backgroundColor", -16777216));
         localLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(-1, -1, 0.0F));
         localLinearLayout.setBackgroundResource(jdField_thissplashscreen);
         splashDialog = new Dialog(jdField_this, 16973840);
@@ -739,6 +720,7 @@ public class CordovaActivity
     });
   }
   
+  @Deprecated
   public void showWebPage(String paramString, boolean paramBoolean1, boolean paramBoolean2, HashMap<String, Object> paramHashMap)
   {
     if (appView != null) {

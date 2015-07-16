@@ -9,7 +9,7 @@ class CordovaWebView$4
   
   public void run()
   {
-    CordovaWebView.access$1(this$0).getThreadPool().execute(val$timeoutCheck);
+    CordovaWebView.access$000(this$0).getThreadPool().execute(val$timeoutCheck);
     val$me.loadUrlNow(val$url);
   }
 }

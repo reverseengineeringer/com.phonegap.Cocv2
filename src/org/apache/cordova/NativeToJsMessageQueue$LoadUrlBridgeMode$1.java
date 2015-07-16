@@ -7,9 +7,9 @@ class NativeToJsMessageQueue$LoadUrlBridgeMode$1
   
   public void run()
   {
-    String str = NativeToJsMessageQueue.access$0(NativeToJsMessageQueue.LoadUrlBridgeMode.access$1(this$1));
+    String str = NativeToJsMessageQueue.access$500(this$1.this$0);
     if (str != null) {
-      NativeToJsMessageQueue.access$1(NativeToJsMessageQueue.LoadUrlBridgeMode.access$1(this$1)).loadUrlNow("javascript:" + str);
+      NativeToJsMessageQueue.access$600(this$1.this$0).loadUrlNow("javascript:" + str);
     }
   }
 }

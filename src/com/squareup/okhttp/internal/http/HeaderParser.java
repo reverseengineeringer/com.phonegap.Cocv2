@@ -5,35 +5,34 @@ final class HeaderParser
   public static void parseCacheControl(String paramString, CacheControlHandler paramCacheControlHandler)
   {
     int i = 0;
-    String str2;
-    for (;;)
+    while (i < paramString.length())
     {
-      if (i >= paramString.length()) {
-        return;
+      int j = skipUntil(paramString, i, "=,;");
+      String str2 = paramString.substring(i, j).trim();
+      if ((j == paramString.length()) || (paramString.charAt(j) == ',') || (paramString.charAt(j) == ';'))
+      {
+        i = j + 1;
+        paramCacheControlHandler.handle(str2, null);
       }
-      j = skipUntil(paramString, i, "=,;");
-      str2 = paramString.substring(i, j).trim();
-      if ((j != paramString.length()) && (paramString.charAt(j) != ',') && (paramString.charAt(j) != ';')) {
-        break;
+      else
+      {
+        j = skipWhitespace(paramString, j + 1);
+        String str1;
+        if ((j < paramString.length()) && (paramString.charAt(j) == '"'))
+        {
+          i = j + 1;
+          j = skipUntil(paramString, i, "\"");
+          str1 = paramString.substring(i, j);
+          i = j + 1;
+        }
+        for (;;)
+        {
+          paramCacheControlHandler.handle(str2, str1);
+          break;
+          i = skipUntil(paramString, j, ",;");
+          str1 = paramString.substring(j, i).trim();
+        }
       }
-      i = j + 1;
-      paramCacheControlHandler.handle(str2, null);
-    }
-    int j = skipWhitespace(paramString, j + 1);
-    String str1;
-    if ((j < paramString.length()) && (paramString.charAt(j) == '"'))
-    {
-      i = j + 1;
-      j = skipUntil(paramString, i, "\"");
-      str1 = paramString.substring(i, j);
-      i = j + 1;
-    }
-    for (;;)
-    {
-      paramCacheControlHandler.handle(str2, str1);
-      break;
-      i = skipUntil(paramString, j, ",;");
-      str1 = paramString.substring(j, i).trim();
     }
   }
   
@@ -58,8 +57,7 @@ final class HeaderParser
   {
     for (;;)
     {
-      if (paramInt >= paramString1.length()) {}
-      while (paramString2.indexOf(paramString1.charAt(paramInt)) != -1) {
+      if ((paramInt >= paramString1.length()) || (paramString2.indexOf(paramString1.charAt(paramInt)) != -1)) {
         return paramInt;
       }
       paramInt += 1;
@@ -70,13 +68,15 @@ final class HeaderParser
   {
     for (;;)
     {
-      if (paramInt >= paramString.length()) {}
-      int i;
-      do
+      if (paramInt < paramString.length())
+      {
+        int i = paramString.charAt(paramInt);
+        if ((i == 32) || (i == 9)) {}
+      }
+      else
       {
         return paramInt;
-        i = paramString.charAt(paramInt);
-      } while ((i != 32) && (i != 9));
+      }
       paramInt += 1;
     }
   }

@@ -7,7 +7,7 @@ class CordovaWebViewClient$1$1
   
   public void run()
   {
-    access$0this$1).appView.postMessage("spinner", "stop");
+    this$1.this$0.appView.postMessage("spinner", "stop");
   }
 }
 

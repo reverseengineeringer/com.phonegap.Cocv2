@@ -87,10 +87,10 @@ public final class Connection
     {
       ((Platform)localObject).enableTlsExtensions(paramTunnelRequest, route.address.uriHost);
       if ((!route.modernTls) || (!route.address.transports.contains("spdy/3"))) {
-        break label217;
+        break label220;
       }
     }
-    label217:
+    label220:
     for (int i = 1;; i = 0)
     {
       if (i != 0) {
@@ -98,13 +98,13 @@ public final class Connection
       }
       paramTunnelRequest.startHandshake();
       if (route.address.hostnameVerifier.verify(route.address.uriHost, paramTunnelRequest.getSession())) {
-        break label222;
+        break label225;
       }
       throw new IOException("Hostname '" + route.address.uriHost + "' was not verified");
       ((Platform)localObject).supportTlsIntolerantServer(paramTunnelRequest);
       break;
     }
-    label222:
+    label225:
     out = paramTunnelRequest.getOutputStream();
     in = paramTunnelRequest.getInputStream();
     streamWrapper();
@@ -114,14 +114,14 @@ public final class Connection
       if (localObject != null)
       {
         if (!Arrays.equals((byte[])localObject, SPDY3)) {
-          break label312;
+          break label315;
         }
         paramTunnelRequest.setSoTimeout(0);
         spdyConnection = new SpdyConnection.Builder(route.address.getUriHost(), true, in, out).build();
         spdyConnection.sendConnectionHeader();
       }
     }
-    label312:
+    label315:
     while (Arrays.equals((byte[])localObject, HTTP_11)) {
       return;
     }

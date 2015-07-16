@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-class HttpAuthenticator$1
+final class HttpAuthenticator$1
   implements OkAuthenticator
 {
   private InetAddress getConnectToInetAddress(Proxy paramProxy, URL paramURL)
@@ -31,39 +31,37 @@ class HttpAuthenticator$1
     throws IOException
   {
     paramList = paramList.iterator();
-    Object localObject;
-    do
+    while (paramList.hasNext())
     {
-      do
+      Object localObject = (OkAuthenticator.Challenge)paramList.next();
+      if ("Basic".equalsIgnoreCase(((OkAuthenticator.Challenge)localObject).getScheme()))
       {
-        if (!paramList.hasNext()) {
-          return null;
+        localObject = Authenticator.requestPasswordAuthentication(paramURL.getHost(), getConnectToInetAddress(paramProxy, paramURL), paramURL.getPort(), paramURL.getProtocol(), ((OkAuthenticator.Challenge)localObject).getRealm(), ((OkAuthenticator.Challenge)localObject).getScheme(), paramURL, Authenticator.RequestorType.SERVER);
+        if (localObject != null) {
+          return OkAuthenticator.Credential.basic(((PasswordAuthentication)localObject).getUserName(), new String(((PasswordAuthentication)localObject).getPassword()));
         }
-        localObject = (OkAuthenticator.Challenge)paramList.next();
-      } while (!"Basic".equalsIgnoreCase(((OkAuthenticator.Challenge)localObject).getScheme()));
-      localObject = Authenticator.requestPasswordAuthentication(paramURL.getHost(), getConnectToInetAddress(paramProxy, paramURL), paramURL.getPort(), paramURL.getProtocol(), ((OkAuthenticator.Challenge)localObject).getRealm(), ((OkAuthenticator.Challenge)localObject).getScheme(), paramURL, Authenticator.RequestorType.SERVER);
-    } while (localObject == null);
-    return OkAuthenticator.Credential.basic(((PasswordAuthentication)localObject).getUserName(), new String(((PasswordAuthentication)localObject).getPassword()));
+      }
+    }
+    return null;
   }
   
   public OkAuthenticator.Credential authenticateProxy(Proxy paramProxy, URL paramURL, List<OkAuthenticator.Challenge> paramList)
     throws IOException
   {
     paramList = paramList.iterator();
-    Object localObject;
-    do
+    while (paramList.hasNext())
     {
-      do
+      Object localObject = (OkAuthenticator.Challenge)paramList.next();
+      if ("Basic".equalsIgnoreCase(((OkAuthenticator.Challenge)localObject).getScheme()))
       {
-        if (!paramList.hasNext()) {
-          return null;
+        InetSocketAddress localInetSocketAddress = (InetSocketAddress)paramProxy.address();
+        localObject = Authenticator.requestPasswordAuthentication(localInetSocketAddress.getHostName(), getConnectToInetAddress(paramProxy, paramURL), localInetSocketAddress.getPort(), paramURL.getProtocol(), ((OkAuthenticator.Challenge)localObject).getRealm(), ((OkAuthenticator.Challenge)localObject).getScheme(), paramURL, Authenticator.RequestorType.PROXY);
+        if (localObject != null) {
+          return OkAuthenticator.Credential.basic(((PasswordAuthentication)localObject).getUserName(), new String(((PasswordAuthentication)localObject).getPassword()));
         }
-        localObject = (OkAuthenticator.Challenge)paramList.next();
-      } while (!"Basic".equalsIgnoreCase(((OkAuthenticator.Challenge)localObject).getScheme()));
-      InetSocketAddress localInetSocketAddress = (InetSocketAddress)paramProxy.address();
-      localObject = Authenticator.requestPasswordAuthentication(localInetSocketAddress.getHostName(), getConnectToInetAddress(paramProxy, paramURL), localInetSocketAddress.getPort(), paramURL.getProtocol(), ((OkAuthenticator.Challenge)localObject).getRealm(), ((OkAuthenticator.Challenge)localObject).getScheme(), paramURL, Authenticator.RequestorType.PROXY);
-    } while (localObject == null);
-    return OkAuthenticator.Credential.basic(((PasswordAuthentication)localObject).getUserName(), new String(((PasswordAuthentication)localObject).getPassword()));
+      }
+    }
+    return null;
   }
 }
 

@@ -34,8 +34,7 @@ class NameValueBlockReader
     {
       paramAnonymousInt2 = Math.min(paramAnonymousInt2, compressedLimit);
       paramAnonymousInt1 = paramInputStream.read(paramAnonymousArrayOfByte, paramAnonymousInt1, paramAnonymousInt2);
-      paramAnonymousArrayOfByte = NameValueBlockReader.this;
-      compressedLimit -= paramAnonymousInt1;
+      NameValueBlockReader.access$020(NameValueBlockReader.this, paramAnonymousInt1);
       return paramAnonymousInt1;
     }
   }, new Inflater()
@@ -109,13 +108,8 @@ class NameValueBlockReader
     }
     ArrayList localArrayList = new ArrayList(i * 2);
     paramInt = 0;
-    for (;;)
+    while (paramInt < i)
     {
-      if (paramInt >= i)
-      {
-        doneReading();
-        return localArrayList;
-      }
       String str1 = readString();
       String str2 = readString();
       if (str1.length() == 0) {
@@ -125,6 +119,8 @@ class NameValueBlockReader
       localArrayList.add(str2);
       paramInt += 1;
     }
+    doneReading();
+    return localArrayList;
   }
   
   static class FillableInflaterInputStream

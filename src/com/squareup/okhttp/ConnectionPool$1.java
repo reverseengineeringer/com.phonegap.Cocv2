@@ -18,52 +18,48 @@ class ConnectionPool$1
   {
     ArrayList localArrayList = new ArrayList(2);
     int i = 0;
-    for (;;)
+    synchronized (this$0)
     {
-      synchronized (this$0)
+      ListIterator localListIterator = ConnectionPool.access$000(this$0).listIterator(ConnectionPool.access$000(this$0).size());
+      for (;;)
       {
-        ListIterator localListIterator = ConnectionPool.access$0(this$0).listIterator(ConnectionPool.access$0(this$0).size());
-        if (!localListIterator.hasPrevious())
-        {
-          localListIterator = ConnectionPool.access$0(this$0).listIterator(ConnectionPool.access$0(this$0).size());
-          if ((!localListIterator.hasPrevious()) || (i <= ConnectionPool.access$2(this$0)))
-          {
-            ??? = localArrayList.iterator();
-            if (((Iterator)???).hasNext()) {
-              break label240;
-            }
-            return null;
-          }
-        }
-        else
+        Connection localConnection;
+        if (localListIterator.hasPrevious())
         {
           localConnection = (Connection)localListIterator.previous();
-          if ((!localConnection.isAlive()) || (localConnection.isExpired(ConnectionPool.access$1(this$0))))
+          if ((!localConnection.isAlive()) || (localConnection.isExpired(ConnectionPool.access$100(this$0))))
           {
             localListIterator.remove();
             localArrayList.add(localConnection);
             if (localArrayList.size() != 2) {
               continue;
             }
-            continue;
           }
-          if (!localConnection.isIdle()) {
-            continue;
+        }
+        else
+        {
+          localListIterator = ConnectionPool.access$000(this$0).listIterator(ConnectionPool.access$000(this$0).size());
+          while ((localListIterator.hasPrevious()) && (i > ConnectionPool.access$200(this$0)))
+          {
+            localConnection = (Connection)localListIterator.previous();
+            if (localConnection.isIdle())
+            {
+              localArrayList.add(localConnection);
+              localListIterator.remove();
+              i -= 1;
+            }
           }
+        }
+        if (localConnection.isIdle()) {
           i += 1;
-          continue;
         }
-        Connection localConnection = (Connection)localListIterator.previous();
-        if (!localConnection.isIdle()) {
-          continue;
-        }
-        localArrayList.add(localConnection);
-        localListIterator.remove();
-        i -= 1;
       }
-      label240:
-      Util.closeQuietly((Connection)((Iterator)???).next());
+      ??? = localArrayList.iterator();
+      if (((Iterator)???).hasNext()) {
+        Util.closeQuietly((Connection)((Iterator)???).next());
+      }
     }
+    return null;
   }
 }
 

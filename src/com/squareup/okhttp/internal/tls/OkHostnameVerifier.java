@@ -69,37 +69,33 @@ public final class OkHostnameVerifier
     paramString = paramString.toLowerCase(Locale.US);
     int i = 0;
     Iterator localIterator = getSubjectAltNames(paramX509Certificate, 2).iterator();
-    String str;
-    do
+    while (localIterator.hasNext())
     {
-      if (!localIterator.hasNext())
-      {
-        if (i != 0) {
-          break;
-        }
-        paramX509Certificate = new DistinguishedNameParser(paramX509Certificate.getSubjectX500Principal()).findMostSpecific("cn");
-        if (paramX509Certificate == null) {
-          break;
-        }
+      String str = (String)localIterator.next();
+      i = 1;
+      if (verifyHostName(paramString, str)) {
+        return true;
+      }
+    }
+    if (i == 0)
+    {
+      paramX509Certificate = new DistinguishedNameParser(paramX509Certificate.getSubjectX500Principal()).findMostSpecific("cn");
+      if (paramX509Certificate != null) {
         return verifyHostName(paramString, paramX509Certificate);
       }
-      str = (String)localIterator.next();
-      i = 1;
-    } while (!verifyHostName(paramString, str));
-    return true;
+    }
     return false;
   }
   
   private boolean verifyIpAddress(String paramString, X509Certificate paramX509Certificate)
   {
     paramX509Certificate = getSubjectAltNames(paramX509Certificate, 7).iterator();
-    do
-    {
-      if (!paramX509Certificate.hasNext()) {
-        return false;
+    while (paramX509Certificate.hasNext()) {
+      if (paramString.equalsIgnoreCase((String)paramX509Certificate.next())) {
+        return true;
       }
-    } while (!paramString.equalsIgnoreCase((String)paramX509Certificate.next()));
-    return true;
+    }
+    return false;
   }
   
   public boolean verify(String paramString, X509Certificate paramX509Certificate)

@@ -21,7 +21,7 @@ class NativeToJsMessageQueue$PrivateApiBridgeMode
   
   private void initReflection()
   {
-    Object localObject2 = NativeToJsMessageQueue.access$1(this$0);
+    Object localObject2 = NativeToJsMessageQueue.access$600(this$0);
     Object localObject3 = WebView.class;
     Object localObject1 = localObject2;
     for (;;)
@@ -32,7 +32,7 @@ class NativeToJsMessageQueue$PrivateApiBridgeMode
         localObject1 = localObject2;
         ((Field)localObject4).setAccessible(true);
         localObject1 = localObject2;
-        localObject2 = ((Field)localObject4).get(NativeToJsMessageQueue.access$1(this$0));
+        localObject2 = ((Field)localObject4).get(NativeToJsMessageQueue.access$600(this$0));
         localObject1 = localObject2;
         localObject4 = localObject2.getClass();
         localObject3 = localObject4;
@@ -70,7 +70,7 @@ class NativeToJsMessageQueue$PrivateApiBridgeMode
     }
     Message localMessage;
     if (sendMessageMethod != null) {
-      localMessage = Message.obtain(null, 194, NativeToJsMessageQueue.access$0(this$0));
+      localMessage = Message.obtain(null, 194, NativeToJsMessageQueue.access$500(this$0));
     }
     try
     {

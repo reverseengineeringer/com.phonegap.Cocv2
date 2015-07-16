@@ -6,13 +6,13 @@ import android.content.DialogInterface.OnClickListener;
 class CordovaActivity$4$1
   implements DialogInterface.OnClickListener
 {
-  CordovaActivity$4$1(CordovaActivity.4 param4, boolean paramBoolean, CordovaActivity paramCordovaActivity) {}
+  CordovaActivity$4$1(CordovaActivity.4 param4) {}
   
   public void onClick(DialogInterface paramDialogInterface, int paramInt)
   {
     paramDialogInterface.dismiss();
-    if (val$exit) {
-      val$me.endActivity();
+    if (this$1.val$exit) {
+      this$1.val$me.endActivity();
     }
   }
 }

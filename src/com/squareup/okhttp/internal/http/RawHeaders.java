@@ -82,11 +82,8 @@ public final class RawHeaders
     }
     RawHeaders localRawHeaders = new RawHeaders();
     paramMap = paramMap.entrySet().iterator();
-    for (;;)
+    while (paramMap.hasNext())
     {
-      if (!paramMap.hasNext()) {
-        return localRawHeaders;
-      }
       Object localObject = (Map.Entry)paramMap.next();
       String str = (String)((Map.Entry)localObject).getKey();
       localObject = (List)((Map.Entry)localObject).getValue();
@@ -102,6 +99,7 @@ public final class RawHeaders
         localRawHeaders.setStatusLine((String)((List)localObject).get(((List)localObject).size() - 1));
       }
     }
+    return localRawHeaders;
   }
   
   public static RawHeaders fromNameValueBlock(List<String> paramList)
@@ -114,54 +112,46 @@ public final class RawHeaders
     Object localObject1 = null;
     RawHeaders localRawHeaders = new RawHeaders();
     int i = 0;
-    String str2;
-    String str3;
-    int j;
-    for (;;)
+    while (i < paramList.size())
     {
-      if (i >= paramList.size())
+      String str2 = (String)paramList.get(i);
+      String str3 = (String)paramList.get(i + 1);
+      int j = 0;
+      if (j < str3.length())
       {
-        if (localObject2 != null) {
-          break label221;
+        int m = str3.indexOf(0, j);
+        int k = m;
+        if (m == -1) {
+          k = str3.length();
         }
-        throw new ProtocolException("Expected ':status' header not present");
-      }
-      str2 = (String)paramList.get(i);
-      str3 = (String)paramList.get(i + 1);
-      j = 0;
-      if (j < str3.length()) {
-        break;
+        String str1 = str3.substring(j, k);
+        if (":status".equals(str2)) {
+          localObject2 = str1;
+        }
+        for (;;)
+        {
+          j = k + 1;
+          break;
+          if (":version".equals(str2))
+          {
+            localObject1 = str1;
+          }
+          else
+          {
+            namesAndValues.add(str2);
+            namesAndValues.add(str1);
+          }
+        }
       }
       i += 2;
     }
-    int m = str3.indexOf(0, j);
-    int k = m;
-    if (m == -1) {
-      k = str3.length();
+    if (localObject2 == null) {
+      throw new ProtocolException("Expected ':status' header not present");
     }
-    String str1 = str3.substring(j, k);
-    if (":status".equals(str2)) {
-      localObject2 = str1;
-    }
-    for (;;)
-    {
-      j = k + 1;
-      break;
-      if (":version".equals(str2))
-      {
-        localObject1 = str1;
-      }
-      else
-      {
-        namesAndValues.add(str2);
-        namesAndValues.add(str1);
-      }
-    }
-    label221:
     if (localObject1 == null) {
       throw new ProtocolException("Expected ':version' header not present");
     }
-    localRawHeaders.setStatusLine(localObject1 + " " + (String)localObject2);
+    localRawHeaders.setStatusLine((String)localObject1 + " " + (String)localObject2);
     return localRawHeaders;
   }
   
@@ -172,7 +162,7 @@ public final class RawHeaders
     {
       String str = Util.readAsciiLine(paramInputStream);
       if (str.length() == 0) {
-        return;
+        break;
       }
       paramRawHeaders.addLine(str);
     }
@@ -195,11 +185,7 @@ public final class RawHeaders
   public void addAll(String paramString, List<String> paramList)
   {
     paramList = paramList.iterator();
-    for (;;)
-    {
-      if (!paramList.hasNext()) {
-        return;
-      }
+    while (paramList.hasNext()) {
       add(paramString, (String)paramList.next());
     }
   }
@@ -232,33 +218,29 @@ public final class RawHeaders
   public String get(String paramString)
   {
     int i = namesAndValues.size() - 2;
-    for (;;)
+    while (i >= 0)
     {
-      if (i < 0) {
-        return null;
-      }
       if (paramString.equalsIgnoreCase((String)namesAndValues.get(i))) {
         return (String)namesAndValues.get(i + 1);
       }
       i -= 2;
     }
+    return null;
   }
   
   public RawHeaders getAll(Set<String> paramSet)
   {
     RawHeaders localRawHeaders = new RawHeaders();
     int i = 0;
-    for (;;)
+    while (i < namesAndValues.size())
     {
-      if (i >= namesAndValues.size()) {
-        return localRawHeaders;
-      }
       String str = (String)namesAndValues.get(i);
       if (paramSet.contains(str)) {
         localRawHeaders.add(str, (String)namesAndValues.get(i + 1));
       }
       i += 2;
     }
+    return localRawHeaders;
   }
   
   public String getFieldName(int paramInt)
@@ -311,24 +293,19 @@ public final class RawHeaders
   {
     TreeSet localTreeSet = new TreeSet(String.CASE_INSENSITIVE_ORDER);
     int i = 0;
-    for (;;)
+    while (i < length())
     {
-      if (i >= length()) {
-        return Collections.unmodifiableSet(localTreeSet);
-      }
       localTreeSet.add(getFieldName(i));
       i += 1;
     }
+    return Collections.unmodifiableSet(localTreeSet);
   }
   
   public void removeAll(String paramString)
   {
     int i = 0;
-    for (;;)
+    while (i < namesAndValues.size())
     {
-      if (i >= namesAndValues.size()) {
-        return;
-      }
       if (paramString.equalsIgnoreCase((String)namesAndValues.get(i)))
       {
         namesAndValues.remove(i);
@@ -392,32 +369,21 @@ public final class RawHeaders
     StringBuilder localStringBuilder = new StringBuilder(256);
     localStringBuilder.append(requestLine).append("\r\n");
     int i = 0;
-    for (;;)
+    while (i < namesAndValues.size())
     {
-      if (i >= namesAndValues.size())
-      {
-        localStringBuilder.append("\r\n");
-        return localStringBuilder.toString().getBytes("ISO-8859-1");
-      }
       localStringBuilder.append((String)namesAndValues.get(i)).append(": ").append((String)namesAndValues.get(i + 1)).append("\r\n");
       i += 2;
     }
+    localStringBuilder.append("\r\n");
+    return localStringBuilder.toString().getBytes("ISO-8859-1");
   }
   
   public Map<String, List<String>> toMultimap(boolean paramBoolean)
   {
     TreeMap localTreeMap = new TreeMap(FIELD_NAME_COMPARATOR);
     int i = 0;
-    if (i >= namesAndValues.size())
+    while (i < namesAndValues.size())
     {
-      if ((!paramBoolean) || (statusLine == null)) {
-        break label160;
-      }
-      localTreeMap.put(null, Collections.unmodifiableList(Collections.singletonList(statusLine)));
-    }
-    for (;;)
-    {
-      return Collections.unmodifiableMap(localTreeMap);
       String str1 = (String)namesAndValues.get(i);
       String str2 = (String)namesAndValues.get(i + 1);
       ArrayList localArrayList = new ArrayList();
@@ -428,8 +394,13 @@ public final class RawHeaders
       localArrayList.add(str2);
       localTreeMap.put(str1, Collections.unmodifiableList(localArrayList));
       i += 2;
-      break;
-      label160:
+    }
+    if ((paramBoolean) && (statusLine != null)) {
+      localTreeMap.put(null, Collections.unmodifiableList(Collections.singletonList(statusLine)));
+    }
+    for (;;)
+    {
+      return Collections.unmodifiableMap(localTreeMap);
       if (requestLine != null) {
         localTreeMap.put(null, Collections.unmodifiableList(Collections.singletonList(requestLine)));
       }
@@ -441,54 +412,48 @@ public final class RawHeaders
     HashSet localHashSet = new HashSet();
     ArrayList localArrayList = new ArrayList();
     int i = 0;
-    if (i >= namesAndValues.size()) {
-      return localArrayList;
-    }
-    String str1 = ((String)namesAndValues.get(i)).toLowerCase(Locale.US);
-    String str2 = (String)namesAndValues.get(i + 1);
-    if ((str1.equals("connection")) || (str1.equals("host")) || (str1.equals("keep-alive")) || (str1.equals("proxy-connection")) || (str1.equals("transfer-encoding"))) {}
-    label254:
-    for (;;)
+    if (i < namesAndValues.size())
     {
-      i += 2;
-      break;
-      if (localHashSet.add(str1))
+      String str1 = ((String)namesAndValues.get(i)).toLowerCase(Locale.US);
+      String str2 = (String)namesAndValues.get(i + 1);
+      if ((str1.equals("connection")) || (str1.equals("host")) || (str1.equals("keep-alive")) || (str1.equals("proxy-connection")) || (str1.equals("transfer-encoding"))) {}
+      label251:
+      for (;;)
       {
-        localArrayList.add(str1);
-        localArrayList.add(str2);
-      }
-      else
-      {
-        int j = 0;
-        for (;;)
+        i += 2;
+        break;
+        if (localHashSet.add(str1))
         {
-          if (j >= localArrayList.size()) {
-            break label254;
-          }
-          if (str1.equals(localArrayList.get(j)))
+          localArrayList.add(str1);
+          localArrayList.add(str2);
+        }
+        else
+        {
+          int j = 0;
+          for (;;)
           {
-            localArrayList.set(j + 1, (String)localArrayList.get(j + 1) + "\000" + str2);
-            break;
+            if (j >= localArrayList.size()) {
+              break label251;
+            }
+            if (str1.equals(localArrayList.get(j)))
+            {
+              localArrayList.set(j + 1, (String)localArrayList.get(j + 1) + "\000" + str2);
+              break;
+            }
+            j += 2;
           }
-          j += 2;
         }
       }
     }
+    return localArrayList;
   }
   
   public List<String> values(String paramString)
   {
     Object localObject1 = null;
     int i = 0;
-    for (;;)
+    while (i < length())
     {
-      if (i >= length())
-      {
-        if (localObject1 == null) {
-          break;
-        }
-        return Collections.unmodifiableList((List)localObject1);
-      }
       Object localObject2 = localObject1;
       if (paramString.equalsIgnoreCase(getFieldName(i)))
       {
@@ -500,6 +465,9 @@ public final class RawHeaders
       }
       i += 1;
       localObject1 = localObject2;
+    }
+    if (localObject1 != null) {
+      return Collections.unmodifiableList((List)localObject1);
     }
     return Collections.emptyList();
   }

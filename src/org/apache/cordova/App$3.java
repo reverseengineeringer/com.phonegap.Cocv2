@@ -7,7 +7,7 @@ class App$3
   
   public void run()
   {
-    this$0.webView.backHistory();
+    this$0.webView.clearHistory();
   }
 }
 

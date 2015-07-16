@@ -13,16 +13,12 @@ final class HttpTransport$ChunkedOutputStream
   private static final byte[] FINAL_CHUNK = { 48, 13, 10, 13, 10 };
   private static final byte[] HEX_DIGITS = { 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102 };
   private final ByteArrayOutputStream bufferedChunk;
-  private final byte[] hex;
+  private final byte[] hex = { 0, 0, 0, 0, 0, 0, 0, 0, 13, 10 };
   private final int maxChunkLength;
   private final OutputStream socketOut;
   
   private HttpTransport$ChunkedOutputStream(OutputStream paramOutputStream, int paramInt)
   {
-    byte[] arrayOfByte = new byte[10];
-    arrayOfByte[8] = 13;
-    arrayOfByte[9] = 10;
-    hex = arrayOfByte;
     socketOut = paramOutputStream;
     maxChunkLength = Math.max(1, dataLength(paramInt));
     bufferedChunk = new ByteArrayOutputStream(paramInt);
@@ -32,14 +28,12 @@ final class HttpTransport$ChunkedOutputStream
   {
     int j = 4;
     int i = paramInt - 4;
-    for (;;)
+    while (i > 0)
     {
-      if (i <= 0) {
-        return paramInt - j;
-      }
       j += 1;
       i >>= 4;
     }
+    return paramInt - j;
   }
   
   private void writeBufferedChunkToSocket()
@@ -81,7 +75,7 @@ final class HttpTransport$ChunkedOutputStream
     //   0: aload_0
     //   1: monitorenter
     //   2: aload_0
-    //   3: getfield 107	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:closed	Z
+    //   3: getfield 108	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:closed	Z
     //   6: istore_1
     //   7: iload_1
     //   8: ifeq +6 -> 14
@@ -90,13 +84,13 @@ final class HttpTransport$ChunkedOutputStream
     //   13: return
     //   14: aload_0
     //   15: iconst_1
-    //   16: putfield 107	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:closed	Z
+    //   16: putfield 108	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:closed	Z
     //   19: aload_0
-    //   20: invokespecial 109	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:writeBufferedChunkToSocket	()V
+    //   20: invokespecial 110	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:writeBufferedChunkToSocket	()V
     //   23: aload_0
-    //   24: getfield 53	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:socketOut	Ljava/io/OutputStream;
+    //   24: getfield 54	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:socketOut	Ljava/io/OutputStream;
     //   27: getstatic 44	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:FINAL_CHUNK	[B
-    //   30: invokevirtual 98	java/io/OutputStream:write	([B)V
+    //   30: invokevirtual 99	java/io/OutputStream:write	([B)V
     //   33: goto -22 -> 11
     //   36: astore_2
     //   37: aload_0
@@ -122,7 +116,7 @@ final class HttpTransport$ChunkedOutputStream
     //   0: aload_0
     //   1: monitorenter
     //   2: aload_0
-    //   3: getfield 107	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:closed	Z
+    //   3: getfield 108	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:closed	Z
     //   6: istore_1
     //   7: iload_1
     //   8: ifeq +6 -> 14
@@ -130,10 +124,10 @@ final class HttpTransport$ChunkedOutputStream
     //   12: monitorexit
     //   13: return
     //   14: aload_0
-    //   15: invokespecial 109	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:writeBufferedChunkToSocket	()V
+    //   15: invokespecial 110	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:writeBufferedChunkToSocket	()V
     //   18: aload_0
-    //   19: getfield 53	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:socketOut	Ljava/io/OutputStream;
-    //   22: invokevirtual 112	java/io/OutputStream:flush	()V
+    //   19: getfield 54	com/squareup/okhttp/internal/http/HttpTransport$ChunkedOutputStream:socketOut	Ljava/io/OutputStream;
+    //   22: invokevirtual 113	java/io/OutputStream:flush	()V
     //   25: goto -14 -> 11
     //   28: astore_2
     //   29: aload_0
@@ -161,29 +155,29 @@ final class HttpTransport$ChunkedOutputStream
       {
         checkNotClosed();
         Util.checkOffsetAndCount(paramArrayOfByte.length, paramInt1, paramInt2);
-        if (paramInt2 <= 0) {
-          return;
-        }
-        if ((bufferedChunk.size() > 0) || (paramInt2 < maxChunkLength))
-        {
-          int j = Math.min(paramInt2, maxChunkLength - bufferedChunk.size());
-          bufferedChunk.write(paramArrayOfByte, paramInt1, j);
-          i = j;
-          if (bufferedChunk.size() == maxChunkLength)
+        if (paramInt2 > 0) {
+          if ((bufferedChunk.size() > 0) || (paramInt2 < maxChunkLength))
           {
-            writeBufferedChunkToSocket();
+            int j = Math.min(paramInt2, maxChunkLength - bufferedChunk.size());
+            bufferedChunk.write(paramArrayOfByte, paramInt1, j);
             i = j;
+            if (bufferedChunk.size() == maxChunkLength)
+            {
+              writeBufferedChunkToSocket();
+              i = j;
+            }
           }
-        }
-        else
-        {
-          i = maxChunkLength;
-          writeHex(i);
-          socketOut.write(paramArrayOfByte, paramInt1, i);
-          socketOut.write(CRLF);
+          else
+          {
+            i = maxChunkLength;
+            writeHex(i);
+            socketOut.write(paramArrayOfByte, paramInt1, i);
+            socketOut.write(CRLF);
+          }
         }
       }
       finally {}
+      return;
       paramInt1 += i;
       paramInt2 -= i;
     }

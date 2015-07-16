@@ -25,11 +25,8 @@ public final class DiskLruCache$Snapshot
     InputStream[] arrayOfInputStream = ins;
     int j = arrayOfInputStream.length;
     int i = 0;
-    for (;;)
+    while (i < j)
     {
-      if (i >= j) {
-        return;
-      }
       Util.closeQuietly(arrayOfInputStream[i]);
       i += 1;
     }
@@ -38,7 +35,7 @@ public final class DiskLruCache$Snapshot
   public DiskLruCache.Editor edit()
     throws IOException
   {
-    return DiskLruCache.access$5(this$0, key, sequenceNumber);
+    return DiskLruCache.access$1600(this$0, key, sequenceNumber);
   }
   
   public InputStream getInputStream(int paramInt)
@@ -54,7 +51,7 @@ public final class DiskLruCache$Snapshot
   public String getString(int paramInt)
     throws IOException
   {
-    return DiskLruCache.access$6(getInputStream(paramInt));
+    return DiskLruCache.access$1700(getInputStream(paramInt));
   }
 }
 

@@ -76,7 +76,13 @@ public class App
   
   public void clearHistory()
   {
-    webView.clearHistory();
+    cordova.getActivity().runOnUiThread(new Runnable()
+    {
+      public void run()
+      {
+        webView.clearHistory();
+      }
+    });
   }
   
   public boolean execute(String paramString, JSONArray paramJSONArray, CallbackContext paramCallbackContext)
@@ -137,124 +143,116 @@ public class App
     webView.postMessage("exit", null);
   }
   
-  public void initialize(CordovaInterface paramCordovaInterface, CordovaWebView paramCordovaWebView)
-  {
-    super.initialize(paramCordovaInterface, paramCordovaWebView);
-    initTelephonyReceiver();
-  }
-  
   public boolean isBackbuttonOverridden()
   {
-    return webView.isBackButtonBound();
+    return webView.isButtonPlumbedToJs(4);
   }
   
   public void loadUrl(String paramString, JSONObject paramJSONObject)
     throws JSONException
   {
     LOG.d("App", "App.loadUrl(" + paramString + "," + paramJSONObject + ")");
+    int k = 0;
     int i = 0;
-    int j = 0;
-    boolean bool2 = false;
     boolean bool4 = false;
     boolean bool1 = false;
     boolean bool3 = false;
+    boolean bool2 = false;
     HashMap localHashMap = new HashMap();
-    JSONArray localJSONArray;
-    int k;
     if (paramJSONObject != null)
     {
-      localJSONArray = paramJSONObject.names();
-      k = 0;
-      i = j;
-      bool2 = bool4;
-      j = k;
-      bool1 = bool3;
-      if (j < localJSONArray.length()) {}
+      JSONArray localJSONArray = paramJSONObject.names();
+      int j = 0;
+      bool3 = bool2;
+      bool4 = bool1;
+      k = i;
+      if (j < localJSONArray.length())
+      {
+        String str = localJSONArray.getString(j);
+        if (str.equals("wait"))
+        {
+          k = paramJSONObject.getInt(str);
+          bool4 = bool1;
+          bool3 = bool2;
+        }
+        for (;;)
+        {
+          j += 1;
+          bool2 = bool3;
+          bool1 = bool4;
+          i = k;
+          break;
+          if (str.equalsIgnoreCase("openexternal"))
+          {
+            bool4 = paramJSONObject.getBoolean(str);
+            bool3 = bool2;
+            k = i;
+          }
+          else if (str.equalsIgnoreCase("clearhistory"))
+          {
+            bool3 = paramJSONObject.getBoolean(str);
+            bool4 = bool1;
+            k = i;
+          }
+          else
+          {
+            Object localObject = paramJSONObject.get(str);
+            bool3 = bool2;
+            bool4 = bool1;
+            k = i;
+            if (localObject != null) {
+              if (localObject.getClass().equals(String.class))
+              {
+                localHashMap.put(str, (String)localObject);
+                bool3 = bool2;
+                bool4 = bool1;
+                k = i;
+              }
+              else if (localObject.getClass().equals(Boolean.class))
+              {
+                localHashMap.put(str, (Boolean)localObject);
+                bool3 = bool2;
+                bool4 = bool1;
+                k = i;
+              }
+              else
+              {
+                bool3 = bool2;
+                bool4 = bool1;
+                k = i;
+                if (localObject.getClass().equals(Integer.class))
+                {
+                  localHashMap.put(str, (Integer)localObject);
+                  bool3 = bool2;
+                  bool4 = bool1;
+                  k = i;
+                }
+              }
+            }
+          }
+        }
+      }
     }
-    else if (i <= 0) {}
+    if (k > 0) {}
     for (;;)
     {
       try
       {
-        l = i;
+        l = k;
       }
       catch (InterruptedException paramJSONObject)
       {
         long l;
-        String str;
         paramJSONObject.printStackTrace();
         continue;
       }
       try
       {
         wait(l);
-        webView.showWebPage(paramString, bool2, bool1, localHashMap);
+        webView.showWebPage(paramString, bool4, bool3, localHashMap);
         return;
       }
       finally {}
-    }
-    str = localJSONArray.getString(j);
-    if (str.equals("wait"))
-    {
-      k = paramJSONObject.getInt(str);
-      bool4 = bool2;
-      bool3 = bool1;
-    }
-    for (;;)
-    {
-      j += 1;
-      bool1 = bool3;
-      bool2 = bool4;
-      i = k;
-      break;
-      if (str.equalsIgnoreCase("openexternal"))
-      {
-        bool4 = paramJSONObject.getBoolean(str);
-        bool3 = bool1;
-        k = i;
-      }
-      else if (str.equalsIgnoreCase("clearhistory"))
-      {
-        bool3 = paramJSONObject.getBoolean(str);
-        bool4 = bool2;
-        k = i;
-      }
-      else
-      {
-        Object localObject = paramJSONObject.get(str);
-        bool3 = bool1;
-        bool4 = bool2;
-        k = i;
-        if (localObject != null) {
-          if (localObject.getClass().equals(String.class))
-          {
-            localHashMap.put(str, (String)localObject);
-            bool3 = bool1;
-            bool4 = bool2;
-            k = i;
-          }
-          else if (localObject.getClass().equals(Boolean.class))
-          {
-            localHashMap.put(str, (Boolean)localObject);
-            bool3 = bool1;
-            bool4 = bool2;
-            k = i;
-          }
-          else
-          {
-            bool3 = bool1;
-            bool4 = bool2;
-            k = i;
-            if (localObject.getClass().equals(Integer.class))
-            {
-              localHashMap.put(str, (Integer)localObject);
-              bool3 = bool1;
-              bool4 = bool2;
-              k = i;
-            }
-          }
-        }
-      }
     }
   }
   
@@ -266,13 +264,24 @@ public class App
   public void overrideBackbutton(boolean paramBoolean)
   {
     LOG.i("App", "WARNING: Back Button Default Behavior will be overridden.  The backbutton event will be fired!");
-    webView.bindButton(paramBoolean);
+    webView.setButtonPlumbedToJs(4, paramBoolean);
   }
   
   public void overrideButton(String paramString, boolean paramBoolean)
   {
     LOG.i("App", "WARNING: Volume Button Default Behavior will be overridden.  The volume event will be fired!");
-    webView.bindButton(paramString, paramBoolean);
+    if (paramString.equals("volumeup")) {
+      webView.setButtonPlumbedToJs(24, paramBoolean);
+    }
+    while (!paramString.equals("volumedown")) {
+      return;
+    }
+    webView.setButtonPlumbedToJs(25, paramBoolean);
+  }
+  
+  public void pluginInitialize()
+  {
+    initTelephonyReceiver();
   }
 }
 

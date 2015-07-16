@@ -130,15 +130,15 @@ final class Settings
   void merge(Settings paramSettings)
   {
     int i = 0;
-    if (i >= 10) {
-      return;
-    }
-    if (!paramSettings.isSet(i)) {}
-    for (;;)
+    if (i < 10)
     {
-      i += 1;
-      break;
-      set(i, paramSettings.flags(i), paramSettings.get(i));
+      if (!paramSettings.isSet(i)) {}
+      for (;;)
+      {
+        i += 1;
+        break;
+        set(i, paramSettings.flags(i), paramSettings.get(i));
+      }
     }
   }
   

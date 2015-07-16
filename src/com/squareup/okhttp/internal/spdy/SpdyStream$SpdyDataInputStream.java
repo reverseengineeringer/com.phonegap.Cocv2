@@ -34,8 +34,8 @@ final class SpdyStream$SpdyDataInputStream
     if (closed) {
       throw new IOException("stream closed");
     }
-    if (SpdyStream.access$3(this$0) != null) {
-      throw new IOException("stream was reset: " + SpdyStream.access$3(this$0));
+    if (SpdyStream.access$1000(this$0) != null) {
+      throw new IOException("stream was reset: " + SpdyStream.access$1000(this$0));
     }
   }
   
@@ -44,22 +44,19 @@ final class SpdyStream$SpdyDataInputStream
   {
     long l2 = 0L;
     long l1 = 0L;
-    if (SpdyStream.access$2(this$0) != 0L) {
+    if (SpdyStream.access$900(this$0) != 0L) {
       l2 = System.nanoTime() / 1000000L;
     }
-    for (l1 = SpdyStream.access$2(this$0);; l1 = SpdyStream.access$2(this$0) + l2 - System.nanoTime() / 1000000L)
+    for (l1 = SpdyStream.access$900(this$0);; l1 = SpdyStream.access$900(this$0) + l2 - System.nanoTime() / 1000000L)
     {
       try
       {
         for (;;)
         {
-          if ((pos != -1) || (finished) || (closed)) {
+          if ((pos != -1) || (finished) || (closed) || (SpdyStream.access$1000(this$0) != null)) {
             return;
           }
-          if (SpdyStream.access$3(this$0) != null) {
-            return;
-          }
-          if (SpdyStream.access$2(this$0) != 0L) {
+          if (SpdyStream.access$900(this$0) != 0L) {
             break;
           }
           this$0.wait();
@@ -106,7 +103,7 @@ final class SpdyStream$SpdyDataInputStream
     {
       closed = true;
       this$0.notifyAll();
-      SpdyStream.access$4(this$0);
+      SpdyStream.access$1100(this$0);
       return;
     }
   }
@@ -153,7 +150,7 @@ final class SpdyStream$SpdyDataInputStream
       unacknowledgedBytes += j;
       if (unacknowledgedBytes >= 32768)
       {
-        SpdyStream.access$0(this$0).writeWindowUpdateLater(SpdyStream.access$1(this$0), unacknowledgedBytes);
+        SpdyStream.access$800(this$0).writeWindowUpdateLater(SpdyStream.access$700(this$0), unacknowledgedBytes);
         unacknowledgedBytes = 0;
       }
       if (pos == limit)

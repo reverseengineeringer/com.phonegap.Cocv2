@@ -37,7 +37,7 @@ class HttpTransport$FixedLengthInputStream
     if (closed) {
       return;
     }
-    if ((bytesRemaining != 0L) && (!HttpTransport.access$0(httpEngine, this))) {
+    if ((bytesRemaining != 0L) && (!HttpTransport.access$200(httpEngine, this))) {
       unexpectedEndOfInput();
     }
     closed = true;

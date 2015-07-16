@@ -59,8 +59,8 @@ public class Route
     Address localAddress = address;
     Proxy localProxy = proxy;
     InetSocketAddress localInetSocketAddress = inetSocketAddress;
-    if (modernTls) {}
-    for (boolean bool = false;; bool = true) {
+    if (!modernTls) {}
+    for (boolean bool = true;; bool = false) {
       return new Route(localAddress, localProxy, localInetSocketAddress, bool);
     }
   }

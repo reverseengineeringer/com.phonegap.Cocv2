@@ -149,20 +149,17 @@ final class Spdy3
       }
       Settings localSettings = new Settings();
       paramInt2 = 0;
-      if (paramInt2 >= i) {
-        if ((paramInt1 & 0x1) == 0) {
-          break label123;
-        }
+      while (paramInt2 < i)
+      {
+        int j = in.readInt();
+        localSettings.set(j & 0xFFFFFF, (0xFF000000 & j) >>> 24, in.readInt());
+        paramInt2 += 1;
       }
+      if ((paramInt1 & 0x1) != 0) {}
       for (;;)
       {
         paramHandler.settings(bool, localSettings);
         return;
-        int j = in.readInt();
-        localSettings.set(j & 0xFFFFFF, (0xFF000000 & j) >>> 24, in.readInt());
-        paramInt2 += 1;
-        break;
-        label123:
         bool = false;
       }
     }
@@ -239,7 +236,7 @@ final class Spdy3
             m = (0xFF000000 & k) >>> 24;
             k &= 0xFFFFFF;
             if (i == 0) {
-              break label326;
+              break label330;
             }
             i = (0x7FFF0000 & j) >>> 16;
             if (i == 3) {
@@ -297,7 +294,7 @@ final class Spdy3
       }
       Util.skipByReading(in, k);
       throw new UnsupportedOperationException("TODO");
-      label326:
+      label330:
       if ((m & 0x1) != 0) {
         bool = true;
       }
@@ -333,17 +330,13 @@ final class Spdy3
       int i = paramList.size() / 2;
       nameValueBlockOut.writeInt(i);
       paramList = paramList.iterator();
-      for (;;)
+      while (paramList.hasNext())
       {
-        if (!paramList.hasNext())
-        {
-          nameValueBlockOut.flush();
-          return;
-        }
         String str = (String)paramList.next();
         nameValueBlockOut.writeInt(str.length());
         nameValueBlockOut.write(str.getBytes("UTF-8"));
       }
+      nameValueBlockOut.flush();
     }
     
     public void close()
@@ -458,27 +451,37 @@ final class Spdy3
     public void ping(boolean paramBoolean, int paramInt1, int paramInt2)
       throws IOException
     {
-      paramInt2 = 1;
+      boolean bool2 = true;
       for (;;)
       {
+        boolean bool3;
         try
         {
-          int i = client;
-          if (paramInt1 % 2 == 1)
-          {
-            if (paramBoolean == (i ^ paramInt2)) {
-              break;
-            }
-            throw new IllegalArgumentException("payload != reply");
+          bool3 = client;
+          if (paramInt1 % 2 != 1) {
+            break label47;
           }
+          bool1 = true;
         }
         finally {}
-        paramInt2 = 0;
+        if (paramBoolean != bool1)
+        {
+          throw new IllegalArgumentException("payload != reply");
+          label47:
+          bool1 = false;
+        }
+        while (bool3 == bool1)
+        {
+          bool1 = false;
+          break;
+          out.writeInt(-2147287034);
+          out.writeInt(4);
+          out.writeInt(paramInt1);
+          out.flush();
+          return;
+        }
+        boolean bool1 = bool2;
       }
-      out.writeInt(-2147287034);
-      out.writeInt(4);
-      out.writeInt(paramInt1);
-      out.flush();
     }
     
     public void rstStream(int paramInt, ErrorCode paramErrorCode)
@@ -511,19 +514,20 @@ final class Spdy3
           out.writeInt(i * 8 + 4 & 0xFFFFFF | 0x0);
           out.writeInt(i);
           i = 0;
-          if (i > 10)
+          if (i <= 10)
           {
-            out.flush();
-            return;
-          }
-          if (paramSettings.isSet(i))
-          {
+            if (!paramSettings.isSet(i)) {
+              break label117;
+            }
             int j = paramSettings.flags(i);
             out.writeInt((j & 0xFF) << 24 | i & 0xFFFFFF);
             out.writeInt(paramSettings.get(i));
           }
         }
         finally {}
+        out.flush();
+        return;
+        label117:
         i += 1;
       }
     }
@@ -577,7 +581,7 @@ final class Spdy3
       //   75: invokevirtual 149	java/io/ByteArrayOutputStream:writeTo	(Ljava/io/OutputStream;)V
       //   78: aload_0
       //   79: getfield 28	com/squareup/okhttp/internal/spdy/Spdy3$Writer:out	Ljava/io/DataOutputStream;
-      //   82: invokevirtual 89	java/io/DataOutputStream:flush	()V
+      //   82: invokevirtual 107	java/io/DataOutputStream:flush	()V
       //   85: aload_0
       //   86: monitorexit
       //   87: return

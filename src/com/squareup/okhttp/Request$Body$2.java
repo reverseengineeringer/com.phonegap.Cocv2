@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-class Request$Body$2
+final class Request$Body$2
   extends Request.Body
 {
   Request$Body$2(MediaType paramMediaType, File paramFile) {}
@@ -40,10 +40,8 @@ class Request$Body$2
         for (;;)
         {
           int i = ((InputStream)localObject1).read(arrayOfByte);
-          if (i == -1)
-          {
-            Util.closeQuietly((Closeable)localObject1);
-            return;
+          if (i == -1) {
+            break;
           }
           paramOutputStream.write(arrayOfByte, 0, i);
         }
@@ -57,10 +55,14 @@ class Request$Body$2
     }
     finally
     {
-      Object localObject1;
-      paramOutputStream = (OutputStream)localObject3;
+      for (;;)
+      {
+        Object localObject1;
+        paramOutputStream = (OutputStream)localObject3;
+      }
     }
     throw ((Throwable)localObject1);
+    Util.closeQuietly((Closeable)localObject1);
   }
 }
 

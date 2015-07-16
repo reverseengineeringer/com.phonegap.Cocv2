@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
 
-class HttpDate$1
+final class HttpDate$1
   extends ThreadLocal<DateFormat>
 {
   protected DateFormat initialValue()

@@ -10,7 +10,6 @@ import android.content.DialogInterface.OnKeyListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build.VERSION;
-import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -28,14 +27,11 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout.LayoutParams;
-import org.json.JSONArray;
-import org.json.JSONException;
 
 public class CordovaChromeClient
   extends WebChromeClient
 {
   public static final int FILECHOOSER_RESULTCODE = 5173;
-  private static final String LOG_TAG = "CordovaChromeClient";
   private long MAX_QUOTA = 104857600L;
   private String TAG = "CordovaLog";
   protected CordovaWebView appView;
@@ -43,6 +39,7 @@ public class CordovaChromeClient
   public ValueCallback<Uri> mUploadMessage;
   private View mVideoProgressView;
   
+  @Deprecated
   public CordovaChromeClient(CordovaInterface paramCordovaInterface)
   {
     cordova = paramCordovaInterface;
@@ -194,85 +191,37 @@ public class CordovaChromeClient
   
   public boolean onJsPrompt(WebView paramWebView, final String paramString1, String paramString2, String paramString3, final JsPromptResult paramJsPromptResult)
   {
-    int i = 0;
-    if ((paramString1.startsWith("file://")) || (Config.isUrlWhiteListed(paramString1))) {
-      i = 1;
+    paramWebView = appView.bridge.promptOnJsPrompt(paramString1, paramString2, paramString3);
+    if (paramWebView != null) {
+      paramJsPromptResult.confirm(paramWebView);
     }
-    if ((i != 0) && (paramString3 != null) && (paramString3.length() > 3) && (paramString3.substring(0, 4).equals("gap:"))) {}
     for (;;)
     {
-      try
-      {
-        paramString3 = new JSONArray(paramString3.substring(4));
-        paramWebView = paramString3.getString(0);
-        paramString1 = paramString3.getString(1);
-        paramString3 = paramString3.getString(2);
-        paramString1 = appView.exposedJsApi.exec(paramWebView, paramString1, paramString3, paramString2);
-        paramWebView = paramString1;
-        if (paramString1 == null) {
-          paramWebView = "";
-        }
-        paramJsPromptResult.confirm(paramWebView);
-        return true;
+      return true;
+      paramWebView = new AlertDialog.Builder(cordova.getActivity());
+      paramWebView.setMessage(paramString2);
+      paramString1 = new EditText(cordova.getActivity());
+      if (paramString3 != null) {
+        paramString1.setText(paramString3);
       }
-      catch (JSONException paramWebView)
+      paramWebView.setView(paramString1);
+      paramWebView.setCancelable(false);
+      paramWebView.setPositiveButton(17039370, new DialogInterface.OnClickListener()
       {
-        paramWebView.printStackTrace();
-        return false;
-      }
-      if ((i != 0) && (paramString3 != null) && (paramString3.equals("gap_bridge_mode:")))
-      {
-        try
+        public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
         {
-          appView.exposedJsApi.setNativeToJsBridgeMode(Integer.parseInt(paramString2));
-          paramJsPromptResult.confirm("");
+          paramAnonymousDialogInterface = paramString1.getText().toString();
+          paramJsPromptResult.confirm(paramAnonymousDialogInterface);
         }
-        catch (NumberFormatException paramWebView)
-        {
-          paramJsPromptResult.confirm("");
-          paramWebView.printStackTrace();
-        }
-      }
-      else if ((i != 0) && (paramString3 != null) && (paramString3.equals("gap_poll:")))
+      });
+      paramWebView.setNegativeButton(17039360, new DialogInterface.OnClickListener()
       {
-        paramString1 = appView.exposedJsApi.retrieveJsMessages("1".equals(paramString2));
-        paramWebView = paramString1;
-        if (paramString1 == null) {
-          paramWebView = "";
-        }
-        paramJsPromptResult.confirm(paramWebView);
-      }
-      else if ((paramString3 != null) && (paramString3.equals("gap_init:")))
-      {
-        paramJsPromptResult.confirm("OK");
-      }
-      else
-      {
-        paramWebView = new AlertDialog.Builder(cordova.getActivity());
-        paramWebView.setMessage(paramString2);
-        paramString1 = new EditText(cordova.getActivity());
-        if (paramString3 != null) {
-          paramString1.setText(paramString3);
-        }
-        paramWebView.setView(paramString1);
-        paramWebView.setCancelable(false);
-        paramWebView.setPositiveButton(17039370, new DialogInterface.OnClickListener()
+        public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
         {
-          public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
-          {
-            paramAnonymousDialogInterface = paramString1.getText().toString();
-            paramJsPromptResult.confirm(paramAnonymousDialogInterface);
-          }
-        });
-        paramWebView.setNegativeButton(17039360, new DialogInterface.OnClickListener()
-        {
-          public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
-          {
-            paramJsPromptResult.cancel();
-          }
-        });
-        paramWebView.show();
-      }
+          paramJsPromptResult.cancel();
+        }
+      });
+      paramWebView.show();
     }
   }
   
@@ -300,6 +249,7 @@ public class CordovaChromeClient
     cordova.getActivity().startActivityForResult(Intent.createChooser(paramValueCallback, "File Browser"), 5173);
   }
   
+  @Deprecated
   public void setWebView(CordovaWebView paramCordovaWebView)
   {
     appView = paramCordovaWebView;

@@ -15,7 +15,7 @@ final class HttpResponseCache$CacheRequestImpl
   private boolean done;
   private final DiskLruCache.Editor editor;
   
-  public HttpResponseCache$CacheRequestImpl(HttpResponseCache paramHttpResponseCache, final DiskLruCache.Editor paramEditor)
+  public HttpResponseCache$CacheRequestImpl(final HttpResponseCache paramHttpResponseCache, final DiskLruCache.Editor paramEditor)
     throws IOException
   {
     editor = paramEditor;
@@ -30,9 +30,8 @@ final class HttpResponseCache$CacheRequestImpl
           if (done) {
             return;
           }
-          done = true;
-          HttpResponseCache localHttpResponseCache2 = this$0;
-          HttpResponseCache.access$5(localHttpResponseCache2, HttpResponseCache.access$4(localHttpResponseCache2) + 1);
+          HttpResponseCache.CacheRequestImpl.access$702(HttpResponseCache.CacheRequestImpl.this, true);
+          HttpResponseCache.access$808(this$0);
           super.close();
           paramEditor.commit();
           return;
@@ -55,8 +54,7 @@ final class HttpResponseCache$CacheRequestImpl
         return;
       }
       done = true;
-      HttpResponseCache localHttpResponseCache2 = this$0;
-      HttpResponseCache.access$7(localHttpResponseCache2, HttpResponseCache.access$6(localHttpResponseCache2) + 1);
+      HttpResponseCache.access$908(this$0);
       Util.closeQuietly(cacheOut);
       try
       {

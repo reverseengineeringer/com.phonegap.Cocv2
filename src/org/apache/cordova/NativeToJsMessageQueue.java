@@ -11,13 +11,11 @@ import java.util.LinkedList;
 
 public class NativeToJsMessageQueue
 {
-  private static final int DEFAULT_BRIDGE_MODE = 2;
   static final boolean DISABLE_EXEC_CHAINING = false;
-  static final boolean ENABLE_LOCATION_CHANGE_EXEC_MODE = false;
   private static final boolean FORCE_ENCODE_USING_EVAL = false;
   private static final String LOG_TAG = "JsMessageQueue";
   private static int MAX_PAYLOAD_SIZE = 524288000;
-  private int activeListenerIndex;
+  private BridgeMode activeBridgeMode;
   private final CordovaInterface cordova;
   private boolean paused;
   private final LinkedList<JsMessage> queue = new LinkedList();
@@ -46,9 +44,14 @@ public class NativeToJsMessageQueue
   {
     try
     {
+      if (activeBridgeMode == null)
+      {
+        Log.d("JsMessageQueue", "Dropping Native->JS message due to disabled bridge");
+        return;
+      }
       queue.add(paramJsMessage);
       if (!paused) {
-        registeredListeners[activeListenerIndex].onNativeToJsMessageAvailable();
+        activeBridgeMode.onNativeToJsMessageAvailable();
       }
       return;
     }
@@ -63,92 +66,86 @@ public class NativeToJsMessageQueue
   
   private String popAndEncodeAsJs()
   {
+    int i;
+    int j;
+    int k;
+    label88:
+    int m;
+    try
+    {
+      if (queue.size() == 0) {
+        return null;
+      }
+      i = 0;
+      j = 0;
+      Object localObject1 = queue.iterator();
+      if (((Iterator)localObject1).hasNext())
+      {
+        k = ((JsMessage)((Iterator)localObject1).next()).calculateEncodedLength() + 50;
+        if ((j <= 0) || (i + k <= MAX_PAYLOAD_SIZE) || (MAX_PAYLOAD_SIZE <= 0)) {
+          break label235;
+        }
+      }
+      if (j != queue.size()) {
+        break label246;
+      }
+      k = 1;
+      if (k == 0) {
+        break label251;
+      }
+      m = 0;
+      label95:
+      localObject1 = new StringBuilder(m + i);
+      i = 0;
+      label110:
+      if (i < j)
+      {
+        JsMessage localJsMessage = (JsMessage)queue.removeFirst();
+        if ((k != 0) && (i + 1 == j))
+        {
+          localJsMessage.encodeAsJsMessage((StringBuilder)localObject1);
+        }
+        else
+        {
+          ((StringBuilder)localObject1).append("try{");
+          localJsMessage.encodeAsJsMessage((StringBuilder)localObject1);
+          ((StringBuilder)localObject1).append("}finally{");
+        }
+      }
+    }
+    finally {}
+    if (k == 0) {
+      ((StringBuilder)localObject2).append("window.setTimeout(function(){cordova.require('cordova/plugin/android/polling').pollOnce();},0);");
+    }
     for (;;)
     {
-      int j;
-      Object localObject;
-      try
+      if (i < j)
       {
-        if (queue.size() == 0) {
-          return null;
-        }
-        i = 0;
-        j = 0;
-        localObject = queue.iterator();
-        if (((Iterator)localObject).hasNext()) {
-          break label118;
-        }
-        if (j != queue.size()) {
-          break label251;
-        }
-        k = 1;
-        if (k == 0) {
-          break label256;
-        }
-        m = 0;
-        localObject = new StringBuilder(m + i);
-        i = 0;
-        if (i < j) {
-          break label157;
-        }
-        if (k != 0) {
-          break label231;
-        }
-        ((StringBuilder)localObject).append("window.setTimeout(function(){cordova.require('cordova/plugin/android/polling').pollOnce();},0);");
-      }
-      finally {}
-      if (i >= j)
-      {
-        localObject = ((StringBuilder)localObject).toString();
-        return (String)localObject;
-        label118:
-        k = ((JsMessage)localStringBuilder.next()).calculateEncodedLength() + 50;
-        if ((j > 0) && (i + k > MAX_PAYLOAD_SIZE))
-        {
-          if (MAX_PAYLOAD_SIZE > 0) {
-            continue;
-          }
-          break label240;
-          label157:
-          JsMessage localJsMessage = (JsMessage)queue.removeFirst();
-          if ((k != 0) && (i + 1 == j))
-          {
-            localJsMessage.encodeAsJsMessage(localStringBuilder);
-            break label263;
-          }
-          localStringBuilder.append("try{");
-          localJsMessage.encodeAsJsMessage(localStringBuilder);
-          localStringBuilder.append("}finally{");
-          break label263;
-        }
+        ((StringBuilder)localObject2).append('}');
+        i += 1;
       }
       else
       {
-        localStringBuilder.append('}');
+        String str = ((StringBuilder)localObject2).toString();
+        return str;
         i += 1;
-        continue;
-        label231:
-        if (k == 0) {
-          break label270;
+        break label110;
+        label235:
+        i += k;
+        j += 1;
+        break;
+        label246:
+        k = 0;
+        break label88;
+        label251:
+        m = 100;
+        break label95;
+        if (k != 0) {
+          i = 1;
+        } else {
+          i = 0;
         }
-        i = 1;
-        continue;
       }
-      label240:
-      i += k;
-      j += 1;
-      continue;
-      label251:
-      int k = 0;
-      continue;
-      label256:
-      int m = 100;
-      continue;
-      label263:
-      i += 1;
-      continue;
-      label270:
-      int i = 0;
     }
   }
   
@@ -176,54 +173,50 @@ public class NativeToJsMessageQueue
     }
   }
   
-  public boolean getPaused()
+  public boolean isBridgeEnabled()
   {
-    return paused;
+    return activeBridgeMode != null;
   }
   
   public String popAndEncode(boolean paramBoolean)
   {
+    try
+    {
+      if (activeBridgeMode == null) {
+        return null;
+      }
+      activeBridgeMode.notifyOfFlush(paramBoolean);
+      if (queue.isEmpty()) {
+        return null;
+      }
+    }
+    finally {}
+    int j = 0;
+    int i = 0;
+    Object localObject2 = queue.iterator();
     for (;;)
     {
-      int j;
-      int i;
-      try
+      int k;
+      if (((Iterator)localObject2).hasNext())
       {
-        registeredListeners[activeListenerIndex].notifyOfFlush(paramBoolean);
-        if (queue.isEmpty()) {
-          return null;
-        }
+        k = calculatePackedMessageLength((JsMessage)((Iterator)localObject2).next());
+        if ((i <= 0) || (j + k <= MAX_PAYLOAD_SIZE) || (MAX_PAYLOAD_SIZE <= 0)) {}
+      }
+      else
+      {
+        localObject2 = new StringBuilder(j);
         j = 0;
-        i = 0;
-        Object localObject = queue.iterator();
-        if (!((Iterator)localObject).hasNext())
+        while (j < i)
         {
-          localObject = new StringBuilder(j);
-          j = 0;
-          if (j < i) {
-            break label145;
-          }
-          if (!queue.isEmpty()) {
-            ((StringBuilder)localObject).append('*');
-          }
-          localObject = ((StringBuilder)localObject).toString();
-          return (String)localObject;
+          packMessage((JsMessage)queue.removeFirst(), (StringBuilder)localObject2);
+          j += 1;
         }
-      }
-      finally {}
-      int k = calculatePackedMessageLength((JsMessage)localStringBuilder.next());
-      if ((i > 0) && (j + k > MAX_PAYLOAD_SIZE))
-      {
-        if (MAX_PAYLOAD_SIZE > 0) {
-          continue;
+        if (!queue.isEmpty()) {
+          ((StringBuilder)localObject2).append('*');
         }
-        break label168;
-        label145:
-        packMessage((JsMessage)queue.removeFirst(), localStringBuilder);
-        j += 1;
-        continue;
+        localObject2 = ((StringBuilder)localObject2).toString();
+        return (String)localObject2;
       }
-      label168:
       j += k;
       i += 1;
     }
@@ -234,8 +227,7 @@ public class NativeToJsMessageQueue
     try
     {
       queue.clear();
-      setBridgeMode(2);
-      registeredListeners[activeListenerIndex].reset();
+      setBridgeMode(-1);
       return;
     }
     finally {}
@@ -243,24 +235,48 @@ public class NativeToJsMessageQueue
   
   public void setBridgeMode(int paramInt)
   {
-    if ((paramInt < 0) || (paramInt >= registeredListeners.length)) {
-      Log.d("JsMessageQueue", "Invalid NativeToJsBridgeMode: " + paramInt);
-    }
-    while (paramInt == activeListenerIndex) {
-      return;
-    }
-    Log.d("JsMessageQueue", "Set native->JS mode to " + paramInt);
-    try
+    if ((paramInt < -1) || (paramInt >= registeredListeners.length))
     {
-      activeListenerIndex = paramInt;
-      BridgeMode localBridgeMode = registeredListeners[paramInt];
-      localBridgeMode.reset();
-      if ((!paused) && (!queue.isEmpty())) {
-        localBridgeMode.onNativeToJsMessageAvailable();
-      }
+      Log.d("JsMessageQueue", "Invalid NativeToJsBridgeMode: " + paramInt);
       return;
     }
-    finally {}
+    BridgeMode localBridgeMode1;
+    label46:
+    StringBuilder localStringBuilder;
+    if (paramInt < 0)
+    {
+      localBridgeMode1 = null;
+      if (localBridgeMode1 == activeBridgeMode) {
+        break label142;
+      }
+      localStringBuilder = new StringBuilder().append("Set native->JS mode to ");
+      if (localBridgeMode1 != null) {
+        break label144;
+      }
+    }
+    BridgeMode localBridgeMode2;
+    label142:
+    label144:
+    for (String str = "null";; str = localBridgeMode2.getClass().getSimpleName())
+    {
+      Log.d("JsMessageQueue", str);
+      try
+      {
+        activeBridgeMode = localBridgeMode1;
+        if (localBridgeMode1 != null)
+        {
+          localBridgeMode1.reset();
+          if ((!paused) && (!queue.isEmpty())) {
+            localBridgeMode1.onNativeToJsMessageAvailable();
+          }
+        }
+        return;
+      }
+      finally {}
+      localBridgeMode2 = registeredListeners[paramInt];
+      break label46;
+      break;
+    }
   }
   
   public void setPaused(boolean paramBoolean)
@@ -272,8 +288,8 @@ public class NativeToJsMessageQueue
     if (!paramBoolean) {
       try
       {
-        if (!queue.isEmpty()) {
-          registeredListeners[activeListenerIndex].onNativeToJsMessageAvailable();
+        if ((!queue.isEmpty()) && (activeBridgeMode != null)) {
+          activeBridgeMode.onNativeToJsMessageAvailable();
         }
         return;
       }
@@ -348,9 +364,9 @@ public class NativeToJsMessageQueue
       }
       int i = pluginResult.getStatus();
       boolean bool;
-      if ((i != PluginResult.Status.OK.ordinal()) && (i != PluginResult.Status.NO_RESULT.ordinal()))
+      if ((i == PluginResult.Status.OK.ordinal()) || (i == PluginResult.Status.NO_RESULT.ordinal()))
       {
-        bool = false;
+        bool = true;
         paramStringBuilder.append("cordova.callbackFromNative('").append(jsPayloadOrCallbackId).append("',").append(bool).append(",").append(i).append(",[");
         switch (pluginResult.getMessageType())
         {
@@ -362,7 +378,7 @@ public class NativeToJsMessageQueue
       {
         paramStringBuilder.append("],").append(pluginResult.getKeepCallback()).append(");");
         return;
-        bool = true;
+        bool = false;
         break;
         paramStringBuilder.append("atob('").append(pluginResult.getMessage()).append("')");
         continue;
@@ -466,12 +482,24 @@ public class NativeToJsMessageQueue
   private class OnlineEventsBridgeMode
     extends NativeToJsMessageQueue.BridgeMode
   {
+    private boolean ignoreNextFlush;
     private boolean online;
-    final Runnable runnable = new Runnable()
+    final Runnable resetNetworkRunnable = new Runnable()
     {
       public void run()
       {
-        if (!queue.isEmpty()) {
+        NativeToJsMessageQueue.OnlineEventsBridgeMode.access$1002(NativeToJsMessageQueue.OnlineEventsBridgeMode.this, false);
+        NativeToJsMessageQueue.OnlineEventsBridgeMode.access$902(NativeToJsMessageQueue.OnlineEventsBridgeMode.this, true);
+        webView.setNetworkAvailable(true);
+      }
+    };
+    final Runnable toggleNetworkRunnable = new Runnable()
+    {
+      public void run()
+      {
+        if (!queue.isEmpty())
+        {
+          NativeToJsMessageQueue.OnlineEventsBridgeMode.access$902(NativeToJsMessageQueue.OnlineEventsBridgeMode.this, false);
           webView.setNetworkAvailable(online);
         }
       }
@@ -484,13 +512,13 @@ public class NativeToJsMessageQueue
     
     void notifyOfFlush(boolean paramBoolean)
     {
-      if (paramBoolean) {
-        if (!online) {
-          break label19;
+      if ((paramBoolean) && (!ignoreNextFlush)) {
+        if (online) {
+          break label26;
         }
       }
-      label19:
-      for (paramBoolean = false;; paramBoolean = true)
+      label26:
+      for (paramBoolean = true;; paramBoolean = false)
       {
         online = paramBoolean;
         return;
@@ -499,13 +527,12 @@ public class NativeToJsMessageQueue
     
     void onNativeToJsMessageAvailable()
     {
-      cordova.getActivity().runOnUiThread(runnable);
+      cordova.getActivity().runOnUiThread(toggleNetworkRunnable);
     }
     
     void reset()
     {
-      online = false;
-      webView.setNetworkAvailable(true);
+      cordova.getActivity().runOnUiThread(resetNetworkRunnable);
     }
   }
   

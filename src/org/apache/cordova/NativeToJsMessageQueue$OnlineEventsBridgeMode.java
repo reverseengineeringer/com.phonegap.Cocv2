@@ -6,13 +6,25 @@ import java.util.LinkedList;
 class NativeToJsMessageQueue$OnlineEventsBridgeMode
   extends NativeToJsMessageQueue.BridgeMode
 {
+  private boolean ignoreNextFlush;
   private boolean online;
-  final Runnable runnable = new Runnable()
+  final Runnable resetNetworkRunnable = new Runnable()
   {
     public void run()
     {
-      if (!NativeToJsMessageQueue.access$3(this$0).isEmpty()) {
-        NativeToJsMessageQueue.access$1(this$0).setNetworkAvailable(online);
+      NativeToJsMessageQueue.OnlineEventsBridgeMode.access$1002(NativeToJsMessageQueue.OnlineEventsBridgeMode.this, false);
+      NativeToJsMessageQueue.OnlineEventsBridgeMode.access$902(NativeToJsMessageQueue.OnlineEventsBridgeMode.this, true);
+      NativeToJsMessageQueue.access$600(this$0).setNetworkAvailable(true);
+    }
+  };
+  final Runnable toggleNetworkRunnable = new Runnable()
+  {
+    public void run()
+    {
+      if (!NativeToJsMessageQueue.access$800(this$0).isEmpty())
+      {
+        NativeToJsMessageQueue.OnlineEventsBridgeMode.access$902(NativeToJsMessageQueue.OnlineEventsBridgeMode.this, false);
+        NativeToJsMessageQueue.access$600(this$0).setNetworkAvailable(online);
       }
     }
   };
@@ -24,13 +36,13 @@ class NativeToJsMessageQueue$OnlineEventsBridgeMode
   
   void notifyOfFlush(boolean paramBoolean)
   {
-    if (paramBoolean) {
-      if (!online) {
-        break label19;
+    if ((paramBoolean) && (!ignoreNextFlush)) {
+      if (online) {
+        break label26;
       }
     }
-    label19:
-    for (paramBoolean = false;; paramBoolean = true)
+    label26:
+    for (paramBoolean = true;; paramBoolean = false)
     {
       online = paramBoolean;
       return;
@@ -39,13 +51,12 @@ class NativeToJsMessageQueue$OnlineEventsBridgeMode
   
   void onNativeToJsMessageAvailable()
   {
-    NativeToJsMessageQueue.access$2(this$0).getActivity().runOnUiThread(runnable);
+    NativeToJsMessageQueue.access$700(this$0).getActivity().runOnUiThread(toggleNetworkRunnable);
   }
   
   void reset()
   {
-    online = false;
-    NativeToJsMessageQueue.access$1(this$0).setNetworkAvailable(true);
+    NativeToJsMessageQueue.access$700(this$0).getActivity().runOnUiThread(resetNetworkRunnable);
   }
 }
 

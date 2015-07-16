@@ -8,33 +8,33 @@ class ResponseHeaders$1
   public void handle(String paramString1, String paramString2)
   {
     if ("no-cache".equalsIgnoreCase(paramString1)) {
-      ResponseHeaders.access$0(this$0, true);
+      ResponseHeaders.access$002(this$0, true);
     }
     do
     {
       return;
       if ("no-store".equalsIgnoreCase(paramString1))
       {
-        ResponseHeaders.access$1(this$0, true);
+        ResponseHeaders.access$102(this$0, true);
         return;
       }
       if ("max-age".equalsIgnoreCase(paramString1))
       {
-        ResponseHeaders.access$2(this$0, HeaderParser.parseSeconds(paramString2));
+        ResponseHeaders.access$202(this$0, HeaderParser.parseSeconds(paramString2));
         return;
       }
       if ("s-maxage".equalsIgnoreCase(paramString1))
       {
-        ResponseHeaders.access$3(this$0, HeaderParser.parseSeconds(paramString2));
+        ResponseHeaders.access$302(this$0, HeaderParser.parseSeconds(paramString2));
         return;
       }
       if ("public".equalsIgnoreCase(paramString1))
       {
-        ResponseHeaders.access$4(this$0, true);
+        ResponseHeaders.access$402(this$0, true);
         return;
       }
     } while (!"must-revalidate".equalsIgnoreCase(paramString1));
-    ResponseHeaders.access$5(this$0, true);
+    ResponseHeaders.access$502(this$0, true);
   }
 }
 

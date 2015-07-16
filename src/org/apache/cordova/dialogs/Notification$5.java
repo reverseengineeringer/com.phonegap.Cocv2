@@ -12,21 +12,19 @@ class Notification$5
   
   public void run()
   {
-    val$notification.progressDialog = new ProgressDialog(val$cordova.getActivity());
-    val$notification.progressDialog.setProgressStyle(1);
-    val$notification.progressDialog.setTitle(val$title);
-    val$notification.progressDialog.setMessage(val$message);
-    val$notification.progressDialog.setCancelable(true);
-    val$notification.progressDialog.setMax(100);
-    val$notification.progressDialog.setProgress(0);
-    val$notification.progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener()
+    val$notification.spinnerDialog = Notification.access$200(this$0, val$cordova);
+    val$notification.spinnerDialog.setTitle(val$title);
+    val$notification.spinnerDialog.setMessage(val$message);
+    val$notification.spinnerDialog.setCancelable(true);
+    val$notification.spinnerDialog.setIndeterminate(true);
+    val$notification.spinnerDialog.setOnCancelListener(new DialogInterface.OnCancelListener()
     {
       public void onCancel(DialogInterface paramAnonymousDialogInterface)
       {
-        val$notification.progressDialog = null;
+        val$notification.spinnerDialog = null;
       }
     });
-    val$notification.progressDialog.show();
+    val$notification.spinnerDialog.show();
   }
 }
 

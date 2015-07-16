@@ -15,7 +15,7 @@ class SpdyConnection$Reader$1
   {
     try
     {
-      SpdyConnection.access$11(SpdyConnection.Reader.access$1(this$1)).receive(val$newStream);
+      SpdyConnection.access$1700(this$1.this$0).receive(val$newStream);
       return;
     }
     catch (IOException localIOException)

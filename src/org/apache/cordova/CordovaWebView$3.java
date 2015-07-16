@@ -20,7 +20,7 @@ class CordovaWebView$3
       {
         wait(val$loadUrlTimeoutValue);
         if (val$me.loadUrlTimeout == val$currentLoadUrlTimeout) {
-          CordovaWebView.access$1(val$me).getActivity().runOnUiThread(val$loadError);
+          CordovaWebView.access$000(val$me).getActivity().runOnUiThread(val$loadError);
         }
         return;
       }

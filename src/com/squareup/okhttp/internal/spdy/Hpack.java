@@ -178,11 +178,8 @@ final class Hpack
     
     public void emitReferenceSet()
     {
-      for (int i = referenceSet.nextSetBit(0);; i = referenceSet.nextSetBit(i + 1))
+      for (int i = referenceSet.nextSetBit(0); i != -1; i = referenceSet.nextSetBit(i + 1))
       {
-        if (i == -1) {
-          return;
-        }
         emittedHeaders.add(getName(i));
         emittedHeaders.add(getValue(i));
       }
@@ -199,45 +196,27 @@ final class Hpack
       throws IOException
     {
       bytesLeft += paramInt;
-      for (;;)
+      while (bytesLeft > 0L)
       {
-        if (bytesLeft <= 0L) {
-          return;
-        }
         paramInt = readByte();
-        if ((paramInt & 0x80) != 0)
-        {
+        if ((paramInt & 0x80) != 0) {
           readIndexedHeader(readInt(paramInt, 127));
-        }
-        else if (paramInt == 96)
-        {
+        } else if (paramInt == 96) {
           readLiteralHeaderWithoutIndexingNewName();
-        }
-        else if ((paramInt & 0xE0) == 96)
-        {
+        } else if ((paramInt & 0xE0) == 96) {
           readLiteralHeaderWithoutIndexingIndexedName(readInt(paramInt, 31) - 1);
-        }
-        else if (paramInt == 64)
-        {
+        } else if (paramInt == 64) {
           readLiteralHeaderWithIncrementalIndexingNewName();
-        }
-        else if ((paramInt & 0xE0) == 64)
-        {
+        } else if ((paramInt & 0xE0) == 64) {
           readLiteralHeaderWithIncrementalIndexingIndexedName(readInt(paramInt, 31) - 1);
-        }
-        else if (paramInt == 0)
-        {
+        } else if (paramInt == 0) {
           readLiteralHeaderWithSubstitutionIndexingNewName();
-        }
-        else
-        {
-          if ((paramInt & 0xC0) != 0) {
-            break;
-          }
+        } else if ((paramInt & 0xC0) == 0) {
           readLiteralHeaderWithSubstitutionIndexingIndexedName(readInt(paramInt, 63) - 1);
+        } else {
+          throw new AssertionError();
         }
       }
-      throw new AssertionError();
     }
     
     int readInt(int paramInt1, int paramInt2)
@@ -286,11 +265,8 @@ final class Hpack
     {
       int i = 0;
       int j = paramList.size();
-      for (;;)
+      while (i < j)
       {
-        if (i >= j) {
-          return;
-        }
         out.write(96);
         writeString((String)paramList.get(i));
         writeString((String)paramList.get(i + 1));
@@ -308,16 +284,12 @@ final class Hpack
       }
       out.write(paramInt3 | paramInt2);
       paramInt1 -= paramInt2;
-      for (;;)
+      while (paramInt1 >= 128)
       {
-        if (paramInt1 < 128)
-        {
-          out.write(paramInt1);
-          return;
-        }
         out.write(paramInt1 & 0x7F | 0x80);
         paramInt1 >>>= 7;
       }
+      out.write(paramInt1);
     }
     
     public void writeString(String paramString)

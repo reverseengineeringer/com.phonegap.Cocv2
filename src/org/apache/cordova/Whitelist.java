@@ -28,12 +28,12 @@ public class Whitelist
           whiteList = null;
           return;
         }
-        localObject = Pattern.compile("^((\\*|[A-Za-z-]+)://)?(\\*|((\\*\\.)?[^*/:]+))?(:(\\d+))?(/.*)?").matcher(paramString);
+        localObject = Pattern.compile("^((\\*|[A-Za-z-]+):(//)?)?(\\*|((\\*\\.)?[^*/:]+))?(:(\\d+))?(/.*)?").matcher(paramString);
         if (!((Matcher)localObject).matches()) {
           break label197;
         }
         str4 = ((Matcher)localObject).group(2);
-        str3 = ((Matcher)localObject).group(3);
+        str3 = ((Matcher)localObject).group(4);
         if ("file".equals(str4)) {
           break label198;
         }
@@ -41,8 +41,8 @@ public class Whitelist
         if ("content".equals(str4)) {
           break label198;
         }
-        str3 = ((Matcher)localObject).group(7);
-        localObject = ((Matcher)localObject).group(8);
+        str3 = ((Matcher)localObject).group(8);
+        localObject = ((Matcher)localObject).group(9);
         if (str4 == null)
         {
           whiteList.add(new URLPattern("http", str1, str3, (String)localObject));
@@ -73,13 +73,12 @@ public class Whitelist
     }
     paramString = Uri.parse(paramString);
     Iterator localIterator = whiteList.iterator();
-    do
-    {
-      if (!localIterator.hasNext()) {
-        return false;
+    while (localIterator.hasNext()) {
+      if (((URLPattern)localIterator.next()).matches(paramString)) {
+        return true;
       }
-    } while (!((URLPattern)localIterator.next()).matches(paramString));
-    return true;
+    }
+    return false;
   }
   
   private static class URLPattern
@@ -104,7 +103,7 @@ public class Whitelist
             {
               host = null;
               if ((paramString3 != null) && (!"*".equals(paramString3))) {
-                break label165;
+                break label168;
               }
               port = null;
               if ((paramString4 != null) && (!"/*".equals(paramString4))) {
@@ -119,7 +118,7 @@ public class Whitelist
             continue;
           }
           if (!paramString2.startsWith("*.")) {
-            break label148;
+            break label151;
           }
         }
         catch (NumberFormatException paramString1)
@@ -128,10 +127,10 @@ public class Whitelist
         }
         host = Pattern.compile("([a-z0-9.-]*\\.)?" + regexFromPattern(paramString2.substring(2), false), 2);
         continue;
-        label148:
+        label151:
         host = Pattern.compile(regexFromPattern(paramString2, false), 2);
         continue;
-        label165:
+        label168:
         port = Integer.valueOf(Integer.parseInt(paramString3, 10));
       }
       path = Pattern.compile(regexFromPattern(paramString4, true));
@@ -141,22 +140,23 @@ public class Whitelist
     {
       StringBuilder localStringBuilder = new StringBuilder();
       int i = 0;
-      if (i >= paramString.length()) {
-        return localStringBuilder.toString();
-      }
-      char c = paramString.charAt(i);
-      if ((c == '*') && (paramBoolean)) {
-        localStringBuilder.append(".");
-      }
-      for (;;)
+      if (i < paramString.length())
       {
-        localStringBuilder.append(c);
-        i += 1;
-        break;
-        if ("\\.[]{}()^$?+|".indexOf(c) > -1) {
-          localStringBuilder.append('\\');
+        char c = paramString.charAt(i);
+        if ((c == '*') && (paramBoolean)) {
+          localStringBuilder.append(".");
+        }
+        for (;;)
+        {
+          localStringBuilder.append(c);
+          i += 1;
+          break;
+          if ("\\.[]{}()^$?+|".indexOf(c) > -1) {
+            localStringBuilder.append('\\');
+          }
         }
       }
+      return localStringBuilder.toString();
     }
     
     public boolean matches(Uri paramUri)

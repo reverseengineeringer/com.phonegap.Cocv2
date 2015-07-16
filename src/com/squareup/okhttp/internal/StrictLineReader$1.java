@@ -18,7 +18,7 @@ class StrictLineReader$1
     for (int i = count - 1;; i = count) {
       try
       {
-        String str = new String(buf, 0, i, StrictLineReader.access$0(this$0).name());
+        String str = new String(buf, 0, i, StrictLineReader.access$000(this$0).name());
         return str;
       }
       catch (UnsupportedEncodingException localUnsupportedEncodingException)

@@ -2,7 +2,7 @@ package com.phonegap.Cocv2;
 
 public final class R$xml
 {
-  public static final int config = 2130903040;
+  public static final int config = 2130968576;
 }
 
 /* Location:

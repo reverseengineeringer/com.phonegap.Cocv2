@@ -1,74 +1,47 @@
 package org.apache.cordova;
 
-import java.io.PrintStream;
+import java.util.List;
 
 public class PluginEntry
 {
-  public boolean onload = false;
-  public CordovaPlugin plugin = null;
-  public String pluginClass = "";
-  public String service = "";
+  public boolean onload;
+  public CordovaPlugin plugin;
+  public String pluginClass;
+  public String service;
+  private List<String> urlFilters;
   
   public PluginEntry(String paramString1, String paramString2, boolean paramBoolean)
+  {
+    this(paramString1, paramString2, paramBoolean, null, null);
+  }
+  
+  @Deprecated
+  public PluginEntry(String paramString1, String paramString2, boolean paramBoolean, List<String> paramList)
   {
     service = paramString1;
     pluginClass = paramString2;
     onload = paramBoolean;
+    urlFilters = paramList;
+    plugin = null;
+  }
+  
+  private PluginEntry(String paramString1, String paramString2, boolean paramBoolean, CordovaPlugin paramCordovaPlugin, List<String> paramList)
+  {
+    service = paramString1;
+    pluginClass = paramString2;
+    onload = paramBoolean;
+    urlFilters = paramList;
+    plugin = paramCordovaPlugin;
   }
   
   public PluginEntry(String paramString, CordovaPlugin paramCordovaPlugin)
   {
-    service = paramString;
-    plugin = paramCordovaPlugin;
-    pluginClass = paramCordovaPlugin.getClass().getName();
-    onload = false;
+    this(paramString, paramCordovaPlugin.getClass().getName(), true, paramCordovaPlugin, null);
   }
   
-  private Class getClassByName(String paramString)
-    throws ClassNotFoundException
+  public List<String> getUrlFilters()
   {
-    Object localObject2 = null;
-    Object localObject1 = localObject2;
-    if (paramString != null)
-    {
-      localObject1 = localObject2;
-      if (!"".equals(paramString)) {
-        localObject1 = Class.forName(paramString);
-      }
-    }
-    return (Class)localObject1;
-  }
-  
-  private boolean isCordovaPlugin(Class paramClass)
-  {
-    if (paramClass != null) {
-      return CordovaPlugin.class.isAssignableFrom(paramClass);
-    }
-    return false;
-  }
-  
-  public CordovaPlugin createPlugin(CordovaWebView paramCordovaWebView, CordovaInterface paramCordovaInterface)
-  {
-    if (plugin != null) {
-      return plugin;
-    }
-    try
-    {
-      Class localClass = getClassByName(pluginClass);
-      if (isCordovaPlugin(localClass))
-      {
-        plugin = ((CordovaPlugin)localClass.newInstance());
-        plugin.initialize(paramCordovaInterface, paramCordovaWebView);
-        paramCordovaWebView = plugin;
-        return paramCordovaWebView;
-      }
-    }
-    catch (Exception paramCordovaWebView)
-    {
-      paramCordovaWebView.printStackTrace();
-      System.out.println("Error adding plugin " + pluginClass + ".");
-    }
-    return null;
+    return urlFilters;
   }
 }
 

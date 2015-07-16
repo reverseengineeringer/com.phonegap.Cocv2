@@ -5,7 +5,7 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-class HttpResponseCache$2
+final class HttpResponseCache$2
   extends FilterInputStream
 {
   HttpResponseCache$2(InputStream paramInputStream, DiskLruCache.Snapshot paramSnapshot)

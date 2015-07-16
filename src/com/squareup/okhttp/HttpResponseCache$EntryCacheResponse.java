@@ -18,7 +18,7 @@ class HttpResponseCache$EntryCacheResponse
   {
     entry = paramEntry;
     snapshot = paramSnapshot;
-    in = HttpResponseCache.access$8(paramSnapshot);
+    in = HttpResponseCache.access$1000(paramSnapshot);
   }
   
   public InputStream getBody()
@@ -28,7 +28,7 @@ class HttpResponseCache$EntryCacheResponse
   
   public Map<String, List<String>> getHeaders()
   {
-    return HttpResponseCache.Entry.access$0(entry).toMultimap(true);
+    return HttpResponseCache.Entry.access$1100(entry).toMultimap(true);
   }
 }
 

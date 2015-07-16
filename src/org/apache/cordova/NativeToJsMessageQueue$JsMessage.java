@@ -56,9 +56,9 @@ class NativeToJsMessageQueue$JsMessage
     }
     int i = pluginResult.getStatus();
     boolean bool;
-    if ((i != PluginResult.Status.OK.ordinal()) && (i != PluginResult.Status.NO_RESULT.ordinal()))
+    if ((i == PluginResult.Status.OK.ordinal()) || (i == PluginResult.Status.NO_RESULT.ordinal()))
     {
-      bool = false;
+      bool = true;
       paramStringBuilder.append("cordova.callbackFromNative('").append(jsPayloadOrCallbackId).append("',").append(bool).append(",").append(i).append(",[");
       switch (pluginResult.getMessageType())
       {
@@ -70,7 +70,7 @@ class NativeToJsMessageQueue$JsMessage
     {
       paramStringBuilder.append("],").append(pluginResult.getKeepCallback()).append(");");
       return;
-      bool = true;
+      bool = false;
       break;
       paramStringBuilder.append("atob('").append(pluginResult.getMessage()).append("')");
       continue;

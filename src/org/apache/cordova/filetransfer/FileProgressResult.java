@@ -42,7 +42,7 @@ public class FileProgressResult
   public JSONObject toJSONObject()
     throws JSONException
   {
-    StringBuilder localStringBuilder = new StringBuilder("{loaded:").append(loaded).append(",total:").append(total).append(",lengthComputable:");
+    StringBuilder localStringBuilder = new StringBuilder().append("{loaded:").append(loaded).append(",total:").append(total).append(",lengthComputable:");
     if (lengthComputable) {}
     for (String str = "true";; str = "false") {
       return new JSONObject(str + "}");

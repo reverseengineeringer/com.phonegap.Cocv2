@@ -9,12 +9,12 @@ import org.apache.cordova.PluginResult.Status;
 class Notification$2$1
   implements DialogInterface.OnClickListener
 {
-  Notification$2$1(Notification.2 param2, CallbackContext paramCallbackContext) {}
+  Notification$2$1(Notification.2 param2) {}
   
   public void onClick(DialogInterface paramDialogInterface, int paramInt)
   {
     paramDialogInterface.dismiss();
-    val$callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, 1));
+    this$1.val$callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, 0));
   }
 }
 

@@ -24,10 +24,9 @@ class NameValueBlockReader$1
   public int read(byte[] paramArrayOfByte, int paramInt1, int paramInt2)
     throws IOException
   {
-    paramInt2 = Math.min(paramInt2, NameValueBlockReader.access$0(this$0));
+    paramInt2 = Math.min(paramInt2, NameValueBlockReader.access$000(this$0));
     paramInt1 = val$in.read(paramArrayOfByte, paramInt1, paramInt2);
-    paramArrayOfByte = this$0;
-    NameValueBlockReader.access$1(paramArrayOfByte, NameValueBlockReader.access$0(paramArrayOfByte) - paramInt1);
+    NameValueBlockReader.access$020(this$0, paramInt1);
     return paramInt1;
   }
 }

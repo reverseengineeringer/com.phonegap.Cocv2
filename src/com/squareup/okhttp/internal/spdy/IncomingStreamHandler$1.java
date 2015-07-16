@@ -2,7 +2,7 @@ package com.squareup.okhttp.internal.spdy;
 
 import java.io.IOException;
 
-class IncomingStreamHandler$1
+final class IncomingStreamHandler$1
   implements IncomingStreamHandler
 {
   public void receive(SpdyStream paramSpdyStream)

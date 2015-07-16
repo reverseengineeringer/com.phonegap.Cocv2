@@ -14,12 +14,21 @@ import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URI;
+import java.util.concurrent.ExecutorService;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaResourceApi;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginManager;
+import org.apache.cordova.PluginResult;
+import org.apache.cordova.PluginResult.Status;
+import org.apache.cordova.file.FileUtils;
+import org.apache.cordova.file.LocalFilesystemURL;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,8 +62,18 @@ public class Capture
   {
     numPics = queryImgDB(whichContentStore()).getCount();
     Intent localIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-    localIntent.putExtra("output", Uri.fromFile(new File(getTempDirectoryPath(), "Capture.jpg")));
-    cordova.startActivityForResult(this, localIntent, 1);
+    File localFile = new File(getTempDirectoryPath(), "Capture.jpg");
+    try
+    {
+      createWritableFile(localFile);
+      localIntent.putExtra("output", Uri.fromFile(localFile));
+      cordova.startActivityForResult(this, localIntent, 1);
+      return;
+    }
+    catch (IOException localIOException)
+    {
+      fail(createErrorObject(0, localIOException.toString()));
+    }
   }
   
   private void captureVideo(int paramInt)
@@ -96,32 +115,83 @@ public class Capture
   {
     File localFile = webView.getResourceApi().mapUriToFile(paramUri);
     JSONObject localJSONObject = new JSONObject();
-    for (;;)
+    Class localClass = webView.getClass();
+    Object localObject1 = null;
+    try
     {
-      try
+      localObject2 = (PluginManager)localClass.getMethod("getPluginManager", new Class[0]).invoke(webView, new Object[0]);
+      localObject1 = localObject2;
+    }
+    catch (InvocationTargetException localInvocationTargetException)
+    {
+      Object localObject2;
+      for (;;) {}
+    }
+    catch (IllegalAccessException localIllegalAccessException2)
+    {
+      for (;;) {}
+    }
+    catch (NoSuchMethodException localNoSuchMethodException)
+    {
+      for (;;) {}
+    }
+    localObject2 = localObject1;
+    if (localObject1 == null) {}
+    try
+    {
+      localObject2 = (PluginManager)localClass.getField("pluginManager").get(webView);
+      localObject1 = ((FileUtils)((PluginManager)localObject2).getPlugin("File")).filesystemURLforLocalPath(localFile.getAbsolutePath());
+      for (;;)
       {
-        localJSONObject.put("name", localFile.getName());
-        localJSONObject.put("fullPath", localFile.toURI().toString());
-        if ((localFile.getAbsoluteFile().toString().endsWith(".3gp")) || (localFile.getAbsoluteFile().toString().endsWith(".3gpp")))
+        try
         {
-          if (paramUri.toString().contains("/audio/"))
-          {
-            localJSONObject.put("type", "audio/3gpp");
-            localJSONObject.put("lastModifiedDate", localFile.lastModified());
-            localJSONObject.put("size", localFile.length());
-            return localJSONObject;
+          localJSONObject.put("name", localFile.getName());
+          localJSONObject.put("fullPath", localFile.toURI().toString());
+          if (localObject1 != null) {
+            localJSONObject.put("localURL", ((LocalFilesystemURL)localObject1).toString());
           }
-          localJSONObject.put("type", "video/3gpp");
-          continue;
+          if ((localFile.getAbsoluteFile().toString().endsWith(".3gp")) || (localFile.getAbsoluteFile().toString().endsWith(".3gpp")))
+          {
+            if (paramUri.toString().contains("/audio/"))
+            {
+              localJSONObject.put("type", "audio/3gpp");
+              localJSONObject.put("lastModifiedDate", localFile.lastModified());
+              localJSONObject.put("size", localFile.length());
+              return localJSONObject;
+            }
+            localJSONObject.put("type", "video/3gpp");
+            continue;
+          }
+          localJSONObject.put("type", FileHelper.getMimeType(Uri.fromFile(localFile), cordova));
         }
-        localJSONObject.put("type", FileHelper.getMimeType(Uri.fromFile(localFile), cordova));
-      }
-      catch (JSONException paramUri)
-      {
-        paramUri.printStackTrace();
-        return localJSONObject;
+        catch (JSONException paramUri)
+        {
+          paramUri.printStackTrace();
+          return localJSONObject;
+        }
       }
     }
+    catch (IllegalAccessException localIllegalAccessException1)
+    {
+      for (;;)
+      {
+        Object localObject3 = localObject1;
+      }
+    }
+    catch (NoSuchFieldException localNoSuchFieldException)
+    {
+      for (;;)
+      {
+        Object localObject4 = localObject1;
+      }
+    }
+  }
+  
+  private static void createWritableFile(File paramFile)
+    throws IOException
+  {
+    paramFile.createNewFile();
+    paramFile.setWritable(true, false);
   }
   
   private JSONObject getAudioVideoData(String paramString, JSONObject paramJSONObject, boolean paramBoolean)
@@ -173,11 +243,11 @@ public class Capture
       }
       Log.d("Capture", "Mime type = " + str);
       if ((!str.equals("image/jpeg")) && (!paramString1.endsWith(".jpg"))) {
-        break label182;
+        break label185;
       }
       paramString2 = getImageData(localUri, localJSONObject);
     }
-    label182:
+    label185:
     do
     {
       return paramString2;
@@ -187,11 +257,11 @@ public class Capture
         return getAudioVideoData(paramString1, localJSONObject, false);
       }
       if (str.equals("video/3gpp")) {
-        break label224;
+        break label227;
       }
       paramString2 = localJSONObject;
     } while (!str.equals("video/mp4"));
-    label224:
+    label227:
     return getAudioVideoData(paramString1, localJSONObject, true);
   }
   
@@ -208,12 +278,9 @@ public class Capture
   
   private String getTempDirectoryPath()
   {
-    if (Environment.getExternalStorageState().equals("mounted")) {}
-    for (File localFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + cordova.getActivity().getPackageName() + "/cache/");; localFile = cordova.getActivity().getCacheDir())
-    {
-      localFile.mkdirs();
-      return localFile.getAbsolutePath();
-    }
+    File localFile = cordova.getActivity().getCacheDir();
+    localFile.mkdirs();
+    return localFile.getAbsolutePath();
   }
   
   private Cursor queryImgDB(Uri paramUri)
@@ -270,283 +337,254 @@ public class Capture
     callbackContext.error(paramJSONObject);
   }
   
-  /* Error */
-  public void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent)
+  public void onActivityResult(int paramInt1, int paramInt2, final Intent paramIntent)
   {
-    // Byte code:
-    //   0: iload_2
-    //   1: iconst_m1
-    //   2: if_icmpne +430 -> 432
-    //   5: iload_1
-    //   6: ifne +64 -> 70
-    //   9: aload_3
-    //   10: invokevirtual 463	android/content/Intent:getData	()Landroid/net/Uri;
-    //   13: astore_3
-    //   14: aload_0
-    //   15: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   18: aload_0
-    //   19: aload_3
-    //   20: invokespecial 465	org/apache/cordova/mediacapture/Capture:createMediaFile	(Landroid/net/Uri;)Lorg/json/JSONObject;
-    //   23: invokevirtual 468	org/json/JSONArray:put	(Ljava/lang/Object;)Lorg/json/JSONArray;
-    //   26: pop
-    //   27: aload_0
-    //   28: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   31: invokevirtual 470	org/json/JSONArray:length	()I
-    //   34: i2l
-    //   35: aload_0
-    //   36: getfield 413	org/apache/cordova/mediacapture/Capture:limit	J
-    //   39: lcmp
-    //   40: iflt +25 -> 65
-    //   43: aload_0
-    //   44: getfield 411	org/apache/cordova/mediacapture/Capture:callbackContext	Lorg/apache/cordova/CallbackContext;
-    //   47: new 472	org/apache/cordova/PluginResult
-    //   50: dup
-    //   51: getstatic 478	org/apache/cordova/PluginResult$Status:OK	Lorg/apache/cordova/PluginResult$Status;
-    //   54: aload_0
-    //   55: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   58: invokespecial 481	org/apache/cordova/PluginResult:<init>	(Lorg/apache/cordova/PluginResult$Status;Lorg/json/JSONArray;)V
-    //   61: invokevirtual 485	org/apache/cordova/CallbackContext:sendPluginResult	(Lorg/apache/cordova/PluginResult;)V
-    //   64: return
-    //   65: aload_0
-    //   66: invokespecial 446	org/apache/cordova/mediacapture/Capture:captureAudio	()V
-    //   69: return
-    //   70: iload_1
-    //   71: iconst_1
-    //   72: if_icmpne +273 -> 345
-    //   75: new 487	android/content/ContentValues
-    //   78: dup
-    //   79: invokespecial 488	android/content/ContentValues:<init>	()V
-    //   82: astore 4
-    //   84: aload 4
-    //   86: ldc_w 490
-    //   89: ldc 21
-    //   91: invokevirtual 492	android/content/ContentValues:put	(Ljava/lang/String;Ljava/lang/String;)V
-    //   94: aload_0
-    //   95: getfield 55	org/apache/cordova/mediacapture/Capture:cordova	Lorg/apache/cordova/CordovaInterface;
-    //   98: invokeinterface 167 1 0
-    //   103: invokevirtual 173	android/app/Activity:getContentResolver	()Landroid/content/ContentResolver;
-    //   106: getstatic 404	android/provider/MediaStore$Images$Media:EXTERNAL_CONTENT_URI	Landroid/net/Uri;
-    //   109: aload 4
-    //   111: invokevirtual 496	android/content/ContentResolver:insert	(Landroid/net/Uri;Landroid/content/ContentValues;)Landroid/net/Uri;
-    //   114: astore_3
-    //   115: new 498	java/io/FileInputStream
-    //   118: dup
-    //   119: new 143	java/lang/StringBuilder
-    //   122: dup
-    //   123: aload_0
-    //   124: invokespecial 88	org/apache/cordova/mediacapture/Capture:getTempDirectoryPath	()Ljava/lang/String;
-    //   127: invokestatic 381	java/lang/String:valueOf	(Ljava/lang/Object;)Ljava/lang/String;
-    //   130: invokespecial 334	java/lang/StringBuilder:<init>	(Ljava/lang/String;)V
-    //   133: ldc_w 500
-    //   136: invokevirtual 153	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
-    //   139: invokevirtual 159	java/lang/StringBuilder:toString	()Ljava/lang/String;
-    //   142: invokespecial 501	java/io/FileInputStream:<init>	(Ljava/lang/String;)V
-    //   145: astore 4
-    //   147: aload_0
-    //   148: getfield 55	org/apache/cordova/mediacapture/Capture:cordova	Lorg/apache/cordova/CordovaInterface;
-    //   151: invokeinterface 167 1 0
-    //   156: invokevirtual 173	android/app/Activity:getContentResolver	()Landroid/content/ContentResolver;
-    //   159: aload_3
-    //   160: invokevirtual 505	android/content/ContentResolver:openOutputStream	(Landroid/net/Uri;)Ljava/io/OutputStream;
-    //   163: astore 5
-    //   165: sipush 4096
-    //   168: newarray <illegal type>
-    //   170: astore 6
-    //   172: aload 4
-    //   174: aload 6
-    //   176: invokevirtual 509	java/io/FileInputStream:read	([B)I
-    //   179: istore_1
-    //   180: iload_1
-    //   181: iconst_m1
-    //   182: if_icmpne +146 -> 328
-    //   185: aload 5
-    //   187: invokevirtual 514	java/io/OutputStream:flush	()V
-    //   190: aload 5
-    //   192: invokevirtual 517	java/io/OutputStream:close	()V
-    //   195: aload 4
-    //   197: invokevirtual 518	java/io/FileInputStream:close	()V
-    //   200: aload_0
-    //   201: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   204: aload_0
-    //   205: aload_3
-    //   206: invokespecial 465	org/apache/cordova/mediacapture/Capture:createMediaFile	(Landroid/net/Uri;)Lorg/json/JSONObject;
-    //   209: invokevirtual 468	org/json/JSONArray:put	(Ljava/lang/Object;)Lorg/json/JSONArray;
-    //   212: pop
-    //   213: aload_0
-    //   214: invokespecial 520	org/apache/cordova/mediacapture/Capture:checkForDuplicateImage	()V
-    //   217: aload_0
-    //   218: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   221: invokevirtual 470	org/json/JSONArray:length	()I
-    //   224: i2l
-    //   225: aload_0
-    //   226: getfield 413	org/apache/cordova/mediacapture/Capture:limit	J
-    //   229: lcmp
-    //   230: iflt +110 -> 340
-    //   233: aload_0
-    //   234: getfield 411	org/apache/cordova/mediacapture/Capture:callbackContext	Lorg/apache/cordova/CallbackContext;
-    //   237: new 472	org/apache/cordova/PluginResult
-    //   240: dup
-    //   241: getstatic 478	org/apache/cordova/PluginResult$Status:OK	Lorg/apache/cordova/PluginResult$Status;
-    //   244: aload_0
-    //   245: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   248: invokespecial 481	org/apache/cordova/PluginResult:<init>	(Lorg/apache/cordova/PluginResult$Status;Lorg/json/JSONArray;)V
-    //   251: invokevirtual 485	org/apache/cordova/CallbackContext:sendPluginResult	(Lorg/apache/cordova/PluginResult;)V
-    //   254: return
-    //   255: astore_3
-    //   256: aload_3
-    //   257: invokevirtual 521	java/io/IOException:printStackTrace	()V
-    //   260: aload_0
-    //   261: aload_0
-    //   262: iconst_0
-    //   263: ldc_w 523
-    //   266: invokespecial 525	org/apache/cordova/mediacapture/Capture:createErrorObject	(ILjava/lang/String;)Lorg/json/JSONObject;
-    //   269: invokevirtual 527	org/apache/cordova/mediacapture/Capture:fail	(Lorg/json/JSONObject;)V
-    //   272: return
-    //   273: astore_3
-    //   274: ldc 24
-    //   276: ldc_w 529
-    //   279: invokestatic 533	org/apache/cordova/LOG:d	(Ljava/lang/String;Ljava/lang/String;)V
-    //   282: aload_0
-    //   283: getfield 55	org/apache/cordova/mediacapture/Capture:cordova	Lorg/apache/cordova/CordovaInterface;
-    //   286: invokeinterface 167 1 0
-    //   291: invokevirtual 173	android/app/Activity:getContentResolver	()Landroid/content/ContentResolver;
-    //   294: getstatic 407	android/provider/MediaStore$Images$Media:INTERNAL_CONTENT_URI	Landroid/net/Uri;
-    //   297: aload 4
-    //   299: invokevirtual 496	android/content/ContentResolver:insert	(Landroid/net/Uri;Landroid/content/ContentValues;)Landroid/net/Uri;
-    //   302: astore_3
-    //   303: goto -188 -> 115
-    //   306: astore_3
-    //   307: ldc 24
-    //   309: ldc_w 535
-    //   312: invokestatic 533	org/apache/cordova/LOG:d	(Ljava/lang/String;Ljava/lang/String;)V
-    //   315: aload_0
-    //   316: aload_0
-    //   317: iconst_0
-    //   318: ldc_w 537
-    //   321: invokespecial 525	org/apache/cordova/mediacapture/Capture:createErrorObject	(ILjava/lang/String;)Lorg/json/JSONObject;
-    //   324: invokevirtual 527	org/apache/cordova/mediacapture/Capture:fail	(Lorg/json/JSONObject;)V
-    //   327: return
-    //   328: aload 5
-    //   330: aload 6
-    //   332: iconst_0
-    //   333: iload_1
-    //   334: invokevirtual 541	java/io/OutputStream:write	([BII)V
-    //   337: goto -165 -> 172
-    //   340: aload_0
-    //   341: invokespecial 449	org/apache/cordova/mediacapture/Capture:captureImage	()V
-    //   344: return
-    //   345: iload_1
-    //   346: iconst_2
-    //   347: if_icmpne -283 -> 64
-    //   350: aload_3
-    //   351: invokevirtual 463	android/content/Intent:getData	()Landroid/net/Uri;
-    //   354: astore_3
-    //   355: aload_3
-    //   356: ifnonnull +16 -> 372
-    //   359: aload_0
-    //   360: aload_0
-    //   361: iconst_3
-    //   362: ldc_w 543
-    //   365: invokespecial 525	org/apache/cordova/mediacapture/Capture:createErrorObject	(ILjava/lang/String;)Lorg/json/JSONObject;
-    //   368: invokevirtual 527	org/apache/cordova/mediacapture/Capture:fail	(Lorg/json/JSONObject;)V
-    //   371: return
-    //   372: aload_0
-    //   373: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   376: aload_0
-    //   377: aload_3
-    //   378: invokespecial 465	org/apache/cordova/mediacapture/Capture:createMediaFile	(Landroid/net/Uri;)Lorg/json/JSONObject;
-    //   381: invokevirtual 468	org/json/JSONArray:put	(Ljava/lang/Object;)Lorg/json/JSONArray;
-    //   384: pop
-    //   385: aload_0
-    //   386: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   389: invokevirtual 470	org/json/JSONArray:length	()I
-    //   392: i2l
-    //   393: aload_0
-    //   394: getfield 413	org/apache/cordova/mediacapture/Capture:limit	J
-    //   397: lcmp
-    //   398: iflt +25 -> 423
-    //   401: aload_0
-    //   402: getfield 411	org/apache/cordova/mediacapture/Capture:callbackContext	Lorg/apache/cordova/CallbackContext;
-    //   405: new 472	org/apache/cordova/PluginResult
-    //   408: dup
-    //   409: getstatic 478	org/apache/cordova/PluginResult$Status:OK	Lorg/apache/cordova/PluginResult$Status;
-    //   412: aload_0
-    //   413: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   416: invokespecial 481	org/apache/cordova/PluginResult:<init>	(Lorg/apache/cordova/PluginResult$Status;Lorg/json/JSONArray;)V
-    //   419: invokevirtual 485	org/apache/cordova/CallbackContext:sendPluginResult	(Lorg/apache/cordova/PluginResult;)V
-    //   422: return
-    //   423: aload_0
-    //   424: aload_0
-    //   425: getfield 415	org/apache/cordova/mediacapture/Capture:duration	I
-    //   428: invokespecial 452	org/apache/cordova/mediacapture/Capture:captureVideo	(I)V
-    //   431: return
-    //   432: iload_2
-    //   433: ifne +48 -> 481
-    //   436: aload_0
-    //   437: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   440: invokevirtual 470	org/json/JSONArray:length	()I
-    //   443: ifle +25 -> 468
-    //   446: aload_0
-    //   447: getfield 411	org/apache/cordova/mediacapture/Capture:callbackContext	Lorg/apache/cordova/CallbackContext;
-    //   450: new 472	org/apache/cordova/PluginResult
-    //   453: dup
-    //   454: getstatic 478	org/apache/cordova/PluginResult$Status:OK	Lorg/apache/cordova/PluginResult$Status;
-    //   457: aload_0
-    //   458: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   461: invokespecial 481	org/apache/cordova/PluginResult:<init>	(Lorg/apache/cordova/PluginResult$Status;Lorg/json/JSONArray;)V
-    //   464: invokevirtual 485	org/apache/cordova/CallbackContext:sendPluginResult	(Lorg/apache/cordova/PluginResult;)V
-    //   467: return
-    //   468: aload_0
-    //   469: aload_0
-    //   470: iconst_3
-    //   471: ldc_w 545
-    //   474: invokespecial 525	org/apache/cordova/mediacapture/Capture:createErrorObject	(ILjava/lang/String;)Lorg/json/JSONObject;
-    //   477: invokevirtual 527	org/apache/cordova/mediacapture/Capture:fail	(Lorg/json/JSONObject;)V
-    //   480: return
-    //   481: aload_0
-    //   482: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   485: invokevirtual 470	org/json/JSONArray:length	()I
-    //   488: ifle +25 -> 513
-    //   491: aload_0
-    //   492: getfield 411	org/apache/cordova/mediacapture/Capture:callbackContext	Lorg/apache/cordova/CallbackContext;
-    //   495: new 472	org/apache/cordova/PluginResult
-    //   498: dup
-    //   499: getstatic 478	org/apache/cordova/PluginResult$Status:OK	Lorg/apache/cordova/PluginResult$Status;
-    //   502: aload_0
-    //   503: getfield 420	org/apache/cordova/mediacapture/Capture:results	Lorg/json/JSONArray;
-    //   506: invokespecial 481	org/apache/cordova/PluginResult:<init>	(Lorg/apache/cordova/PluginResult$Status;Lorg/json/JSONArray;)V
-    //   509: invokevirtual 485	org/apache/cordova/CallbackContext:sendPluginResult	(Lorg/apache/cordova/PluginResult;)V
-    //   512: return
-    //   513: aload_0
-    //   514: aload_0
-    //   515: iconst_3
-    //   516: ldc_w 547
-    //   519: invokespecial 525	org/apache/cordova/mediacapture/Capture:createErrorObject	(ILjava/lang/String;)Lorg/json/JSONObject;
-    //   522: invokevirtual 527	org/apache/cordova/mediacapture/Capture:fail	(Lorg/json/JSONObject;)V
-    //   525: return
-    // Local variable table:
-    //   start	length	slot	name	signature
-    //   0	526	0	this	Capture
-    //   0	526	1	paramInt1	int
-    //   0	526	2	paramInt2	int
-    //   0	526	3	paramIntent	Intent
-    //   82	216	4	localObject	Object
-    //   163	166	5	localOutputStream	java.io.OutputStream
-    //   170	161	6	arrayOfByte	byte[]
-    // Exception table:
-    //   from	to	target	type
-    //   75	94	255	java/io/IOException
-    //   94	115	255	java/io/IOException
-    //   115	172	255	java/io/IOException
-    //   172	180	255	java/io/IOException
-    //   185	254	255	java/io/IOException
-    //   274	282	255	java/io/IOException
-    //   282	303	255	java/io/IOException
-    //   307	327	255	java/io/IOException
-    //   328	337	255	java/io/IOException
-    //   340	344	255	java/io/IOException
-    //   94	115	273	java/lang/UnsupportedOperationException
-    //   282	303	306	java/lang/UnsupportedOperationException
+    if (paramInt2 == -1)
+    {
+      if (paramInt1 == 0)
+      {
+        paramIntent = new Runnable()
+        {
+          public void run()
+          {
+            Uri localUri = paramIntent.getData();
+            results.put(Capture.this.createMediaFile(localUri));
+            if (results.length() >= limit)
+            {
+              jdField_thiscallbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, results));
+              return;
+            }
+            Capture.this.captureAudio();
+          }
+        };
+        cordova.getThreadPool().execute(paramIntent);
+      }
+      do
+      {
+        return;
+        if (paramInt1 == 1)
+        {
+          paramIntent = new Runnable()
+          {
+            /* Error */
+            public void run()
+            {
+              // Byte code:
+              //   0: new 31	android/content/ContentValues
+              //   3: dup
+              //   4: invokespecial 32	android/content/ContentValues:<init>	()V
+              //   7: astore_3
+              //   8: aload_3
+              //   9: ldc 34
+              //   11: ldc 36
+              //   13: invokevirtual 40	android/content/ContentValues:put	(Ljava/lang/String;Ljava/lang/String;)V
+              //   16: aload_0
+              //   17: getfield 20	org/apache/cordova/mediacapture/Capture$2:val$that	Lorg/apache/cordova/mediacapture/Capture;
+              //   20: getfield 44	org/apache/cordova/mediacapture/Capture:cordova	Lorg/apache/cordova/CordovaInterface;
+              //   23: invokeinterface 50 1 0
+              //   28: invokevirtual 56	android/app/Activity:getContentResolver	()Landroid/content/ContentResolver;
+              //   31: getstatic 62	android/provider/MediaStore$Images$Media:EXTERNAL_CONTENT_URI	Landroid/net/Uri;
+              //   34: aload_3
+              //   35: invokevirtual 68	android/content/ContentResolver:insert	(Landroid/net/Uri;Landroid/content/ContentValues;)Landroid/net/Uri;
+              //   38: astore_2
+              //   39: new 70	java/io/FileInputStream
+              //   42: dup
+              //   43: new 72	java/lang/StringBuilder
+              //   46: dup
+              //   47: invokespecial 73	java/lang/StringBuilder:<init>	()V
+              //   50: aload_0
+              //   51: getfield 18	org/apache/cordova/mediacapture/Capture$2:this$0	Lorg/apache/cordova/mediacapture/Capture;
+              //   54: invokestatic 77	org/apache/cordova/mediacapture/Capture:access$600	(Lorg/apache/cordova/mediacapture/Capture;)Ljava/lang/String;
+              //   57: invokevirtual 81	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+              //   60: ldc 83
+              //   62: invokevirtual 81	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+              //   65: invokevirtual 87	java/lang/StringBuilder:toString	()Ljava/lang/String;
+              //   68: invokespecial 90	java/io/FileInputStream:<init>	(Ljava/lang/String;)V
+              //   71: astore_3
+              //   72: aload_0
+              //   73: getfield 20	org/apache/cordova/mediacapture/Capture$2:val$that	Lorg/apache/cordova/mediacapture/Capture;
+              //   76: getfield 44	org/apache/cordova/mediacapture/Capture:cordova	Lorg/apache/cordova/CordovaInterface;
+              //   79: invokeinterface 50 1 0
+              //   84: invokevirtual 56	android/app/Activity:getContentResolver	()Landroid/content/ContentResolver;
+              //   87: aload_2
+              //   88: invokevirtual 94	android/content/ContentResolver:openOutputStream	(Landroid/net/Uri;)Ljava/io/OutputStream;
+              //   91: astore 4
+              //   93: sipush 4096
+              //   96: newarray <illegal type>
+              //   98: astore 5
+              //   100: aload_3
+              //   101: aload 5
+              //   103: invokevirtual 98	java/io/FileInputStream:read	([B)I
+              //   106: istore_1
+              //   107: iload_1
+              //   108: iconst_m1
+              //   109: if_icmpeq +98 -> 207
+              //   112: aload 4
+              //   114: aload 5
+              //   116: iconst_0
+              //   117: iload_1
+              //   118: invokevirtual 104	java/io/OutputStream:write	([BII)V
+              //   121: goto -21 -> 100
+              //   124: astore_2
+              //   125: aload_2
+              //   126: invokevirtual 107	java/io/IOException:printStackTrace	()V
+              //   129: aload_0
+              //   130: getfield 20	org/apache/cordova/mediacapture/Capture$2:val$that	Lorg/apache/cordova/mediacapture/Capture;
+              //   133: aload_0
+              //   134: getfield 18	org/apache/cordova/mediacapture/Capture$2:this$0	Lorg/apache/cordova/mediacapture/Capture;
+              //   137: iconst_0
+              //   138: ldc 109
+              //   140: invokestatic 113	org/apache/cordova/mediacapture/Capture:access$500	(Lorg/apache/cordova/mediacapture/Capture;ILjava/lang/String;)Lorg/json/JSONObject;
+              //   143: invokevirtual 117	org/apache/cordova/mediacapture/Capture:fail	(Lorg/json/JSONObject;)V
+              //   146: return
+              //   147: astore_2
+              //   148: ldc 119
+              //   150: ldc 121
+              //   152: invokestatic 126	org/apache/cordova/LOG:d	(Ljava/lang/String;Ljava/lang/String;)V
+              //   155: aload_0
+              //   156: getfield 20	org/apache/cordova/mediacapture/Capture$2:val$that	Lorg/apache/cordova/mediacapture/Capture;
+              //   159: getfield 44	org/apache/cordova/mediacapture/Capture:cordova	Lorg/apache/cordova/CordovaInterface;
+              //   162: invokeinterface 50 1 0
+              //   167: invokevirtual 56	android/app/Activity:getContentResolver	()Landroid/content/ContentResolver;
+              //   170: getstatic 129	android/provider/MediaStore$Images$Media:INTERNAL_CONTENT_URI	Landroid/net/Uri;
+              //   173: aload_3
+              //   174: invokevirtual 68	android/content/ContentResolver:insert	(Landroid/net/Uri;Landroid/content/ContentValues;)Landroid/net/Uri;
+              //   177: astore_2
+              //   178: goto -139 -> 39
+              //   181: astore_2
+              //   182: ldc 119
+              //   184: ldc -125
+              //   186: invokestatic 126	org/apache/cordova/LOG:d	(Ljava/lang/String;Ljava/lang/String;)V
+              //   189: aload_0
+              //   190: getfield 20	org/apache/cordova/mediacapture/Capture$2:val$that	Lorg/apache/cordova/mediacapture/Capture;
+              //   193: aload_0
+              //   194: getfield 18	org/apache/cordova/mediacapture/Capture$2:this$0	Lorg/apache/cordova/mediacapture/Capture;
+              //   197: iconst_0
+              //   198: ldc -123
+              //   200: invokestatic 113	org/apache/cordova/mediacapture/Capture:access$500	(Lorg/apache/cordova/mediacapture/Capture;ILjava/lang/String;)Lorg/json/JSONObject;
+              //   203: invokevirtual 117	org/apache/cordova/mediacapture/Capture:fail	(Lorg/json/JSONObject;)V
+              //   206: return
+              //   207: aload 4
+              //   209: invokevirtual 136	java/io/OutputStream:flush	()V
+              //   212: aload 4
+              //   214: invokevirtual 139	java/io/OutputStream:close	()V
+              //   217: aload_3
+              //   218: invokevirtual 140	java/io/FileInputStream:close	()V
+              //   221: aload_0
+              //   222: getfield 18	org/apache/cordova/mediacapture/Capture$2:this$0	Lorg/apache/cordova/mediacapture/Capture;
+              //   225: invokestatic 144	org/apache/cordova/mediacapture/Capture:access$100	(Lorg/apache/cordova/mediacapture/Capture;)Lorg/json/JSONArray;
+              //   228: aload_0
+              //   229: getfield 18	org/apache/cordova/mediacapture/Capture$2:this$0	Lorg/apache/cordova/mediacapture/Capture;
+              //   232: aload_2
+              //   233: invokestatic 148	org/apache/cordova/mediacapture/Capture:access$000	(Lorg/apache/cordova/mediacapture/Capture;Landroid/net/Uri;)Lorg/json/JSONObject;
+              //   236: invokevirtual 153	org/json/JSONArray:put	(Ljava/lang/Object;)Lorg/json/JSONArray;
+              //   239: pop
+              //   240: aload_0
+              //   241: getfield 18	org/apache/cordova/mediacapture/Capture$2:this$0	Lorg/apache/cordova/mediacapture/Capture;
+              //   244: invokestatic 157	org/apache/cordova/mediacapture/Capture:access$700	(Lorg/apache/cordova/mediacapture/Capture;)V
+              //   247: aload_0
+              //   248: getfield 18	org/apache/cordova/mediacapture/Capture$2:this$0	Lorg/apache/cordova/mediacapture/Capture;
+              //   251: invokestatic 144	org/apache/cordova/mediacapture/Capture:access$100	(Lorg/apache/cordova/mediacapture/Capture;)Lorg/json/JSONArray;
+              //   254: invokevirtual 161	org/json/JSONArray:length	()I
+              //   257: i2l
+              //   258: aload_0
+              //   259: getfield 18	org/apache/cordova/mediacapture/Capture$2:this$0	Lorg/apache/cordova/mediacapture/Capture;
+              //   262: invokestatic 165	org/apache/cordova/mediacapture/Capture:access$200	(Lorg/apache/cordova/mediacapture/Capture;)J
+              //   265: lcmp
+              //   266: iflt +31 -> 297
+              //   269: aload_0
+              //   270: getfield 20	org/apache/cordova/mediacapture/Capture$2:val$that	Lorg/apache/cordova/mediacapture/Capture;
+              //   273: invokestatic 169	org/apache/cordova/mediacapture/Capture:access$300	(Lorg/apache/cordova/mediacapture/Capture;)Lorg/apache/cordova/CallbackContext;
+              //   276: new 171	org/apache/cordova/PluginResult
+              //   279: dup
+              //   280: getstatic 177	org/apache/cordova/PluginResult$Status:OK	Lorg/apache/cordova/PluginResult$Status;
+              //   283: aload_0
+              //   284: getfield 18	org/apache/cordova/mediacapture/Capture$2:this$0	Lorg/apache/cordova/mediacapture/Capture;
+              //   287: invokestatic 144	org/apache/cordova/mediacapture/Capture:access$100	(Lorg/apache/cordova/mediacapture/Capture;)Lorg/json/JSONArray;
+              //   290: invokespecial 180	org/apache/cordova/PluginResult:<init>	(Lorg/apache/cordova/PluginResult$Status;Lorg/json/JSONArray;)V
+              //   293: invokevirtual 186	org/apache/cordova/CallbackContext:sendPluginResult	(Lorg/apache/cordova/PluginResult;)V
+              //   296: return
+              //   297: aload_0
+              //   298: getfield 18	org/apache/cordova/mediacapture/Capture$2:this$0	Lorg/apache/cordova/mediacapture/Capture;
+              //   301: invokestatic 189	org/apache/cordova/mediacapture/Capture:access$800	(Lorg/apache/cordova/mediacapture/Capture;)V
+              //   304: return
+              // Local variable table:
+              //   start	length	slot	name	signature
+              //   0	305	0	this	2
+              //   106	12	1	i	int
+              //   38	50	2	localUri1	Uri
+              //   124	2	2	localIOException	IOException
+              //   147	1	2	localUnsupportedOperationException1	UnsupportedOperationException
+              //   177	1	2	localUri2	Uri
+              //   181	52	2	localUnsupportedOperationException2	UnsupportedOperationException
+              //   7	211	3	localObject	Object
+              //   91	122	4	localOutputStream	java.io.OutputStream
+              //   98	17	5	arrayOfByte	byte[]
+              // Exception table:
+              //   from	to	target	type
+              //   0	16	124	java/io/IOException
+              //   16	39	124	java/io/IOException
+              //   39	100	124	java/io/IOException
+              //   100	107	124	java/io/IOException
+              //   112	121	124	java/io/IOException
+              //   148	155	124	java/io/IOException
+              //   155	178	124	java/io/IOException
+              //   182	206	124	java/io/IOException
+              //   207	296	124	java/io/IOException
+              //   297	304	124	java/io/IOException
+              //   16	39	147	java/lang/UnsupportedOperationException
+              //   155	178	181	java/lang/UnsupportedOperationException
+            }
+          };
+          cordova.getThreadPool().execute(paramIntent);
+          return;
+        }
+      } while (paramInt1 != 2);
+      paramIntent = new Runnable()
+      {
+        public void run()
+        {
+          Uri localUri1 = null;
+          if (paramIntent != null) {
+            localUri1 = paramIntent.getData();
+          }
+          Uri localUri2 = localUri1;
+          if (localUri1 == null) {
+            localUri2 = Uri.fromFile(new File(Capture.this.getTempDirectoryPath(), "Capture.avi"));
+          }
+          if (localUri2 == null)
+          {
+            jdField_this.fail(Capture.this.createErrorObject(3, "Error: data is null"));
+            return;
+          }
+          results.put(Capture.this.createMediaFile(localUri2));
+          if (results.length() >= limit)
+          {
+            jdField_thiscallbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, results));
+            return;
+          }
+          Capture.this.captureVideo(duration);
+        }
+      };
+      cordova.getThreadPool().execute(paramIntent);
+      return;
+    }
+    if (paramInt2 == 0)
+    {
+      if (results.length() > 0)
+      {
+        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, results));
+        return;
+      }
+      fail(createErrorObject(3, "Canceled."));
+      return;
+    }
+    if (results.length() > 0)
+    {
+      callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, results));
+      return;
+    }
+    fail(createErrorObject(3, "Did not complete!"));
   }
 }
 

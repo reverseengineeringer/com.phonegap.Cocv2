@@ -2,7 +2,7 @@ package com.squareup.okhttp.internal;
 
 import java.util.concurrent.ThreadFactory;
 
-class Util$1
+final class Util$1
   implements ThreadFactory
 {
   Util$1(String paramString) {}

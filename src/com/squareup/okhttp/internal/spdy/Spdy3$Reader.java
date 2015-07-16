@@ -99,20 +99,17 @@ final class Spdy3$Reader
     }
     Settings localSettings = new Settings();
     paramInt2 = 0;
-    if (paramInt2 >= i) {
-      if ((paramInt1 & 0x1) == 0) {
-        break label123;
-      }
+    while (paramInt2 < i)
+    {
+      int j = in.readInt();
+      localSettings.set(j & 0xFFFFFF, (0xFF000000 & j) >>> 24, in.readInt());
+      paramInt2 += 1;
     }
+    if ((paramInt1 & 0x1) != 0) {}
     for (;;)
     {
       paramHandler.settings(bool, localSettings);
       return;
-      int j = in.readInt();
-      localSettings.set(j & 0xFFFFFF, (0xFF000000 & j) >>> 24, in.readInt());
-      paramInt2 += 1;
-      break;
-      label123:
       bool = false;
     }
   }
@@ -189,7 +186,7 @@ final class Spdy3$Reader
           m = (0xFF000000 & k) >>> 24;
           k &= 0xFFFFFF;
           if (i == 0) {
-            break label326;
+            break label330;
           }
           i = (0x7FFF0000 & j) >>> 16;
           if (i == 3) {
@@ -247,7 +244,7 @@ final class Spdy3$Reader
     }
     Util.skipByReading(in, k);
     throw new UnsupportedOperationException("TODO");
-    label326:
+    label330:
     if ((m & 0x1) != 0) {
       bool = true;
     }

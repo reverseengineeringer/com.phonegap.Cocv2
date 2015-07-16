@@ -33,39 +33,37 @@ public final class HttpAuthenticator
       throws IOException
     {
       paramAnonymousList = paramAnonymousList.iterator();
-      Object localObject;
-      do
+      while (paramAnonymousList.hasNext())
       {
-        do
+        Object localObject = (OkAuthenticator.Challenge)paramAnonymousList.next();
+        if ("Basic".equalsIgnoreCase(((OkAuthenticator.Challenge)localObject).getScheme()))
         {
-          if (!paramAnonymousList.hasNext()) {
-            return null;
+          localObject = Authenticator.requestPasswordAuthentication(paramAnonymousURL.getHost(), getConnectToInetAddress(paramAnonymousProxy, paramAnonymousURL), paramAnonymousURL.getPort(), paramAnonymousURL.getProtocol(), ((OkAuthenticator.Challenge)localObject).getRealm(), ((OkAuthenticator.Challenge)localObject).getScheme(), paramAnonymousURL, Authenticator.RequestorType.SERVER);
+          if (localObject != null) {
+            return OkAuthenticator.Credential.basic(((PasswordAuthentication)localObject).getUserName(), new String(((PasswordAuthentication)localObject).getPassword()));
           }
-          localObject = (OkAuthenticator.Challenge)paramAnonymousList.next();
-        } while (!"Basic".equalsIgnoreCase(((OkAuthenticator.Challenge)localObject).getScheme()));
-        localObject = Authenticator.requestPasswordAuthentication(paramAnonymousURL.getHost(), getConnectToInetAddress(paramAnonymousProxy, paramAnonymousURL), paramAnonymousURL.getPort(), paramAnonymousURL.getProtocol(), ((OkAuthenticator.Challenge)localObject).getRealm(), ((OkAuthenticator.Challenge)localObject).getScheme(), paramAnonymousURL, Authenticator.RequestorType.SERVER);
-      } while (localObject == null);
-      return OkAuthenticator.Credential.basic(((PasswordAuthentication)localObject).getUserName(), new String(((PasswordAuthentication)localObject).getPassword()));
+        }
+      }
+      return null;
     }
     
     public OkAuthenticator.Credential authenticateProxy(Proxy paramAnonymousProxy, URL paramAnonymousURL, List<OkAuthenticator.Challenge> paramAnonymousList)
       throws IOException
     {
       paramAnonymousList = paramAnonymousList.iterator();
-      Object localObject;
-      do
+      while (paramAnonymousList.hasNext())
       {
-        do
+        Object localObject = (OkAuthenticator.Challenge)paramAnonymousList.next();
+        if ("Basic".equalsIgnoreCase(((OkAuthenticator.Challenge)localObject).getScheme()))
         {
-          if (!paramAnonymousList.hasNext()) {
-            return null;
+          InetSocketAddress localInetSocketAddress = (InetSocketAddress)paramAnonymousProxy.address();
+          localObject = Authenticator.requestPasswordAuthentication(localInetSocketAddress.getHostName(), getConnectToInetAddress(paramAnonymousProxy, paramAnonymousURL), localInetSocketAddress.getPort(), paramAnonymousURL.getProtocol(), ((OkAuthenticator.Challenge)localObject).getRealm(), ((OkAuthenticator.Challenge)localObject).getScheme(), paramAnonymousURL, Authenticator.RequestorType.PROXY);
+          if (localObject != null) {
+            return OkAuthenticator.Credential.basic(((PasswordAuthentication)localObject).getUserName(), new String(((PasswordAuthentication)localObject).getPassword()));
           }
-          localObject = (OkAuthenticator.Challenge)paramAnonymousList.next();
-        } while (!"Basic".equalsIgnoreCase(((OkAuthenticator.Challenge)localObject).getScheme()));
-        InetSocketAddress localInetSocketAddress = (InetSocketAddress)paramAnonymousProxy.address();
-        localObject = Authenticator.requestPasswordAuthentication(localInetSocketAddress.getHostName(), getConnectToInetAddress(paramAnonymousProxy, paramAnonymousURL), localInetSocketAddress.getPort(), paramAnonymousURL.getProtocol(), ((OkAuthenticator.Challenge)localObject).getRealm(), ((OkAuthenticator.Challenge)localObject).getScheme(), paramAnonymousURL, Authenticator.RequestorType.PROXY);
-      } while (localObject == null);
-      return OkAuthenticator.Credential.basic(((PasswordAuthentication)localObject).getUserName(), new String(((PasswordAuthentication)localObject).getPassword()));
+        }
+      }
+      return null;
     }
   };
   
@@ -73,35 +71,36 @@ public final class HttpAuthenticator
   {
     ArrayList localArrayList = new ArrayList();
     int i = 0;
-    if (i >= paramRawHeaders.length()) {
-      return localArrayList;
-    }
-    if (!paramString.equalsIgnoreCase(paramRawHeaders.getFieldName(i))) {}
-    label175:
-    for (;;)
+    if (i < paramRawHeaders.length())
     {
-      i += 1;
-      break;
-      String str1 = paramRawHeaders.getValue(i);
-      int j = 0;
+      if (!paramString.equalsIgnoreCase(paramRawHeaders.getFieldName(i))) {}
+      label172:
       for (;;)
       {
-        if (j >= str1.length()) {
-          break label175;
+        i += 1;
+        break;
+        String str1 = paramRawHeaders.getValue(i);
+        int j = 0;
+        for (;;)
+        {
+          if (j >= str1.length()) {
+            break label172;
+          }
+          int k = HeaderParser.skipUntil(str1, j, " ");
+          String str2 = str1.substring(j, k).trim();
+          j = HeaderParser.skipWhitespace(str1, k);
+          if (!str1.regionMatches(true, j, "realm=\"", 0, "realm=\"".length())) {
+            break;
+          }
+          j += "realm=\"".length();
+          k = HeaderParser.skipUntil(str1, j, "\"");
+          String str3 = str1.substring(j, k);
+          j = HeaderParser.skipWhitespace(str1, HeaderParser.skipUntil(str1, k + 1, ",") + 1);
+          localArrayList.add(new OkAuthenticator.Challenge(str2, str3));
         }
-        int k = HeaderParser.skipUntil(str1, j, " ");
-        String str2 = str1.substring(j, k).trim();
-        j = HeaderParser.skipWhitespace(str1, k);
-        if (!str1.regionMatches(true, j, "realm=\"", 0, "realm=\"".length())) {
-          break;
-        }
-        j += "realm=\"".length();
-        k = HeaderParser.skipUntil(str1, j, "\"");
-        String str3 = str1.substring(j, k);
-        j = HeaderParser.skipWhitespace(str1, HeaderParser.skipUntil(str1, k + 1, ",") + 1);
-        localArrayList.add(new OkAuthenticator.Challenge(str2, str3));
       }
     }
+    return localArrayList;
   }
   
   public static boolean processAuthHeader(OkAuthenticator paramOkAuthenticator, int paramInt, RawHeaders paramRawHeaders1, RawHeaders paramRawHeaders2, Proxy paramProxy, URL paramURL)

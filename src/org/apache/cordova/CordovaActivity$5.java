@@ -21,7 +21,7 @@ class CordovaActivity$5
     localLinearLayout.setMinimumHeight(localDisplay.getHeight());
     localLinearLayout.setMinimumWidth(localDisplay.getWidth());
     localLinearLayout.setOrientation(1);
-    localLinearLayout.setBackgroundColor(val$that.getIntegerProperty("backgroundColor", -16777216));
+    localLinearLayout.setBackgroundColor(this$0.preferences.getInteger("backgroundColor", -16777216));
     localLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(-1, -1, 0.0F));
     localLinearLayout.setBackgroundResource(val$that.splashscreen);
     this$0.splashDialog = new Dialog(val$that, 16973840);

@@ -8,28 +8,28 @@ class RequestHeaders$1
   public void handle(String paramString1, String paramString2)
   {
     if ("no-cache".equalsIgnoreCase(paramString1)) {
-      RequestHeaders.access$0(this$0, true);
+      RequestHeaders.access$002(this$0, true);
     }
     do
     {
       return;
       if ("max-age".equalsIgnoreCase(paramString1))
       {
-        RequestHeaders.access$1(this$0, HeaderParser.parseSeconds(paramString2));
+        RequestHeaders.access$102(this$0, HeaderParser.parseSeconds(paramString2));
         return;
       }
       if ("max-stale".equalsIgnoreCase(paramString1))
       {
-        RequestHeaders.access$2(this$0, HeaderParser.parseSeconds(paramString2));
+        RequestHeaders.access$202(this$0, HeaderParser.parseSeconds(paramString2));
         return;
       }
       if ("min-fresh".equalsIgnoreCase(paramString1))
       {
-        RequestHeaders.access$3(this$0, HeaderParser.parseSeconds(paramString2));
+        RequestHeaders.access$302(this$0, HeaderParser.parseSeconds(paramString2));
         return;
       }
     } while (!"only-if-cached".equalsIgnoreCase(paramString1));
-    RequestHeaders.access$4(this$0, true);
+    RequestHeaders.access$402(this$0, true);
   }
 }
 

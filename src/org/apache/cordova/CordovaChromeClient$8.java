@@ -2,7 +2,6 @@ package org.apache.cordova;
 
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.text.Editable;
 import android.webkit.JsPromptResult;
 import android.widget.EditText;
 

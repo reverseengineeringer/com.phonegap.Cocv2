@@ -3,7 +3,7 @@ package com.squareup.okhttp;
 import java.io.IOException;
 import java.io.OutputStream;
 
-class Request$Body$1
+final class Request$Body$1
   extends Request.Body
 {
   Request$Body$1(MediaType paramMediaType, byte[] paramArrayOfByte) {}

@@ -2,7 +2,7 @@ package com.squareup.okhttp.internal.http;
 
 import java.util.Comparator;
 
-class RawHeaders$1
+final class RawHeaders$1
   implements Comparator<String>
 {
   public int compare(String paramString1, String paramString2)

@@ -43,8 +43,8 @@ public final class SpdyStream
     }
     id = paramInt1;
     connection = paramSpdyConnection;
-    in.finished = paramBoolean2;
-    out.finished = paramBoolean1;
+    SpdyDataInputStream.access$202(in, paramBoolean2);
+    SpdyDataOutputStream.access$302(out, paramBoolean1);
     priority = paramInt2;
     requestHeaders = paramList;
     setSettings(paramSettings);
@@ -203,13 +203,8 @@ public final class SpdyStream
         }
         try
         {
-          if ((responseHeaders != null) || (errorCode != null))
-          {
-            if (responseHeaders == null) {
-              break label161;
-            }
-            List localList = responseHeaders;
-            return localList;
+          if ((responseHeaders != null) || (errorCode != null)) {
+            break label146;
           }
           if (readTimeoutMillis == 0L)
           {
@@ -234,7 +229,12 @@ public final class SpdyStream
       l1 = readTimeoutMillis + l2 - System.nanoTime() / 1000000L;
     }
     throw new SocketTimeoutException("Read response header timeout. readTimeoutMillis: " + readTimeoutMillis);
-    label161:
+    label146:
+    if (responseHeaders != null)
+    {
+      List localList = responseHeaders;
+      return localList;
+    }
     throw new IOException("stream was reset: " + errorCode);
   }
   
@@ -265,23 +265,23 @@ public final class SpdyStream
     //   15: iload_1
     //   16: ireturn
     //   17: aload_0
-    //   18: getfield 54	com/squareup/okhttp/internal/spdy/SpdyStream:in	Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
-    //   21: invokestatic 123	com/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream:access$2	(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
+    //   18: getfield 56	com/squareup/okhttp/internal/spdy/SpdyStream:in	Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
+    //   21: invokestatic 126	com/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream:access$200	(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
     //   24: ifne +13 -> 37
     //   27: aload_0
-    //   28: getfield 54	com/squareup/okhttp/internal/spdy/SpdyStream:in	Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
-    //   31: invokestatic 125	com/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream:access$3	(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
+    //   28: getfield 56	com/squareup/okhttp/internal/spdy/SpdyStream:in	Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;
+    //   31: invokestatic 129	com/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream:access$400	(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataInputStream;)Z
     //   34: ifeq +32 -> 66
     //   37: aload_0
     //   38: getfield 59	com/squareup/okhttp/internal/spdy/SpdyStream:out	Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
-    //   41: invokestatic 128	com/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream:access$2	(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
+    //   41: invokestatic 133	com/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream:access$300	(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
     //   44: ifne +13 -> 57
     //   47: aload_0
     //   48: getfield 59	com/squareup/okhttp/internal/spdy/SpdyStream:out	Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;
-    //   51: invokestatic 130	com/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream:access$3	(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
+    //   51: invokestatic 136	com/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream:access$500	(Lcom/squareup/okhttp/internal/spdy/SpdyStream$SpdyDataOutputStream;)Z
     //   54: ifeq +12 -> 66
     //   57: aload_0
-    //   58: getfield 180	com/squareup/okhttp/internal/spdy/SpdyStream:responseHeaders	Ljava/util/List;
+    //   58: getfield 186	com/squareup/okhttp/internal/spdy/SpdyStream:responseHeaders	Ljava/util/List;
     //   61: astore_2
     //   62: aload_2
     //   63: ifnonnull -50 -> 13
@@ -319,7 +319,7 @@ public final class SpdyStream
     assert (!Thread.holdsLock(this));
     try
     {
-      in.finished = true;
+      SpdyDataInputStream.access$202(in, true);
       boolean bool = isOpen();
       notifyAll();
       if (!bool) {
@@ -405,8 +405,7 @@ public final class SpdyStream
   {
     try
     {
-      SpdyDataOutputStream localSpdyDataOutputStream = out;
-      unacknowledgedBytes -= paramInt;
+      SpdyDataOutputStream.access$620(out, paramInt);
       notifyAll();
       return;
     }
@@ -438,7 +437,7 @@ public final class SpdyStream
     responseHeaders = paramList;
     if (!paramBoolean)
     {
-      out.finished = true;
+      SpdyDataOutputStream.access$302(out, true);
       bool = true;
     }
     connection.writeSynReply(id, bool, paramList);
@@ -496,10 +495,7 @@ public final class SpdyStream
         {
           for (;;)
           {
-            if ((pos != -1) || (finished) || (closed)) {
-              return;
-            }
-            if (errorCode != null) {
+            if ((pos != -1) || (finished) || (closed) || (errorCode != null)) {
               return;
             }
             if (readTimeoutMillis != 0L) {
@@ -725,7 +721,7 @@ public final class SpdyStream
         try
         {
           if (unacknowledgedBytes + paramInt < writeWindowSize) {
-            return;
+            break;
           }
           wait();
           if ((!paramBoolean) && (closed)) {
@@ -801,11 +797,8 @@ public final class SpdyStream
       assert (!Thread.holdsLock(SpdyStream.this));
       Util.checkOffsetAndCount(paramArrayOfByte.length, paramInt1, paramInt2);
       checkNotClosed();
-      for (;;)
+      while (paramInt2 > 0)
       {
-        if (paramInt2 <= 0) {
-          return;
-        }
         if (pos == buffer.length) {
           writeFrame(false);
         }

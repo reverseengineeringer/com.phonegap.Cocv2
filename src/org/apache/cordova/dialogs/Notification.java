@@ -1,6 +1,8 @@
 package org.apache.cordova.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -9,8 +11,10 @@ import android.content.DialogInterface.OnClickListener;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.text.Editable;
+import android.os.Build.VERSION;
 import android.widget.EditText;
+import android.widget.TextView;
+import java.util.concurrent.ExecutorService;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -27,6 +31,35 @@ public class Notification
   public ProgressDialog progressDialog = null;
   public ProgressDialog spinnerDialog = null;
   
+  @SuppressLint({"NewApi"})
+  private void changeTextDirection(AlertDialog.Builder paramBuilder)
+  {
+    int i = Build.VERSION.SDK_INT;
+    paramBuilder.create();
+    paramBuilder = paramBuilder.show();
+    if (i >= 17) {
+      ((TextView)paramBuilder.findViewById(16908299)).setTextDirection(5);
+    }
+  }
+  
+  @SuppressLint({"NewApi"})
+  private AlertDialog.Builder createDialog(CordovaInterface paramCordovaInterface)
+  {
+    if (Build.VERSION.SDK_INT >= 11) {
+      return new AlertDialog.Builder(paramCordovaInterface.getActivity(), 5);
+    }
+    return new AlertDialog.Builder(paramCordovaInterface.getActivity());
+  }
+  
+  @SuppressLint({"InlinedApi"})
+  private ProgressDialog createProgressDialog(CordovaInterface paramCordovaInterface)
+  {
+    if (Build.VERSION.SDK_INT >= 14) {
+      return new ProgressDialog(paramCordovaInterface.getActivity(), 5);
+    }
+    return new ProgressDialog(paramCordovaInterface.getActivity());
+  }
+  
   public void activityStart(final String paramString1, final String paramString2)
   {
     try
@@ -40,13 +73,19 @@ public class Notification
       {
         public void run()
         {
-          spinnerDialog = ProgressDialog.show(val$cordova.getActivity(), paramString1, paramString2, true, true, new DialogInterface.OnCancelListener()
+          jdField_thisspinnerDialog = Notification.this.createProgressDialog(val$cordova);
+          jdField_thisspinnerDialog.setTitle(paramString1);
+          jdField_thisspinnerDialog.setMessage(paramString2);
+          jdField_thisspinnerDialog.setCancelable(true);
+          jdField_thisspinnerDialog.setIndeterminate(true);
+          jdField_thisspinnerDialog.setOnCancelListener(new DialogInterface.OnCancelListener()
           {
             public void onCancel(DialogInterface paramAnonymous2DialogInterface)
             {
-              spinnerDialog = null;
+              val$notification.spinnerDialog = null;
             }
           });
+          jdField_thisspinnerDialog.show();
         }
       };
       cordova.getActivity().runOnUiThread(paramString1);
@@ -81,7 +120,7 @@ public class Notification
       {
         public void run()
         {
-          AlertDialog.Builder localBuilder = new AlertDialog.Builder(val$cordova.getActivity());
+          AlertDialog.Builder localBuilder = Notification.this.createDialog(val$cordova);
           localBuilder.setMessage(paramString1);
           localBuilder.setTitle(paramString2);
           localBuilder.setCancelable(true);
@@ -101,8 +140,7 @@ public class Notification
               val$callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, 0));
             }
           });
-          localBuilder.create();
-          localBuilder.show();
+          Notification.this.changeTextDirection(localBuilder);
         }
       };
       cordova.getActivity().runOnUiThread(paramString1);
@@ -115,36 +153,32 @@ public class Notification
     }
   }
   
-  public void beep(long paramLong)
+  public void beep(final long paramLong)
   {
-    Object localObject = RingtoneManager.getDefaultUri(2);
-    localObject = RingtoneManager.getRingtone(cordova.getActivity().getBaseContext(), (Uri)localObject);
-    long l1;
-    if (localObject != null)
+    cordova.getThreadPool().execute(new Runnable()
     {
-      l1 = 0L;
-      if (l1 < paramLong) {}
-    }
-    else
-    {
-      return;
-    }
-    ((Ringtone)localObject).play();
-    long l2 = 5000L;
-    for (;;)
-    {
-      if ((!((Ringtone)localObject).isPlaying()) || (l2 <= 0L))
+      public void run()
       {
-        l1 += 1L;
-        break;
+        Object localObject = RingtoneManager.getDefaultUri(2);
+        localObject = RingtoneManager.getRingtone(cordova.getActivity().getBaseContext(), (Uri)localObject);
+        if (localObject != null) {
+          for (long l1 = 0L; l1 < paramLong; l1 += 1L)
+          {
+            ((Ringtone)localObject).play();
+            long l2 = 5000L;
+            while ((((Ringtone)localObject).isPlaying()) && (l2 > 0L))
+            {
+              l2 -= 100L;
+              try
+              {
+                Thread.sleep(100L);
+              }
+              catch (InterruptedException localInterruptedException) {}
+            }
+          }
+        }
       }
-      l2 -= 100L;
-      try
-      {
-        Thread.sleep(100L);
-      }
-      catch (InterruptedException localInterruptedException) {}
-    }
+    });
   }
   
   public void confirm(final String paramString1, final String paramString2, final JSONArray paramJSONArray, final CallbackContext paramCallbackContext)
@@ -155,7 +189,7 @@ public class Notification
       {
         public void run()
         {
-          AlertDialog.Builder localBuilder = new AlertDialog.Builder(val$cordova.getActivity());
+          AlertDialog.Builder localBuilder = Notification.this.createDialog(val$cordova);
           localBuilder.setMessage(paramString1);
           localBuilder.setTitle(paramString2);
           localBuilder.setCancelable(true);
@@ -200,8 +234,7 @@ public class Notification
                     val$callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, 0));
                   }
                 });
-                localBuilder.create();
-                localBuilder.show();
+                Notification.this.changeTextDirection(localBuilder);
                 return;
               }
               catch (JSONException localJSONException1)
@@ -234,53 +267,56 @@ public class Notification
     throws JSONException
   {
     boolean bool = false;
+    if (cordova.getActivity().isFinishing())
+    {
+      bool = true;
+      return bool;
+    }
     if (paramString.equals("beep")) {
       beep(paramJSONArray.getLong(0));
     }
     for (;;)
     {
       paramCallbackContext.success();
-      bool = true;
-      do
+      return true;
+      if (paramString.equals("alert"))
       {
-        return bool;
-        if (paramString.equals("alert"))
-        {
-          alert(paramJSONArray.getString(0), paramJSONArray.getString(1), paramJSONArray.getString(2), paramCallbackContext);
-          return true;
-        }
-        if (paramString.equals("confirm"))
-        {
-          confirm(paramJSONArray.getString(0), paramJSONArray.getString(1), paramJSONArray.getJSONArray(2), paramCallbackContext);
-          return true;
-        }
-        if (paramString.equals("prompt"))
-        {
-          prompt(paramJSONArray.getString(0), paramJSONArray.getString(1), paramJSONArray.getJSONArray(2), paramJSONArray.getString(3), paramCallbackContext);
-          return true;
-        }
-        if (paramString.equals("activityStart"))
-        {
-          activityStart(paramJSONArray.getString(0), paramJSONArray.getString(1));
+        alert(paramJSONArray.getString(0), paramJSONArray.getString(1), paramJSONArray.getString(2), paramCallbackContext);
+        return true;
+      }
+      if (paramString.equals("confirm"))
+      {
+        confirm(paramJSONArray.getString(0), paramJSONArray.getString(1), paramJSONArray.getJSONArray(2), paramCallbackContext);
+        return true;
+      }
+      if (paramString.equals("prompt"))
+      {
+        prompt(paramJSONArray.getString(0), paramJSONArray.getString(1), paramJSONArray.getJSONArray(2), paramJSONArray.getString(3), paramCallbackContext);
+        return true;
+      }
+      if (paramString.equals("activityStart"))
+      {
+        activityStart(paramJSONArray.getString(0), paramJSONArray.getString(1));
+      }
+      else if (paramString.equals("activityStop"))
+      {
+        activityStop();
+      }
+      else if (paramString.equals("progressStart"))
+      {
+        progressStart(paramJSONArray.getString(0), paramJSONArray.getString(1));
+      }
+      else if (paramString.equals("progressValue"))
+      {
+        progressValue(paramJSONArray.getInt(0));
+      }
+      else
+      {
+        if (!paramString.equals("progressStop")) {
           break;
         }
-        if (paramString.equals("activityStop"))
-        {
-          activityStop();
-          break;
-        }
-        if (paramString.equals("progressStart"))
-        {
-          progressStart(paramJSONArray.getString(0), paramJSONArray.getString(1));
-          break;
-        }
-        if (paramString.equals("progressValue"))
-        {
-          progressValue(paramJSONArray.getInt(0));
-          break;
-        }
-      } while (!paramString.equals("progressStop"));
-      progressStop();
+        progressStop();
+      }
     }
   }
   
@@ -297,7 +333,7 @@ public class Notification
       {
         public void run()
         {
-          jdField_thisprogressDialog = new ProgressDialog(val$cordova.getActivity());
+          jdField_thisprogressDialog = Notification.this.createProgressDialog(val$cordova);
           jdField_thisprogressDialog.setProgressStyle(1);
           jdField_thisprogressDialog.setTitle(paramString1);
           jdField_thisprogressDialog.setMessage(paramString2);
@@ -358,14 +394,13 @@ public class Notification
   {
     try
     {
-      final CordovaInterface localCordovaInterface = cordova;
-      final EditText localEditText = new EditText(localCordovaInterface.getActivity());
-      localEditText.setHint(paramString3);
       paramString1 = new Runnable()
       {
         public void run()
         {
-          AlertDialog.Builder localBuilder = new AlertDialog.Builder(localCordovaInterface.getActivity());
+          final EditText localEditText = new EditText(val$cordova.getActivity());
+          localEditText.setHint(paramString3);
+          AlertDialog.Builder localBuilder = Notification.this.createDialog(val$cordova);
           localBuilder.setMessage(paramString1);
           localBuilder.setTitle(paramString2);
           localBuilder.setCancelable(true);
@@ -385,7 +420,7 @@ public class Notification
                   {
                     localJSONObject.put("buttonIndex", 1);
                     JSONObject localJSONObject = localJSONObject;
-                    if (val$promptInput.getText().toString().trim().length() != 0) {
+                    if (localEditText.getText().toString().trim().length() != 0) {
                       continue;
                     }
                     paramAnonymous2DialogInterface = val$defaultText;
@@ -398,7 +433,7 @@ public class Notification
                   }
                   val$callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, localJSONObject));
                   return;
-                  paramAnonymous2DialogInterface = val$promptInput.getText();
+                  paramAnonymous2DialogInterface = localEditText.getText();
                 }
               }
             });
@@ -416,7 +451,7 @@ public class Notification
                     {
                       localJSONObject.put("buttonIndex", 2);
                       JSONObject localJSONObject = localJSONObject;
-                      if (val$promptInput.getText().toString().trim().length() != 0) {
+                      if (localEditText.getText().toString().trim().length() != 0) {
                         continue;
                       }
                       paramAnonymous2DialogInterface = val$defaultText;
@@ -429,7 +464,7 @@ public class Notification
                     }
                     val$callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, localJSONObject));
                     return;
-                    paramAnonymous2DialogInterface = val$promptInput.getText();
+                    paramAnonymous2DialogInterface = localEditText.getText();
                   }
                 }
               });
@@ -447,7 +482,7 @@ public class Notification
                       {
                         localJSONObject.put("buttonIndex", 3);
                         JSONObject localJSONObject = localJSONObject;
-                        if (val$promptInput.getText().toString().trim().length() != 0) {
+                        if (localEditText.getText().toString().trim().length() != 0) {
                           continue;
                         }
                         paramAnonymous2DialogInterface = val$defaultText;
@@ -460,7 +495,7 @@ public class Notification
                       }
                       val$callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, localJSONObject));
                       return;
-                      paramAnonymous2DialogInterface = val$promptInput.getText();
+                      paramAnonymous2DialogInterface = localEditText.getText();
                     }
                   }
                 });
@@ -475,7 +510,7 @@ public class Notification
                       {
                         localJSONObject.put("buttonIndex", 0);
                         JSONObject localJSONObject = localJSONObject;
-                        if (val$promptInput.getText().toString().trim().length() != 0) {
+                        if (localEditText.getText().toString().trim().length() != 0) {
                           continue;
                         }
                         paramAnonymous2DialogInterface = val$defaultText;
@@ -488,12 +523,11 @@ public class Notification
                       }
                       val$callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, localJSONObject));
                       return;
-                      paramAnonymous2DialogInterface = val$promptInput.getText();
+                      paramAnonymous2DialogInterface = localEditText.getText();
                     }
                   }
                 });
-                localBuilder.create();
-                localBuilder.show();
+                Notification.this.changeTextDirection(localBuilder);
                 return;
               }
               catch (JSONException localJSONException1)

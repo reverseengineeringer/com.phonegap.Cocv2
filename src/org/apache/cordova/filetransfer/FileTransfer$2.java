@@ -1,23 +1,14 @@
 package org.apache.cordova.filetransfer;
 
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
 
-class FileTransfer$2
-  implements X509TrustManager
+final class FileTransfer$2
+  implements HostnameVerifier
 {
-  public void checkClientTrusted(X509Certificate[] paramArrayOfX509Certificate, String paramString)
-    throws CertificateException
-  {}
-  
-  public void checkServerTrusted(X509Certificate[] paramArrayOfX509Certificate, String paramString)
-    throws CertificateException
-  {}
-  
-  public X509Certificate[] getAcceptedIssuers()
+  public boolean verify(String paramString, SSLSession paramSSLSession)
   {
-    return new X509Certificate[0];
+    return true;
   }
 }
 

@@ -26,24 +26,13 @@ public class ConnectionPool
     {
       ArrayList localArrayList = new ArrayList(2);
       int i = 0;
-      for (;;)
+      synchronized (ConnectionPool.this)
       {
-        synchronized (ConnectionPool.this)
+        ListIterator localListIterator = connections.listIterator(connections.size());
+        for (;;)
         {
-          ListIterator localListIterator = connections.listIterator(connections.size());
-          if (!localListIterator.hasPrevious())
-          {
-            localListIterator = connections.listIterator(connections.size());
-            if ((!localListIterator.hasPrevious()) || (i <= maxIdleConnections))
-            {
-              ??? = localArrayList.iterator();
-              if (((Iterator)???).hasNext()) {
-                break label240;
-              }
-              return null;
-            }
-          }
-          else
+          Connection localConnection;
+          if (localListIterator.hasPrevious())
           {
             localConnection = (Connection)localListIterator.previous();
             if ((!localConnection.isAlive()) || (localConnection.isExpired(keepAliveDurationNs)))
@@ -53,25 +42,32 @@ public class ConnectionPool
               if (localArrayList.size() != 2) {
                 continue;
               }
-              continue;
             }
-            if (!localConnection.isIdle()) {
-              continue;
+          }
+          else
+          {
+            localListIterator = connections.listIterator(connections.size());
+            while ((localListIterator.hasPrevious()) && (i > maxIdleConnections))
+            {
+              localConnection = (Connection)localListIterator.previous();
+              if (localConnection.isIdle())
+              {
+                localArrayList.add(localConnection);
+                localListIterator.remove();
+                i -= 1;
+              }
             }
+          }
+          if (localConnection.isIdle()) {
             i += 1;
-            continue;
           }
-          Connection localConnection = (Connection)localListIterator.previous();
-          if (!localConnection.isIdle()) {
-            continue;
-          }
-          localArrayList.add(localConnection);
-          localListIterator.remove();
-          i -= 1;
         }
-        label240:
-        Util.closeQuietly((Connection)((Iterator)???).next());
+        ??? = localArrayList.iterator();
+        if (((Iterator)???).hasNext()) {
+          Util.closeQuietly((Connection)((Iterator)???).next());
+        }
       }
+      return null;
     }
   };
   private final ExecutorService executorService = new ThreadPoolExecutor(0, 1, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue(), Util.daemonThreadFactory("OkHttp ConnectionPool"));
@@ -126,20 +122,17 @@ public class ConnectionPool
   
   public void evictAll()
   {
-    for (;;)
+    try
     {
-      try
-      {
-        Object localObject1 = new ArrayList(connections);
-        connections.clear();
-        localObject1 = ((List)localObject1).iterator();
-        if (!((Iterator)localObject1).hasNext()) {
-          return;
-        }
+      Object localObject1 = new ArrayList(connections);
+      connections.clear();
+      localObject1 = ((List)localObject1).iterator();
+      while (((Iterator)localObject1).hasNext()) {
+        Util.closeQuietly((Connection)((Iterator)localObject1).next());
       }
-      finally {}
-      Util.closeQuietly((Connection)((Iterator)localObject2).next());
+      return;
     }
+    finally {}
   }
   
   /* Error */
@@ -149,110 +142,107 @@ public class ConnectionPool
     //   0: aload_0
     //   1: monitorenter
     //   2: aconst_null
-    //   3: astore_3
-    //   4: aload_0
-    //   5: getfield 73	com/squareup/okhttp/ConnectionPool:connections	Ljava/util/LinkedList;
-    //   8: aload_0
-    //   9: getfield 73	com/squareup/okhttp/ConnectionPool:connections	Ljava/util/LinkedList;
-    //   12: invokevirtual 174	java/util/LinkedList:size	()I
-    //   15: invokevirtual 178	java/util/LinkedList:listIterator	(I)Ljava/util/ListIterator;
-    //   18: astore 5
-    //   20: aload 5
-    //   22: invokeinterface 183 1 0
-    //   27: ifne +42 -> 69
-    //   30: aload_3
-    //   31: astore_1
-    //   32: aload_1
-    //   33: ifnull +18 -> 51
-    //   36: aload_1
-    //   37: invokevirtual 186	com/squareup/okhttp/Connection:isSpdy	()Z
-    //   40: ifeq +11 -> 51
-    //   43: aload_0
-    //   44: getfield 73	com/squareup/okhttp/ConnectionPool:connections	Ljava/util/LinkedList;
-    //   47: aload_1
-    //   48: invokevirtual 190	java/util/LinkedList:addFirst	(Ljava/lang/Object;)V
-    //   51: aload_0
-    //   52: getfield 99	com/squareup/okhttp/ConnectionPool:executorService	Ljava/util/concurrent/ExecutorService;
-    //   55: aload_0
-    //   56: getfield 104	com/squareup/okhttp/ConnectionPool:connectionsCleanupCallable	Ljava/util/concurrent/Callable;
-    //   59: invokeinterface 193 2 0
-    //   64: pop
-    //   65: aload_0
-    //   66: monitorexit
-    //   67: aload_1
-    //   68: areturn
-    //   69: aload 5
-    //   71: invokeinterface 196 1 0
-    //   76: checkcast 163	com/squareup/okhttp/Connection
-    //   79: astore 4
-    //   81: aload 4
-    //   83: invokevirtual 200	com/squareup/okhttp/Connection:getRoute	()Lcom/squareup/okhttp/Route;
-    //   86: invokevirtual 206	com/squareup/okhttp/Route:getAddress	()Lcom/squareup/okhttp/Address;
-    //   89: aload_1
-    //   90: invokevirtual 212	com/squareup/okhttp/Address:equals	(Ljava/lang/Object;)Z
-    //   93: ifeq -73 -> 20
-    //   96: aload 4
-    //   98: invokevirtual 215	com/squareup/okhttp/Connection:isAlive	()Z
-    //   101: ifeq -81 -> 20
-    //   104: invokestatic 219	java/lang/System:nanoTime	()J
-    //   107: aload 4
-    //   109: invokevirtual 222	com/squareup/okhttp/Connection:getIdleStartTimeNs	()J
-    //   112: lsub
-    //   113: aload_0
-    //   114: getfield 110	com/squareup/okhttp/ConnectionPool:keepAliveDurationNs	J
-    //   117: lcmp
-    //   118: ifge -98 -> 20
-    //   121: aload 5
-    //   123: invokeinterface 225 1 0
-    //   128: aload 4
-    //   130: invokevirtual 186	com/squareup/okhttp/Connection:isSpdy	()Z
-    //   133: istore_2
-    //   134: iload_2
-    //   135: ifne +14 -> 149
-    //   138: invokestatic 230	com/squareup/okhttp/internal/Platform:get	()Lcom/squareup/okhttp/internal/Platform;
-    //   141: aload 4
-    //   143: invokevirtual 234	com/squareup/okhttp/Connection:getSocket	()Ljava/net/Socket;
-    //   146: invokevirtual 238	com/squareup/okhttp/internal/Platform:tagSocket	(Ljava/net/Socket;)V
-    //   149: aload 4
-    //   151: astore_1
-    //   152: goto -120 -> 32
-    //   155: astore 6
-    //   157: aload 4
-    //   159: invokestatic 167	com/squareup/okhttp/internal/Util:closeQuietly	(Ljava/io/Closeable;)V
-    //   162: invokestatic 230	com/squareup/okhttp/internal/Platform:get	()Lcom/squareup/okhttp/internal/Platform;
-    //   165: new 240	java/lang/StringBuilder
-    //   168: dup
-    //   169: ldc -14
-    //   171: invokespecial 245	java/lang/StringBuilder:<init>	(Ljava/lang/String;)V
-    //   174: aload 6
-    //   176: invokevirtual 249	java/lang/StringBuilder:append	(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-    //   179: invokevirtual 253	java/lang/StringBuilder:toString	()Ljava/lang/String;
-    //   182: invokevirtual 256	com/squareup/okhttp/internal/Platform:logW	(Ljava/lang/String;)V
-    //   185: goto -165 -> 20
-    //   188: astore_1
-    //   189: aload_0
-    //   190: monitorexit
-    //   191: aload_1
-    //   192: athrow
+    //   3: astore 4
+    //   5: aload_0
+    //   6: getfield 73	com/squareup/okhttp/ConnectionPool:connections	Ljava/util/LinkedList;
+    //   9: aload_0
+    //   10: getfield 73	com/squareup/okhttp/ConnectionPool:connections	Ljava/util/LinkedList;
+    //   13: invokevirtual 174	java/util/LinkedList:size	()I
+    //   16: invokevirtual 178	java/util/LinkedList:listIterator	(I)Ljava/util/ListIterator;
+    //   19: astore 5
+    //   21: aload 4
+    //   23: astore_3
+    //   24: aload 5
+    //   26: invokeinterface 183 1 0
+    //   31: ifeq +77 -> 108
+    //   34: aload 5
+    //   36: invokeinterface 186 1 0
+    //   41: checkcast 163	com/squareup/okhttp/Connection
+    //   44: astore_3
+    //   45: aload_3
+    //   46: invokevirtual 190	com/squareup/okhttp/Connection:getRoute	()Lcom/squareup/okhttp/Route;
+    //   49: invokevirtual 196	com/squareup/okhttp/Route:getAddress	()Lcom/squareup/okhttp/Address;
+    //   52: aload_1
+    //   53: invokevirtual 202	com/squareup/okhttp/Address:equals	(Ljava/lang/Object;)Z
+    //   56: ifeq -35 -> 21
+    //   59: aload_3
+    //   60: invokevirtual 205	com/squareup/okhttp/Connection:isAlive	()Z
+    //   63: ifeq -42 -> 21
+    //   66: invokestatic 209	java/lang/System:nanoTime	()J
+    //   69: aload_3
+    //   70: invokevirtual 212	com/squareup/okhttp/Connection:getIdleStartTimeNs	()J
+    //   73: lsub
+    //   74: aload_0
+    //   75: getfield 110	com/squareup/okhttp/ConnectionPool:keepAliveDurationNs	J
+    //   78: lcmp
+    //   79: ifge -58 -> 21
+    //   82: aload 5
+    //   84: invokeinterface 215 1 0
+    //   89: aload_3
+    //   90: invokevirtual 218	com/squareup/okhttp/Connection:isSpdy	()Z
+    //   93: istore_2
+    //   94: iload_2
+    //   95: ifne +13 -> 108
+    //   98: invokestatic 223	com/squareup/okhttp/internal/Platform:get	()Lcom/squareup/okhttp/internal/Platform;
+    //   101: aload_3
+    //   102: invokevirtual 227	com/squareup/okhttp/Connection:getSocket	()Ljava/net/Socket;
+    //   105: invokevirtual 231	com/squareup/okhttp/internal/Platform:tagSocket	(Ljava/net/Socket;)V
+    //   108: aload_3
+    //   109: ifnull +18 -> 127
+    //   112: aload_3
+    //   113: invokevirtual 218	com/squareup/okhttp/Connection:isSpdy	()Z
+    //   116: ifeq +11 -> 127
+    //   119: aload_0
+    //   120: getfield 73	com/squareup/okhttp/ConnectionPool:connections	Ljava/util/LinkedList;
+    //   123: aload_3
+    //   124: invokevirtual 235	java/util/LinkedList:addFirst	(Ljava/lang/Object;)V
+    //   127: aload_0
+    //   128: getfield 99	com/squareup/okhttp/ConnectionPool:executorService	Ljava/util/concurrent/ExecutorService;
+    //   131: aload_0
+    //   132: getfield 104	com/squareup/okhttp/ConnectionPool:connectionsCleanupCallable	Ljava/util/concurrent/Callable;
+    //   135: invokeinterface 238 2 0
+    //   140: pop
+    //   141: aload_0
+    //   142: monitorexit
+    //   143: aload_3
+    //   144: areturn
+    //   145: astore 6
+    //   147: aload_3
+    //   148: invokestatic 167	com/squareup/okhttp/internal/Util:closeQuietly	(Ljava/io/Closeable;)V
+    //   151: invokestatic 223	com/squareup/okhttp/internal/Platform:get	()Lcom/squareup/okhttp/internal/Platform;
+    //   154: new 240	java/lang/StringBuilder
+    //   157: dup
+    //   158: invokespecial 241	java/lang/StringBuilder:<init>	()V
+    //   161: ldc -13
+    //   163: invokevirtual 247	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   166: aload 6
+    //   168: invokevirtual 250	java/lang/StringBuilder:append	(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    //   171: invokevirtual 254	java/lang/StringBuilder:toString	()Ljava/lang/String;
+    //   174: invokevirtual 258	com/squareup/okhttp/internal/Platform:logW	(Ljava/lang/String;)V
+    //   177: goto -156 -> 21
+    //   180: astore_1
+    //   181: aload_0
+    //   182: monitorexit
+    //   183: aload_1
+    //   184: athrow
     // Local variable table:
     //   start	length	slot	name	signature
-    //   0	193	0	this	ConnectionPool
-    //   0	193	1	paramAddress	Address
-    //   133	2	2	bool	boolean
-    //   3	28	3	localObject	Object
-    //   79	79	4	localConnection	Connection
-    //   18	104	5	localListIterator	ListIterator
-    //   155	20	6	localSocketException	java.net.SocketException
+    //   0	185	0	this	ConnectionPool
+    //   0	185	1	paramAddress	Address
+    //   93	2	2	bool	boolean
+    //   23	125	3	localObject1	Object
+    //   3	19	4	localObject2	Object
+    //   19	64	5	localListIterator	ListIterator
+    //   145	22	6	localSocketException	java.net.SocketException
     // Exception table:
     //   from	to	target	type
-    //   138	149	155	java/net/SocketException
-    //   4	20	188	finally
-    //   20	30	188	finally
-    //   36	51	188	finally
-    //   51	65	188	finally
-    //   69	134	188	finally
-    //   138	149	188	finally
-    //   157	185	188	finally
+    //   98	108	145	java/net/SocketException
+    //   5	21	180	finally
+    //   24	94	180	finally
+    //   98	108	180	finally
+    //   112	127	180	finally
+    //   127	141	180	finally
+    //   147	177	180	finally
   }
   
   public int getConnectionCount()
@@ -280,108 +270,40 @@ public class ConnectionPool
     finally {}
   }
   
-  /* Error */
   public int getHttpConnectionCount()
   {
-    // Byte code:
-    //   0: aload_0
-    //   1: monitorenter
-    //   2: iconst_0
-    //   3: istore_1
-    //   4: aload_0
-    //   5: getfield 73	com/squareup/okhttp/ConnectionPool:connections	Ljava/util/LinkedList;
-    //   8: invokevirtual 265	java/util/LinkedList:iterator	()Ljava/util/Iterator;
-    //   11: astore_3
-    //   12: aload_3
-    //   13: invokeinterface 158 1 0
-    //   18: istore_2
-    //   19: iload_2
-    //   20: ifne +7 -> 27
-    //   23: aload_0
-    //   24: monitorexit
-    //   25: iload_1
-    //   26: ireturn
-    //   27: aload_3
-    //   28: invokeinterface 161 1 0
-    //   33: checkcast 163	com/squareup/okhttp/Connection
-    //   36: invokevirtual 186	com/squareup/okhttp/Connection:isSpdy	()Z
-    //   39: istore_2
-    //   40: iload_2
-    //   41: ifne -29 -> 12
-    //   44: iload_1
-    //   45: iconst_1
-    //   46: iadd
-    //   47: istore_1
-    //   48: goto -36 -> 12
-    //   51: astore_3
-    //   52: aload_0
-    //   53: monitorexit
-    //   54: aload_3
-    //   55: athrow
-    // Local variable table:
-    //   start	length	slot	name	signature
-    //   0	56	0	this	ConnectionPool
-    //   3	45	1	i	int
-    //   18	23	2	bool	boolean
-    //   11	17	3	localIterator	Iterator
-    //   51	4	3	localObject	Object
-    // Exception table:
-    //   from	to	target	type
-    //   4	12	51	finally
-    //   12	19	51	finally
-    //   27	40	51	finally
+    int i = 0;
+    try
+    {
+      Iterator localIterator = connections.iterator();
+      while (localIterator.hasNext())
+      {
+        boolean bool = ((Connection)localIterator.next()).isSpdy();
+        if (!bool) {
+          i += 1;
+        }
+      }
+      return i;
+    }
+    finally {}
   }
   
-  /* Error */
   public int getSpdyConnectionCount()
   {
-    // Byte code:
-    //   0: aload_0
-    //   1: monitorenter
-    //   2: iconst_0
-    //   3: istore_1
-    //   4: aload_0
-    //   5: getfield 73	com/squareup/okhttp/ConnectionPool:connections	Ljava/util/LinkedList;
-    //   8: invokevirtual 265	java/util/LinkedList:iterator	()Ljava/util/Iterator;
-    //   11: astore_3
-    //   12: aload_3
-    //   13: invokeinterface 158 1 0
-    //   18: istore_2
-    //   19: iload_2
-    //   20: ifne +7 -> 27
-    //   23: aload_0
-    //   24: monitorexit
-    //   25: iload_1
-    //   26: ireturn
-    //   27: aload_3
-    //   28: invokeinterface 161 1 0
-    //   33: checkcast 163	com/squareup/okhttp/Connection
-    //   36: invokevirtual 186	com/squareup/okhttp/Connection:isSpdy	()Z
-    //   39: istore_2
-    //   40: iload_2
-    //   41: ifeq -29 -> 12
-    //   44: iload_1
-    //   45: iconst_1
-    //   46: iadd
-    //   47: istore_1
-    //   48: goto -36 -> 12
-    //   51: astore_3
-    //   52: aload_0
-    //   53: monitorexit
-    //   54: aload_3
-    //   55: athrow
-    // Local variable table:
-    //   start	length	slot	name	signature
-    //   0	56	0	this	ConnectionPool
-    //   3	45	1	i	int
-    //   18	23	2	bool	boolean
-    //   11	17	3	localIterator	Iterator
-    //   51	4	3	localObject	Object
-    // Exception table:
-    //   from	to	target	type
-    //   4	12	51	finally
-    //   12	19	51	finally
-    //   27	40	51	finally
+    int i = 0;
+    try
+    {
+      Iterator localIterator = connections.iterator();
+      while (localIterator.hasNext())
+      {
+        boolean bool = ((Connection)localIterator.next()).isSpdy();
+        if (bool) {
+          i += 1;
+        }
+      }
+      return i;
+    }
+    finally {}
   }
   
   public void maybeShare(Connection paramConnection)
@@ -404,64 +326,65 @@ public class ConnectionPool
   {
     // Byte code:
     //   0: aload_1
-    //   1: invokevirtual 186	com/squareup/okhttp/Connection:isSpdy	()Z
+    //   1: invokevirtual 218	com/squareup/okhttp/Connection:isSpdy	()Z
     //   4: ifeq +4 -> 8
     //   7: return
     //   8: aload_1
-    //   9: invokevirtual 215	com/squareup/okhttp/Connection:isAlive	()Z
+    //   9: invokevirtual 205	com/squareup/okhttp/Connection:isAlive	()Z
     //   12: ifne +8 -> 20
     //   15: aload_1
     //   16: invokestatic 167	com/squareup/okhttp/internal/Util:closeQuietly	(Ljava/io/Closeable;)V
     //   19: return
-    //   20: invokestatic 230	com/squareup/okhttp/internal/Platform:get	()Lcom/squareup/okhttp/internal/Platform;
+    //   20: invokestatic 223	com/squareup/okhttp/internal/Platform:get	()Lcom/squareup/okhttp/internal/Platform;
     //   23: aload_1
-    //   24: invokevirtual 234	com/squareup/okhttp/Connection:getSocket	()Ljava/net/Socket;
-    //   27: invokevirtual 272	com/squareup/okhttp/internal/Platform:untagSocket	(Ljava/net/Socket;)V
+    //   24: invokevirtual 227	com/squareup/okhttp/Connection:getSocket	()Ljava/net/Socket;
+    //   27: invokevirtual 274	com/squareup/okhttp/internal/Platform:untagSocket	(Ljava/net/Socket;)V
     //   30: aload_0
     //   31: monitorenter
     //   32: aload_0
     //   33: getfield 73	com/squareup/okhttp/ConnectionPool:connections	Ljava/util/LinkedList;
     //   36: aload_1
-    //   37: invokevirtual 190	java/util/LinkedList:addFirst	(Ljava/lang/Object;)V
+    //   37: invokevirtual 235	java/util/LinkedList:addFirst	(Ljava/lang/Object;)V
     //   40: aload_1
-    //   41: invokevirtual 275	com/squareup/okhttp/Connection:resetIdleStartTime	()V
+    //   41: invokevirtual 277	com/squareup/okhttp/Connection:resetIdleStartTime	()V
     //   44: aload_0
     //   45: monitorexit
     //   46: aload_0
     //   47: getfield 99	com/squareup/okhttp/ConnectionPool:executorService	Ljava/util/concurrent/ExecutorService;
     //   50: aload_0
     //   51: getfield 104	com/squareup/okhttp/ConnectionPool:connectionsCleanupCallable	Ljava/util/concurrent/Callable;
-    //   54: invokeinterface 193 2 0
+    //   54: invokeinterface 238 2 0
     //   59: pop
     //   60: return
     //   61: astore_2
-    //   62: invokestatic 230	com/squareup/okhttp/internal/Platform:get	()Lcom/squareup/okhttp/internal/Platform;
+    //   62: invokestatic 223	com/squareup/okhttp/internal/Platform:get	()Lcom/squareup/okhttp/internal/Platform;
     //   65: new 240	java/lang/StringBuilder
     //   68: dup
-    //   69: ldc_w 277
-    //   72: invokespecial 245	java/lang/StringBuilder:<init>	(Ljava/lang/String;)V
-    //   75: aload_2
-    //   76: invokevirtual 249	java/lang/StringBuilder:append	(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-    //   79: invokevirtual 253	java/lang/StringBuilder:toString	()Ljava/lang/String;
-    //   82: invokevirtual 256	com/squareup/okhttp/internal/Platform:logW	(Ljava/lang/String;)V
-    //   85: aload_1
-    //   86: invokestatic 167	com/squareup/okhttp/internal/Util:closeQuietly	(Ljava/io/Closeable;)V
-    //   89: return
-    //   90: astore_1
-    //   91: aload_0
-    //   92: monitorexit
-    //   93: aload_1
-    //   94: athrow
+    //   69: invokespecial 241	java/lang/StringBuilder:<init>	()V
+    //   72: ldc_w 279
+    //   75: invokevirtual 247	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    //   78: aload_2
+    //   79: invokevirtual 250	java/lang/StringBuilder:append	(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    //   82: invokevirtual 254	java/lang/StringBuilder:toString	()Ljava/lang/String;
+    //   85: invokevirtual 258	com/squareup/okhttp/internal/Platform:logW	(Ljava/lang/String;)V
+    //   88: aload_1
+    //   89: invokestatic 167	com/squareup/okhttp/internal/Util:closeQuietly	(Ljava/io/Closeable;)V
+    //   92: return
+    //   93: astore_1
+    //   94: aload_0
+    //   95: monitorexit
+    //   96: aload_1
+    //   97: athrow
     // Local variable table:
     //   start	length	slot	name	signature
-    //   0	95	0	this	ConnectionPool
-    //   0	95	1	paramConnection	Connection
-    //   61	15	2	localSocketException	java.net.SocketException
+    //   0	98	0	this	ConnectionPool
+    //   0	98	1	paramConnection	Connection
+    //   61	18	2	localSocketException	java.net.SocketException
     // Exception table:
     //   from	to	target	type
     //   20	30	61	java/net/SocketException
-    //   32	46	90	finally
-    //   91	93	90	finally
+    //   32	46	93	finally
+    //   94	96	93	finally
   }
 }
 

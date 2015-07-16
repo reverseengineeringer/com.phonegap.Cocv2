@@ -37,35 +37,38 @@ public final class MediaType
     int i = ((Matcher)localObject2).end();
     for (;;)
     {
-      if (i >= paramString.length()) {
-        return new MediaType(paramString, str1, str2, (String)localObject1);
-      }
-      localMatcher.region(i, paramString.length());
-      if (!localMatcher.lookingAt()) {
-        break;
-      }
-      String str3 = localMatcher.group(1);
-      localObject2 = localObject1;
-      if (str3 != null)
+      if (i < paramString.length())
       {
-        if (str3.equalsIgnoreCase("charset")) {
-          break label138;
+        localMatcher.region(i, paramString.length());
+        if (!localMatcher.lookingAt()) {
+          break;
         }
+        String str3 = localMatcher.group(1);
         localObject2 = localObject1;
+        if (str3 != null)
+        {
+          if (!str3.equalsIgnoreCase("charset")) {
+            localObject2 = localObject1;
+          }
+        }
+        else
+        {
+          i = localMatcher.end();
+          localObject1 = localObject2;
+          continue;
+        }
+        if (localObject1 != null) {
+          throw new IllegalArgumentException("Multiple charsets: " + paramString);
+        }
+        if (localMatcher.group(2) != null) {}
+        for (localObject1 = localMatcher.group(2);; localObject1 = localMatcher.group(3))
+        {
+          localObject2 = localObject1;
+          break;
+        }
       }
-      i = localMatcher.end();
-      localObject1 = localObject2;
     }
-    label138:
-    if (localObject1 != null) {
-      throw new IllegalArgumentException("Multiple charsets: " + paramString);
-    }
-    if (localMatcher.group(2) != null) {}
-    for (localObject1 = localMatcher.group(2);; localObject1 = localMatcher.group(3))
-    {
-      localObject2 = localObject1;
-      break;
-    }
+    return new MediaType(paramString, str1, str2, (String)localObject1);
   }
   
   public Charset charset()

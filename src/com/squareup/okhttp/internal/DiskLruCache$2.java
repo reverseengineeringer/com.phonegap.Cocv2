@@ -3,7 +3,7 @@ package com.squareup.okhttp.internal;
 import java.io.IOException;
 import java.io.OutputStream;
 
-class DiskLruCache$2
+final class DiskLruCache$2
   extends OutputStream
 {
   public void write(int paramInt)

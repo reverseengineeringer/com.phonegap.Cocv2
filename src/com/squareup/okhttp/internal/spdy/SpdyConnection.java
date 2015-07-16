@@ -61,10 +61,10 @@ public final class SpdyConnection
       i = 1;
       nextStreamId = i;
       if (!client) {
-        break label170;
+        break label173;
       }
     }
-    label170:
+    label173:
     for (int i = j;; i = 2)
     {
       nextPingId = i;
@@ -76,180 +76,107 @@ public final class SpdyConnection
     }
   }
   
-  /* Error */
   private void close(ErrorCode paramErrorCode1, ErrorCode paramErrorCode2)
     throws IOException
   {
-    // Byte code:
-    //   0: getstatic 59	com/squareup/okhttp/internal/spdy/SpdyConnection:$assertionsDisabled	Z
-    //   3: ifne +18 -> 21
-    //   6: aload_0
-    //   7: invokestatic 236	java/lang/Thread:holdsLock	(Ljava/lang/Object;)Z
-    //   10: ifeq +11 -> 21
-    //   13: new 238	java/lang/AssertionError
-    //   16: dup
-    //   17: invokespecial 239	java/lang/AssertionError:<init>	()V
-    //   20: athrow
-    //   21: aconst_null
-    //   22: astore 5
-    //   24: aload_0
-    //   25: aload_1
-    //   26: invokevirtual 242	com/squareup/okhttp/internal/spdy/SpdyConnection:shutdown	(Lcom/squareup/okhttp/internal/spdy/ErrorCode;)V
-    //   29: aload 5
-    //   31: astore_1
-    //   32: aconst_null
-    //   33: astore 6
-    //   35: aconst_null
-    //   36: astore 7
-    //   38: aload_0
-    //   39: monitorenter
-    //   40: aload_0
-    //   41: getfield 96	com/squareup/okhttp/internal/spdy/SpdyConnection:streams	Ljava/util/Map;
-    //   44: invokeinterface 247 1 0
-    //   49: ifne +48 -> 97
-    //   52: aload_0
-    //   53: getfield 96	com/squareup/okhttp/internal/spdy/SpdyConnection:streams	Ljava/util/Map;
-    //   56: invokeinterface 251 1 0
-    //   61: aload_0
-    //   62: getfield 96	com/squareup/okhttp/internal/spdy/SpdyConnection:streams	Ljava/util/Map;
-    //   65: invokeinterface 255 1 0
-    //   70: anewarray 257	com/squareup/okhttp/internal/spdy/SpdyStream
-    //   73: invokeinterface 263 2 0
-    //   78: checkcast 265	[Lcom/squareup/okhttp/internal/spdy/SpdyStream;
-    //   81: astore 6
-    //   83: aload_0
-    //   84: getfield 96	com/squareup/okhttp/internal/spdy/SpdyConnection:streams	Ljava/util/Map;
-    //   87: invokeinterface 268 1 0
-    //   92: aload_0
-    //   93: iconst_0
-    //   94: invokespecial 272	com/squareup/okhttp/internal/spdy/SpdyConnection:setIdle	(Z)V
-    //   97: aload_0
-    //   98: getfield 274	com/squareup/okhttp/internal/spdy/SpdyConnection:pings	Ljava/util/Map;
-    //   101: ifnull +39 -> 140
-    //   104: aload_0
-    //   105: getfield 274	com/squareup/okhttp/internal/spdy/SpdyConnection:pings	Ljava/util/Map;
-    //   108: invokeinterface 251 1 0
-    //   113: aload_0
-    //   114: getfield 274	com/squareup/okhttp/internal/spdy/SpdyConnection:pings	Ljava/util/Map;
-    //   117: invokeinterface 255 1 0
-    //   122: anewarray 276	com/squareup/okhttp/internal/spdy/Ping
-    //   125: invokeinterface 263 2 0
-    //   130: checkcast 278	[Lcom/squareup/okhttp/internal/spdy/Ping;
-    //   133: astore 7
-    //   135: aload_0
-    //   136: aconst_null
-    //   137: putfield 274	com/squareup/okhttp/internal/spdy/SpdyConnection:pings	Ljava/util/Map;
-    //   140: aload_0
-    //   141: monitorexit
-    //   142: aload_1
-    //   143: astore 5
-    //   145: aload 6
-    //   147: ifnull +19 -> 166
-    //   150: aload 6
-    //   152: arraylength
-    //   153: istore 4
-    //   155: iconst_0
-    //   156: istore_3
-    //   157: iload_3
-    //   158: iload 4
-    //   160: if_icmplt +60 -> 220
-    //   163: aload_1
-    //   164: astore 5
-    //   166: aload 7
-    //   168: ifnull +16 -> 184
-    //   171: aload 7
-    //   173: arraylength
-    //   174: istore 4
-    //   176: iconst_0
-    //   177: istore_3
-    //   178: iload_3
-    //   179: iload 4
-    //   181: if_icmplt +80 -> 261
-    //   184: aload_0
-    //   185: getfield 134	com/squareup/okhttp/internal/spdy/SpdyConnection:frameReader	Lcom/squareup/okhttp/internal/spdy/FrameReader;
-    //   188: invokeinterface 282 1 0
-    //   193: aload_0
-    //   194: getfield 144	com/squareup/okhttp/internal/spdy/SpdyConnection:frameWriter	Lcom/squareup/okhttp/internal/spdy/FrameWriter;
-    //   197: invokeinterface 285 1 0
-    //   202: aload 5
-    //   204: astore_1
-    //   205: aload_1
-    //   206: ifnull +88 -> 294
-    //   209: aload_1
-    //   210: athrow
-    //   211: astore_1
-    //   212: goto -180 -> 32
-    //   215: astore_1
-    //   216: aload_0
-    //   217: monitorexit
-    //   218: aload_1
-    //   219: athrow
-    //   220: aload 6
-    //   222: iload_3
-    //   223: aaload
-    //   224: astore 5
-    //   226: aload 5
-    //   228: aload_2
-    //   229: invokevirtual 287	com/squareup/okhttp/internal/spdy/SpdyStream:close	(Lcom/squareup/okhttp/internal/spdy/ErrorCode;)V
-    //   232: aload_1
-    //   233: astore 5
-    //   235: iload_3
-    //   236: iconst_1
-    //   237: iadd
-    //   238: istore_3
-    //   239: aload 5
-    //   241: astore_1
-    //   242: goto -85 -> 157
-    //   245: astore 8
-    //   247: aload_1
-    //   248: astore 5
-    //   250: aload_1
-    //   251: ifnull -16 -> 235
-    //   254: aload 8
-    //   256: astore 5
-    //   258: goto -23 -> 235
-    //   261: aload 7
-    //   263: iload_3
-    //   264: aaload
-    //   265: invokevirtual 290	com/squareup/okhttp/internal/spdy/Ping:cancel	()V
-    //   268: iload_3
-    //   269: iconst_1
-    //   270: iadd
-    //   271: istore_3
-    //   272: goto -94 -> 178
-    //   275: astore 5
-    //   277: goto -84 -> 193
-    //   280: astore_2
-    //   281: aload 5
-    //   283: astore_1
-    //   284: aload 5
-    //   286: ifnonnull -81 -> 205
-    //   289: aload_2
-    //   290: astore_1
-    //   291: goto -86 -> 205
-    //   294: return
-    // Local variable table:
-    //   start	length	slot	name	signature
-    //   0	295	0	this	SpdyConnection
-    //   0	295	1	paramErrorCode1	ErrorCode
-    //   0	295	2	paramErrorCode2	ErrorCode
-    //   156	116	3	i	int
-    //   153	29	4	j	int
-    //   22	235	5	localObject	Object
-    //   275	10	5	localIOException1	IOException
-    //   33	188	6	arrayOfSpdyStream	SpdyStream[]
-    //   36	226	7	arrayOfPing	Ping[]
-    //   245	10	8	localIOException2	IOException
-    // Exception table:
-    //   from	to	target	type
-    //   24	29	211	java/io/IOException
-    //   40	97	215	finally
-    //   97	140	215	finally
-    //   140	142	215	finally
-    //   216	218	215	finally
-    //   226	232	245	java/io/IOException
-    //   184	193	275	java/io/IOException
-    //   193	202	280	java/io/IOException
+    assert (!Thread.holdsLock(this));
+    Object localObject = null;
+    try
+    {
+      shutdown(paramErrorCode1);
+      paramErrorCode1 = (ErrorCode)localObject;
+    }
+    catch (IOException paramErrorCode1)
+    {
+      SpdyStream[] arrayOfSpdyStream;
+      for (;;) {}
+    }
+    arrayOfSpdyStream = null;
+    Ping[] arrayOfPing = null;
+    int j;
+    int i;
+    for (;;)
+    {
+      try
+      {
+        if (!streams.isEmpty())
+        {
+          arrayOfSpdyStream = (SpdyStream[])streams.values().toArray(new SpdyStream[streams.size()]);
+          streams.clear();
+          setIdle(false);
+        }
+        if (pings != null)
+        {
+          arrayOfPing = (Ping[])pings.values().toArray(new Ping[pings.size()]);
+          pings = null;
+        }
+        localObject = paramErrorCode1;
+        if (arrayOfSpdyStream == null) {
+          break label216;
+        }
+        j = arrayOfSpdyStream.length;
+        i = 0;
+        localObject = paramErrorCode1;
+        if (i >= j) {
+          break label216;
+        }
+        localObject = arrayOfSpdyStream[i];
+      }
+      finally {}
+      try
+      {
+        ((SpdyStream)localObject).close(paramErrorCode2);
+        localObject = paramErrorCode1;
+      }
+      catch (IOException localIOException2)
+      {
+        localObject = paramErrorCode1;
+        if (paramErrorCode1 == null) {
+          continue;
+        }
+        localObject = localIOException2;
+        continue;
+      }
+      i += 1;
+      paramErrorCode1 = (ErrorCode)localObject;
+    }
+    label216:
+    if (arrayOfPing != null)
+    {
+      j = arrayOfPing.length;
+      i = 0;
+      while (i < j)
+      {
+        arrayOfPing[i].cancel();
+        i += 1;
+      }
+    }
+    try
+    {
+      frameReader.close();
+      try
+      {
+        frameWriter.close();
+        paramErrorCode1 = (ErrorCode)localObject;
+      }
+      catch (IOException paramErrorCode2)
+      {
+        for (;;)
+        {
+          paramErrorCode1 = localIOException1;
+          if (localIOException1 == null) {
+            paramErrorCode1 = paramErrorCode2;
+          }
+        }
+      }
+      if (paramErrorCode1 != null) {
+        throw paramErrorCode1;
+      }
+    }
+    catch (IOException localIOException1)
+    {
+      for (;;) {}
+    }
   }
   
   private SpdyStream getStream(int paramInt)
@@ -273,14 +200,14 @@ public final class SpdyConnection
     //   0: aload_0
     //   1: monitorenter
     //   2: aload_0
-    //   3: getfield 274	com/squareup/okhttp/internal/spdy/SpdyConnection:pings	Ljava/util/Map;
+    //   3: getfield 277	com/squareup/okhttp/internal/spdy/SpdyConnection:pings	Ljava/util/Map;
     //   6: ifnull +24 -> 30
     //   9: aload_0
-    //   10: getfield 274	com/squareup/okhttp/internal/spdy/SpdyConnection:pings	Ljava/util/Map;
+    //   10: getfield 277	com/squareup/okhttp/internal/spdy/SpdyConnection:pings	Ljava/util/Map;
     //   13: iload_1
-    //   14: invokestatic 296	java/lang/Integer:valueOf	(I)Ljava/lang/Integer;
-    //   17: invokeinterface 303 2 0
-    //   22: checkcast 276	com/squareup/okhttp/internal/spdy/Ping
+    //   14: invokestatic 299	java/lang/Integer:valueOf	(I)Ljava/lang/Integer;
+    //   17: invokeinterface 306 2 0
+    //   22: checkcast 279	com/squareup/okhttp/internal/spdy/Ping
     //   25: astore_2
     //   26: aload_0
     //   27: monitorexit
@@ -387,7 +314,7 @@ public final class SpdyConnection
     //   3: getfield 104	com/squareup/okhttp/internal/spdy/SpdyConnection:idleStartTimeNs	J
     //   6: lstore_1
     //   7: lload_1
-    //   8: ldc2_w 304
+    //   8: ldc2_w 307
     //   11: lcmp
     //   12: ifeq +9 -> 21
     //   15: iconst_1
@@ -418,15 +345,15 @@ public final class SpdyConnection
   public SpdyStream newStream(List<String> paramList, boolean paramBoolean1, boolean paramBoolean2)
     throws IOException
   {
-    if (paramBoolean1)
+    if (!paramBoolean1)
     {
-      paramBoolean1 = false;
-      if (!paramBoolean2) {
+      paramBoolean1 = true;
+      if (paramBoolean2) {
         break label57;
       }
     }
     label57:
-    for (paramBoolean2 = false;; paramBoolean2 = true)
+    for (paramBoolean2 = true;; paramBoolean2 = false)
     {
       synchronized (frameWriter)
       {
@@ -439,7 +366,7 @@ public final class SpdyConnection
         }
         finally {}
       }
-      paramBoolean1 = true;
+      paramBoolean1 = false;
       break;
     }
     label62:
@@ -669,18 +596,17 @@ public final class SpdyConnection
     {
       synchronized (SpdyConnection.this)
       {
-        shutdown = true;
+        SpdyConnection.access$1202(SpdyConnection.this, true);
         Iterator localIterator = streams.entrySet().iterator();
-        Map.Entry localEntry;
-        do
+        while (localIterator.hasNext())
         {
-          if (!localIterator.hasNext()) {
-            return;
+          Map.Entry localEntry = (Map.Entry)localIterator.next();
+          if ((((Integer)localEntry.getKey()).intValue() > paramInt) && (((SpdyStream)localEntry.getValue()).isLocallyInitiated()))
+          {
+            ((SpdyStream)localEntry.getValue()).receiveRstStream(ErrorCode.REFUSED_STREAM);
+            localIterator.remove();
           }
-          localEntry = (Map.Entry)localIterator.next();
-        } while ((((Integer)localEntry.getKey()).intValue() <= paramInt) || (!((SpdyStream)localEntry.getValue()).isLocallyInitiated()));
-        ((SpdyStream)localEntry.getValue()).receiveRstStream(ErrorCode.REFUSED_STREAM);
-        localIterator.remove();
+        }
       }
     }
     
@@ -694,7 +620,7 @@ public final class SpdyConnection
         }
         localSpdyStream = SpdyConnection.this.getStream(paramInt1);
         if (localSpdyStream != null) {
-          break label203;
+          break label204;
         }
         if (paramHeadersMode.failIfStreamAbsent())
         {
@@ -709,7 +635,7 @@ public final class SpdyConnection
         return;
       }
       paramList = new SpdyStream(paramInt1, SpdyConnection.this, paramBoolean1, paramBoolean2, paramInt3, paramList, settings);
-      lastGoodStreamId = paramInt1;
+      SpdyConnection.access$1302(SpdyConnection.this, paramInt1);
       streams.put(Integer.valueOf(paramInt1), paramList);
       SpdyConnection.executor.submit(new NamedRunnable("OkHttp Callback %s stream %d", new Object[] { hostName, Integer.valueOf(paramInt1) })
       {
@@ -727,7 +653,7 @@ public final class SpdyConnection
         }
       });
       return;
-      label203:
+      label204:
       if (paramHeadersMode.failIfStreamPresent())
       {
         localSpdyStream.closeLater(ErrorCode.PROTOCOL_ERROR);
@@ -765,134 +691,97 @@ public final class SpdyConnection
       }
     }
     
-    /* Error */
     public void run()
     {
-      // Byte code:
-      //   0: getstatic 218	com/squareup/okhttp/internal/spdy/ErrorCode:INTERNAL_ERROR	Lcom/squareup/okhttp/internal/spdy/ErrorCode;
-      //   3: astore_3
-      //   4: getstatic 218	com/squareup/okhttp/internal/spdy/ErrorCode:INTERNAL_ERROR	Lcom/squareup/okhttp/internal/spdy/ErrorCode;
-      //   7: astore 4
-      //   9: aload_3
-      //   10: astore_2
-      //   11: aload_3
-      //   12: astore_1
-      //   13: aload_0
-      //   14: getfield 19	com/squareup/okhttp/internal/spdy/SpdyConnection$Reader:this$0	Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
-      //   17: invokestatic 222	com/squareup/okhttp/internal/spdy/SpdyConnection:access$2	(Lcom/squareup/okhttp/internal/spdy/SpdyConnection;)Lcom/squareup/okhttp/internal/spdy/FrameReader;
-      //   20: aload_0
-      //   21: invokeinterface 228 2 0
-      //   26: ifne -17 -> 9
-      //   29: aload_3
-      //   30: astore_2
-      //   31: aload_3
-      //   32: astore_1
-      //   33: getstatic 231	com/squareup/okhttp/internal/spdy/ErrorCode:NO_ERROR	Lcom/squareup/okhttp/internal/spdy/ErrorCode;
-      //   36: astore_3
-      //   37: aload_3
-      //   38: astore_2
-      //   39: aload_3
-      //   40: astore_1
-      //   41: getstatic 234	com/squareup/okhttp/internal/spdy/ErrorCode:CANCEL	Lcom/squareup/okhttp/internal/spdy/ErrorCode;
-      //   44: astore 5
-      //   46: aload_0
-      //   47: getfield 19	com/squareup/okhttp/internal/spdy/SpdyConnection$Reader:this$0	Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
-      //   50: aload_3
-      //   51: aload 5
-      //   53: invokestatic 237	com/squareup/okhttp/internal/spdy/SpdyConnection:access$1	(Lcom/squareup/okhttp/internal/spdy/SpdyConnection;Lcom/squareup/okhttp/internal/spdy/ErrorCode;Lcom/squareup/okhttp/internal/spdy/ErrorCode;)V
-      //   56: return
-      //   57: astore_1
-      //   58: aload_2
-      //   59: astore_1
-      //   60: getstatic 182	com/squareup/okhttp/internal/spdy/ErrorCode:PROTOCOL_ERROR	Lcom/squareup/okhttp/internal/spdy/ErrorCode;
-      //   63: astore_2
-      //   64: aload_2
-      //   65: astore_1
-      //   66: getstatic 182	com/squareup/okhttp/internal/spdy/ErrorCode:PROTOCOL_ERROR	Lcom/squareup/okhttp/internal/spdy/ErrorCode;
-      //   69: astore_3
-      //   70: aload_0
-      //   71: getfield 19	com/squareup/okhttp/internal/spdy/SpdyConnection$Reader:this$0	Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
-      //   74: aload_2
-      //   75: aload_3
-      //   76: invokestatic 237	com/squareup/okhttp/internal/spdy/SpdyConnection:access$1	(Lcom/squareup/okhttp/internal/spdy/SpdyConnection;Lcom/squareup/okhttp/internal/spdy/ErrorCode;Lcom/squareup/okhttp/internal/spdy/ErrorCode;)V
-      //   79: return
-      //   80: astore_1
-      //   81: return
-      //   82: astore_2
-      //   83: aload_0
-      //   84: getfield 19	com/squareup/okhttp/internal/spdy/SpdyConnection$Reader:this$0	Lcom/squareup/okhttp/internal/spdy/SpdyConnection;
-      //   87: aload_1
-      //   88: aload 4
-      //   90: invokestatic 237	com/squareup/okhttp/internal/spdy/SpdyConnection:access$1	(Lcom/squareup/okhttp/internal/spdy/SpdyConnection;Lcom/squareup/okhttp/internal/spdy/ErrorCode;Lcom/squareup/okhttp/internal/spdy/ErrorCode;)V
-      //   93: aload_2
-      //   94: athrow
-      //   95: astore_1
-      //   96: return
-      //   97: astore_1
-      //   98: goto -5 -> 93
-      // Local variable table:
-      //   start	length	slot	name	signature
-      //   0	101	0	this	Reader
-      //   12	29	1	localErrorCode1	ErrorCode
-      //   57	1	1	localIOException1	IOException
-      //   59	7	1	localErrorCode2	ErrorCode
-      //   80	8	1	localIOException2	IOException
-      //   95	1	1	localIOException3	IOException
-      //   97	1	1	localIOException4	IOException
-      //   10	65	2	localErrorCode3	ErrorCode
-      //   82	12	2	localObject	Object
-      //   3	73	3	localErrorCode4	ErrorCode
-      //   7	82	4	localErrorCode5	ErrorCode
-      //   44	8	5	localErrorCode6	ErrorCode
-      // Exception table:
-      //   from	to	target	type
-      //   13	29	57	java/io/IOException
-      //   33	37	57	java/io/IOException
-      //   41	46	57	java/io/IOException
-      //   70	79	80	java/io/IOException
-      //   13	29	82	finally
-      //   33	37	82	finally
-      //   41	46	82	finally
-      //   60	64	82	finally
-      //   66	70	82	finally
-      //   46	56	95	java/io/IOException
-      //   83	93	97	java/io/IOException
+      ErrorCode localErrorCode4 = ErrorCode.INTERNAL_ERROR;
+      ErrorCode localErrorCode5 = ErrorCode.INTERNAL_ERROR;
+      for (;;)
+      {
+        ErrorCode localErrorCode3 = localErrorCode4;
+        ErrorCode localErrorCode1 = localErrorCode4;
+        try
+        {
+          if (frameReader.nextFrame(this)) {
+            continue;
+          }
+          localErrorCode3 = localErrorCode4;
+          localErrorCode1 = localErrorCode4;
+          localErrorCode4 = ErrorCode.NO_ERROR;
+          localErrorCode3 = localErrorCode4;
+          localErrorCode1 = localErrorCode4;
+          ErrorCode localErrorCode6 = ErrorCode.CANCEL;
+          ErrorCode localErrorCode2;
+          return;
+        }
+        catch (IOException localIOException1)
+        {
+          localIOException1 = localIOException1;
+          localErrorCode2 = localErrorCode3;
+          localErrorCode3 = ErrorCode.PROTOCOL_ERROR;
+          localErrorCode2 = localErrorCode3;
+          localErrorCode4 = ErrorCode.PROTOCOL_ERROR;
+          try
+          {
+            SpdyConnection.this.close(localErrorCode3, localErrorCode4);
+            return;
+          }
+          catch (IOException localIOException2)
+          {
+            return;
+          }
+        }
+        finally
+        {
+          try
+          {
+            SpdyConnection.this.close(localIOException2, localErrorCode5);
+            throw ((Throwable)localObject);
+          }
+          catch (IOException localIOException3)
+          {
+            for (;;) {}
+          }
+        }
+      }
     }
     
     public void settings(boolean paramBoolean, Settings paramSettings)
     {
       ??? = null;
-      int i;
-      synchronized (SpdyConnection.this)
+      for (;;)
       {
-        if ((settings == null) || (paramBoolean))
+        int i;
+        synchronized (SpdyConnection.this)
         {
-          settings = paramSettings;
-          paramSettings = (Settings)???;
-          if (!streams.isEmpty()) {
-            paramSettings = (SpdyStream[])streams.values().toArray(new SpdyStream[streams.size()]);
-          }
-          if (paramSettings != null)
+          if ((settings == null) || (paramBoolean))
           {
+            settings = paramSettings;
+            paramSettings = (Settings)???;
+            if (!streams.isEmpty()) {
+              paramSettings = (SpdyStream[])streams.values().toArray(new SpdyStream[streams.size()]);
+            }
+            if (paramSettings == null) {
+              break;
+            }
             int j = paramSettings.length;
             i = 0;
-            if (i < j) {
-              break label128;
+            if (i >= j) {
+              break;
             }
           }
         }
-        else
+        synchronized (paramSettings[i])
         {
-          settings.merge(paramSettings);
-        }
-      }
-      label128:
-      synchronized (paramSettings[i])
-      {
-        synchronized (SpdyConnection.this)
-        {
-          ((SpdyStream)???).receiveSettings(settings);
-          i += 1;
+          synchronized (SpdyConnection.this)
+          {
+            ((SpdyStream)???).receiveSettings(settings);
+            i += 1;
+            continue;
+            settings.merge(paramSettings);
+            continue;
+            paramSettings = finally;
+            throw paramSettings;
+          }
         }
       }
     }

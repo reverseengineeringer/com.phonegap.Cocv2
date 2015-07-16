@@ -155,16 +155,12 @@ final class Http20Draft06$Reader
     }
     Settings localSettings = new Settings();
     paramInt1 = 0;
-    for (;;)
+    while (paramInt1 < paramInt2)
     {
-      if (paramInt1 >= paramInt2)
-      {
-        paramHandler.settings(false, localSettings);
-        return;
-      }
       localSettings.set(in.readInt() & 0xFFFFFF, 0, in.readInt());
       paramInt1 += 8;
     }
+    paramHandler.settings(false, localSettings);
   }
   
   private void readWindowUpdate(FrameReader.Handler paramHandler, int paramInt1, int paramInt2, int paramInt3)
@@ -237,9 +233,9 @@ final class Http20Draft06$Reader
     do
     {
       return;
-      arrayOfByte = new byte[Http20Draft06.access$0().length];
+      arrayOfByte = new byte[Http20Draft06.access$000().length];
       in.readFully(arrayOfByte);
-    } while (Arrays.equals(arrayOfByte, Http20Draft06.access$0()));
+    } while (Arrays.equals(arrayOfByte, Http20Draft06.access$000()));
     throw ioException("Expected a connection header but was " + Arrays.toString(arrayOfByte), new Object[0]);
   }
 }

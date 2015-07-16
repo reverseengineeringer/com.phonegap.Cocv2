@@ -51,120 +51,120 @@ public final class ResponseHeaders
       public void handle(String paramAnonymousString1, String paramAnonymousString2)
       {
         if ("no-cache".equalsIgnoreCase(paramAnonymousString1)) {
-          noCache = true;
+          ResponseHeaders.access$002(ResponseHeaders.this, true);
         }
         do
         {
           return;
           if ("no-store".equalsIgnoreCase(paramAnonymousString1))
           {
-            noStore = true;
+            ResponseHeaders.access$102(ResponseHeaders.this, true);
             return;
           }
           if ("max-age".equalsIgnoreCase(paramAnonymousString1))
           {
-            maxAgeSeconds = HeaderParser.parseSeconds(paramAnonymousString2);
+            ResponseHeaders.access$202(ResponseHeaders.this, HeaderParser.parseSeconds(paramAnonymousString2));
             return;
           }
           if ("s-maxage".equalsIgnoreCase(paramAnonymousString1))
           {
-            sMaxAgeSeconds = HeaderParser.parseSeconds(paramAnonymousString2);
+            ResponseHeaders.access$302(ResponseHeaders.this, HeaderParser.parseSeconds(paramAnonymousString2));
             return;
           }
           if ("public".equalsIgnoreCase(paramAnonymousString1))
           {
-            isPublic = true;
+            ResponseHeaders.access$402(ResponseHeaders.this, true);
             return;
           }
         } while (!"must-revalidate".equalsIgnoreCase(paramAnonymousString1));
-        mustRevalidate = true;
+        ResponseHeaders.access$502(ResponseHeaders.this, true);
       }
     };
     int i = 0;
-    if (i >= paramRawHeaders.length()) {
-      return;
-    }
-    Object localObject = paramRawHeaders.getFieldName(i);
-    String str = paramRawHeaders.getValue(i);
-    if ("Cache-Control".equalsIgnoreCase((String)localObject)) {
-      HeaderParser.parseCacheControl(str, paramURI);
-    }
-    for (;;)
+    if (i < paramRawHeaders.length())
     {
-      i += 1;
-      break;
-      if ("Date".equalsIgnoreCase((String)localObject))
-      {
-        servedDate = HttpDate.parse(str);
+      Object localObject = paramRawHeaders.getFieldName(i);
+      String str = paramRawHeaders.getValue(i);
+      if ("Cache-Control".equalsIgnoreCase((String)localObject)) {
+        HeaderParser.parseCacheControl(str, paramURI);
       }
-      else if ("Expires".equalsIgnoreCase((String)localObject))
+      for (;;)
       {
-        expires = HttpDate.parse(str);
-      }
-      else if ("Last-Modified".equalsIgnoreCase((String)localObject))
-      {
-        lastModified = HttpDate.parse(str);
-      }
-      else if ("ETag".equalsIgnoreCase((String)localObject))
-      {
-        etag = str;
-      }
-      else if ("Pragma".equalsIgnoreCase((String)localObject))
-      {
-        if ("no-cache".equalsIgnoreCase(str)) {
-          noCache = true;
-        }
-      }
-      else if ("Age".equalsIgnoreCase((String)localObject))
-      {
-        ageSeconds = HeaderParser.parseSeconds(str);
-      }
-      else if ("Vary".equalsIgnoreCase((String)localObject))
-      {
-        if (varyFields.isEmpty()) {
-          varyFields = new TreeSet(String.CASE_INSENSITIVE_ORDER);
-        }
-        localObject = str.split(",");
-        int k = localObject.length;
-        int j = 0;
-        while (j < k)
+        i += 1;
+        break;
+        if ("Date".equalsIgnoreCase((String)localObject))
         {
-          str = localObject[j];
-          varyFields.add(str.trim());
-          j += 1;
+          servedDate = HttpDate.parse(str);
         }
-      }
-      else if ("Content-Encoding".equalsIgnoreCase((String)localObject))
-      {
-        contentEncoding = str;
-      }
-      else if ("Transfer-Encoding".equalsIgnoreCase((String)localObject))
-      {
-        transferEncoding = str;
-      }
-      else if ("Content-Length".equalsIgnoreCase((String)localObject))
-      {
-        try
+        else if ("Expires".equalsIgnoreCase((String)localObject))
         {
-          contentLength = Long.parseLong(str);
+          expires = HttpDate.parse(str);
         }
-        catch (NumberFormatException localNumberFormatException) {}
-      }
-      else if ("Content-Type".equalsIgnoreCase(localNumberFormatException))
-      {
-        contentType = str;
-      }
-      else if ("Connection".equalsIgnoreCase(localNumberFormatException))
-      {
-        connection = str;
-      }
-      else if (SENT_MILLIS.equalsIgnoreCase(localNumberFormatException))
-      {
-        sentRequestMillis = Long.parseLong(str);
-      }
-      else if (RECEIVED_MILLIS.equalsIgnoreCase(localNumberFormatException))
-      {
-        receivedResponseMillis = Long.parseLong(str);
+        else if ("Last-Modified".equalsIgnoreCase((String)localObject))
+        {
+          lastModified = HttpDate.parse(str);
+        }
+        else if ("ETag".equalsIgnoreCase((String)localObject))
+        {
+          etag = str;
+        }
+        else if ("Pragma".equalsIgnoreCase((String)localObject))
+        {
+          if ("no-cache".equalsIgnoreCase(str)) {
+            noCache = true;
+          }
+        }
+        else if ("Age".equalsIgnoreCase((String)localObject))
+        {
+          ageSeconds = HeaderParser.parseSeconds(str);
+        }
+        else if ("Vary".equalsIgnoreCase((String)localObject))
+        {
+          if (varyFields.isEmpty()) {
+            varyFields = new TreeSet(String.CASE_INSENSITIVE_ORDER);
+          }
+          localObject = str.split(",");
+          int k = localObject.length;
+          int j = 0;
+          while (j < k)
+          {
+            str = localObject[j];
+            varyFields.add(str.trim());
+            j += 1;
+          }
+        }
+        else if ("Content-Encoding".equalsIgnoreCase((String)localObject))
+        {
+          contentEncoding = str;
+        }
+        else if ("Transfer-Encoding".equalsIgnoreCase((String)localObject))
+        {
+          transferEncoding = str;
+        }
+        else if ("Content-Length".equalsIgnoreCase((String)localObject))
+        {
+          try
+          {
+            contentLength = Long.parseLong(str);
+          }
+          catch (NumberFormatException localNumberFormatException) {}
+        }
+        else if ("Content-Type".equalsIgnoreCase(localNumberFormatException))
+        {
+          contentType = str;
+        }
+        else if ("Connection".equalsIgnoreCase(localNumberFormatException))
+        {
+          connection = str;
+        }
+        else if (SENT_MILLIS.equalsIgnoreCase(localNumberFormatException))
+        {
+          sentRequestMillis = Long.parseLong(str);
+        }
+        else if (RECEIVED_MILLIS.equalsIgnoreCase(localNumberFormatException))
+        {
+          receivedResponseMillis = Long.parseLong(str);
+        }
       }
     }
   }
@@ -302,32 +302,31 @@ public final class ResponseHeaders
     RawHeaders localRawHeaders = new RawHeaders();
     localRawHeaders.setStatusLine(headers.getStatusLine());
     int i = 0;
-    if (i >= headers.length()) {
-      i = 0;
-    }
-    for (;;)
+    String str1;
+    if (i < headers.length())
     {
-      if (i >= headers.length())
+      str1 = headers.getFieldName(i);
+      String str2 = headers.getValue(i);
+      if (("Warning".equals(str1)) && (str2.startsWith("1"))) {}
+      for (;;)
       {
-        return new ResponseHeaders(uri, localRawHeaders);
-        str1 = headers.getFieldName(i);
-        String str2 = headers.getValue(i);
-        if (("Warning".equals(str1)) && (str2.startsWith("1"))) {}
-        for (;;)
-        {
-          i += 1;
-          break;
-          if ((!isEndToEnd(str1)) || (headers.get(str1) == null)) {
-            localRawHeaders.add(str1, str2);
-          }
+        i += 1;
+        break;
+        if ((!isEndToEnd(str1)) || (headers.get(str1) == null)) {
+          localRawHeaders.add(str1, str2);
         }
       }
-      String str1 = headers.getFieldName(i);
+    }
+    i = 0;
+    while (i < headers.length())
+    {
+      str1 = headers.getFieldName(i);
       if (isEndToEnd(str1)) {
         localRawHeaders.add(str1, headers.getValue(i));
       }
       i += 1;
     }
+    return new ResponseHeaders(uri, localRawHeaders);
   }
   
   public String getConnection()
@@ -487,15 +486,14 @@ public final class ResponseHeaders
   public boolean varyMatches(Map<String, List<String>> paramMap1, Map<String, List<String>> paramMap2)
   {
     Iterator localIterator = varyFields.iterator();
-    String str;
-    do
+    while (localIterator.hasNext())
     {
-      if (!localIterator.hasNext()) {
-        return true;
+      String str = (String)localIterator.next();
+      if (!Util.equal(paramMap1.get(str), paramMap2.get(str))) {
+        return false;
       }
-      str = (String)localIterator.next();
-    } while (Util.equal(paramMap1.get(str), paramMap2.get(str)));
-    return false;
+    }
+    return true;
   }
 }
 

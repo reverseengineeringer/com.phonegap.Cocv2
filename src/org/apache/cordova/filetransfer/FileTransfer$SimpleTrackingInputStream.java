@@ -32,12 +32,6 @@ class FileTransfer$SimpleTrackingInputStream
     return updateBytesRead(super.read());
   }
   
-  public int read(byte[] paramArrayOfByte)
-    throws IOException
-  {
-    return updateBytesRead(super.read(paramArrayOfByte));
-  }
-  
   public int read(byte[] paramArrayOfByte, int paramInt1, int paramInt2)
     throws IOException
   {

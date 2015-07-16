@@ -23,7 +23,7 @@ class HttpResponseCache$EntrySecureCacheResponse
   {
     entry = paramEntry;
     snapshot = paramSnapshot;
-    in = HttpResponseCache.access$8(paramSnapshot);
+    in = HttpResponseCache.access$1000(paramSnapshot);
   }
   
   public InputStream getBody()
@@ -33,46 +33,46 @@ class HttpResponseCache$EntrySecureCacheResponse
   
   public String getCipherSuite()
   {
-    return HttpResponseCache.Entry.access$1(entry);
+    return HttpResponseCache.Entry.access$1200(entry);
   }
   
   public Map<String, List<String>> getHeaders()
   {
-    return HttpResponseCache.Entry.access$0(entry).toMultimap(true);
+    return HttpResponseCache.Entry.access$1100(entry).toMultimap(true);
   }
   
   public List<Certificate> getLocalCertificateChain()
   {
-    if ((HttpResponseCache.Entry.access$3(entry) == null) || (HttpResponseCache.Entry.access$3(entry).length == 0)) {
+    if ((HttpResponseCache.Entry.access$1400(entry) == null) || (HttpResponseCache.Entry.access$1400(entry).length == 0)) {
       return null;
     }
-    return Arrays.asList((Certificate[])HttpResponseCache.Entry.access$3(entry).clone());
+    return Arrays.asList((Object[])HttpResponseCache.Entry.access$1400(entry).clone());
   }
   
   public Principal getLocalPrincipal()
   {
-    if ((HttpResponseCache.Entry.access$3(entry) == null) || (HttpResponseCache.Entry.access$3(entry).length == 0)) {
+    if ((HttpResponseCache.Entry.access$1400(entry) == null) || (HttpResponseCache.Entry.access$1400(entry).length == 0)) {
       return null;
     }
-    return ((X509Certificate)HttpResponseCache.Entry.access$3(entry)[0]).getSubjectX500Principal();
+    return ((X509Certificate)HttpResponseCache.Entry.access$1400(entry)[0]).getSubjectX500Principal();
   }
   
   public Principal getPeerPrincipal()
     throws SSLPeerUnverifiedException
   {
-    if ((HttpResponseCache.Entry.access$2(entry) == null) || (HttpResponseCache.Entry.access$2(entry).length == 0)) {
+    if ((HttpResponseCache.Entry.access$1300(entry) == null) || (HttpResponseCache.Entry.access$1300(entry).length == 0)) {
       throw new SSLPeerUnverifiedException(null);
     }
-    return ((X509Certificate)HttpResponseCache.Entry.access$2(entry)[0]).getSubjectX500Principal();
+    return ((X509Certificate)HttpResponseCache.Entry.access$1300(entry)[0]).getSubjectX500Principal();
   }
   
   public List<Certificate> getServerCertificateChain()
     throws SSLPeerUnverifiedException
   {
-    if ((HttpResponseCache.Entry.access$2(entry) == null) || (HttpResponseCache.Entry.access$2(entry).length == 0)) {
+    if ((HttpResponseCache.Entry.access$1300(entry) == null) || (HttpResponseCache.Entry.access$1300(entry).length == 0)) {
       throw new SSLPeerUnverifiedException(null);
     }
-    return Arrays.asList((Certificate[])HttpResponseCache.Entry.access$2(entry).clone());
+    return Arrays.asList((Object[])HttpResponseCache.Entry.access$1300(entry).clone());
   }
 }
 

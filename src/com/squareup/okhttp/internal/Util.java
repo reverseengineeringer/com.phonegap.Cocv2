@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Reader;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -38,11 +40,8 @@ public final class Util
     int k = paramArrayOfByte.length;
     int i = 0;
     int j = 0;
-    for (;;)
+    while (i < k)
     {
-      if (i >= k) {
-        return new String(arrayOfChar2);
-      }
       int m = paramArrayOfByte[i];
       int n = j + 1;
       arrayOfChar2[j] = arrayOfChar1[(m >> 4 & 0xF)];
@@ -50,6 +49,7 @@ public final class Util
       arrayOfChar2[n] = arrayOfChar1[(m & 0xF)];
       i += 1;
     }
+    return new String(arrayOfChar2);
   }
   
   public static void checkOffsetAndCount(int paramInt1, int paramInt2, int paramInt3)
@@ -159,11 +159,12 @@ public final class Util
     {
       int j = paramInputStream.read(arrayOfByte);
       if (j == -1) {
-        return i;
+        break;
       }
       i += j;
       paramOutputStream.write(arrayOfByte, 0, j);
     }
+    return i;
   }
   
   public static ThreadFactory daemonThreadFactory(String paramString)
@@ -172,7 +173,7 @@ public final class Util
     {
       public Thread newThread(Runnable paramAnonymousRunnable)
       {
-        paramAnonymousRunnable = new Thread(paramAnonymousRunnable, Util.this);
+        paramAnonymousRunnable = new Thread(paramAnonymousRunnable, val$name);
         paramAnonymousRunnable.setDaemon(true);
         return paramAnonymousRunnable;
       }
@@ -188,11 +189,8 @@ public final class Util
     }
     int j = arrayOfFile.length;
     int i = 0;
-    for (;;)
+    while (i < j)
     {
-      if (i >= j) {
-        return;
-      }
       paramFile = arrayOfFile[i];
       if (paramFile.isDirectory()) {
         deleteContents(paramFile);
@@ -302,56 +300,30 @@ public final class Util
     }
   }
   
-  /* Error */
-  public static String readFully(java.io.Reader paramReader)
+  public static String readFully(Reader paramReader)
     throws IOException
   {
-    // Byte code:
-    //   0: new 279	java/io/StringWriter
-    //   3: dup
-    //   4: invokespecial 280	java/io/StringWriter:<init>	()V
-    //   7: astore_2
-    //   8: sipush 1024
-    //   11: newarray <illegal type>
-    //   13: astore_3
-    //   14: aload_0
-    //   15: aload_3
-    //   16: invokevirtual 285	java/io/Reader:read	([C)I
-    //   19: istore_1
-    //   20: iload_1
-    //   21: iconst_m1
-    //   22: if_icmpne +14 -> 36
-    //   25: aload_2
-    //   26: invokevirtual 286	java/io/StringWriter:toString	()Ljava/lang/String;
-    //   29: astore_2
-    //   30: aload_0
-    //   31: invokevirtual 287	java/io/Reader:close	()V
-    //   34: aload_2
-    //   35: areturn
-    //   36: aload_2
-    //   37: aload_3
-    //   38: iconst_0
-    //   39: iload_1
-    //   40: invokevirtual 290	java/io/StringWriter:write	([CII)V
-    //   43: goto -29 -> 14
-    //   46: astore_2
-    //   47: aload_0
-    //   48: invokevirtual 287	java/io/Reader:close	()V
-    //   51: aload_2
-    //   52: athrow
-    // Local variable table:
-    //   start	length	slot	name	signature
-    //   0	53	0	paramReader	java.io.Reader
-    //   19	21	1	i	int
-    //   7	30	2	localObject1	Object
-    //   46	6	2	localObject2	Object
-    //   13	25	3	arrayOfChar	char[]
-    // Exception table:
-    //   from	to	target	type
-    //   0	14	46	finally
-    //   14	20	46	finally
-    //   25	30	46	finally
-    //   36	43	46	finally
+    try
+    {
+      StringWriter localStringWriter = new StringWriter();
+      char[] arrayOfChar = new char['Ѐ'];
+      for (;;)
+      {
+        int i = paramReader.read(arrayOfChar);
+        if (i == -1) {
+          break;
+        }
+        localStringWriter.write(arrayOfChar, 0, i);
+      }
+      str = ((StringWriter)localObject).toString();
+    }
+    finally
+    {
+      paramReader.close();
+    }
+    String str;
+    paramReader.close();
+    return str;
   }
   
   public static void readFully(InputStream paramInputStream, byte[] paramArrayOfByte)
@@ -418,24 +390,27 @@ public final class Util
       arrayOfByte1 = new byte['က'];
     }
     long l1 = 0L;
-    long l2;
-    if (l1 >= paramLong) {
+    long l2 = l1;
+    int i;
+    int j;
+    if (l1 < paramLong)
+    {
+      i = (int)Math.min(paramLong - l1, arrayOfByte1.length);
+      j = paramInputStream.read(arrayOfByte1, 0, i);
+      if (j != -1) {
+        break label94;
+      }
       l2 = l1;
     }
     for (;;)
     {
       skipBuffer.set(arrayOfByte1);
       return l2;
-      int i = (int)Math.min(paramLong - l1, arrayOfByte1.length);
-      int j = paramInputStream.read(arrayOfByte1, 0, i);
-      l2 = l1;
-      if (j != -1)
-      {
-        l2 = l1 + j;
-        l1 = l2;
-        if (j >= i) {
-          break;
-        }
+      label94:
+      l2 = l1 + j;
+      l1 = l2;
+      if (j >= i) {
+        break;
       }
     }
   }

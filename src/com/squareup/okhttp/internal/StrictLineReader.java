@@ -93,62 +93,64 @@ public class StrictLineReader
       fillBuf();
     }
     int i = pos;
-    Object localObject2;
-    if (i == end) {
-      localObject2 = new ByteArrayOutputStream(end - pos + 80)
-      {
-        public String toString()
-        {
-          if ((count > 0) && (buf[(count - 1)] == 13)) {}
-          for (int i = count - 1;; i = count) {
-            try
-            {
-              String str = new String(buf, 0, i, charset.name());
-              return str;
-            }
-            catch (UnsupportedEncodingException localUnsupportedEncodingException)
-            {
-              throw new AssertionError(localUnsupportedEncodingException);
-            }
-          }
-        }
-      };
-    }
-    label277:
     for (;;)
     {
-      ((ByteArrayOutputStream)localObject2).write(buf, pos, end - pos);
-      end = -1;
-      fillBuf();
-      i = pos;
-      for (;;)
+      if (i != end)
       {
-        if (i == end) {
-          break label277;
+        if (buf[i] != 10) {
+          break label272;
         }
-        if (buf[i] == 10)
+        if ((i == pos) || (buf[(i - 1)] != 13)) {
+          break label267;
+        }
+      }
+      label267:
+      for (int j = i - 1;; j = i)
+      {
+        Object localObject2 = new String(buf, pos, j - pos, charset.name());
+        pos = (i + 1);
+        return (String)localObject2;
+        localObject2 = new ByteArrayOutputStream(end - pos + 80)
         {
-          if (i != pos) {
-            ((ByteArrayOutputStream)localObject2).write(buf, pos, i - pos);
-          }
-          pos = (i + 1);
-          localObject2 = ((ByteArrayOutputStream)localObject2).toString();
-          return (String)localObject2;
-          if (buf[i] == 10)
+          public String toString()
           {
-            if ((i != pos) && (buf[(i - 1)] == 13)) {}
-            for (int j = i - 1;; j = i)
-            {
-              localObject2 = new String(buf, pos, j - pos, charset.name());
-              pos = (i + 1);
-              return (String)localObject2;
+            if ((count > 0) && (buf[(count - 1)] == 13)) {}
+            for (int i = count - 1;; i = count) {
+              try
+              {
+                String str = new String(buf, 0, i, charset.name());
+                return str;
+              }
+              catch (UnsupportedEncodingException localUnsupportedEncodingException)
+              {
+                throw new AssertionError(localUnsupportedEncodingException);
+              }
             }
           }
-          i += 1;
-          break;
+        };
+        for (;;)
+        {
+          ((ByteArrayOutputStream)localObject2).write(buf, pos, end - pos);
+          end = -1;
+          fillBuf();
+          i = pos;
+          while (i != end)
+          {
+            if (buf[i] == 10)
+            {
+              if (i != pos) {
+                ((ByteArrayOutputStream)localObject2).write(buf, pos, i - pos);
+              }
+              pos = (i + 1);
+              localObject2 = ((ByteArrayOutputStream)localObject2).toString();
+              return (String)localObject2;
+            }
+            i += 1;
+          }
         }
-        i += 1;
       }
+      label272:
+      i += 1;
     }
   }
 }

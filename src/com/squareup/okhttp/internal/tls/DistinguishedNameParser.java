@@ -22,53 +22,50 @@ final class DistinguishedNameParser
   {
     beg = pos;
     end = pos;
-    for (;;)
+    do
     {
-      if (pos >= length) {
-        return new String(chars, beg, end - beg);
-      }
-      switch (chars[pos])
+      for (;;)
       {
-      default: 
-        arrayOfChar = chars;
-        i = end;
-        end = (i + 1);
-        arrayOfChar[i] = chars[pos];
-        pos += 1;
-        break;
-      case '+': 
-      case ',': 
-      case ';': 
-        return new String(chars, beg, end - beg);
-      case '\\': 
-        arrayOfChar = chars;
-        i = end;
-        end = (i + 1);
-        arrayOfChar[i] = getEscaped();
-        pos += 1;
-      }
-    }
-    cur = end;
-    pos += 1;
-    char[] arrayOfChar = chars;
-    int i = end;
-    end = (i + 1);
-    arrayOfChar[i] = ' ';
-    for (;;)
-    {
-      if ((pos >= length) || (chars[pos] != ' '))
-      {
-        if ((pos != length) && (chars[pos] != ',') && (chars[pos] != '+') && (chars[pos] != ';')) {
-          break;
+        if (pos >= length) {
+          return new String(chars, beg, end - beg);
         }
-        return new String(chars, beg, cur - beg);
+        switch (chars[pos])
+        {
+        default: 
+          arrayOfChar = chars;
+          i = end;
+          end = (i + 1);
+          arrayOfChar[i] = chars[pos];
+          pos += 1;
+          break;
+        case '+': 
+        case ',': 
+        case ';': 
+          return new String(chars, beg, end - beg);
+        case '\\': 
+          arrayOfChar = chars;
+          i = end;
+          end = (i + 1);
+          arrayOfChar[i] = getEscaped();
+          pos += 1;
+        }
       }
-      arrayOfChar = chars;
-      i = end;
+      cur = end;
+      pos += 1;
+      char[] arrayOfChar = chars;
+      int i = end;
       end = (i + 1);
       arrayOfChar[i] = ' ';
-      pos += 1;
-    }
+      while ((pos < length) && (chars[pos] == ' '))
+      {
+        arrayOfChar = chars;
+        i = end;
+        end = (i + 1);
+        arrayOfChar[i] = ' ';
+        pos += 1;
+      }
+    } while ((pos != length) && (chars[pos] != ',') && (chars[pos] != '+') && (chars[pos] != ';'));
+    return new String(chars, beg, cur - beg);
   }
   
   private int getByte(int paramInt)
@@ -82,7 +79,7 @@ final class DistinguishedNameParser
       i -= 48;
       paramInt = chars[(paramInt + 1)];
       if ((paramInt < 48) || (paramInt > 57)) {
-        break label160;
+        break label166;
       }
       paramInt -= 48;
     }
@@ -100,7 +97,7 @@ final class DistinguishedNameParser
         break;
       }
       throw new IllegalStateException("Malformed DN: " + dn);
-      label160:
+      label166:
       if ((paramInt >= 97) && (paramInt <= 102))
       {
         paramInt -= 87;
@@ -108,12 +105,12 @@ final class DistinguishedNameParser
       else
       {
         if ((paramInt < 65) || (paramInt > 70)) {
-          break label200;
+          break label206;
         }
         paramInt -= 55;
       }
     }
-    label200:
+    label206:
     throw new IllegalStateException("Malformed DN: " + dn);
   }
   
@@ -150,51 +147,54 @@ final class DistinguishedNameParser
       c1 = c2;
     } while (i > 247);
     int j;
-    label67:
-    int m;
-    int k;
     if (i <= 223)
     {
       j = 1;
       i &= 0x1F;
-      m = 0;
-      k = i;
-      i = m;
     }
+    int k;
     for (;;)
     {
-      if (i >= j)
+      int m = 0;
+      k = i;
+      i = m;
+      for (;;)
       {
-        return (char)k;
-        if (i <= 239)
-        {
-          j = 2;
-          i &= 0xF;
-          break label67;
+        if (i >= j) {
+          break label214;
         }
+        pos += 1;
+        c1 = c2;
+        if (pos == length) {
+          break;
+        }
+        c1 = c2;
+        if (chars[pos] != '\\') {
+          break;
+        }
+        pos += 1;
+        m = getByte(pos);
+        pos += 1;
+        c1 = c2;
+        if ((m & 0xC0) != 128) {
+          break;
+        }
+        k = (k << 6) + (m & 0x3F);
+        i += 1;
+      }
+      if (i <= 239)
+      {
+        j = 2;
+        i &= 0xF;
+      }
+      else
+      {
         j = 3;
         i &= 0x7;
-        break label67;
       }
-      pos += 1;
-      c1 = c2;
-      if (pos == length) {
-        break;
-      }
-      c1 = c2;
-      if (chars[pos] != '\\') {
-        break;
-      }
-      pos += 1;
-      m = getByte(pos);
-      pos += 1;
-      c1 = c2;
-      if ((m & 0xC0) != 128) {
-        break;
-      }
-      k = (k << 6) + (m & 0x3F);
-      i += 1;
     }
+    label214:
+    return (char)k;
   }
   
   private String hexAV()
@@ -213,7 +213,7 @@ final class DistinguishedNameParser
       {
         k = end - beg;
         if ((k >= 5) && ((k & 0x1) != 0)) {
-          break label301;
+          break label307;
         }
         throw new IllegalStateException("Unexpected end of DN: " + dn);
         if (chars[pos] != ' ') {
@@ -229,67 +229,47 @@ final class DistinguishedNameParser
         localObject[i] = ((char)(localObject[i] + ' '));
       }
     }
-    label301:
+    label307:
     Object localObject = new byte[k / 2];
     int i = 0;
     int j = beg + 1;
-    for (;;)
+    while (i < localObject.length)
     {
-      if (i >= localObject.length) {
-        return new String(chars, beg, k);
-      }
       localObject[i] = ((byte)getByte(j));
       j += 2;
       i += 1;
     }
+    return new String(chars, beg, k);
   }
   
   private String nextAT()
   {
-    for (;;)
-    {
-      if ((pos >= length) || (chars[pos] != ' '))
-      {
-        if (pos != length) {
-          break;
-        }
-        return null;
-      }
+    while ((pos < length) && (chars[pos] == ' ')) {
       pos += 1;
     }
+    if (pos == length) {
+      return null;
+    }
     beg = pos;
-    for (pos += 1;; pos += 1) {
-      if ((pos >= length) || (chars[pos] == '=') || (chars[pos] == ' '))
-      {
-        if (pos < length) {
-          break;
-        }
+    for (pos += 1; (pos < length) && (chars[pos] != '=') && (chars[pos] != ' '); pos += 1) {}
+    if (pos >= length) {
+      throw new IllegalStateException("Unexpected end of DN: " + dn);
+    }
+    end = pos;
+    if (chars[pos] == ' ')
+    {
+      while ((pos < length) && (chars[pos] != '=') && (chars[pos] == ' ')) {
+        pos += 1;
+      }
+      if ((chars[pos] != '=') || (pos == length)) {
         throw new IllegalStateException("Unexpected end of DN: " + dn);
       }
     }
-    end = pos;
-    if (chars[pos] == ' ') {
-      for (;;)
-      {
-        if ((pos >= length) || (chars[pos] == '=') || (chars[pos] != ' '))
-        {
-          if ((chars[pos] == '=') && (pos != length)) {
-            break;
-          }
-          throw new IllegalStateException("Unexpected end of DN: " + dn);
-        }
-        pos += 1;
-      }
+    for (pos += 1; (pos < length) && (chars[pos] == ' '); pos += 1) {}
+    if ((end - beg > 4) && (chars[(beg + 3)] == '.') && ((chars[beg] == 'O') || (chars[beg] == 'o')) && ((chars[(beg + 1)] == 'I') || (chars[(beg + 1)] == 'i')) && ((chars[(beg + 2)] == 'D') || (chars[(beg + 2)] == 'd'))) {
+      beg += 4;
     }
-    for (pos += 1;; pos += 1) {
-      if ((pos >= length) || (chars[pos] != ' '))
-      {
-        if ((end - beg > 4) && (chars[(beg + 3)] == '.') && ((chars[beg] == 'O') || (chars[beg] == 'o')) && ((chars[(beg + 1)] == 'I') || (chars[(beg + 1)] == 'i')) && ((chars[(beg + 2)] == 'D') || (chars[(beg + 2)] == 'd'))) {
-          beg += 4;
-        }
-        return new String(chars, beg, end - beg);
-      }
-    }
+    return new String(chars, beg, end - beg);
   }
   
   private String quotedAV()
@@ -300,23 +280,20 @@ final class DistinguishedNameParser
     if (pos == length) {
       throw new IllegalStateException("Unexpected end of DN: " + dn);
     }
-    if (chars[pos] == '"') {}
-    for (pos += 1;; pos += 1) {
-      if ((pos >= length) || (chars[pos] != ' '))
-      {
-        return new String(chars, beg, end - beg);
-        if (chars[pos] == '\\') {
-          chars[end] = getEscaped();
-        }
-        for (;;)
-        {
-          pos += 1;
-          end += 1;
-          break;
-          chars[end] = chars[pos];
-        }
-      }
+    if (chars[pos] == '"') {
+      for (pos += 1; (pos < length) && (chars[pos] == ' '); pos += 1) {}
     }
+    if (chars[pos] == '\\') {
+      chars[end] = getEscaped();
+    }
+    for (;;)
+    {
+      pos += 1;
+      end += 1;
+      break;
+      chars[end] = chars[pos];
+    }
+    return new String(chars, beg, end - beg);
   }
   
   public String findMostSpecific(String paramString)
@@ -333,35 +310,37 @@ final class DistinguishedNameParser
       str1 = null;
       return str1;
     }
-    label162:
-    do
+    str1 = "";
+    if (pos == length) {
+      return null;
+    }
+    switch (chars[pos])
     {
-      str1 = "";
-      if (pos == length) {
-        return null;
+    default: 
+      str1 = escapedAV();
+    }
+    while (!paramString.equalsIgnoreCase(str2))
+    {
+      if (pos < length) {
+        break label162;
       }
-      switch (chars[pos])
-      {
-      default: 
-        str1 = escapedAV();
-      }
-      while (!paramString.equalsIgnoreCase(str2))
-      {
-        if (pos < length) {
-          break label162;
-        }
-        return null;
-        str1 = quotedAV();
-        continue;
-        str1 = hexAV();
-      }
-      if ((chars[pos] != ',') && (chars[pos] != ';') && (chars[pos] != '+')) {
-        throw new IllegalStateException("Malformed DN: " + dn);
-      }
+      return null;
+      str1 = quotedAV();
+      continue;
+      str1 = hexAV();
+    }
+    label162:
+    if ((chars[pos] == ',') || (chars[pos] == ';')) {}
+    while (chars[pos] == '+')
+    {
       pos += 1;
       str1 = nextAT();
       str2 = str1;
-    } while (str1 != null);
+      if (str1 != null) {
+        break;
+      }
+      throw new IllegalStateException("Malformed DN: " + dn);
+    }
     throw new IllegalStateException("Malformed DN: " + dn);
   }
 }

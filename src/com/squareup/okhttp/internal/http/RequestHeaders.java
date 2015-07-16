@@ -38,75 +38,75 @@ public final class RequestHeaders
       public void handle(String paramAnonymousString1, String paramAnonymousString2)
       {
         if ("no-cache".equalsIgnoreCase(paramAnonymousString1)) {
-          noCache = true;
+          RequestHeaders.access$002(RequestHeaders.this, true);
         }
         do
         {
           return;
           if ("max-age".equalsIgnoreCase(paramAnonymousString1))
           {
-            maxAgeSeconds = HeaderParser.parseSeconds(paramAnonymousString2);
+            RequestHeaders.access$102(RequestHeaders.this, HeaderParser.parseSeconds(paramAnonymousString2));
             return;
           }
           if ("max-stale".equalsIgnoreCase(paramAnonymousString1))
           {
-            maxStaleSeconds = HeaderParser.parseSeconds(paramAnonymousString2);
+            RequestHeaders.access$202(RequestHeaders.this, HeaderParser.parseSeconds(paramAnonymousString2));
             return;
           }
           if ("min-fresh".equalsIgnoreCase(paramAnonymousString1))
           {
-            minFreshSeconds = HeaderParser.parseSeconds(paramAnonymousString2);
+            RequestHeaders.access$302(RequestHeaders.this, HeaderParser.parseSeconds(paramAnonymousString2));
             return;
           }
         } while (!"only-if-cached".equalsIgnoreCase(paramAnonymousString1));
-        onlyIfCached = true;
+        RequestHeaders.access$402(RequestHeaders.this, true);
       }
     };
     int i = 0;
-    if (i >= paramRawHeaders.length()) {
-      return;
-    }
-    String str1 = paramRawHeaders.getFieldName(i);
-    String str2 = paramRawHeaders.getValue(i);
-    if ("Cache-Control".equalsIgnoreCase(str1)) {
-      HeaderParser.parseCacheControl(str2, paramURI);
-    }
-    for (;;)
+    if (i < paramRawHeaders.length())
     {
-      i += 1;
-      break;
-      if ("Pragma".equalsIgnoreCase(str1))
-      {
-        if ("no-cache".equalsIgnoreCase(str2)) {
-          noCache = true;
-        }
+      String str1 = paramRawHeaders.getFieldName(i);
+      String str2 = paramRawHeaders.getValue(i);
+      if ("Cache-Control".equalsIgnoreCase(str1)) {
+        HeaderParser.parseCacheControl(str2, paramURI);
       }
-      else if ("If-None-Match".equalsIgnoreCase(str1)) {
-        ifNoneMatch = str2;
-      } else if ("If-Modified-Since".equalsIgnoreCase(str1)) {
-        ifModifiedSince = str2;
-      } else if ("Authorization".equalsIgnoreCase(str1)) {
-        hasAuthorization = true;
-      } else if ("Content-Length".equalsIgnoreCase(str1)) {
-        try
+      for (;;)
+      {
+        i += 1;
+        break;
+        if ("Pragma".equalsIgnoreCase(str1))
         {
-          contentLength = Integer.parseInt(str2);
+          if ("no-cache".equalsIgnoreCase(str2)) {
+            noCache = true;
+          }
         }
-        catch (NumberFormatException localNumberFormatException) {}
-      } else if ("Transfer-Encoding".equalsIgnoreCase(localNumberFormatException)) {
-        transferEncoding = str2;
-      } else if ("User-Agent".equalsIgnoreCase(localNumberFormatException)) {
-        userAgent = str2;
-      } else if ("Host".equalsIgnoreCase(localNumberFormatException)) {
-        host = str2;
-      } else if ("Connection".equalsIgnoreCase(localNumberFormatException)) {
-        connection = str2;
-      } else if ("Accept-Encoding".equalsIgnoreCase(localNumberFormatException)) {
-        acceptEncoding = str2;
-      } else if ("Content-Type".equalsIgnoreCase(localNumberFormatException)) {
-        contentType = str2;
-      } else if ("Proxy-Authorization".equalsIgnoreCase(localNumberFormatException)) {
-        proxyAuthorization = str2;
+        else if ("If-None-Match".equalsIgnoreCase(str1)) {
+          ifNoneMatch = str2;
+        } else if ("If-Modified-Since".equalsIgnoreCase(str1)) {
+          ifModifiedSince = str2;
+        } else if ("Authorization".equalsIgnoreCase(str1)) {
+          hasAuthorization = true;
+        } else if ("Content-Length".equalsIgnoreCase(str1)) {
+          try
+          {
+            contentLength = Integer.parseInt(str2);
+          }
+          catch (NumberFormatException localNumberFormatException) {}
+        } else if ("Transfer-Encoding".equalsIgnoreCase(localNumberFormatException)) {
+          transferEncoding = str2;
+        } else if ("User-Agent".equalsIgnoreCase(localNumberFormatException)) {
+          userAgent = str2;
+        } else if ("Host".equalsIgnoreCase(localNumberFormatException)) {
+          host = str2;
+        } else if ("Connection".equalsIgnoreCase(localNumberFormatException)) {
+          connection = str2;
+        } else if ("Accept-Encoding".equalsIgnoreCase(localNumberFormatException)) {
+          acceptEncoding = str2;
+        } else if ("Content-Type".equalsIgnoreCase(localNumberFormatException)) {
+          contentType = str2;
+        } else if ("Proxy-Authorization".equalsIgnoreCase(localNumberFormatException)) {
+          proxyAuthorization = str2;
+        }
       }
     }
   }
@@ -118,27 +118,22 @@ public final class RequestHeaders
     }
     StringBuilder localStringBuilder = new StringBuilder();
     int i = 0;
-    for (;;)
+    while (i < paramList.size())
     {
-      if (i >= paramList.size()) {
-        return localStringBuilder.toString();
-      }
       if (i > 0) {
         localStringBuilder.append("; ");
       }
       localStringBuilder.append((String)paramList.get(i));
       i += 1;
     }
+    return localStringBuilder.toString();
   }
   
   public void addCookies(Map<String, List<String>> paramMap)
   {
     paramMap = paramMap.entrySet().iterator();
-    for (;;)
+    while (paramMap.hasNext())
     {
-      if (!paramMap.hasNext()) {
-        return;
-      }
       Map.Entry localEntry = (Map.Entry)paramMap.next();
       String str = (String)localEntry.getKey();
       if ((("Cookie".equalsIgnoreCase(str)) || ("Cookie2".equalsIgnoreCase(str))) && (!((List)localEntry.getValue()).isEmpty())) {

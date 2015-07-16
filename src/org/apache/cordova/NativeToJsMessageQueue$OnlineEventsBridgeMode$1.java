@@ -9,8 +9,10 @@ class NativeToJsMessageQueue$OnlineEventsBridgeMode$1
   
   public void run()
   {
-    if (!NativeToJsMessageQueue.access$3(NativeToJsMessageQueue.OnlineEventsBridgeMode.access$2(this$1)).isEmpty()) {
-      NativeToJsMessageQueue.access$1(NativeToJsMessageQueue.OnlineEventsBridgeMode.access$2(this$1)).setNetworkAvailable(NativeToJsMessageQueue.OnlineEventsBridgeMode.access$0(this$1));
+    if (!NativeToJsMessageQueue.access$800(this$1.this$0).isEmpty())
+    {
+      NativeToJsMessageQueue.OnlineEventsBridgeMode.access$902(this$1, false);
+      NativeToJsMessageQueue.access$600(this$1.this$0).setNetworkAvailable(NativeToJsMessageQueue.OnlineEventsBridgeMode.access$1000(this$1));
     }
   }
 }

@@ -2,15 +2,11 @@ package org.apache.cordova;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.net.http.SslError;
-import android.util.Log;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
@@ -22,14 +18,15 @@ import org.json.JSONObject;
 public class CordovaWebViewClient
   extends WebViewClient
 {
-  private static final String CORDOVA_EXEC_URL_PREFIX = "http://cdv_exec/";
   private static final String TAG = "CordovaWebViewClient";
   CordovaWebView appView;
   private Hashtable<String, AuthenticationToken> authenticationTokens = new Hashtable();
   CordovaInterface cordova;
   private boolean doClearHistory = false;
+  CordovaUriHelper helper;
   boolean isCurrentlyLoading;
   
+  @Deprecated
   public CordovaWebViewClient(CordovaInterface paramCordovaInterface)
   {
     cordova = paramCordovaInterface;
@@ -39,24 +36,7 @@ public class CordovaWebViewClient
   {
     cordova = paramCordovaInterface;
     appView = paramCordovaWebView;
-  }
-  
-  private void handleExecUrl(String paramString)
-  {
-    int i = "http://cdv_exec/".length();
-    int j = paramString.indexOf('#', i + 1);
-    int k = paramString.indexOf('#', j + 1);
-    int m = paramString.indexOf('#', k + 1);
-    if ((i == -1) || (j == -1) || (k == -1) || (m == -1))
-    {
-      Log.e("CordovaWebViewClient", "Could not decode URL command: " + paramString);
-      return;
-    }
-    String str1 = paramString.substring(i, j);
-    String str2 = paramString.substring(j + 1, k);
-    String str3 = paramString.substring(k + 1, m);
-    paramString = paramString.substring(m + 1);
-    appView.pluginManager.exec(str1, str2, str3, paramString);
+    helper = new CordovaUriHelper(paramCordovaInterface, paramCordovaWebView);
   }
   
   public void clearAuthenticationTokens()
@@ -130,7 +110,7 @@ public class CordovaWebViewClient
     super.onPageStarted(paramWebView, paramString, paramBitmap);
     isCurrentlyLoading = true;
     LOG.d("CordovaWebViewClient", "onPageStarted(" + paramString + ")");
-    appView.jsMessageQueue.reset();
+    appView.bridge.reset(paramString);
     appView.postMessage("onPageStarted", paramString);
     if (appView.pluginManager != null) {
       appView.pluginManager.onReset();
@@ -143,8 +123,17 @@ public class CordovaWebViewClient
       return;
     }
     LOG.d("CordovaWebViewClient", "CordovaWebViewClient.onReceivedError: Error code=%s Description=%s URL=%s", new Object[] { Integer.valueOf(paramInt), paramString1, paramString2 });
-    paramWebView = appView;
+    CordovaWebView localCordovaWebView = appView;
     loadUrlTimeout += 1;
+    if (paramInt == -10)
+    {
+      if (paramWebView.canGoBack())
+      {
+        paramWebView.goBack();
+        return;
+      }
+      super.onReceivedError(paramWebView, paramInt, paramString1, paramString2);
+    }
     paramWebView = new JSONObject();
     try
     {
@@ -213,125 +202,16 @@ public class CordovaWebViewClient
     authenticationTokens.put(str.concat(paramString1), paramAuthenticationToken);
   }
   
+  @Deprecated
   public void setWebView(CordovaWebView paramCordovaWebView)
   {
     appView = paramCordovaWebView;
+    helper = new CordovaUriHelper(cordova, paramCordovaWebView);
   }
   
   public boolean shouldOverrideUrlLoading(WebView paramWebView, String paramString)
   {
-    if (((appView.pluginManager != null) && (appView.pluginManager.onOverrideUrlLoading(paramString))) || (paramString.startsWith("tel:"))) {}
-    for (;;)
-    {
-      try
-      {
-        paramWebView = new Intent("android.intent.action.DIAL");
-        paramWebView.setData(Uri.parse(paramString));
-        cordova.getActivity().startActivity(paramWebView);
-        return true;
-      }
-      catch (ActivityNotFoundException paramWebView)
-      {
-        LOG.e("CordovaWebViewClient", "Error dialing " + paramString + ": " + paramWebView.toString());
-        continue;
-      }
-      if (paramString.startsWith("geo:"))
-      {
-        try
-        {
-          paramWebView = new Intent("android.intent.action.VIEW");
-          paramWebView.setData(Uri.parse(paramString));
-          cordova.getActivity().startActivity(paramWebView);
-        }
-        catch (ActivityNotFoundException paramWebView)
-        {
-          LOG.e("CordovaWebViewClient", "Error showing map " + paramString + ": " + paramWebView.toString());
-        }
-      }
-      else if (paramString.startsWith("mailto:"))
-      {
-        try
-        {
-          paramWebView = new Intent("android.intent.action.VIEW");
-          paramWebView.setData(Uri.parse(paramString));
-          cordova.getActivity().startActivity(paramWebView);
-        }
-        catch (ActivityNotFoundException paramWebView)
-        {
-          LOG.e("CordovaWebViewClient", "Error sending email " + paramString + ": " + paramWebView.toString());
-        }
-      }
-      else
-      {
-        if (paramString.startsWith("sms:")) {
-          for (;;)
-          {
-            Intent localIntent;
-            int i;
-            try
-            {
-              localIntent = new Intent("android.intent.action.VIEW");
-              i = paramString.indexOf('?');
-              if (i != -1) {
-                break label419;
-              }
-              paramWebView = paramString.substring(4);
-              localIntent.setData(Uri.parse("sms:" + paramWebView));
-              localIntent.putExtra("address", paramWebView);
-              localIntent.setType("vnd.android-dir/mms-sms");
-              cordova.getActivity().startActivity(localIntent);
-            }
-            catch (ActivityNotFoundException paramWebView)
-            {
-              LOG.e("CordovaWebViewClient", "Error sending sms " + paramString + ":" + paramWebView.toString());
-            }
-            break;
-            label419:
-            String str1 = paramString.substring(4, i);
-            String str2 = Uri.parse(paramString).getQuery();
-            paramWebView = str1;
-            if (str2 != null)
-            {
-              paramWebView = str1;
-              if (str2.startsWith("body="))
-              {
-                localIntent.putExtra("sms_body", str2.substring(5));
-                paramWebView = str1;
-              }
-            }
-          }
-        }
-        if (paramString.startsWith("market:"))
-        {
-          try
-          {
-            paramWebView = new Intent("android.intent.action.VIEW");
-            paramWebView.setData(Uri.parse(paramString));
-            cordova.getActivity().startActivity(paramWebView);
-          }
-          catch (ActivityNotFoundException paramWebView)
-          {
-            LOG.e("CordovaWebViewClient", "Error loading Google Play Store: " + paramString, paramWebView);
-          }
-        }
-        else
-        {
-          if ((paramString.startsWith("file://")) || (paramString.startsWith("data:")) || (Config.isUrlWhiteListed(paramString))) {
-            return false;
-          }
-          try
-          {
-            paramWebView = new Intent("android.intent.action.VIEW");
-            paramWebView.setData(Uri.parse(paramString));
-            cordova.getActivity().startActivity(paramWebView);
-          }
-          catch (ActivityNotFoundException paramWebView)
-          {
-            LOG.e("CordovaWebViewClient", "Error loading url " + paramString, paramWebView);
-          }
-        }
-      }
-    }
+    return helper.shouldOverrideUrlLoading(paramWebView, paramString);
   }
 }
 

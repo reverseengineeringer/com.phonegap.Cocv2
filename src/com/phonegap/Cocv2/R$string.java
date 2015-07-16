@@ -2,7 +2,9 @@ package com.phonegap.Cocv2;
 
 public final class R$string
 {
-  public static final int app_name = 2130968576;
+  public static final int activity_name = 2131034114;
+  public static final int app_name = 2131034112;
+  public static final int launcher_name = 2131034113;
 }
 
 /* Location:

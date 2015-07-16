@@ -5,51 +5,32 @@ import org.json.JSONException;
 
 class ExposedJsApi
 {
-  private NativeToJsMessageQueue jsMessageQueue;
-  private PluginManager pluginManager;
+  private CordovaBridge bridge;
   
-  public ExposedJsApi(PluginManager paramPluginManager, NativeToJsMessageQueue paramNativeToJsMessageQueue)
+  public ExposedJsApi(CordovaBridge paramCordovaBridge)
   {
-    pluginManager = paramPluginManager;
-    jsMessageQueue = paramNativeToJsMessageQueue;
+    bridge = paramCordovaBridge;
   }
   
   @JavascriptInterface
-  public String exec(String paramString1, String paramString2, String paramString3, String paramString4)
-    throws JSONException
+  public String exec(int paramInt, String paramString1, String paramString2, String paramString3, String paramString4)
+    throws JSONException, IllegalAccessException
   {
-    if (paramString4 == null) {
-      return "@Null arguments.";
-    }
-    jsMessageQueue.setPaused(true);
-    try
-    {
-      CordovaResourceApi.jsThread = Thread.currentThread();
-      pluginManager.exec(paramString1, paramString2, paramString3, paramString4);
-      paramString1 = jsMessageQueue.popAndEncode(false);
-      return paramString1;
-    }
-    catch (Throwable paramString1)
-    {
-      paramString1.printStackTrace();
-      return "";
-    }
-    finally
-    {
-      jsMessageQueue.setPaused(false);
-    }
+    return bridge.jsExec(paramInt, paramString1, paramString2, paramString3, paramString4);
   }
   
   @JavascriptInterface
-  public String retrieveJsMessages(boolean paramBoolean)
+  public String retrieveJsMessages(int paramInt, boolean paramBoolean)
+    throws IllegalAccessException
   {
-    return jsMessageQueue.popAndEncode(paramBoolean);
+    return bridge.jsRetrieveJsMessages(paramInt, paramBoolean);
   }
   
   @JavascriptInterface
-  public void setNativeToJsBridgeMode(int paramInt)
+  public void setNativeToJsBridgeMode(int paramInt1, int paramInt2)
+    throws IllegalAccessException
   {
-    jsMessageQueue.setBridgeMode(paramInt);
+    bridge.jsSetNativeToJsBridgeMode(paramInt1, paramInt2);
   }
 }
 

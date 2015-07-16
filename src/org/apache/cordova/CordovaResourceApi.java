@@ -144,22 +144,17 @@ public class CordovaResourceApi
       str = arrayOfString[0];
     }
     int i = 1;
-    if (i >= arrayOfString.length)
+    while (i < arrayOfString.length)
     {
-      localObject = ((String)localObject).substring(k + 1);
-      if (j == 0) {
-        break label133;
-      }
-    }
-    label133:
-    for (localObject = Base64.decode((String)localObject, 0);; localObject = EncodingUtils.getBytes((String)localObject, "UTF-8"))
-    {
-      return new OpenForReadResult(paramUri, new ByteArrayInputStream((byte[])localObject), str, localObject.length, null);
       if ("base64".equalsIgnoreCase(arrayOfString[i])) {
         j = 1;
       }
       i += 1;
-      break;
+    }
+    localObject = ((String)localObject).substring(k + 1);
+    if (j != 0) {}
+    for (localObject = Base64.decode((String)localObject, 0);; localObject = EncodingUtils.getBytes((String)localObject, "UTF-8")) {
+      return new OpenForReadResult(paramUri, new ByteArrayInputStream((byte[])localObject), str, localObject.length, null);
     }
   }
   
@@ -335,13 +330,12 @@ public class CordovaResourceApi
           return (File)localObject1;
         }
       }
+      return null;
     }
     finally
     {
       paramUri.close();
     }
-    paramUri.close();
-    return null;
   }
   
   public OpenForReadResult openForRead(Uri paramUri)

@@ -7,7 +7,7 @@ class CordovaActivity$5$1
   
   public void run()
   {
-    CordovaActivity.5.access$0(this$1).removeSplashScreen();
+    this$1.this$0.removeSplashScreen();
   }
 }
 

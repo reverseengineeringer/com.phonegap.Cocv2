@@ -50,34 +50,17 @@ public final class Base64
     int i1 = 0;
     int m = 0;
     paramInt = 0;
-    if (m >= k)
+    if (m < k)
     {
-      i = paramInt;
-      if (j > 0)
-      {
-        k = i1 << j * 6;
-        i = paramInt + 1;
-        arrayOfByte[paramInt] = ((byte)(k >> 16));
-        paramInt = i;
-        if (j == 1)
-        {
-          paramInt = i + 1;
-          arrayOfByte[i] = ((byte)(k >> 8));
-          i = paramInt;
-        }
+      i = paramArrayOfByte[m];
+      if ((i == 10) || (i == 13) || (i == 32)) {
+        break label366;
       }
-      else
-      {
-        paramInt = i;
-      }
-      paramArrayOfByte = new byte[paramInt];
-      System.arraycopy(arrayOfByte, 0, paramArrayOfByte, 0, paramInt);
-      return paramArrayOfByte;
-    }
-    i = paramArrayOfByte[m];
-    if ((i != 10) && (i != 13) && (i != 32)) {
       if (i != 9) {}
     }
+    label160:
+    label363:
+    label366:
     for (;;)
     {
       m += 1;
@@ -85,7 +68,6 @@ public final class Base64
       if ((i >= 65) && (i <= 90))
       {
         i -= 65;
-        label229:
         i1 = i1 << 6 | (byte)i;
         if (n % 4 != 3) {
           break label363;
@@ -97,7 +79,6 @@ public final class Base64
         paramInt = i2 + 1;
         arrayOfByte[i2] = ((byte)i1);
       }
-      label363:
       for (;;)
       {
         n += 1;
@@ -105,24 +86,45 @@ public final class Base64
         if ((i >= 97) && (i <= 122))
         {
           i -= 71;
-          break label229;
+          break label160;
         }
         if ((i >= 48) && (i <= 57))
         {
           i += 4;
-          break label229;
+          break label160;
         }
         if (i == 43)
         {
           i = 62;
-          break label229;
+          break label160;
         }
         if (i == 47)
         {
           i = 63;
-          break label229;
+          break label160;
         }
         return null;
+        i = paramInt;
+        if (j > 0)
+        {
+          k = i1 << j * 6;
+          i = paramInt + 1;
+          arrayOfByte[paramInt] = ((byte)(k >> 16));
+          paramInt = i;
+          if (j == 1)
+          {
+            paramInt = i + 1;
+            arrayOfByte[i] = ((byte)(k >> 8));
+            i = paramInt;
+          }
+        }
+        else
+        {
+          paramInt = i;
+        }
+        paramArrayOfByte = new byte[paramInt];
+        System.arraycopy(arrayOfByte, 0, paramArrayOfByte, 0, paramInt);
+        return paramArrayOfByte;
       }
     }
   }
@@ -133,10 +135,20 @@ public final class Base64
     int k = paramArrayOfByte.length - paramArrayOfByte.length % 3;
     int j = 0;
     int i = 0;
-    if (j >= k) {
-      switch (paramArrayOfByte.length % 3)
-      {
-      }
+    while (j < k)
+    {
+      int m = i + 1;
+      arrayOfByte[i] = MAP[((paramArrayOfByte[j] & 0xFF) >> 2)];
+      i = m + 1;
+      arrayOfByte[m] = MAP[((paramArrayOfByte[j] & 0x3) << 4 | (paramArrayOfByte[(j + 1)] & 0xFF) >> 4)];
+      m = i + 1;
+      arrayOfByte[i] = MAP[((paramArrayOfByte[(j + 1)] & 0xF) << 2 | (paramArrayOfByte[(j + 2)] & 0xFF) >> 6)];
+      i = m + 1;
+      arrayOfByte[m] = MAP[(paramArrayOfByte[(j + 2)] & 0x3F)];
+      j += 3;
+    }
+    switch (paramArrayOfByte.length % 3)
+    {
     }
     for (;;)
     {
@@ -147,19 +159,8 @@ public final class Base64
       }
       catch (UnsupportedEncodingException paramArrayOfByte)
       {
-        int m;
         throw new AssertionError(paramArrayOfByte);
       }
-      m = i + 1;
-      arrayOfByte[i] = MAP[((paramArrayOfByte[j] & 0xFF) >> 2)];
-      i = m + 1;
-      arrayOfByte[m] = MAP[((paramArrayOfByte[j] & 0x3) << 4 | (paramArrayOfByte[(j + 1)] & 0xFF) >> 4)];
-      m = i + 1;
-      arrayOfByte[i] = MAP[((paramArrayOfByte[(j + 1)] & 0xF) << 2 | (paramArrayOfByte[(j + 2)] & 0xFF) >> 6)];
-      i = m + 1;
-      arrayOfByte[m] = MAP[(paramArrayOfByte[(j + 2)] & 0x3F)];
-      j += 3;
-      break;
       j = i + 1;
       arrayOfByte[i] = MAP[((paramArrayOfByte[k] & 0xFF) >> 2)];
       i = j + 1;

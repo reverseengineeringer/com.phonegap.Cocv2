@@ -13,6 +13,7 @@ public class IceCreamCordovaWebViewClient
   extends CordovaWebViewClient
 {
   private static final String TAG = "IceCreamCordovaWebViewClient";
+  private CordovaUriHelper helper;
   
   public IceCreamCordovaWebViewClient(CordovaInterface paramCordovaInterface)
   {
@@ -22,6 +23,11 @@ public class IceCreamCordovaWebViewClient
   public IceCreamCordovaWebViewClient(CordovaInterface paramCordovaInterface, CordovaWebView paramCordovaWebView)
   {
     super(paramCordovaInterface, paramCordovaWebView);
+  }
+  
+  private boolean isUrlHarmful(String paramString)
+  {
+    return ((!paramString.startsWith("http:")) && (!paramString.startsWith("https:"))) || ((!appView.getWhitelist().isUrlWhiteListed(paramString)) || (paramString.contains("app_webview")));
   }
   
   private static boolean needsKitKatContentUrlFix(Uri paramUri)
@@ -49,20 +55,19 @@ public class IceCreamCordovaWebViewClient
   
   public WebResourceResponse shouldInterceptRequest(WebView paramWebView, String paramString)
   {
-    paramWebView = null;
     try
     {
-      if (((paramString.startsWith("http:")) || (paramString.startsWith("https:"))) && (!Config.isUrlWhiteListed(paramString)))
+      if (isUrlHarmful(paramString))
       {
         LOG.w("IceCreamCordovaWebViewClient", "URL blocked by whitelist: " + paramString);
         return new WebResourceResponse("text/plain", "UTF-8", null);
       }
-      CordovaResourceApi localCordovaResourceApi = appView.getResourceApi();
+      paramWebView = appView.getResourceApi();
       paramString = Uri.parse(paramString);
-      Uri localUri = localCordovaResourceApi.remapUri(paramString);
+      Uri localUri = paramWebView.remapUri(paramString);
       if ((!paramString.equals(localUri)) || (needsSpecialsInAssetUrlFix(paramString)) || (needsKitKatContentUrlFix(paramString)))
       {
-        paramWebView = localCordovaResourceApi.openForRead(localUri, true);
+        paramWebView = paramWebView.openForRead(localUri, true);
         paramWebView = new WebResourceResponse(mimeType, "UTF-8", inputStream);
         return paramWebView;
       }
@@ -72,9 +77,9 @@ public class IceCreamCordovaWebViewClient
       if (!(paramWebView instanceof FileNotFoundException)) {
         LOG.e("IceCreamCordovaWebViewClient", "Error occurred while loading a file (returning a 404).", paramWebView);
       }
-      paramWebView = new WebResourceResponse("text/plain", "UTF-8", null);
+      return new WebResourceResponse("text/plain", "UTF-8", null);
     }
-    return paramWebView;
+    return null;
   }
 }
 

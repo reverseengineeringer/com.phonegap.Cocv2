@@ -165,7 +165,7 @@ public final class HttpResponseCache
       try
       {
         requestCount += 1;
-        int i = $SWITCH_TABLE$com$squareup$okhttp$ResponseSource()[paramResponseSource.ordinal()];
+        int i = 3.$SwitchMap$com$squareup$okhttp$ResponseSource[paramResponseSource.ordinal()];
         switch (i)
         {
         default: 
@@ -414,9 +414,8 @@ public final class HttpResponseCache
             if (done) {
               return;
             }
-            done = true;
-            HttpResponseCache localHttpResponseCache2 = HttpResponseCache.this;
-            writeSuccessCount += 1;
+            HttpResponseCache.CacheRequestImpl.access$702(HttpResponseCache.CacheRequestImpl.this, true);
+            HttpResponseCache.access$808(HttpResponseCache.this);
             super.close();
             paramEditor.commit();
             return;
@@ -439,8 +438,7 @@ public final class HttpResponseCache
           return;
         }
         done = true;
-        HttpResponseCache localHttpResponseCache2 = HttpResponseCache.this;
-        writeAbortCount += 1;
+        HttpResponseCache.access$908(HttpResponseCache.this);
         Util.closeQuietly(cacheOut);
         try
         {
@@ -471,46 +469,39 @@ public final class HttpResponseCache
     public Entry(InputStream paramInputStream)
       throws IOException
     {
-      for (;;)
+      try
       {
-        int i;
-        try
+        StrictLineReader localStrictLineReader1 = new StrictLineReader(paramInputStream, Util.US_ASCII);
+        uri = localStrictLineReader1.readLine();
+        requestMethod = localStrictLineReader1.readLine();
+        varyHeaders = new RawHeaders();
+        int j = localStrictLineReader1.readInt();
+        int i = 0;
+        while (i < j)
         {
-          StrictLineReader localStrictLineReader1 = new StrictLineReader(paramInputStream, Util.US_ASCII);
-          uri = localStrictLineReader1.readLine();
-          requestMethod = localStrictLineReader1.readLine();
-          varyHeaders = new RawHeaders();
-          int j = localStrictLineReader1.readInt();
-          i = 0;
-          if (i >= j)
-          {
-            responseHeaders = new RawHeaders();
-            responseHeaders.setStatusLine(localStrictLineReader1.readLine());
-            j = localStrictLineReader1.readInt();
-            i = 0;
-            if (i < j) {
-              break label175;
-            }
-            if (!isHttps()) {
-              break label228;
-            }
-            String str = localStrictLineReader1.readLine();
-            if (str.length() <= 0) {
-              break;
-            }
-            throw new IOException("expected \"\" but was \"" + str + "\"");
-          }
+          varyHeaders.addLine(localStrictLineReader1.readLine());
+          i += 1;
         }
-        finally
+        responseHeaders = new RawHeaders();
+        responseHeaders.setStatusLine(localStrictLineReader1.readLine());
+        j = localStrictLineReader1.readInt();
+        i = 0;
+        while (i < j)
         {
-          paramInputStream.close();
+          responseHeaders.addLine(localStrictLineReader1.readLine());
+          i += 1;
         }
-        varyHeaders.addLine(localStrictLineReader2.readLine());
-        i += 1;
-        continue;
-        label175:
-        responseHeaders.addLine(localStrictLineReader2.readLine());
-        i += 1;
+        if (!isHttps()) {
+          break label231;
+        }
+        String str = localStrictLineReader1.readLine();
+        if (str.length() > 0) {
+          throw new IOException("expected \"\" but was \"" + str + "\"");
+        }
+      }
+      finally
+      {
+        paramInputStream.close();
       }
       cipherSuite = localStrictLineReader2.readLine();
       peerCertificates = readCertArray(localStrictLineReader2);
@@ -518,7 +509,7 @@ public final class HttpResponseCache
       {
         paramInputStream.close();
         return;
-        label228:
+        label231:
         cipherSuite = null;
         peerCertificates = null;
       }
@@ -620,7 +611,7 @@ public final class HttpResponseCache
       //   78: dup
       //   79: aload_1
       //   80: invokevirtual 209	java/security/cert/CertificateException:getMessage	()Ljava/lang/String;
-      //   83: invokespecial 83	java/io/IOException:<init>	(Ljava/lang/String;)V
+      //   83: invokespecial 86	java/io/IOException:<init>	(Ljava/lang/String;)V
       //   86: athrow
       // Local variable table:
       //   start	length	slot	name	signature
@@ -648,16 +639,16 @@ public final class HttpResponseCache
       //   7: invokevirtual 220	java/io/Writer:write	(Ljava/lang/String;)V
       //   10: return
       //   11: aload_1
-      //   12: new 69	java/lang/StringBuilder
+      //   12: new 72	java/lang/StringBuilder
       //   15: dup
-      //   16: aload_2
-      //   17: arraylength
-      //   18: invokestatic 225	java/lang/Integer:toString	(I)Ljava/lang/String;
-      //   21: invokestatic 229	java/lang/String:valueOf	(Ljava/lang/Object;)Ljava/lang/String;
-      //   24: invokespecial 73	java/lang/StringBuilder:<init>	(Ljava/lang/String;)V
+      //   16: invokespecial 73	java/lang/StringBuilder:<init>	()V
+      //   19: aload_2
+      //   20: arraylength
+      //   21: invokestatic 225	java/lang/Integer:toString	(I)Ljava/lang/String;
+      //   24: invokevirtual 79	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
       //   27: bipush 10
-      //   29: invokevirtual 232	java/lang/StringBuilder:append	(C)Ljava/lang/StringBuilder;
-      //   32: invokevirtual 82	java/lang/StringBuilder:toString	()Ljava/lang/String;
+      //   29: invokevirtual 228	java/lang/StringBuilder:append	(C)Ljava/lang/StringBuilder;
+      //   32: invokevirtual 84	java/lang/StringBuilder:toString	()Ljava/lang/String;
       //   35: invokevirtual 220	java/io/Writer:write	(Ljava/lang/String;)V
       //   38: aload_2
       //   39: arraylength
@@ -667,43 +658,46 @@ public final class HttpResponseCache
       //   44: iload_3
       //   45: iload 4
       //   47: if_icmpge -37 -> 10
-      //   50: aload_1
-      //   51: new 69	java/lang/StringBuilder
-      //   54: dup
-      //   55: aload_2
-      //   56: iload_3
-      //   57: aaload
-      //   58: invokevirtual 236	java/security/cert/Certificate:getEncoded	()[B
-      //   61: invokestatic 240	com/squareup/okhttp/internal/Base64:encode	([B)Ljava/lang/String;
-      //   64: invokestatic 229	java/lang/String:valueOf	(Ljava/lang/Object;)Ljava/lang/String;
-      //   67: invokespecial 73	java/lang/StringBuilder:<init>	(Ljava/lang/String;)V
-      //   70: bipush 10
-      //   72: invokevirtual 232	java/lang/StringBuilder:append	(C)Ljava/lang/StringBuilder;
-      //   75: invokevirtual 82	java/lang/StringBuilder:toString	()Ljava/lang/String;
-      //   78: invokevirtual 220	java/io/Writer:write	(Ljava/lang/String;)V
-      //   81: iload_3
-      //   82: iconst_1
-      //   83: iadd
-      //   84: istore_3
-      //   85: goto -41 -> 44
-      //   88: astore_1
-      //   89: new 21	java/io/IOException
-      //   92: dup
-      //   93: aload_1
-      //   94: invokevirtual 241	java/security/cert/CertificateEncodingException:getMessage	()Ljava/lang/String;
-      //   97: invokespecial 83	java/io/IOException:<init>	(Ljava/lang/String;)V
-      //   100: athrow
+      //   50: aload_2
+      //   51: iload_3
+      //   52: aaload
+      //   53: invokevirtual 232	java/security/cert/Certificate:getEncoded	()[B
+      //   56: invokestatic 236	com/squareup/okhttp/internal/Base64:encode	([B)Ljava/lang/String;
+      //   59: astore 5
+      //   61: aload_1
+      //   62: new 72	java/lang/StringBuilder
+      //   65: dup
+      //   66: invokespecial 73	java/lang/StringBuilder:<init>	()V
+      //   69: aload 5
+      //   71: invokevirtual 79	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      //   74: bipush 10
+      //   76: invokevirtual 228	java/lang/StringBuilder:append	(C)Ljava/lang/StringBuilder;
+      //   79: invokevirtual 84	java/lang/StringBuilder:toString	()Ljava/lang/String;
+      //   82: invokevirtual 220	java/io/Writer:write	(Ljava/lang/String;)V
+      //   85: iload_3
+      //   86: iconst_1
+      //   87: iadd
+      //   88: istore_3
+      //   89: goto -45 -> 44
+      //   92: astore_1
+      //   93: new 21	java/io/IOException
+      //   96: dup
+      //   97: aload_1
+      //   98: invokevirtual 237	java/security/cert/CertificateEncodingException:getMessage	()Ljava/lang/String;
+      //   101: invokespecial 86	java/io/IOException:<init>	(Ljava/lang/String;)V
+      //   104: athrow
       // Local variable table:
       //   start	length	slot	name	signature
-      //   0	101	0	this	Entry
-      //   0	101	1	paramWriter	Writer
-      //   0	101	2	paramArrayOfCertificate	Certificate[]
-      //   43	42	3	i	int
+      //   0	105	0	this	Entry
+      //   0	105	1	paramWriter	Writer
+      //   0	105	2	paramArrayOfCertificate	Certificate[]
+      //   43	46	3	i	int
       //   40	8	4	j	int
+      //   59	11	5	str	String
       // Exception table:
       //   from	to	target	type
-      //   11	42	88	java/security/cert/CertificateEncodingException
-      //   50	81	88	java/security/cert/CertificateEncodingException
+      //   11	42	92	java/security/cert/CertificateEncodingException
+      //   50	85	92	java/security/cert/CertificateEncodingException
     }
     
     public boolean matches(URI paramURI, String paramString, Map<String, List<String>> paramMap)
@@ -732,32 +726,27 @@ public final class HttpResponseCache
       paramEditor.write(requestMethod + '\n');
       paramEditor.write(Integer.toString(varyHeaders.length()) + '\n');
       int i = 0;
-      if (i >= varyHeaders.length())
+      while (i < varyHeaders.length())
       {
-        paramEditor.write(responseHeaders.getStatusLine() + '\n');
-        paramEditor.write(Integer.toString(responseHeaders.length()) + '\n');
-        i = 0;
+        paramEditor.write(varyHeaders.getFieldName(i) + ": " + varyHeaders.getValue(i) + '\n');
+        i += 1;
       }
-      for (;;)
+      paramEditor.write(responseHeaders.getStatusLine() + '\n');
+      paramEditor.write(Integer.toString(responseHeaders.length()) + '\n');
+      i = 0;
+      while (i < responseHeaders.length())
       {
-        if (i >= responseHeaders.length())
-        {
-          if (isHttps())
-          {
-            paramEditor.write(10);
-            paramEditor.write(cipherSuite + '\n');
-            writeCertArray(paramEditor, peerCertificates);
-            writeCertArray(paramEditor, localCertificates);
-          }
-          paramEditor.close();
-          return;
-          paramEditor.write(varyHeaders.getFieldName(i) + ": " + varyHeaders.getValue(i) + '\n');
-          i += 1;
-          break;
-        }
         paramEditor.write(responseHeaders.getFieldName(i) + ": " + responseHeaders.getValue(i) + '\n');
         i += 1;
       }
+      if (isHttps())
+      {
+        paramEditor.write(10);
+        paramEditor.write(cipherSuite + '\n');
+        writeCertArray(paramEditor, peerCertificates);
+        writeCertArray(paramEditor, localCertificates);
+      }
+      paramEditor.close();
     }
   }
   
@@ -820,7 +809,7 @@ public final class HttpResponseCache
       if ((entry.localCertificates == null) || (entry.localCertificates.length == 0)) {
         return null;
       }
-      return Arrays.asList((Certificate[])entry.localCertificates.clone());
+      return Arrays.asList((Object[])entry.localCertificates.clone());
     }
     
     public Principal getLocalPrincipal()
@@ -846,7 +835,7 @@ public final class HttpResponseCache
       if ((entry.peerCertificates == null) || (entry.peerCertificates.length == 0)) {
         throw new SSLPeerUnverifiedException(null);
       }
-      return Arrays.asList((Certificate[])entry.peerCertificates.clone());
+      return Arrays.asList((Object[])entry.peerCertificates.clone());
     }
   }
 }

@@ -9,9 +9,9 @@ class NativeToJsMessageQueue$LoadUrlBridgeMode
   {
     public void run()
     {
-      String str = NativeToJsMessageQueue.access$0(this$0);
+      String str = NativeToJsMessageQueue.access$500(this$0);
       if (str != null) {
-        NativeToJsMessageQueue.access$1(this$0).loadUrlNow("javascript:" + str);
+        NativeToJsMessageQueue.access$600(this$0).loadUrlNow("javascript:" + str);
       }
     }
   };
@@ -23,7 +23,7 @@ class NativeToJsMessageQueue$LoadUrlBridgeMode
   
   void onNativeToJsMessageAvailable()
   {
-    NativeToJsMessageQueue.access$2(this$0).getActivity().runOnUiThread(runnable);
+    NativeToJsMessageQueue.access$700(this$0).getActivity().runOnUiThread(runnable);
   }
 }
 

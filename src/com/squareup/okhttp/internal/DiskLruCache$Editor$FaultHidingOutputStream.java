@@ -21,7 +21,7 @@ class DiskLruCache$Editor$FaultHidingOutputStream
     }
     catch (IOException localIOException)
     {
-      DiskLruCache.Editor.access$0(this$1, true);
+      DiskLruCache.Editor.access$2302(this$1, true);
     }
   }
   
@@ -34,7 +34,7 @@ class DiskLruCache$Editor$FaultHidingOutputStream
     }
     catch (IOException localIOException)
     {
-      DiskLruCache.Editor.access$0(this$1, true);
+      DiskLruCache.Editor.access$2302(this$1, true);
     }
   }
   
@@ -47,7 +47,7 @@ class DiskLruCache$Editor$FaultHidingOutputStream
     }
     catch (IOException localIOException)
     {
-      DiskLruCache.Editor.access$0(this$1, true);
+      DiskLruCache.Editor.access$2302(this$1, true);
     }
   }
   
@@ -60,7 +60,7 @@ class DiskLruCache$Editor$FaultHidingOutputStream
     }
     catch (IOException paramArrayOfByte)
     {
-      DiskLruCache.Editor.access$0(this$1, true);
+      DiskLruCache.Editor.access$2302(this$1, true);
     }
   }
 }

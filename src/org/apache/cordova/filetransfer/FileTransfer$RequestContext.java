@@ -1,8 +1,7 @@
 package org.apache.cordova.filetransfer;
 
 import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 
@@ -10,8 +9,7 @@ final class FileTransfer$RequestContext
 {
   boolean aborted;
   CallbackContext callbackContext;
-  InputStream currentInputStream;
-  OutputStream currentOutputStream;
+  HttpURLConnection connection;
   String source;
   String target;
   File targetFile;

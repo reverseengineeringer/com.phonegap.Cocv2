@@ -13,7 +13,7 @@ class NetworkManager$1
   public void onReceive(Context paramContext, Intent paramIntent)
   {
     if (this$0.webView != null) {
-      NetworkManager.access$0(this$0, this$0.sockMan.getActiveNetworkInfo());
+      NetworkManager.access$000(this$0, this$0.sockMan.getActiveNetworkInfo());
     }
   }
 }

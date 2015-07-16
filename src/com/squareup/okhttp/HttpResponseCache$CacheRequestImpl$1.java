@@ -8,7 +8,7 @@ import java.io.OutputStream;
 class HttpResponseCache$CacheRequestImpl$1
   extends FilterOutputStream
 {
-  HttpResponseCache$CacheRequestImpl$1(HttpResponseCache.CacheRequestImpl paramCacheRequestImpl, OutputStream paramOutputStream, DiskLruCache.Editor paramEditor)
+  HttpResponseCache$CacheRequestImpl$1(HttpResponseCache.CacheRequestImpl paramCacheRequestImpl, OutputStream paramOutputStream, HttpResponseCache paramHttpResponseCache, DiskLruCache.Editor paramEditor)
   {
     super(paramOutputStream);
   }
@@ -16,14 +16,13 @@ class HttpResponseCache$CacheRequestImpl$1
   public void close()
     throws IOException
   {
-    synchronized (HttpResponseCache.CacheRequestImpl.access$2(this$1))
+    synchronized (this$1.this$0)
     {
-      if (HttpResponseCache.CacheRequestImpl.access$0(this$1)) {
+      if (HttpResponseCache.CacheRequestImpl.access$700(this$1)) {
         return;
       }
-      HttpResponseCache.CacheRequestImpl.access$1(this$1, true);
-      HttpResponseCache localHttpResponseCache2 = HttpResponseCache.CacheRequestImpl.access$2(this$1);
-      HttpResponseCache.access$5(localHttpResponseCache2, HttpResponseCache.access$4(localHttpResponseCache2) + 1);
+      HttpResponseCache.CacheRequestImpl.access$702(this$1, true);
+      HttpResponseCache.access$808(this$1.this$0);
       super.close();
       val$editor.commit();
       return;

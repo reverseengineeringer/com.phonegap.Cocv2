@@ -29,7 +29,7 @@ public abstract class Request$Body
       
       public MediaType contentType()
       {
-        return Request.Body.this;
+        return val$contentType;
       }
       
       public void writeTo(OutputStream paramAnonymousOutputStream)
@@ -49,10 +49,8 @@ public abstract class Request$Body
             for (;;)
             {
               int i = ((InputStream)localObject1).read(arrayOfByte);
-              if (i == -1)
-              {
-                Util.closeQuietly((Closeable)localObject1);
-                return;
+              if (i == -1) {
+                break;
               }
               paramAnonymousOutputStream.write(arrayOfByte, 0, i);
             }
@@ -66,10 +64,14 @@ public abstract class Request$Body
         }
         finally
         {
-          Object localObject1;
-          paramAnonymousOutputStream = (OutputStream)localObject3;
+          for (;;)
+          {
+            Object localObject1;
+            paramAnonymousOutputStream = (OutputStream)localObject3;
+          }
         }
         throw ((Throwable)localObject1);
+        Util.closeQuietly((Closeable)localObject1);
       }
     };
   }
@@ -109,7 +111,7 @@ public abstract class Request$Body
       
       public MediaType contentType()
       {
-        return Request.Body.this;
+        return val$contentType;
       }
       
       public void writeTo(OutputStream paramAnonymousOutputStream)

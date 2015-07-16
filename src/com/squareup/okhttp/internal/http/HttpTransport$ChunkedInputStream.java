@@ -17,7 +17,7 @@ class HttpTransport$ChunkedInputStream
   HttpTransport$ChunkedInputStream(InputStream paramInputStream, CacheRequest paramCacheRequest, HttpTransport paramHttpTransport)
     throws IOException
   {
-    super(paramInputStream, HttpTransport.access$1(paramHttpTransport), paramCacheRequest);
+    super(paramInputStream, HttpTransport.access$300(paramHttpTransport), paramCacheRequest);
     transport = paramHttpTransport;
   }
   
@@ -40,7 +40,7 @@ class HttpTransport$ChunkedInputStream
       {
         hasMoreChunks = false;
         localObject = httpEngine.responseHeaders.getHeaders();
-        RawHeaders.readHeaders(HttpTransport.access$2(transport), (RawHeaders)localObject);
+        RawHeaders.readHeaders(HttpTransport.access$400(transport), (RawHeaders)localObject);
         httpEngine.receiveHeaders((RawHeaders)localObject);
         endOfInput();
       }
@@ -68,7 +68,7 @@ class HttpTransport$ChunkedInputStream
     if (closed) {
       return;
     }
-    if ((hasMoreChunks) && (!HttpTransport.access$0(httpEngine, this))) {
+    if ((hasMoreChunks) && (!HttpTransport.access$200(httpEngine, this))) {
       unexpectedEndOfInput();
     }
     closed = true;

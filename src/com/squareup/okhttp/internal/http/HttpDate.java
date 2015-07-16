@@ -34,6 +34,7 @@ final class HttpDate
   public static Date parse(String paramString)
   {
     String[] arrayOfString;
+    int i;
     try
     {
       Date localDate = ((DateFormat)STANDARD_DATE_FORMAT.get()).parse(paramString);
@@ -43,38 +44,36 @@ final class HttpDate
     {
       arrayOfString = BROWSER_COMPATIBLE_DATE_FORMAT_STRINGS;
       i = 0;
-    }
-    try
-    {
-      int j = BROWSER_COMPATIBLE_DATE_FORMAT_STRINGS.length;
-      Object localObject;
-      for (;;)
-      {
-        if (i >= j) {
-          return null;
-        }
-        DateFormat localDateFormat = BROWSER_COMPATIBLE_DATE_FORMATS[i];
-        localObject = localDateFormat;
-        if (localDateFormat == null)
-        {
-          localObject = new SimpleDateFormat(BROWSER_COMPATIBLE_DATE_FORMAT_STRINGS[i], Locale.US);
-          BROWSER_COMPATIBLE_DATE_FORMATS[i] = localObject;
-        }
-      }
-    }
-    finally
-    {
       try
       {
-        localObject = ((DateFormat)localObject).parse(paramString);
-        return (Date)localObject;
+        int j = BROWSER_COMPATIBLE_DATE_FORMAT_STRINGS.length;
+        Object localObject;
+        while (i < j)
+        {
+          DateFormat localDateFormat = BROWSER_COMPATIBLE_DATE_FORMATS[i];
+          localObject = localDateFormat;
+          if (localDateFormat == null)
+          {
+            localObject = new SimpleDateFormat(BROWSER_COMPATIBLE_DATE_FORMAT_STRINGS[i], Locale.US);
+            BROWSER_COMPATIBLE_DATE_FORMATS[i] = localObject;
+          }
+        }
       }
-      catch (ParseException localParseException2)
+      finally
       {
-        i += 1;
+        try
+        {
+          localObject = ((DateFormat)localObject).parse(paramString);
+          return (Date)localObject;
+        }
+        catch (ParseException localParseException2)
+        {
+          i += 1;
+        }
+        paramString = finally;
       }
-      paramString = finally;
     }
+    return null;
   }
 }
 

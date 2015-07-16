@@ -21,8 +21,8 @@ public final class DiskLruCache$Editor
   private DiskLruCache$Editor(DiskLruCache paramDiskLruCache, DiskLruCache.Entry paramEntry)
   {
     entry = paramEntry;
-    if (DiskLruCache.Entry.access$0(paramEntry)) {}
-    for (paramDiskLruCache = null;; paramDiskLruCache = new boolean[DiskLruCache.access$7(paramDiskLruCache)])
+    if (DiskLruCache.Entry.access$600(paramEntry)) {}
+    for (paramDiskLruCache = null;; paramDiskLruCache = new boolean[DiskLruCache.access$1800(paramDiskLruCache)])
     {
       written = paramDiskLruCache;
       return;
@@ -32,7 +32,7 @@ public final class DiskLruCache$Editor
   public void abort()
     throws IOException
   {
-    DiskLruCache.access$10(this$0, this, false);
+    DiskLruCache.access$2200(this$0, this, false);
   }
   
   public void abortUnlessCommitted()
@@ -51,14 +51,14 @@ public final class DiskLruCache$Editor
   {
     if (hasErrors)
     {
-      DiskLruCache.access$10(this$0, this, false);
-      this$0.remove(DiskLruCache.Entry.access$2(entry));
+      DiskLruCache.access$2200(this$0, this, false);
+      this$0.remove(DiskLruCache.Entry.access$1100(entry));
     }
     for (;;)
     {
       committed = true;
       return;
-      DiskLruCache.access$10(this$0, this, true);
+      DiskLruCache.access$2200(this$0, this, true);
     }
   }
   
@@ -67,7 +67,7 @@ public final class DiskLruCache$Editor
   {
     InputStream localInputStream = newInputStream(paramInt);
     if (localInputStream != null) {
-      return DiskLruCache.access$6(localInputStream);
+      return DiskLruCache.access$1700(localInputStream);
     }
     return null;
   }
@@ -77,11 +77,11 @@ public final class DiskLruCache$Editor
   {
     synchronized (this$0)
     {
-      if (DiskLruCache.Entry.access$1(entry) != this) {
+      if (DiskLruCache.Entry.access$700(entry) != this) {
         throw new IllegalStateException();
       }
     }
-    if (!DiskLruCache.Entry.access$0(entry)) {
+    if (!DiskLruCache.Entry.access$600(entry)) {
       return null;
     }
     try
@@ -98,11 +98,11 @@ public final class DiskLruCache$Editor
   {
     synchronized (this$0)
     {
-      if (DiskLruCache.Entry.access$1(entry) != this) {
+      if (DiskLruCache.Entry.access$700(entry) != this) {
         throw new IllegalStateException();
       }
     }
-    if (!DiskLruCache.Entry.access$0(entry)) {
+    if (!DiskLruCache.Entry.access$600(entry)) {
       written[paramInt] = true;
     }
     File localFile = entry.getDirtyFile(paramInt);
@@ -116,14 +116,14 @@ public final class DiskLruCache$Editor
     {
       for (;;)
       {
-        DiskLruCache.access$8(this$0).mkdirs();
+        DiskLruCache.access$1900(this$0).mkdirs();
         try
         {
           FileOutputStream localFileOutputStream = new FileOutputStream(localFile);
         }
         catch (FileNotFoundException localFileNotFoundException2)
         {
-          OutputStream localOutputStream = DiskLruCache.access$9();
+          OutputStream localOutputStream = DiskLruCache.access$2000();
           return localOutputStream;
         }
       }
@@ -175,7 +175,7 @@ public final class DiskLruCache$Editor
       }
       catch (IOException localIOException)
       {
-        hasErrors = true;
+        DiskLruCache.Editor.access$2302(DiskLruCache.Editor.this, true);
       }
     }
     
@@ -188,7 +188,7 @@ public final class DiskLruCache$Editor
       }
       catch (IOException localIOException)
       {
-        hasErrors = true;
+        DiskLruCache.Editor.access$2302(DiskLruCache.Editor.this, true);
       }
     }
     
@@ -201,7 +201,7 @@ public final class DiskLruCache$Editor
       }
       catch (IOException localIOException)
       {
-        hasErrors = true;
+        DiskLruCache.Editor.access$2302(DiskLruCache.Editor.this, true);
       }
     }
     
@@ -214,7 +214,7 @@ public final class DiskLruCache$Editor
       }
       catch (IOException paramArrayOfByte)
       {
-        hasErrors = true;
+        DiskLruCache.Editor.access$2302(DiskLruCache.Editor.this, true);
       }
     }
   }

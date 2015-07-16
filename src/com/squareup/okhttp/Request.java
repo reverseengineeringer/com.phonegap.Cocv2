@@ -121,7 +121,7 @@ final class Request
         
         public MediaType contentType()
         {
-          return Request.Body.this;
+          return val$contentType;
         }
         
         public void writeTo(OutputStream paramAnonymousOutputStream)
@@ -141,10 +141,8 @@ final class Request
               for (;;)
               {
                 int i = ((InputStream)localObject1).read(arrayOfByte);
-                if (i == -1)
-                {
-                  Util.closeQuietly((Closeable)localObject1);
-                  return;
+                if (i == -1) {
+                  break;
                 }
                 paramAnonymousOutputStream.write(arrayOfByte, 0, i);
               }
@@ -158,10 +156,14 @@ final class Request
           }
           finally
           {
-            Object localObject1;
-            paramAnonymousOutputStream = (OutputStream)localObject3;
+            for (;;)
+            {
+              Object localObject1;
+              paramAnonymousOutputStream = (OutputStream)localObject3;
+            }
           }
           throw ((Throwable)localObject1);
+          Util.closeQuietly((Closeable)localObject1);
         }
       };
     }
@@ -201,7 +203,7 @@ final class Request
         
         public MediaType contentType()
         {
-          return Request.Body.this;
+          return val$contentType;
         }
         
         public void writeTo(OutputStream paramAnonymousOutputStream)
