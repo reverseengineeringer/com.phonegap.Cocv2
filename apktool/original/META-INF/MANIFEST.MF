@@ -9,7 +9,7 @@ Name: assets/www/plugins/com.wezka.nativecamera/www/CameraPopoverHandl
 SHA1-Digest: ZArNg8lHdMHXmiQgJ2n75MaFZTs=
 
 Name: res/xml/config.xml
-SHA1-Digest: wtfQtHpV8XkczbnrOvgLIMrODWo=
+SHA1-Digest: lBFe134nLDyKq6iv9i+0tMJbCEk=
 
 Name: res/drawable-hdpi-v4/ic_action_remove.png
 SHA1-Digest: fJ8PTsrpYrWc6H7e3ctCsDSiaAY=
@@ -141,7 +141,7 @@ Name: resources.arsc
 SHA1-Digest: 4a4iUbGCelE9o2LYmjQG+H1IVbc=
 
 Name: assets/www/config.xml
-SHA1-Digest: MweKejkuiwpi7mNeHlUsSSH7aYQ=
+SHA1-Digest: s7jLIsc0sKJPMyDDa/1lrGr68sY=
 
 Name: res/drawable/btn_flash_auto.png
 SHA1-Digest: Sa+ms9gA4BA6qm6xdIl8ZqLDCgE=
@@ -150,7 +150,7 @@ Name: assets/www/res/screen/blackberry10/splash-1280x768.png
 SHA1-Digest: 5v15ii0oRhUbRTS8Qi9rjRmUuwI=
 
 Name: AndroidManifest.xml
-SHA1-Digest: axWGNMMrDznsn5gpvrx9La62sWo=
+SHA1-Digest: edul6ARx+xnvmEMT4R3OzcOXZPM=
 
 Name: assets/www/img/navbar-back.png
 SHA1-Digest: RovlwYheSLQ5pOkSUjCe2iBhnLM=

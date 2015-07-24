@@ -1,6 +1,6 @@
 Signature-Version: 1.0
 Created-By: 1.0 (Android)
-SHA1-Digest-Manifest: Gjs+N91UWo/KtM699qnF0HAqEI0=
+SHA1-Digest-Manifest: maGaecBXqc4dXwkNjaLpCWsYKjY=
 
 Name: assets/www/plugins/org.apache.cordova.file/www/ProgressEvent.js
 SHA1-Digest: SHz2zufUm+KPPcJMKn25SgSDH9c=
@@ -10,7 +10,7 @@ Name: assets/www/plugins/com.wezka.nativecamera/www/CameraPopoverHandl
 SHA1-Digest: B9tCfi0oHa7vctunvf7IuJkIJBE=
 
 Name: res/xml/config.xml
-SHA1-Digest: lDuj/2KlrCHJbbEcLUMjFvKyIv4=
+SHA1-Digest: eYkyPxWJzCIvtE+cJ1BiG2dm81g=
 
 Name: assets/www/html/report.html
 SHA1-Digest: 07sjwVuTusEwL6CKBpikXCBke8o=
@@ -142,7 +142,7 @@ Name: resources.arsc
 SHA1-Digest: or9od17yo1LN8khVmC9sA5lzBuY=
 
 Name: assets/www/config.xml
-SHA1-Digest: yOInxW6f/6H3xjVeC/SO63NgfCE=
+SHA1-Digest: ImopG8/npyGGoNALvdiezzJ/KnY=
 
 Name: assets/www/res/screen/blackberry10/splash-1280x768.png
 SHA1-Digest: 2vyuBOktk7vODMWJ0zTvF9A2pR0=
@@ -151,7 +151,7 @@ Name: res/drawable/btn_flash_auto.png
 SHA1-Digest: UYeK6EQEm9Gjoka1sLoiZpZnO34=
 
 Name: AndroidManifest.xml
-SHA1-Digest: 6P8H9iijwH/6GXgsBuMnBeLN2Ss=
+SHA1-Digest: 1jtEw0ZAv66E+tIgHf4oTC9qY8Q=
 
 Name: assets/www/img/navbar-back.png
 SHA1-Digest: RtJw0PGp7jUgyDeQR00kEFxp8FQ=
