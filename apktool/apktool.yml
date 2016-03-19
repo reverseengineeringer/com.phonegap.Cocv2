@@ -1,5 +1,5 @@
-version: 2.0.0
-apkFileName: com.phonegap.Cocv2-1.apk
+version: 2.0.2
+apkFileName: base6.apk
 isFrameworkApk: false
 usesFramework:
   ids:
@@ -10,7 +10,8 @@ sdkInfo:
 packageInfo:
   forced-package-id: '127'
 versionInfo:
-  versionCode: '20301'
-  versionName: 2.3.1
-compressionType: false
+  versionCode: '20401'
+  versionName: 2.4.1
 sharedLibrary: false
+doNotCompress:
+- resources.arsc

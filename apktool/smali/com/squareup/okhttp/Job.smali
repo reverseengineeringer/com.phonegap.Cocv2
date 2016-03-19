@@ -3,8 +3,8 @@
 .source "Job.java"
 
 # interfaces
-.implements Lcom/squareup/okhttp/internal/http/Policy;
 .implements Ljava/lang/Runnable;
+.implements Lcom/squareup/okhttp/internal/http/Policy;
 
 
 # instance fields

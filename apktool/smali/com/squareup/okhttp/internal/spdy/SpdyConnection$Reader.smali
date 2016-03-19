@@ -3,8 +3,8 @@
 .source "SpdyConnection.java"
 
 # interfaces
-.implements Lcom/squareup/okhttp/internal/spdy/FrameReader$Handler;
 .implements Ljava/lang/Runnable;
+.implements Lcom/squareup/okhttp/internal/spdy/FrameReader$Handler;
 
 
 # annotations

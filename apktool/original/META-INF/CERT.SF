@@ -1,6 +1,6 @@
 Signature-Version: 1.0
 Created-By: 1.0 (Android)
-SHA1-Digest-Manifest: maGaecBXqc4dXwkNjaLpCWsYKjY=
+SHA1-Digest-Manifest: sGVNlLcXLl8d2O0LPiNjXmPSXhw=
 
 Name: assets/www/plugins/org.apache.cordova.file/www/ProgressEvent.js
 SHA1-Digest: SHz2zufUm+KPPcJMKn25SgSDH9c=
@@ -10,7 +10,7 @@ Name: assets/www/plugins/com.wezka.nativecamera/www/CameraPopoverHandl
 SHA1-Digest: B9tCfi0oHa7vctunvf7IuJkIJBE=
 
 Name: res/xml/config.xml
-SHA1-Digest: eYkyPxWJzCIvtE+cJ1BiG2dm81g=
+SHA1-Digest: QQZ8TXyH6JuyKR/8sCKUwGyys9E=
 
 Name: assets/www/html/report.html
 SHA1-Digest: 07sjwVuTusEwL6CKBpikXCBke8o=
@@ -142,7 +142,7 @@ Name: resources.arsc
 SHA1-Digest: or9od17yo1LN8khVmC9sA5lzBuY=
 
 Name: assets/www/config.xml
-SHA1-Digest: ImopG8/npyGGoNALvdiezzJ/KnY=
+SHA1-Digest: juUk55TGCirkuE/FkB/UkiX/91I=
 
 Name: assets/www/res/screen/blackberry10/splash-1280x768.png
 SHA1-Digest: 2vyuBOktk7vODMWJ0zTvF9A2pR0=
@@ -151,7 +151,7 @@ Name: res/drawable/btn_flash_auto.png
 SHA1-Digest: UYeK6EQEm9Gjoka1sLoiZpZnO34=
 
 Name: AndroidManifest.xml
-SHA1-Digest: 1jtEw0ZAv66E+tIgHf4oTC9qY8Q=
+SHA1-Digest: 01ku0oRLSY/iCQNJd7G/+oas8AA=
 
 Name: assets/www/img/navbar-back.png
 SHA1-Digest: RtJw0PGp7jUgyDeQR00kEFxp8FQ=
@@ -175,7 +175,7 @@ Name: res/drawable-ldpi-v4/splash.png
 SHA1-Digest: V+aK8SgiFzkyFRJuNqni3Il7qy0=
 
 Name: assets/www/js/cambridge.js
-SHA1-Digest: WVXvvWPIxJVS57TPgMuyR6Wa8Kw=
+SHA1-Digest: vDQNBHhJwSpDDM1nka/zwUqArm8=
 
 Name: assets/www/plugins/org.apache.cordova.file/www/FileReader.js
 SHA1-Digest: ypYxM0drkJtmlDQb9KdB+tJOMAQ=
@@ -193,7 +193,7 @@ Name: assets/www/res/screen/blackberry10/splash-720x720.png
 SHA1-Digest: 1iIDQ9NLcQQWVY/pXYReqFIcWlw=
 
 Name: classes.dex
-SHA1-Digest: +qSO5ItlLGX9HSLbDONu1nNohzk=
+SHA1-Digest: asp3rb8FLFv6ZeseMe+i9mHz1yM=
 
 Name: assets/www/cordova_plugins.js
 SHA1-Digest: JczYiwRDxHCxVZm0jucmgd/Q6U4=
@@ -307,7 +307,7 @@ Name: assets/www/html/help.html
 SHA1-Digest: cnM0QsZA0dY7aTa3dC6CDE5VX6Y=
 
 Name: assets/www/styles.css
-SHA1-Digest: j/CyYFewV7K2Nf2OzDFxMx88PQQ=
+SHA1-Digest: MFjCe67kjhBt4glDVErA3orarQM=
 
 Name: assets/www/res/icon/android/icon-96-xhdpi.png
 SHA1-Digest: qROKHKRFcBLLFcpYuVaTliQw+i4=

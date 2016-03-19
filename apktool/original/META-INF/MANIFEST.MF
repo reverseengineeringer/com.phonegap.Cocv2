@@ -9,7 +9,7 @@ Name: assets/www/plugins/com.wezka.nativecamera/www/CameraPopoverHandl
 SHA1-Digest: ZArNg8lHdMHXmiQgJ2n75MaFZTs=
 
 Name: res/xml/config.xml
-SHA1-Digest: lBFe134nLDyKq6iv9i+0tMJbCEk=
+SHA1-Digest: KrRdxtek+c0pCJ0ncqS+yzf7Nhc=
 
 Name: res/drawable-hdpi-v4/ic_action_remove.png
 SHA1-Digest: fJ8PTsrpYrWc6H7e3ctCsDSiaAY=
@@ -141,7 +141,7 @@ Name: resources.arsc
 SHA1-Digest: 4a4iUbGCelE9o2LYmjQG+H1IVbc=
 
 Name: assets/www/config.xml
-SHA1-Digest: s7jLIsc0sKJPMyDDa/1lrGr68sY=
+SHA1-Digest: nnaj0oD+GlxAlSn0OwJNNBs0koc=
 
 Name: res/drawable/btn_flash_auto.png
 SHA1-Digest: Sa+ms9gA4BA6qm6xdIl8ZqLDCgE=
@@ -150,7 +150,7 @@ Name: assets/www/res/screen/blackberry10/splash-1280x768.png
 SHA1-Digest: 5v15ii0oRhUbRTS8Qi9rjRmUuwI=
 
 Name: AndroidManifest.xml
-SHA1-Digest: edul6ARx+xnvmEMT4R3OzcOXZPM=
+SHA1-Digest: WlNXZ8vhICuLp1Llxm1CNTSzDCU=
 
 Name: assets/www/img/navbar-back.png
 SHA1-Digest: RovlwYheSLQ5pOkSUjCe2iBhnLM=
@@ -174,7 +174,7 @@ Name: res/drawable-ldpi-v4/splash.png
 SHA1-Digest: OHVpCs6JTFAYOxsh34xCoLFjOSg=
 
 Name: assets/www/js/cambridge.js
-SHA1-Digest: mpWRUtjHuYyy+OcmrQJFCmZJV0E=
+SHA1-Digest: HvdYnMbIPj1gAfUKuU4xk6wE+UE=
 
 Name: assets/www/plugins/org.apache.cordova.file/www/FileReader.js
 SHA1-Digest: en+sXlarkWCDSDDHK4SiUdSzzok=
@@ -192,7 +192,7 @@ Name: assets/www/res/screen/blackberry10/splash-720x720.png
 SHA1-Digest: Ns+UOvdayvi69vICF0AbSfZJj5c=
 
 Name: classes.dex
-SHA1-Digest: Jr260bER7/vYL4vKp/dH9BNvva4=
+SHA1-Digest: DnG2NvUxw1VQp2ZgjdNjd51Dr44=
 
 Name: assets/www/cordova_plugins.js
 SHA1-Digest: EMzlk42fKZb6/NYQAmleZRoUpwY=
@@ -306,7 +306,7 @@ Name: assets/www/html/help.html
 SHA1-Digest: SmLlxd77Xoto298tAOMRqyhlDs4=
 
 Name: assets/www/styles.css
-SHA1-Digest: aNJwj8+rQDEItbJwWJeuaNBkQ4k=
+SHA1-Digest: XW7BLDrlw/TI1ux4EWUfqzzlXDY=
 
 Name: assets/www/res/icon/android/icon-96-xhdpi.png
 SHA1-Digest: GjRN9bc56ZJ3nu6nWaDVaAZN7Dc=

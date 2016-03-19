@@ -190,7 +190,7 @@ input, textarea {
 	width:95%;
 }
 input {	width:65%; }
-	.content input {float:right;}
+	.content input:not([type=checkbox]) {float:right;}
 	
 textarea {width:99%;}
 input[type="checkbox"] { width: auto; }
@@ -213,6 +213,13 @@ select { font-size: 1.25em; }
 	text-align:center;
 	text-decoration:none;
 	text-shadow: 0 -1px 0 #a44e00;
+}
+label.pickupCheckbox {
+    width:100%;
+    max-width:120px;
+}
+label.pickupCheckbox input {
+    margin-right:7px;
 }
 button {
 	margin:10px 0;
